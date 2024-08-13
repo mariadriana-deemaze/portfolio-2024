@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -8,11 +9,11 @@ export async function POST() {
 			from: 'Maria Adriana <hello@maria-adriana.com>',
 			to: ['delivered@resend.dev'],
 			subject: 'Contact request',
-			react: () => <h1>hello</h1>
+			html: 'Hello'
 		});
 
-		return Response.json(data);
+		return NextResponse.json({ data });
 	} catch (error) {
-		return Response.json({ error });
+		return NextResponse.json({ data: null });
 	}
 }

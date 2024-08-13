@@ -1,10 +1,11 @@
 {
 	"parser": "@typescript-eslint/parser",
-	"plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+	"plugins": ["react", "@typescript-eslint", "prettier"],
 	"extends": [
 		"next/core-web-vitals",
 		"eslint:recommended",
 		"plugin:react/recommended",
+		"plugin:react-hooks/recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:react/jsx-runtime"
 	],
@@ -33,8 +34,6 @@
 		"react/prefer-stateless-function": 2,
 		"react/prop-types": 0,
 		"react/no-unescaped-entities": "error",
-		"react-hooks/rules-of-hooks": "error",
-		"react-hooks/exhaustive-deps": "warn",
 		"camelcase": "off",
 		"comma-dangle": "off",
 		"global-require": "off",
