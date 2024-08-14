@@ -9,11 +9,11 @@ export const SectionAbout = () => {
 	return (
 		<>
 			<Section>
-				<div className="flex items-center justify-between mt-24">
+				<div className="flex items-center justify-between mt-16">
 					<div className="flex-1 space-y-5">
 						<div className="flex-1">
 							<h1
-								className={`${clashDisplay.className} text-[58px] font-medium leading-none`}
+								className={`${clashDisplay.className} text-[50px] font-medium leading-none`}
 							>
 								{data.name}
 								<span className="text-[30px] align-middle ml-3">👋</span>
@@ -27,7 +27,7 @@ export const SectionAbout = () => {
 						<p className="max-w-md text-pretty font-mono text-sm text-foreground">
 							{data.about}
 						</p>
-						<p className="max-w-md items-center text-pretty font-mono text-xs text-muted-foreground">
+						<p className="max-w-md items-center text-pretty font-mono text-xs text-gray-500">
 							<a
 								className="inline-flex gap-x-1.5 align-baseline leading-none hover:underline"
 								href={data.locationLink}
@@ -47,7 +47,7 @@ export const SectionAbout = () => {
 									size="icon"
 									asChild
 								>
-									<a href={social.url}>
+									<a href={social.url} target='_blank'>
 										<social.icon className="h-4 w-4" />
 									</a>
 								</Button>

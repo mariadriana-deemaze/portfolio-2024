@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 								},
 								{
 									url: '/contact',
-									title: 'email',
+									title: 'contact',
 									type: 'internal'
 								},
 								...data.contact.social.map((socialMediaLink) => ({

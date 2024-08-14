@@ -7,19 +7,22 @@ export const SectionEducation = () => {
 	return (
 		<Section>
 			<h2 className={`${clashDisplay.className} text-xl font-bold`}>Education</h2>
-			{data.education.map(({ school, start, end, degree }) => {
+			{data.education.map(({ school, summary, start, end, degree }) => {
 				return (
 					<Card key={school}>
 						<CardHeader>
 							<div className="flex items-center justify-between gap-x-2 text-base opac">
 								<h3 className="font-semibold leading-none">{school}</h3>
-								<div className="text-sm tabular-nums text-gray-500">
+								<div className="text-sm tabular-nums text-gray-500 hidden sm:flex">
 									{start} - {end}
 								</div>
 							</div>
 							<h4 className="font-mono text-sm leading-none">{degree}</h4>
+							<div className="text-sm tabular-nums text-gray-500 flex sm:hidden">
+								{start} - {end}
+							</div>
 						</CardHeader>
-						<CardContent>Summary here</CardContent>
+						<CardContent className="mt-2 text-xs">{summary}</CardContent>
 					</Card>
 				);
 			})}

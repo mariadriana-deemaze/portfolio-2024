@@ -19,8 +19,8 @@ export function BGGrid({ children }: { children?: React.ReactNode }) {
 					}}
 				/>
 			</div>
-			<div className="h-screen fixed border-l-[1px] border-orange-600 opacity-30 left-[10%] top-0 bottom-0" />
-			<div className="h-screen fixed border-l-[1px] border-orange-600 opacity-30 right-[10%] top-0 bottom-0" />
+			<div className="h-screen fixed border-l-[1px] border-orange-600 opacity-30 left-[10px] md:left-[10%] top-0 bottom-0" />
+			<div className="h-screen fixed border-l-[1px] border-orange-600 opacity-30 right-[10px] md:right-[10%] top-0 bottom-0" />
 		</div>
 	);
 }

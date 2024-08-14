@@ -20,7 +20,7 @@ export const NowPlaying = () => {
 							<Link href={nowPlaying?.data.songUrl} target="_blank">
 								<div className="flex items-center">
 									<Badge variant="outline">
-										<h1 className="text-left">
+										<h1 className="text-left line-clamp-1">
 											{nowPlaying?.data.title} - {nowPlaying?.data.artist}
 										</h1>
 									</Badge>

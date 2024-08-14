@@ -1,5 +1,7 @@
+import { Button } from '@/components/ui/button';
 import { data } from '@/data/main';
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
 	title: `${data.name} | ${data.about}`,
@@ -8,8 +10,14 @@ export const metadata: Metadata = {
 
 export default function Page() {
 	return (
-		<section className="mx-auto w-full max-w-2xl space-y-12 print:space-y-6 h-96 border border-red-600 mt-64">
-			<h1>Soon...</h1>
-		</section>
+		<div className="flex flex-col justify-center items-center h-80">
+				<h2 className="text-4xl font-semibold">Coming soon.</h2>
+				<p className="mt-4">🚧 Page under construction 🚧</p>
+			<div className="flex flex-col mx-auto mt-10 gap-9">
+				<Button variant="outline" size="lg" asChild>
+					<Link href="/">Return Home</Link>
+				</Button>
+			</div>
+		</div>
 	);
 }

@@ -34,9 +34,7 @@ export const data = {
 		{
 			school: 'Coimbra University School of Arts',
 			degree: 'Communication design',
-			summary: `
-			Lernt the bases of communication design.
-			Represented EUAC in a group project on 2015 Eunique Fair.`,
+			summary: `Learned the basics of communication design, gaining a broader, enriching vision and background on design history and its applications today. Came into contact with a myriad of multimedia tools, along with more traditional art methods. Represented EUAC in a group project at the 2015 Eunique Fair.`,
 			start: '2012',
 			end: '2015'
 		}
