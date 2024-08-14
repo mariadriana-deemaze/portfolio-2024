@@ -2,29 +2,9 @@ import { CommandMenu } from '@/components/command-menu';
 import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { data } from '@/data/main';
-import { Metadata } from 'next';
 import { BGGrid } from '@/components/bg-grid';
 import './globals.css';
 import localFont from 'next/font/local';
-
-
-export const metadata: Metadata = {
-	title: data.name,
-	description: data.summary,
-	openGraph: {
-		title: data.name,
-		description: data.about,
-		url: 'https://maria-adriana.com',
-		siteName: data.name,
-		images: [
-			{
-				url: 'https://maria-adriana.com/og-bg.png',
-				alt: 'Maria Adriana'
-			}
-		],
-		type: 'website'
-	}
-};
  
 export const clashDisplay = localFont({
 	src: [
