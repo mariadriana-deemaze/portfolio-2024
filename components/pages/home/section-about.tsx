@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
-import { GlobeIcon } from 'lucide-react';
+import { HiOutlineGlobe } from "react-icons/hi";
 
 export const SectionAbout = () => {
 	return (
@@ -34,7 +34,7 @@ export const SectionAbout = () => {
 								target="_blank"
 								rel="noreferrer"
 							>
-								<GlobeIcon className="h-3 w-3" />
+								<HiOutlineGlobe className="h-3 w-3" />
 								{data.location}
 							</a>
 						</p>
@@ -42,12 +42,12 @@ export const SectionAbout = () => {
 							{data.contact.social.map((social) => (
 								<Button
 									key={social.name}
-									className="h-8 w-8"
+									className="h-8 w-8 bg-card text-card-foreground"
 									variant="outline"
 									size="icon"
 									asChild
 								>
-									<a href={social.url} target='_blank'>
+									<a href={social.url} target="_blank">
 										<social.icon className="h-4 w-4" />
 									</a>
 								</Button>

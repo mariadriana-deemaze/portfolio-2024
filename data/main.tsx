@@ -1,4 +1,5 @@
-import { Github, Instagram, Linkedin } from 'lucide-react';
+import { STACKS } from '@/components/stacks';
+import { LuGithub, LuLinkedin, LuInstagram } from "react-icons/lu";
 
 // TODO: Review.
 export const data = {
@@ -16,17 +17,17 @@ export const data = {
 			{
 				name: 'GitHub',
 				url: 'https://github.com/mariadriana-deemaze',
-				icon: Github
+				icon: LuGithub
 			},
 			{
 				name: 'LinkedIn',
 				url: 'https://www.linkedin.com/in/mariadriana/',
-				icon: Linkedin
+				icon: LuLinkedin
 			},
 			{
 				name: 'Instagram',
 				url: 'https://www.instagram.com/mariadriana94/',
-				icon: Instagram
+				icon: LuInstagram
 			}
 		]
 	},
@@ -53,15 +54,19 @@ export const data = {
 				Over time, I expanded my skill set to encompass back-end development, becoming a full-stack developer
 				This holistic perspective has been invaluable to my growth, enabling me to deliver comprehensive software solutions that meet both user and business needs.`,
 			stack: [
-				'React',
-				'Remix',
-				'Typescript',
-				'NestJS',
-				'Mikro-ORM',
-				'PostgreSQL',
-				'AWS',
-				'Ruby',
-				'Rails'
+				STACKS.PHP,
+				STACKS.React,
+				STACKS.Remix,
+				STACKS.TypeScript,
+				STACKS.Prisma,
+				STACKS.NestJS,
+				STACKS.Ruby,
+				STACKS.Rails,
+				STACKS.AWS,
+				STACKS.Chakra,
+				STACKS.MaterialUI,
+				STACKS.PostgreSQL
+				// 'Mikro-ORM',
 			]
 		},
 		{
@@ -75,15 +80,16 @@ export const data = {
 			description: `
 				Developed cross-platform mobile apps with React Native (TS), Kalipso, and Axway Titanium for seamless experiences on multiple devices. Provided support for e-commerce stores, including customizing and maintaining systems built on WooCommerce and PrestaShop. Designed and implemented intuitive user interfaces that met client acceptance criteria and enhanced the overall user experience. Created visually appealing graphics for web and print materials, and edited video content for social media to promote the brand and drive engagement.`,
 			stack: [
-				'React',
-				'React Native',
-				'Kalipso',
-				'Axway Titanium',
-				'Figma',
-				'PHP',
-				'MySQL',
-				'Wordpress',
-				'Prestashop'
+				STACKS.React,
+				STACKS.Expo,
+				STACKS.Figma,
+				STACKS.PHP,
+				STACKS.MySQL,
+				STACKS.Wordpress,
+				STACKS.Prestashop,
+				STACKS.Figma
+				// 'Kalipso',
+				// 'Axway Titanium',
 			]
 		}
 	],

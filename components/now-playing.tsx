@@ -19,7 +19,7 @@ export const NowPlaying = () => {
 						{nowPlaying?.data.isPlaying ? (
 							<Link href={nowPlaying?.data.songUrl} target="_blank">
 								<div className="flex items-center">
-									<Badge variant="outline">
+									<Badge variant="outline" className='bg-card text-card-foreground'>
 										<h1 className="text-left line-clamp-1">
 											{nowPlaying?.data.title} - {nowPlaying?.data.artist}
 										</h1>

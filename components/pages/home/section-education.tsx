@@ -17,12 +17,14 @@ export const SectionEducation = () => {
 									{start} - {end}
 								</div>
 							</div>
-							<h4 className="font-mono text-sm leading-none">{degree}</h4>
+							<h4 className="font-mono text-sm leading-none opacity-50">{degree}</h4>
 							<div className="text-sm tabular-nums text-gray-500 flex sm:hidden">
 								{start} - {end}
 							</div>
 						</CardHeader>
-						<CardContent className="mt-2 text-xs">{summary}</CardContent>
+						<CardContent className="mt-2 text-pretty font-mono text-xs text-foreground leading-5">
+							{summary}
+						</CardContent>
 					</Card>
 				);
 			})}
