@@ -9,12 +9,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { clashDisplay } from '../layout';
 import { Toaster } from '@/components/ui/sonner';
+import { Button } from '@/components/ui/button';
+import { REGEX_EMAIL } from '@/utils/regex';
 
 export default function Page() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors }
+		formState: { errors },
 	} = useForm<ContactInfo>();
 
 	const formHasErrors = useMemo(() => Object.keys(errors).length > 0, [errors]);
@@ -33,7 +35,11 @@ export default function Page() {
 				toast.error(response.message);
 				return;
 			}
+
+			toast.success('Submitted with sucess. Will get in touch soon.');
 		}
+
+		toast.error('Cannot submit. Form has errors.');
 	};
 
 	return (
@@ -57,9 +63,9 @@ export default function Page() {
 						<Input
 							id="name-input"
 							className="form-input"
-							{...register('name', { required: true })}
+							{...register('name', { required: 'Required field.' })}
 						/>
-						{errors.name && <span>This field is required</span>}
+						{errors.name && <span>{errors.name.message}</span>}
 					</div>
 
 					<div className="flex flex-col gap-2 w-full">
@@ -67,9 +73,15 @@ export default function Page() {
 						<Input
 							id="email-input"
 							className="form-input"
-							{...register('email', { required: true })}
+							{...register('email', {
+								required: 'Required field.',
+								pattern: {
+									value: REGEX_EMAIL,
+									message: 'Invalid e-mail.'
+								}
+							})}
 						/>
-						{errors.email && <span>This field is required</span>}
+						{errors.email && <span>{errors.email.message}</span>}
 					</div>
 
 					<div className="flex flex-col gap-2 w-full">
@@ -77,9 +89,9 @@ export default function Page() {
 						<Input
 							id="subject-input"
 							className="form-input"
-							{...register('subject', { required: true })}
+							{...register('subject', { required: 'Required field.' })}
 						/>
-						{errors.subject && <span>This field is required</span>}
+						{errors.subject && <span>{errors.subject.message}</span>}
 					</div>
 
 					<div className="flex flex-col gap-2 w-full">
@@ -87,12 +99,12 @@ export default function Page() {
 						<Textarea
 							id="message-input"
 							className="form-input"
-							{...register('message', { required: true })}
+							{...register('message', { required: 'Required field.' })}
 						/>
-						{errors.message && <span>This field is required</span>}
+						{errors.message && <span>{errors.message.message}</span>}
 					</div>
 
-					<input type="submit" />
+					<Button type="submit">Submit</Button>
 				</form>
 			</div>
 			<Toaster />

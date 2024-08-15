@@ -9,7 +9,7 @@ export const SectionAbout = () => {
 	return (
 		<>
 			<Section>
-				<div className="flex items-center justify-between mt-16">
+				<div className="flex items-center justify-between">
 					<div className="flex-1 space-y-5">
 						<div className="flex-1">
 							<h1

@@ -5,7 +5,7 @@ import { data } from '@/data/main';
 import { BGGrid } from '@/components/bg-grid';
 import './globals.css';
 import localFont from 'next/font/local';
- 
+
 export const clashDisplay = localFont({
 	src: [
 		{
@@ -46,8 +46,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en">
 			<ThemeProvider attribute="class" defaultTheme="dark">
 				<body className="antialiased mb-10 lg:mx-auto">
-					<main className="container relative mx-auto mt-8 overflow-auto print:p-12">
-						<Navbar />
+					<Navbar />
+					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
 						<BGGrid>{children}</BGGrid>
 						<CommandMenu
 							links={[
