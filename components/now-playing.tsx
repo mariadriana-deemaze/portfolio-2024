@@ -2,9 +2,9 @@
 
 import useSWR from 'swr';
 import Link from 'next/link';
-import { NowPlayingData } from '@/app/api/spotify/types';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { NowPlayingData } from '@/types/spotify';
 
 export const NowPlaying = () => {
 	const { data: nowPlaying } = useSWR<{ data: NowPlayingData }>('/api/spotify/me/current', {

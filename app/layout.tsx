@@ -1,10 +1,11 @@
+import { Metadata } from 'next';
+import localFont from 'next/font/local';
 import { CommandMenu } from '@/components/command-menu';
 import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { data } from '@/data/main';
 import { BGGrid } from '@/components/bg-grid';
-import './globals.css';
-import localFont from 'next/font/local';
+import '@/styles/globals.css';
 
 export const clashDisplay = localFont({
 	src: [
@@ -40,6 +41,11 @@ export const clashDisplay = localFont({
 		}
 	]
 });
+
+export const metadata: Metadata = {
+	title: `${data.name} | ${data.role}`,
+	description: data.summary
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (

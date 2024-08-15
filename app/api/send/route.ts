@@ -1,19 +1,8 @@
+import { ContactInfo, ContactResponse } from '@/types/contact';
 import { NextRequest, NextResponse } from 'next/server';
-import { CreateEmailResponse, Resend } from 'resend';
+import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-export type ContactInfo = {
-	name: string;
-	email: string;
-	subject: string;
-	message: string;
-};
-
-export type ContactResponse = {
-	data: CreateEmailResponse | null;
-	message: string;
-};
 
 export async function POST(req: NextRequest): Promise<NextResponse<ContactResponse>> {
 	const data: ContactInfo = await req.json();

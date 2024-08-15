@@ -1,7 +1,7 @@
 import { currentlyPlayingSong } from '../../lib';
-import { type Song } from '../../types';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
+import { Song } from '@/types/spotify';
 
 export async function GET(request: NextRequest) {
 	const f = 'current.GET';

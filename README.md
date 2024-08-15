@@ -13,10 +13,12 @@
 
 - `app/api/*` - [API routes](https://nextjs.org/docs/api-routes/introduction) powering resend and spotify features.
 - `app/**` - Static content.
-- `components/*` - Various components used throughout the site, and namespace by page.
-- `public/*` - Static assets like images and fonts.
-- `utils/*` - Collection of helpful utilities or code for external services.
-- `data/main.ts` - Simple object containing global data about the site.
+- `@components/**` - Various components used throughout the site, and namespace by page.
+- `@public/**` - Static assets like images and fonts.
+- `@utils/**` - Collection of helpful utilities or code for external services.
+- `@styles/**` - Custom styles allocation.
+- `@types/**` - Allocation of shared types.
+- `@data/**` - Static data.
 
 ## Running the project
 
