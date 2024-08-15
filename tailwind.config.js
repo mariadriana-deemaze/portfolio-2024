@@ -71,6 +71,17 @@ module.exports = {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			animation: {
+				'hand-wave': 'hand-wave 1s ease-in-out infinite',
+			},
+			keyframes: {
+				'hand-wave': {
+					'0%': { transform: 'rotate(-15deg)' },
+					'30%': { transform: 'rotate(10deg)' },
+					'60%': { transform: 'rotate(-15deg)' },
+					'100%': { transform: 'rotate(-15deg)' },
+				}
+			},
 		}
 	},
 	future: {

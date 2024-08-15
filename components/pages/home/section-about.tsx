@@ -13,10 +13,10 @@ export const SectionAbout = () => {
 					<div className="flex-1 space-y-5">
 						<div className="flex-1">
 							<h1
-								className={`${clashDisplay.className} text-[50px] font-medium leading-none`}
+								className={`${clashDisplay.className} relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none`}
 							>
 								{data.name}
-								<span className="text-[30px] align-middle ml-3">👋</span>
+								<div className="absolute top-1 md:top-3 -right-14 text-[30px] w-12 align-middle ml-3 animate-hand-wave">👋</div>
 							</h1>
 							<h6
 								className={`${clashDisplay.className} text-lg font-normal text-orange-600`}

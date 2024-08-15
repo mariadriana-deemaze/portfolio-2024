@@ -99,7 +99,8 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 	projects: [
 		{
 			title: 'maria-adriana.com',
-			techStack: [Intervention.FullStackDevelopment, Intervention.Design],
+			intervention: [Intervention.FullStackDevelopment, Intervention.Design],
+			medium: 'web',
 			description: 'This very site, built with Next.js.',
 			preview: '/images/projects/portfolio/preview.png',
 			link: {
@@ -109,7 +110,8 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 		},
 		{
 			title: 'Eativity',
-			techStack: [Intervention.FullStackDevelopment, Intervention.Design],
+			intervention: [Intervention.FullStackDevelopment, Intervention.Design],
+			medium: 'mobile',
 			description:
 				'A daily log mobile App for helping tracking adherence to a healthier life style.',
 			preview: '/images/projects/eativity/preview.png',
@@ -120,7 +122,8 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 		},
 		{
 			title: 'Ask me anything',
-			techStack: [Intervention.FullStackDevelopment],
+			intervention: [Intervention.FullStackDevelopment],
+			medium: 'web',
 			description: 'Web rooms of questions with websockets.',
 			preview: '/images/projects/ama/preview.png',
 			link: {

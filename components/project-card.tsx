@@ -6,14 +6,24 @@ interface Props {
 	title: string;
 	description: string;
 	tags: readonly string[];
+	medium: 'web' | 'mobile';
 	preview?: string;
 	link?: string;
 }
 
-export function ProjectCard({ title, description, tags, link, preview }: Props) {
+export function ProjectCard({ title, description, tags, link, medium, preview }: Props) {
 	return (
 		<Card className="flex flex-col overflow-hidden">
 			<div className="flex relative bg-muted rounded-lg rounded-bl-none rounded-br-none h-32 w-full overflow-hidden">
+				<div className="absolute top-2 left-2">
+					<Badge
+						className="px-2 py-1 text-[10px] bg-card text-card-foreground"
+						variant="outline"
+					>
+						{medium}
+					</Badge>
+				</div>
+
 				{/* // TODO: Review grad for per project spec. */}
 				{/* <div
 					className="absolute h-[600px]  lg:h-[1100px] w-full right-0 top-0
@@ -21,7 +31,7 @@ export function ProjectCard({ title, description, tags, link, preview }: Props) 
 		  from-green-400/40 via-white/70 to-white to-[67%]
 		  dark:from-green-400/40 dark:via-black/70 dark:to-black dark:to-[67%]"
 				/> */}
-				
+
 				{/* // TODO: Need a fallback here. */}
 				{preview && (
 					<Image
@@ -32,7 +42,6 @@ export function ProjectCard({ title, description, tags, link, preview }: Props) 
 						width={800}
 					/>
 				)}
-
 			</div>
 			<CardHeader>
 				<div className="space-y-1">
