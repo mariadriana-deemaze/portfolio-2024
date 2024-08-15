@@ -56,15 +56,19 @@
 	* {
 		@apply border-border;
 	}
-	
+
 	body {
 		@apply bg-background text-foreground;
 	}
+}
+
+@layer utilities {
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
 	
-	/* @font-face {
-		font-family: 'ClashDisplay';
-		font-style: normal;
-		font-weight: 200;
-		src:url(/public/fonts/ClashDisplay-Bold.ttf) format('ttf');
-	} */
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
 }

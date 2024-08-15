@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
+		<html lang="en" className='overflow-y-scroll no-scrollbar'>
 			<ThemeProvider attribute="class" defaultTheme="dark">
 				<body className="antialiased mb-10 lg:mx-auto">
 					<Navbar />
