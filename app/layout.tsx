@@ -53,12 +53,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							links={[
 								{
 									url: '/blog',
-									title: 'blog',
+									title: 'Blog',
 									type: 'internal'
 								},
 								{
 									url: '/contact',
-									title: 'contact',
+									title: 'Contact',
 									type: 'internal'
 								},
 								...data.contact.social.map((socialMediaLink) => ({

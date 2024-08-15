@@ -1,16 +1,23 @@
 import { STACKS } from '@/components/stacks';
-import { LuGithub, LuLinkedin, LuInstagram } from "react-icons/lu";
+import { LuGithub, LuLinkedin, LuInstagram } from 'react-icons/lu';
 
-// TODO: Review.
+enum Intervention {
+	FrontEndDevelopment = 'Front-end',
+	BackEndDevelopment = 'Back-end',
+	FullStackDevelopment = 'Full stack',
+	Design = 'Design'
+}
+
 export const data = {
 	name: 'Maria Adriana',
 	role: 'Full stack developer',
 	initials: 'MA',
 	location: 'Portugal, Coimbra',
 	locationLink: 'https://www.google.com/maps/place/Coimbra',
-	about: 'The dangerous combo of a curious yet anxious overthinker. Think coffe is also somewhere on the equation.',
-	summary: `Since I was young I always had a special taste for drawing and the arts field, and my journey has always been tangent to this taste that has grown with me. I love drawing, imagining, creating, surrounded by things that inspire me to do better - to know, to do, to learn. 
-	Overtime, during my work experience, Ive found a new passion in the exact sciences.`,
+	about: 'The dangerous combo of a curious yet anxious overthinker - I think coffee is also somewhere in the equation.',
+	summary: `Communication designer, who ultimately ended up self-converting to software development, due to a more akin liking over the exact sciences. 
+Started my career path by working in webdesign, embraced a few more challenges within the role of bringing said designs to life, and et voila, now we are here.
+Thrilled to continue my journey as a software developer, blending my design background with technical skills to build awesome things.`,
 	contact: {
 		email: 'hello@maria-adriana.com',
 		social: [
@@ -35,7 +42,9 @@ export const data = {
 		{
 			school: 'Coimbra University School of Arts',
 			degree: 'Communication design',
-			summary: `Learned the basics of communication design, gaining a broader, enriching vision and background on design history and its applications today. Came into contact with a myriad of multimedia tools, along with more traditional art methods. Represented EUAC in a group project at the 2015 Eunique Fair.`,
+			summary: `Learned the basics of communication design, gaining a broader, enriching vision and background on design history and its applications in today's primary communication mediums.
+Came into contact with a variety of multimedia tools, along with traditional art methods.
+As a highlight, represented EUAC, with my peers, in a group project at the 2015 Eunique Fair.`,
 			start: '2012',
 			end: '2015'
 		}
@@ -44,36 +53,32 @@ export const data = {
 		{
 			company: 'Deemaze Software',
 			link: 'https://deemaze.com/',
-			badges: [],
 			title: 'Full Stack Developer',
 			logo: '',
 			start: '2022',
 			end: 'Present',
 			description: `
-				Consulted in successfully delivering software solutions by closely collaborating with clients to understand their needs and translate them into functional applications. This role has honed my problem-solving skills and adaptability, as I've worked on diverse projects with varying technological requirements.
-				Over time, I expanded my skill set to encompass back-end development, becoming a full-stack developer
-				This holistic perspective has been invaluable to my growth, enabling me to deliver comprehensive software solutions that meet both user and business needs.`,
+				Consulting in delivering software solutions by closely collaborating with clients to understand their needs and translating them into functional applications. This role has honed my problem-solving skills and adaptability, as I've been challenged on diverse projects with varying technological requirements. I primarily work with web technologies, mainly within the Ruby and NodeJS landscapes.`,
 			stack: [
-				STACKS.PHP,
 				STACKS.React,
 				STACKS.Remix,
 				STACKS.TypeScript,
-				STACKS.Prisma,
 				STACKS.NestJS,
+				STACKS.Prisma,
+				STACKS.KnexJS,
+				STACKS.MikroORM,
 				STACKS.Ruby,
 				STACKS.Rails,
 				STACKS.AWS,
 				STACKS.Chakra,
 				STACKS.MaterialUI,
 				STACKS.PostgreSQL
-				// 'Mikro-ORM',
 			]
 		},
 		{
 			company: 'Hes-inovação',
-			link: 'https://deemaze.com/',
-			badges: [],
-			title: 'Designer / Front-end developer',
+			link: 'https://www.hes-inovacao.com/',
+			title: 'Designer/Front-end developer',
 			logo: '',
 			start: '2020',
 			end: '2022',
@@ -82,26 +87,45 @@ export const data = {
 			stack: [
 				STACKS.React,
 				STACKS.Expo,
-				STACKS.Figma,
+				STACKS.Appcelerator,
 				STACKS.PHP,
 				STACKS.MySQL,
 				STACKS.Wordpress,
 				STACKS.Prestashop,
 				STACKS.Figma
-				// 'Kalipso',
-				// 'Axway Titanium',
 			]
 		}
 	],
 	projects: [
 		{
 			title: 'maria-adriana.com',
-			techStack: ['Next.js', 'Tailwind', 'Resend', 'Spotify API'],
-			description: 'This very site, built with Next.js',
-			logo: '',
+			techStack: [Intervention.FullStackDevelopment, Intervention.Design],
+			description: 'This very site, built with Next.js.',
+			preview: '/images/projects/portfolio/preview.png',
 			link: {
 				label: 'maria-adriana.com',
 				href: 'https://maria-adriana.com/'
+			}
+		},
+		{
+			title: 'Eativity',
+			techStack: [Intervention.FullStackDevelopment, Intervention.Design],
+			description:
+				'A daily log mobile App for helping tracking adherence to a healthier life style.',
+			preview: '/images/projects/eativity/preview.png',
+			link: {
+				label: 'github repo',
+				href: 'https://github.com/mariadriana-deemaze/eativity'
+			}
+		},
+		{
+			title: 'Ask me anything',
+			techStack: [Intervention.FullStackDevelopment],
+			description: 'Web rooms of questions with websockets.',
+			preview: '/images/projects/ama/preview.png',
+			link: {
+				label: 'maria-adriana.com',
+				href: 'https://github.com/mariadriana-deemaze/AMA-go-react'
 			}
 		}
 	]
