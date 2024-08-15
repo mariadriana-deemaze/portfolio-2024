@@ -2,7 +2,7 @@
 
 export function BGGrid({ children }: { children?: React.ReactNode }) {
 	return (
-		<div className="min-h-screen w-full relative">
+		<div className="w-full relative">
 			{children}
 			<div
 				className="fixed inset-0 z-[-1] bg-transparent h-screen w-screen bg-gradient-to-b from-muted to-background"
