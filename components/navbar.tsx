@@ -21,7 +21,7 @@ export function Navbar() {
 	const pathname = usePathname();
 
 	return (
-		<nav className="container w-full sticky top-0 z-10 pt-10 border-b border-b-[#F3C6A7] dark:border-b-[#4D2512] from-white-600/10 dark:from-teal-200/10 via-white dark:via-black to-slate-600/10 dark:to-slate-600/10 backdrop-blur-sm transition-all duration-700">
+		<nav className="container w-full fixed top-0 z-10 pt-10 border-b border-b-[#F3C6A7] dark:border-b-[#4D2512] from-white-600/10 dark:from-teal-200/10 via-white dark:via-black to-slate-600/10 dark:to-slate-600/10 backdrop-blur-sm transition-all duration-700">
 			<div className="flex flex-row justify-between flex-wrap w-full max-w-2xl mx-auto mb-4 print:space-y-6 gap-5 place-items-center">
 				<div className="flex flex-row pr-1 gap-2">
 					<ThemeToggle />
