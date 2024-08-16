@@ -8,8 +8,8 @@ import { HiOutlineGlobe } from "react-icons/hi";
 export const SectionAbout = () => {
 	return (
 		<>
-			<Section>
-				<div className="flex items-center justify-between">
+			<Section className='mt-20'>
+				<div className="flex items-center justify-between flex-wrap-reverse sm:flex-nowrap gap-5">
 					<div className="flex-1 space-y-5">
 						<div className="flex-1">
 							<h1
