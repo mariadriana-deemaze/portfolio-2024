@@ -66,9 +66,22 @@
 	.no-scrollbar::-webkit-scrollbar {
 		display: none;
 	}
-	
+
 	.no-scrollbar {
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 	}
 }
+
+.progress {
+	height: 0.18rem;
+}
+
+.progress .progress-bar {
+	height: 0.2rem;
+	transform-origin: left;
+	will-change: transform;
+	transform: scaleX(0);
+	@apply w-full bg-orange-600;
+}
+
