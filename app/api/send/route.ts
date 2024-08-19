@@ -1,16 +1,25 @@
 import { ContactInfo, ContactResponse } from '@/types/contact';
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let transporter = nodemailer.createTransport({
+	host: process.env.SMTP_HOST,
+	port: Number(process.env.SMTP_PORT),
+	secure: true,
+	auth: {
+		user: process.env.SMTP_USER,
+		pass:  process.env.SMTP_PASSWORD,
+	}
+});
 
 export async function POST(req: NextRequest): Promise<NextResponse<ContactResponse>> {
 	const data: ContactInfo = await req.json();
 
 	try {
-		const email = await resend.emails.send({
-			to: 'hello@maria-adriana.com',
-			from: 'hello@maria-adriana.com',
+
+		const email = await transporter.sendMail({
+			to: process.env.SMTP_USER,
+			from: process.env.SMTP_USER,
 			subject: `Contact request: ${data.subject}`,
 			html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 					<html lang="en">
@@ -43,8 +52,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<ContactRespon
 	  `
 		});
 
-		if (email.error) {
-			throw new Error(email.error.message);
+		if (!email.response.includes("250 OK")) {
+			throw new Error(email.response);
 		}
 
 		return NextResponse.json({ data: email, message: 'Sucessfully submitted.' });

@@ -1,4 +1,4 @@
-import { CreateEmailResponse } from "resend";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export type ContactInfo = {
 	name: string;
@@ -8,6 +8,6 @@ export type ContactInfo = {
 };
 
 export type ContactResponse = {
-	data: CreateEmailResponse | null;
+	data:  SMTPTransport.SentMessageInfo | null;
 	message: string;
 };
