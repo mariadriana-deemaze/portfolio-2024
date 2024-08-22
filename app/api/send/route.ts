@@ -1,4 +1,4 @@
-import { ContactInfo, ContactResponse } from '@/types/contact';
+import { ContactInfo } from '@/types/contact';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
@@ -7,19 +7,17 @@ let transporter = nodemailer.createTransport({
 	port: Number(process.env.SMTP_PORT),
 	secure: true,
 	auth: {
-		user: process.env.SMTP_USER,
-		pass:  process.env.SMTP_PASSWORD,
+		user: process.env.SMTP_FROM,
+		pass: process.env.SMTP_PASSWORD
 	}
 });
 
-export async function POST(req: NextRequest): Promise<NextResponse<ContactResponse>> {
+export async function POST(req: NextRequest): Promise<NextResponse<{ message: string }>> {
 	const data: ContactInfo = await req.json();
-
 	try {
-
 		const email = await transporter.sendMail({
-			to: process.env.SMTP_USER,
-			from: process.env.SMTP_USER,
+			from: process.env.SMTP_FROM,
+			to: process.env.SMTP_TO,
 			subject: `Contact request: ${data.subject}`,
 			html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 					<html lang="en">
@@ -52,12 +50,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<ContactRespon
 	  `
 		});
 
-		if (!email.response.includes("250 OK")) {
-			throw new Error(email.response);
-		}
-
-		return NextResponse.json({ data: email, message: 'Sucessfully submitted.' });
+		return NextResponse.json({ message: email.response });
 	} catch (error) {
-		return NextResponse.json({ data: null, message: 'Error sending email.' });
+		return NextResponse.json({ message: 'Error sending email.' }, { status: 500 });
 	}
 }

@@ -1,5 +1,3 @@
-import SMTPTransport from "nodemailer/lib/smtp-transport";
-
 export type ContactInfo = {
 	name: string;
 	email: string;
@@ -8,6 +6,5 @@ export type ContactInfo = {
 };
 
 export type ContactResponse = {
-	data:  SMTPTransport.SentMessageInfo | null;
 	message: string;
 };

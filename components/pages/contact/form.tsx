@@ -1,6 +1,5 @@
 'use client';
 
-import { useMemo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
@@ -31,7 +30,7 @@ export const ContactForm = () => {
 
 		const response: ContactResponse = await request.json();
 
-		if (!response.data) {
+		if (!response.message) {
 			console.log(response);
 			toast.error(response.message);
 			return;
@@ -47,6 +46,7 @@ export const ContactForm = () => {
 				<Input
 					id="name-input"
 					className="form-input"
+					type="text"
 					{...register('name', { required: 'Required field.' })}
 				/>
 				{errors.name && <span>{errors.name.message}</span>}
@@ -57,6 +57,7 @@ export const ContactForm = () => {
 				<Input
 					id="email-input"
 					className="form-input"
+					type="email"
 					{...register('email', {
 						required: 'Required field.',
 						pattern: {
@@ -73,6 +74,7 @@ export const ContactForm = () => {
 				<Input
 					id="subject-input"
 					className="form-input"
+					type="text"
 					{...register('subject', { required: 'Required field.' })}
 				/>
 				{errors.subject && <span>{errors.subject.message}</span>}
