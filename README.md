@@ -11,7 +11,7 @@
 
 ## Project Overview
 
-- `app/api/*` - [API routes](https://nextjs.org/docs/api-routes/introduction) powering resend and spotify features.
+- `app/api/*` - [API routes](https://nextjs.org/docs/api-routes/introduction) powering e-mail sending and spotify features.
 - `app/**` - Static content.
 - `@components/**` - Various components used throughout the site, and namespace by page.
 - `@public/**` - Static assets like images and fonts.

@@ -12,35 +12,34 @@ import { REGEX_EMAIL } from '@/utils/regex';
 import { ContactInfo, ContactResponse } from '@/types/contact';
 
 export const ContactForm = () => {
-
-    const {
+	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isValid, isSubmitting }
 	} = useForm<ContactInfo>();
 
-	const formHasErrors = useMemo(() => Object.keys(errors).length > 0, [errors]);
-
 	const onSubmit: SubmitHandler<ContactInfo> = async (data) => {
-		if (!formHasErrors) {
-			const request = await fetch('api/send', {
-				method: 'POST',
-				body: JSON.stringify(data)
-			});
-
-			const response: ContactResponse = await request.json();
-
-			if (!response.data) {
-				console.log(response);
-				toast.error(response.message);
-				return;
-			}
-
-			toast.success('Submitted with sucess. Will get in touch soon.');
+		if (!isValid) {
+			toast.error('Cannot submit. Form has errors.');
+			return;
 		}
 
-		toast.error('Cannot submit. Form has errors.');
+		const request = await fetch('api/send', {
+			method: 'POST',
+			body: JSON.stringify(data)
+		});
+
+		const response: ContactResponse = await request.json();
+
+		if (!response.data) {
+			console.log(response);
+			toast.error(response.message);
+			return;
+		}
+
+		toast.success('Submitted with sucess. Will get in touch soon.');
 	};
+
 	return (
 		<form className="flex flex-col w-full gap-4" onSubmit={handleSubmit(onSubmit)}>
 			<div className="flex flex-col gap-2 w-full">
@@ -89,9 +88,10 @@ export const ContactForm = () => {
 				{errors.message && <span>{errors.message.message}</span>}
 			</div>
 
-			<Button type="submit">Submit</Button>
-
-            <Toaster />
+			<Button type="submit" disabled={!isValid || isSubmitting}>
+				Submit
+			</Button>
+			<Toaster />
 		</form>
 	);
 };
