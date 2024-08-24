@@ -49,8 +49,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<{ message: st
 					</html>
 	  `
 		});
-
 		return NextResponse.json({ message: email.response });
+
 	} catch (error) {
 		return NextResponse.json({ message: 'Error sending email.' }, { status: 500 });
 	}
