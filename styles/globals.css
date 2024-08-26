@@ -85,3 +85,6 @@
 	@apply w-full bg-orange-600;
 }
 
+.animate-fade-in-left {
+	@apply animate-in fade-in translate-x-1 duration-1000 fill-mode-both;
+}

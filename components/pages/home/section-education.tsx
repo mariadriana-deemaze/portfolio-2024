@@ -5,7 +5,7 @@ import { data } from '@/data/main';
 
 export const SectionEducation = () => {
 	return (
-		<Section>
+		<Section className='animate-fade-in-left delay-300'>
 			<h2 className={`${clashDisplay.className} text-xl font-bold`}>Education</h2>
 			{data.education.map(({ school, summary, start, end, degree }) => {
 				return (

@@ -9,7 +9,7 @@ export const HomeLayout = () => {
 		<>
 			<ProgressIndicator />
 			<section
-				className="wrapper-anim mx-auto w-full max-w-2xl space-y-12 print:space-y-6"
+				className="wrapper-anim mx-auto w-full max-w-2xl space-y-12 print:space-y-6 animate-fade-in-left delay-500"
 			>
 				<SectionAbout />
 				<SectionWorkExperience />
