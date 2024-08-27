@@ -86,5 +86,5 @@
 }
 
 .animate-fade-in-left {
-	@apply animate-in fade-in translate-x-1 duration-1000 fill-mode-both;
+	@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
 }
