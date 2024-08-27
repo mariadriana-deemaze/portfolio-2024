@@ -78,7 +78,7 @@ export function ProjectCard({
 				{ opacity: 1, y: 0, stagger: 0.05, ease: 'Elastic.easeOut' },
 				'<25%'
 			);
-	}, []);
+	}, [index]);
 
 	return (
 		<Card ref={sectionRef} className={`h-full relative flex flex-col overflow-hidden`}>

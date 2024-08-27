@@ -1,10 +1,8 @@
-import AppHead from '@/components/head';
 import { SectionAbout } from '@/components/pages/home/section-about';
 import { SectionEducation } from '@/components/pages/home/section-education';
 import { SectionProjects } from '@/components/pages/home/section-projects';
 import { SectionWorkExperience } from '@/components/pages/home/section-work-experience';
 import ProgressIndicator from '@/components/progress-indicator';
-import { data } from '@/data/main';
 
 export const HomeLayout = () => {
 	return (

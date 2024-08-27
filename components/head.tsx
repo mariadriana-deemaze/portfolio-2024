@@ -17,7 +17,7 @@ type Props = {
 };
 
 const AppHead: React.FC<Props> = ({ title, url = `${process.env.NEXT_PUBLIC_URL}/blog` }) => {
-	let type = 'article';
+	const type = 'article';
 	let coverImage: string | undefined;
 	let coverImageAlt: string | undefined;
 	let ogImage: string | undefined;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { NowPlaying } from './now-playing';
 import { ThemeToggle } from './theme-toggle';
@@ -24,19 +24,19 @@ export function Navbar() {
 
 	const pathname = usePathname();
 
-	const controlNavbarVisibility = () => {
+	const controlNavbarVisibility = useCallback(() => {
 		if (window.scrollY > lastScrollY) {
 			setShow(false);
 		} else {
 			setShow(true);
 		}
 		setLastScrollY(window.scrollY);
-	};
+	},[lastScrollY]);
 
 	useEffect(() => {
 		window.addEventListener('scroll', controlNavbarVisibility);
 		return () => window.removeEventListener('scroll', controlNavbarVisibility);
-	}, [lastScrollY]);
+	}, [lastScrollY, controlNavbarVisibility]);
 
 	return (
 		<nav

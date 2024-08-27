@@ -35,7 +35,7 @@ const getAccessToken = async (): Promise<SpotifyAccessToken> => {
 /**
  * Makes a request to the Spotify API to retrieve the currently playing song for the user.
  */
-export const currentlyPlayingSong = async (initialRequest: NextRequest) => {
+export const currentlyPlayingSong = async () => {
 	const { access_token }: { access_token: string } = await getAccessToken();
 	
 	const request = new NextRequest(NOW_PLAYING_ENDPOINT, {

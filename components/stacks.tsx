@@ -1,6 +1,5 @@
 import {
 	SiAmazon,
-	SiAngular,
 	SiBootstrap,
 	SiChakraui,
 	SiExpo,

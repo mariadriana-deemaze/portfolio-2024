@@ -1,4 +1,3 @@
-import { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { CommandMenu } from '@/components/command-menu';
 import { Navbar } from '@/components/navbar';
