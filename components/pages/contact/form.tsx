@@ -1,11 +1,8 @@
-'use client';
-
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Toaster } from '@/components/ui/sonner';
 import { Button } from '@/components/ui/button';
 import { REGEX_EMAIL } from '@/utils/regex';
 import { ContactInfo, ContactResponse } from '@/types/contact';
@@ -93,7 +90,6 @@ export const ContactForm = () => {
 			<Button type="submit" disabled={!isValid || isSubmitting}>
 				Submit
 			</Button>
-			<Toaster />
 		</form>
 	);
 };

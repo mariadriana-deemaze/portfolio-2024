@@ -6,6 +6,7 @@ import { data } from '@/data/main';
 import { BGGrid } from '@/components/bg-grid';
 import '@/styles/globals.css';
 import AppHead from '@/components/head';
+import { Toaster } from 'sonner';
 
 export const clashDisplay = localFont({
 	src: [
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						/>
 					</main>
 				</ThemeProvider>
+				<Toaster />
 			</body>
 		</html>
 	);

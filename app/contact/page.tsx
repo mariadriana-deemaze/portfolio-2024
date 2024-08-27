@@ -1,3 +1,5 @@
+'use client';
+
 import { ContactForm } from '@/components/pages/contact/form';
 import { clashDisplay } from '../layout';
 import { Section } from '@/components/ui/section';
@@ -18,7 +20,7 @@ export default function Page() {
 							<span className="text-orange-600">1 business day</span>.
 						</p>
 					</div>
-					<div className='animate-fade-in-left delay-300 w-full'>
+					<div className="animate-fade-in-left delay-300 w-full">
 						<ContactForm />
 					</div>
 				</div>
