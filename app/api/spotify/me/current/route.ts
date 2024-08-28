@@ -1,13 +1,11 @@
-import { currentlyPlayingSong } from '../../lib';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
+import { currentlyPlayingSong } from '../../lib';
 import { Song } from '@/types/spotify';
 
 export async function GET(request: NextRequest) {
-	const f = 'current.GET';
-	console.log({ f });
 	const url = request.url;
-	const response = await currentlyPlayingSong(request);
+	const response = await currentlyPlayingSong();
 
 	if (response.status === 204) {
 		return new NextResponse(null, {
