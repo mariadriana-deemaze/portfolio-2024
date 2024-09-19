@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
+import Head from '@/components/head';
 import localFont from 'next/font/local';
 import { CommandMenu } from '@/components/command-menu';
 import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
-import { data } from '@/data/main';
 import { BGGrid } from '@/components/bg-grid';
 import '@/styles/globals.css';
+import { data } from '@/data/main';
 
 export const clashDisplay = localFont({
 	src: [
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en" className='overflow-y-scroll no-scrollbar'>
 			<ThemeProvider attribute="class" defaultTheme="dark">
+			<Head title={`${data.name} | ${data.role}`} url={`${process.env.NEXT_PUBLIC_URL}`} />
 				<body className="antialiased mb-10 lg:mx-auto">
 					<Navbar />
 					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
