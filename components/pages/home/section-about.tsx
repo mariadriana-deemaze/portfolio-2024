@@ -8,7 +8,7 @@ import { HiOutlineGlobe } from "react-icons/hi";
 export const SectionAbout = () => {
 	return (
 		<>
-			<Section className='mt-20'>
+			<Section className='mt-20 animate-fade-in delay-100'>
 				<div className="flex items-center justify-between flex-wrap-reverse sm:flex-nowrap gap-5">
 					<div className="flex-1 space-y-5">
 						<div className="flex-1">
@@ -68,7 +68,7 @@ export const SectionAbout = () => {
 					</Avatar>
 				</div>
 			</Section>
-			<Section>
+			<Section className='animate-fade-in-left delay-300'>
 				<h2 className={`${clashDisplay.className} text-xl font-bold`}>About</h2>
 				<p className="text-pretty font-mono text-sm text-foreground">{data.summary}</p>
 			</Section>

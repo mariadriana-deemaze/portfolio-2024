@@ -6,7 +6,7 @@ import { data } from '@/data/main';
 
 export const SectionWorkExperience = () => {
 	return (
-		<Section>
+		<Section className='animate-fade-in-left delay-500'>
 			<h2 className={`${clashDisplay.className} text-xl font-bold`}>Work Experience</h2>
 			{data.work.map(({ company, title, description, link, stack, start, end }, index) => {
 				return (
