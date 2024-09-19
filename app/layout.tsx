@@ -50,10 +50,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className='overflow-y-scroll no-scrollbar'>
-			<ThemeProvider attribute="class" defaultTheme="dark">
+		<html lang="en" className="overflow-y-scroll no-scrollbar">
 			<Head title={`${data.name} | ${data.role}`} url={`${process.env.NEXT_PUBLIC_URL}`} />
-				<body className="antialiased mb-10 lg:mx-auto">
+			<body className="antialiased mb-10 lg:mx-auto">
+				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
 					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
 						<BGGrid>{children}</BGGrid>
@@ -77,8 +77,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							]}
 						/>
 					</main>
-				</body>
-			</ThemeProvider>
+				</ThemeProvider>
+			</body>
 		</html>
 	);
 }
