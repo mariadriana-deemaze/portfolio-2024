@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { BGGrid } from '@/components/bg-grid';
 import '@/styles/globals.css';
 import { data } from '@/data/main';
+import Script from 'next/script';
 
 export const clashDisplay = localFont({
 	src: [
@@ -53,6 +54,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en" className="overflow-y-scroll no-scrollbar">
 			<Head title={`${data.name} | ${data.role}`} url={`${process.env.NEXT_PUBLIC_URL}`} />
 			<body className="antialiased mb-10 lg:mx-auto">
+				<Script
+					strategy="afterInteractive"
+					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+				/>
+				<Script
+					id="google-analytics"
+					strategy="afterInteractive"
+					dangerouslySetInnerHTML={{
+						__html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+            page_path: window.location.pathname,
+          });`
+					}}
+				/>
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
 					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
