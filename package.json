@@ -39,7 +39,7 @@
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.9",
-		"@types/node": "20.17.9",
+		"@types/node": "22.10.1",
 		"@types/react": "18.2.6",
 		"@types/react-dom": "18.2.4",
 		"@typescript-eslint/eslint-plugin": "5.58.0",
