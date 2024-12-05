@@ -71,6 +71,33 @@
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 	}
+
+	.roles-slider {
+		@apply inline-flex align-top;
+	}
+
+	.roles-slider .role-slide {
+		@apply absolute flex flex-wrap lg:flex-nowrap;
+	}
+
+	.roles-slider .role-slide .letter {
+		@apply origin-[center_center_5px] opacity-0 whitespace-pre;
+	}
+
+	.roles-slider .role-slide .letter.out {
+		@apply opacity-50;
+		transform: rotateX(90deg) translateY(-10px);
+		transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+	}
+
+	.roles-slider .role-slide .letter.in {
+		transition: 0.38s ease;
+		@apply opacity-100 ease-linear;
+	}
+
+	.roles-slider .role-slide .letter.behind {
+		transform: rotateX(-90deg);
+	}
 }
 
 .progress {

@@ -3,26 +3,25 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
-import { HiOutlineGlobe } from "react-icons/hi";
+import { HiOutlineGlobe } from 'react-icons/hi';
+import { AnimatedMottos } from './motto';
 
 export const SectionAbout = () => {
 	return (
 		<>
-			<Section className='mt-20 animate-fade-in delay-100'>
+			<Section className="mt-20 animate-fade-in delay-100">
 				<div className="flex items-center justify-between flex-wrap-reverse sm:flex-nowrap gap-5">
 					<div className="flex-1 space-y-5">
-						<div className="flex-1">
+						<div className="flex-1 group">
 							<h1
 								className={`${clashDisplay.className} relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none`}
 							>
 								{data.name}
-								<div className="absolute top-1 md:top-3 -right-14 text-[30px] w-12 align-middle ml-3 animate-hand-wave">👋</div>
+								<div className="absolute top-1 md:top-3 -right-14 text-[30px] w-12 align-middle ml-3 group-hover:animate-hand-wave">
+									👋
+								</div>
 							</h1>
-							<h6
-								className={`${clashDisplay.className} text-lg font-normal text-orange-600`}
-							>
-								{data.role}
-							</h6>
+							<AnimatedMottos data={[...data.mottos]} className='text-[#F15A24] from-[#F18B3E] bg-gradient-to-r to-[#F15A24] bg-clip-text'/>
 						</div>
 						<p className="max-w-md text-pretty font-mono text-sm text-foreground">
 							{data.about}
@@ -68,7 +67,7 @@ export const SectionAbout = () => {
 					</Avatar>
 				</div>
 			</Section>
-			<Section className='animate-fade-in-left delay-300'>
+			<Section className="animate-fade-in-left delay-300">
 				<h2 className={`${clashDisplay.className} text-xl font-bold`}>About</h2>
 				<p className="text-pretty font-mono text-sm text-foreground">{data.summary}</p>
 			</Section>

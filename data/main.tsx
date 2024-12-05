@@ -11,6 +11,12 @@ enum Intervention {
 export const data = {
 	name: 'Maria Adriana',
 	role: 'Full stack developer',
+	mottos: [
+		'Full-Stack Designer.',
+		'Front-end Developer.',
+		'Interaction Designer.',
+		'Back-ender wannabe.'
+	],
 	initials: 'MA',
 	location: 'Portugal, Coimbra',
 	locationLink: 'https://www.google.com/maps/place/Coimbra',

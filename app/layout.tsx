@@ -43,11 +43,11 @@ export const clashDisplay = localFont({
 		}
 	]
 });
-
+/* 
 export const metadata: Metadata = {
 	title: `${data.name} | ${data.role}`,
 	description: data.summary
-};
+}; */
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
