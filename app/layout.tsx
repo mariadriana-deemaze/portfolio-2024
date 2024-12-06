@@ -47,12 +47,12 @@ export const clashDisplay = localFont({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className="overflow-y-scroll no-scrollbar">
+		<html lang="en" className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar">
 			<Head title={`${data.name} | ${data.role}`} url={`${process.env.NEXT_PUBLIC_URL}`} />
 			<body className="antialiased mb-10 lg:mx-auto">
 				<Script
 					strategy="afterInteractive"
-					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+					src={`https://www.googletagmanager.com/gtag/js?id=G-ZSZBWDZK9T`}
 				/>
 				<Script
 					id="google-analytics"
@@ -62,27 +62,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+            gtag('config', 'G-ZSZBWDZK9T', {
             page_path: window.location.pathname,
           });`
 					}}
 				/>
+				<Image
+					className="fixed -left-10 top-32 scale-150 fade-in-35 duration-1000 opacity-55"
+					alt="Decorative image element"
+					src={'/images/color_grad.webp'}
+					height="400"
+					width={200}
+				/>
+				<Image
+					className="fixed -right-10 -top-32 rotate-180 fade-in-35 duration-1000 opacity-15"
+					alt="Decorative image element"
+					src={'/images/color_grad.webp'}
+					height="400"
+					width={200}
+				/>
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
-					<Image
-						className="absolute -left-10 top-32 scale-150 fade-in-35 duration-1000 opacity-55"
-						alt="Decorative image element"
-						src={'/images/color_grad.webp'}
-						height="400"
-						width={250}
-					/>
-					<Image
-						className="absolute -right-10 -top-32 rotate-180 fade-in-35 duration-1000 opacity-15"
-						alt="Decorative image element"
-						src={'/images/color_grad.webp'}
-						height="400"
-						width={250}
-					/>
 					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
 						<BGGrid>{children}</BGGrid>
 						<CommandMenu
