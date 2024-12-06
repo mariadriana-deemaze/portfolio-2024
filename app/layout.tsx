@@ -67,20 +67,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           });`
 					}}
 				/>
-				<Image
-					className="fixed -left-10 top-32 scale-150 fade-in-35 duration-1000 opacity-55"
-					alt="Decorative image element"
-					src={'/images/color_grad.webp'}
-					height="400"
-					width={200}
-				/>
-				<Image
-					className="fixed -right-10 -top-32 rotate-180 fade-in-35 duration-1000 opacity-15"
-					alt="Decorative image element"
-					src={'/images/color_grad.webp'}
-					height="400"
-					width={200}
-				/>
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
 					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
