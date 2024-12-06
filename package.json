@@ -19,7 +19,7 @@
 		"@radix-ui/react-tooltip": "^1.0.7",
 		"@studio-freight/react-lenis": "^0.0.47",
 		"@vercel/og": "^0.6.0",
-		"class-variance-authority": "^0.6.1",
+		"class-variance-authority": "^0.7.0",
 		"clsx": "^1.2.1",
 		"cmdk": "^0.2.0",
 		"date-fns": "^2.29.3",
