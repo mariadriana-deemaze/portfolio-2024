@@ -10,7 +10,7 @@ export const SectionEducation = () => {
 			<h2 className={`${clashDisplay.className} text-xl font-bold`}>Education</h2>
 			{data.education.map(({ school, preview, summary, start, end, degree }) => {
 				return (
-					<Card key={school}>
+					<Card key={school} className='bg-card/35 shadow-xl'>
 						<CardHeader>
 							<div className="flex flex-row items-start justify-between gap-x-4 text-base">
 								{preview && (

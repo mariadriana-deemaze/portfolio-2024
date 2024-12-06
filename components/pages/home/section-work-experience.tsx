@@ -14,6 +14,7 @@ export const SectionWorkExperience = () => {
 					return (
 						<Card
 							key={company}
+							className='bg-card/35 shadow-xl'
 						>
 							<CardHeader>
 								<div className="flex flex-row gap-x-4">
