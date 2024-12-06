@@ -16,7 +16,7 @@ export const SectionEducation = () => {
 								{preview && (
 									<div className="flex flex-shrink-0 border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl justify-center overflow-hidden">
 										<Image
-											className="self-center"
+											className="self-center w-auto"
 											src={preview}
 											alt={`Logo of ${school}`}
 											height={25}

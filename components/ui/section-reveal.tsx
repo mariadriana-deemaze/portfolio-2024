@@ -1,7 +1,14 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import { useLenis } from '@studio-freight/react-lenis';
+import { cn } from '@/utils/utils';
 
-const ScrollFadeReveal = ({ children }: { children: ReactNode }) => {
+const ScrollFadeReveal = ({
+	onLoadVisibility = false,
+	children
+}: {
+	onLoadVisibility?: boolean;
+	children: ReactNode;
+}) => {
 	const ref = useRef<HTMLDivElement>(null);
 
 	// @ts-expect-error
@@ -40,7 +47,7 @@ const ScrollFadeReveal = ({ children }: { children: ReactNode }) => {
 	});
 
 	return (
-		<div ref={ref} className="scroll-fade-reveal">
+		<div ref={ref} className={cn("scroll-fade-reveal", onLoadVisibility ? "scroll-fade-in" : null)}>
 			{children}
 		</div>
 	);

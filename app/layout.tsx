@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				/>
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
-					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
+					<main className="container relative mx-auto mt-28 overflow-auto print:p-12 overflow-y-scroll overflow-x-hidden no-scrollbar">
 							<BGGrid>{children}</BGGrid>
 						<CommandMenu
 							links={[

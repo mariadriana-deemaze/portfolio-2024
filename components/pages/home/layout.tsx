@@ -13,8 +13,8 @@ export const HomeLayout = () => {
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
 			<ProgressIndicator />
-			<section className="wrapper-anim mx-auto w-full max-w-2xl space-y-48 md:space-y-32 print:space-y-6 animate-fade-in-left delay-500">
-				<ScrollFadeReveal>
+			<section className="mx-auto w-full max-w-2xl space-y-48 md:space-y-32 print:space-y-6 animate-fade-in-left delay-500">
+				<ScrollFadeReveal onLoadVisibility>
 					<SectionHero />
 				</ScrollFadeReveal>
 				<ScrollFadeReveal>
