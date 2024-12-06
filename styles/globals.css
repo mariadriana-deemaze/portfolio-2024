@@ -102,16 +102,12 @@
 	.scroll-fade-reveal {
 		opacity: 0;
 		transform: translateY(20px);
-		transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
-	}
-	
-	.scroll-fade-reveal.scroll-skew {
-		transform: skew(0deg, 10deg);
+		transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 	}
 	
 	.scroll-fade-reveal.scroll-fade-in {
 		opacity: 1;
-		transform: skew(0), translateY(0);
+		transform: translateY(0);
 	}
 }
 
