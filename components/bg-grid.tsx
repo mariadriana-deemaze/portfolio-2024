@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 export function BGGrid({ children }: { children?: React.ReactNode }) {
 	return (
 		<div className="w-full relative">
@@ -19,6 +21,20 @@ export function BGGrid({ children }: { children?: React.ReactNode }) {
 					}}
 				/>
 			</div>
+			<Image
+				className="fixed -left-10 top-32 scale-150 fade-in-35 duration-1000 opacity-55"
+				alt="Decorative image element"
+				src={'/images/color_grad.webp'}
+				height="400"
+				width={200}
+			/>
+			<Image
+				className="fixed -right-10 -top-32 rotate-180 fade-in-35 duration-1000 opacity-15"
+				alt="Decorative image element"
+				src={'/images/color_grad.webp'}
+				height="400"
+				width={200}
+			/>
 			<div className="h-screen fixed border-l-[1px] border-orange-600 opacity-30 left-[5px] md:left-[10%] top-0 bottom-0" />
 			<div className="h-screen fixed border-l-[1px] border-orange-600 opacity-30 right-[5px] md:right-[10%] top-0 bottom-0" />
 		</div>

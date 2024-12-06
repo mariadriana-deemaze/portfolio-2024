@@ -8,6 +8,7 @@ import { BGGrid } from '@/components/bg-grid';
 import '@/styles/globals.css';
 import { data } from '@/data/main';
 import Script from 'next/script';
+import Image from 'next/image';
 
 export const clashDisplay = localFont({
 	src: [
@@ -44,19 +45,14 @@ export const clashDisplay = localFont({
 	]
 });
 
-export const metadata: Metadata = {
-	title: `${data.name} | ${data.role}`,
-	description: data.summary
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className="overflow-y-scroll no-scrollbar">
+		<html lang="en" className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar">
 			<Head title={`${data.name} | ${data.role}`} url={`${process.env.NEXT_PUBLIC_URL}`} />
 			<body className="antialiased mb-10 lg:mx-auto">
 				<Script
 					strategy="afterInteractive"
-					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+					src={`https://www.googletagmanager.com/gtag/js?id=G-ZSZBWDZK9T`}
 				/>
 				<Script
 					id="google-analytics"
@@ -66,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+            gtag('config', 'G-ZSZBWDZK9T', {
             page_path: window.location.pathname,
           });`
 					}}
