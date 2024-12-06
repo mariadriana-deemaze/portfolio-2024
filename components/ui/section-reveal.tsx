@@ -16,13 +16,8 @@ const ScrollFadeReveal = ({ children }: { children: ReactNode }) => {
 				if (ref.current) {
 					if (windowBottom > elementTop && windowTop < elementBottom) {
 						ref.current.classList.add('scroll-fade-in');
-
 						if (isScrolling) {
-							let skewX = 0;
 							let skewY = Math.max(-5, Math.min(5, velocity * 2));
-
-							console.log('skew ->', skewX, skewY);
-
 							ref.current.style.transform = `translateY(0) skewX(0deg) skewY(${skewY}deg)`;
 						} else {
 							ref.current.style.transform = `translateY(0) skewX(0deg) skewY(0deg)`;
