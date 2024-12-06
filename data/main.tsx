@@ -12,10 +12,10 @@ export const data = {
 	name: 'Maria Adriana',
 	role: 'Full stack developer',
 	mottos: [
-		'Full-Stack Designer.',
-		'Front-end Developer.',
-		'Interaction Designer.',
-		'Back-ender wannabe.'
+		'Full-Stack Designer',
+		'Front-end Developer',
+		'Interaction Designer',
+		'Back-ender wannabe'
 	],
 	initials: 'MA',
 	location: 'Portugal, Coimbra',
@@ -46,6 +46,7 @@ Thrilled to continue my journey as a software developer, blending my design back
 	},
 	education: [
 		{
+			preview: '/images/education/arca_euac.png',
 			school: 'Coimbra University School of Arts',
 			degree: 'Communication design',
 			summary: `Learned the basics of communication design, gaining a broader, enriching vision and background on design history and its applications in today's primary communication mediums.
@@ -59,6 +60,7 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 		{
 			company: 'Deemaze Software',
 			link: 'https://deemaze.com/',
+			preview: '/images/work/deemaze.png',
 			title: 'Full Stack Developer',
 			logo: '',
 			start: '2022',
@@ -84,6 +86,7 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 		{
 			company: 'Hes-inovação',
 			link: 'https://www.hes-inovacao.com/',
+			preview: '/images/work/hes-inov.png',
 			title: 'Designer/Front-end developer',
 			logo: '',
 			start: '2020',
