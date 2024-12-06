@@ -15,7 +15,7 @@ export const SectionAbout = () => {
 						<div className="flex-1 group">
 							<div className='relative w-min'>
 								<h1
-									className={`${clashDisplay.className} relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent via-gray-100 to-white bg-clip-text text-transparent`}
+									className={`${clashDisplay.className} relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent`}
 								>
 									{data.name}
 								</h1>
