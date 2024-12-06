@@ -98,6 +98,17 @@
 	.roles-slider .role-slide .letter.behind {
 		transform: rotateX(-90deg);
 	}
+
+	.scroll-fade-reveal {
+		opacity: 0;
+		transform: translateY(20px);
+		transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+	}
+	
+	.scroll-fade-reveal.scroll-fade-in {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .progress {

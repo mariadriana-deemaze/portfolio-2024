@@ -8,7 +8,6 @@ import { BGGrid } from '@/components/bg-grid';
 import '@/styles/globals.css';
 import { data } from '@/data/main';
 import Script from 'next/script';
-import Image from 'next/image';
 
 export const clashDisplay = localFont({
 	src: [
@@ -69,8 +68,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				/>
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
-					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
-						<BGGrid>{children}</BGGrid>
+					<main className="container relative mx-auto mt-28 overflow-auto print:p-12 overflow-y-scroll overflow-x-hidden no-scrollbar">
+							<BGGrid>{children}</BGGrid>
 						<CommandMenu
 							links={[
 								{

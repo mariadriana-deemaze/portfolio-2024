@@ -21,7 +21,7 @@ export const SectionWorkExperience = () => {
 									{preview && (
 										<div className="flex flex-shrink-0 justify-center items-center border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl overflow-hidden">
 											<Image
-												className="self-center"
+												className="self-center w-auto"
 												src={preview}
 												alt={`Logo of ${title}`}
 												height={25}
