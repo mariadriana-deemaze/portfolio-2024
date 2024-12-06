@@ -8,6 +8,7 @@ import { BGGrid } from '@/components/bg-grid';
 import '@/styles/globals.css';
 import { data } from '@/data/main';
 import Script from 'next/script';
+import Image from 'next/image';
 
 export const clashDisplay = localFont({
 	src: [
@@ -43,11 +44,6 @@ export const clashDisplay = localFont({
 		}
 	]
 });
-/* 
-export const metadata: Metadata = {
-	title: `${data.name} | ${data.role}`,
-	description: data.summary
-}; */
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
@@ -73,6 +69,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				/>
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
+					<Image
+						className="absolute -left-10 top-32 scale-150 fade-in-35 duration-1000 opacity-55"
+						alt="Decorative image element"
+						src={'/images/color_grad.webp'}
+						height="400"
+						width={250}
+					/>
+					<Image
+						className="absolute -right-10 -top-32 rotate-180 fade-in-35 duration-1000 opacity-15"
+						alt="Decorative image element"
+						src={'/images/color_grad.webp'}
+						height="400"
+						width={250}
+					/>
 					<main className="container relative mx-auto mt-28 overflow-auto print:p-12">
 						<BGGrid>{children}</BGGrid>
 						<CommandMenu

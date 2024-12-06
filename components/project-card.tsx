@@ -35,7 +35,7 @@ export function ProjectCard({ title, description, tags, link, medium, preview }:
 				</Badge>
 			</div>
 
-			<div className="absolute bottom-0 w-full translate-y-44 group-hover:translate-y-0 group-active:translate-y-0 border-t duration-700 bg-card/95">
+			<div className="absolute bottom-0 w-full translate-y-48 group-hover:translate-y-0 group-active:translate-y-0 border-t duration-700 bg-card/95">
 				<CardHeader>
 					<div className="space-y-1">
 						<CardTitle className="text-base">
@@ -46,7 +46,7 @@ export function ProjectCard({ title, description, tags, link, medium, preview }:
 									rel="noreferrer"
 									className="inline-flex items-center gap-1 hover:underline"
 								>
-									{title} <span className="h-1 w-1 rounded-full bg-green-500" />
+									{title} <span className="h-1 w-1 rounded-full bg-green-400" />
 								</a>
 							) : (
 								title

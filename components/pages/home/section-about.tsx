@@ -13,15 +13,20 @@ export const SectionAbout = () => {
 				<div className="flex items-center justify-between flex-wrap-reverse sm:flex-nowrap gap-5">
 					<div className="flex-1 space-y-5">
 						<div className="flex-1 group">
-							<h1
-								className={`${clashDisplay.className} relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none`}
-							>
-								{data.name}
-								<div className="absolute top-1 md:top-3 -right-14 text-[30px] w-12 align-middle ml-3 group-hover:animate-hand-wave">
+							<div className='relative w-min'>
+								<h1
+									className={`${clashDisplay.className} relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent via-gray-100 to-white bg-clip-text text-transparent`}
+								>
+									{data.name}
+								</h1>
+								<div className="absolute top-1 md:top-0 -right-14 text-[30px] w-12 align-middle ml-3 group-hover:animate-hand-wave">
 									👋
 								</div>
-							</h1>
-							<AnimatedMottos data={[...data.mottos]} className='text-[#F15A24] from-[#F18B3E] bg-gradient-to-r to-[#F15A24] bg-clip-text'/>
+							</div>
+							<AnimatedMottos
+								data={[...data.mottos]}
+								className="text-[#F15A24] from-[#F18B3E] bg-gradient-to-r to-[#F15A24] bg-clip-text"
+							/>
 						</div>
 						<p className="max-w-md text-pretty font-mono text-sm text-foreground">
 							{data.about}

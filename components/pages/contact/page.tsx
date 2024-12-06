@@ -1,6 +1,6 @@
+import { clashDisplay } from '@/app/layout';
 import { ContactForm } from '@/components/pages/contact/form';
 import { Section } from '@/components/ui/section';
-import { clashDisplay } from '../layout';
 
 export default function Page() {
 	return (
