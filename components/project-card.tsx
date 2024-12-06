@@ -17,7 +17,7 @@ export function ProjectCard({ title, description, tags, link, medium, preview }:
 			<div className="flex relative bg-muted rounded-lg rounded-bl-none rounded-br-none h-full w-full overflow-hidden">
 				{preview && (
 					<Image
-						className="self-start group-hover:scale-105 ease-in-out duration-1000"
+						className="self-start group-hover:scale-105 group-active:scale-105 ease-in-out duration-1000"
 						src={preview}
 						alt={`Image preview of project ${title}`}
 						height={400}
@@ -35,7 +35,7 @@ export function ProjectCard({ title, description, tags, link, medium, preview }:
 				</Badge>
 			</div>
 
-			<div className="absolute bottom-0 w-full translate-y-44 group-hover:translate-y-0 border-t duration-700 bg-card/95">
+			<div className="absolute bottom-0 w-full translate-y-44 group-hover:translate-y-0 group-active:translate-y-0 border-t duration-700 bg-card/95">
 				<CardHeader>
 					<div className="space-y-1">
 						<CardTitle className="text-base">
