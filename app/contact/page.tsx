@@ -14,7 +14,8 @@ export default function Page() {
 							get in touch with me if you have a project in mind, want to discuss a
 							potential collaboration, or simply want to say hello. You can reach me
 							through the contact form below.
-							<br />Typically I respond back to emails within{' '}
+							<br />
+							Typically I respond back to emails within
 							<span className="text-orange-600">1 business day</span>.
 						</p>
 					</div>

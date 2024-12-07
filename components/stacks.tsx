@@ -1,6 +1,5 @@
 import {
 	SiAmazon,
-	SiAngular,
 	SiBootstrap,
 	SiChakraui,
 	SiExpo,
@@ -34,7 +33,7 @@ import {
 	SiWebpack,
 	SiWordpress
 } from 'react-icons/si';
-import { DiAppcelerator } from "react-icons/di";
+import { DiAppcelerator } from 'react-icons/di';
 
 const iconSize = 15;
 
@@ -45,7 +44,7 @@ export const STACKS = {
 	},
 	Appcelerator: {
 		label: 'Appcelerator',
-		icon: <DiAppcelerator  size={iconSize} className="text-red-500" />
+		icon: <DiAppcelerator size={iconSize} className="text-red-500" />
 	},
 	TypeScript: {
 		label: 'Typescript',
@@ -118,7 +117,7 @@ export const STACKS = {
 			<svg
 				width={iconSize}
 				height={iconSize}
-				viewBox={`0 0 441 461`}
+				viewBox={'0 0 441 461'}
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
 			>

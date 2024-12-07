@@ -47,11 +47,14 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 
 		Array.from(currentWord.children).forEach((letter, i) => {
 			letter.className = 'letter behind';
-			setTimeout(() => {
-				letter.className = 'letter in';
-			}, 340 + i * 80);
+			setTimeout(
+				() => {
+					letter.className = 'letter in';
+				},
+				340 + i * 80
+			);
 		});
-	}, [roleIndex]);
+	}, [roleIndex, data.length]);
 
 	const switchRole = () => {
 		if (roleIndex === data.length - 1) {

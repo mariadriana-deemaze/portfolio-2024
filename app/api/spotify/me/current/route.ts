@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { Song } from '@/types/spotify';
 
 export async function GET(request: NextRequest) {
-	const response = await currentlyPlayingSong(request);
+	const response = await currentlyPlayingSong();
 
 	if (response.status === 204 || response.status > 404) {
 		return NextResponse.json(
