@@ -2,7 +2,7 @@ import { ContactInfo } from '@/types/contact';
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
 	host: process.env.SMTP_HOST,
 	port: Number(process.env.SMTP_PORT),
 	secure: true,
@@ -50,8 +50,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<{ message: st
 	  `
 		});
 		return NextResponse.json({ message: email.response });
-
 	} catch (error) {
+		console.error('error ->', error);
 		return NextResponse.json({ message: 'Error sending email.' }, { status: 500 });
 	}
 }

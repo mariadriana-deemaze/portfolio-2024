@@ -29,7 +29,7 @@ export const CommandMenu = ({ links }: Props) => {
 		const down = (e: KeyboardEvent) => {
 			if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
 				e.preventDefault();
-				setOpen((open) => !open);
+				setOpen((prevState) => !prevState);
 			}
 		};
 		document.addEventListener('keydown', down);

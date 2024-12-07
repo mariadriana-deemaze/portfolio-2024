@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 import { useLenis } from '@studio-freight/react-lenis';
 import { cn } from '@/utils/utils';
 
@@ -24,14 +24,14 @@ const ScrollFadeReveal = ({
 					if (windowBottom > elementTop && windowTop < elementBottom) {
 						ref.current.classList.add('scroll-fade-in');
 						if (isScrolling) {
-							let skewY = Math.max(-5, Math.min(5, velocity * 2));
+							const skewY = Math.max(-5, Math.min(5, velocity * 2));
 							ref.current.style.transform = `translateY(0) skewX(0deg) skewY(${skewY}deg)`;
 						} else {
-							ref.current.style.transform = `translateY(0) skewX(0deg) skewY(0deg)`;
+							ref.current.style.transform = 'translateY(0) skewX(0deg) skewY(0deg)';
 						}
 					} else {
 						ref.current.classList.remove('scroll-fade-in');
-						ref.current.style.transform = `translateY(0) skewX(0deg) skewY(0deg)`;
+						ref.current.style.transform = 'translateY(0) skewX(0deg) skewY(0deg)';
 					}
 				}
 			};
@@ -47,7 +47,10 @@ const ScrollFadeReveal = ({
 	});
 
 	return (
-		<div ref={ref} className={cn("scroll-fade-reveal", onLoadVisibility ? "scroll-fade-in" : null)}>
+		<div
+			ref={ref}
+			className={cn('scroll-fade-reveal', onLoadVisibility ? 'scroll-fade-in' : null)}
+		>
 			{children}
 		</div>
 	);

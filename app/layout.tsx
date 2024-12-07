@@ -1,4 +1,3 @@
-import { Metadata } from 'next';
 import Head from '@/components/head';
 import localFont from 'next/font/local';
 import { CommandMenu } from '@/components/command-menu';
@@ -51,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className="antialiased mb-10 lg:mx-auto">
 				<Script
 					strategy="afterInteractive"
-					src={`https://www.googletagmanager.com/gtag/js?id=G-ZSZBWDZK9T`}
+					src={'https://www.googletagmanager.com/gtag/js?id=G-ZSZBWDZK9T'}
 				/>
 				<Script
 					id="google-analytics"
@@ -69,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
 					<main className="container relative mx-auto mt-28 overflow-auto print:p-12 overflow-y-scroll overflow-x-hidden no-scrollbar">
-							<BGGrid>{children}</BGGrid>
+						<BGGrid>{children}</BGGrid>
 						<CommandMenu
 							links={[
 								{

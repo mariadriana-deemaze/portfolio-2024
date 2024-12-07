@@ -50,7 +50,7 @@ export const SectionHero = () => {
 								size="icon"
 								asChild
 							>
-								<a href={social.url} target="_blank">
+								<a href={social.url} target="_blank" rel="noreferrer">
 									<social.icon className="h-4 w-4" />
 								</a>
 							</Button>

@@ -1,6 +1,6 @@
-import querystring from "querystring"
+import querystring from 'querystring';
 import { NextRequest, NextResponse } from 'next/server';
-import { SpotifyAccessToken } from "@/types/spotify";
+import { SpotifyAccessToken } from '@/types/spotify';
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
@@ -35,9 +35,9 @@ const getAccessToken = async (): Promise<SpotifyAccessToken> => {
 /**
  * Makes a request to the Spotify API to retrieve the currently playing song for the user.
  */
-export const currentlyPlayingSong = async (initialRequest: NextRequest) => {
+export const currentlyPlayingSong = async () => {
 	const { access_token }: { access_token: string } = await getAccessToken();
-	
+
 	const request = new NextRequest(NOW_PLAYING_ENDPOINT, {
 		headers: {
 			Authorization: `Bearer ${access_token}`
@@ -48,6 +48,7 @@ export const currentlyPlayingSong = async (initialRequest: NextRequest) => {
 		const response: Response = await fetch(request);
 		return response;
 	} catch (error) {
+		console.error('error ->', error);
 		const response: NextResponse = new NextResponse(null, {
 			status: 404
 		});

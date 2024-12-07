@@ -29,11 +29,12 @@
 		"@typescript-eslint/no-explicit-any": 2,
 		"@typescript-eslint/explicit-function-return-type": "off",
 		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"@typescript-eslint/no-empty-object-type": "off",
 
 		"react/display-name": 0,
 		"react/prefer-stateless-function": 2,
 		"react/prop-types": 0,
-		"react/no-unescaped-entities": "error",
+		"react/no-unescaped-entities": "off",
 		"camelcase": "off",
 		"comma-dangle": "off",
 		"global-require": "off",

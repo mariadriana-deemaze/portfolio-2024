@@ -35,7 +35,9 @@ export const NowPlaying = () => {
 						</Link>
 					) : (
 						<div className="flex items-center">
-							<Badge variant="outline" className='bg-card text-card-foreground'>not playing</Badge>
+							<Badge variant="outline" className="bg-card text-card-foreground">
+								not playing
+							</Badge>
 							<span className="ml-1">
 								<svg className="h-4 w-4" viewBox="0 0 168 168">
 									<path
