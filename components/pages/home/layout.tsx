@@ -17,7 +17,7 @@ export const HomeLayout = () => {
 				<ScrollFadeReveal onLoadVisibility>
 					<SectionHero />
 				</ScrollFadeReveal>
-				<ScrollFadeReveal>
+				<ScrollFadeReveal onLoadVisibility>
 					<SectionAbout />
 				</ScrollFadeReveal>
 				<ScrollFadeReveal>

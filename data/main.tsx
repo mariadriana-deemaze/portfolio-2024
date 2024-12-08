@@ -17,13 +17,12 @@ export const data = {
 		'Interaction Designer',
 		'Back-ender wannabe'
 	],
-	initials: 'MA',
 	location: 'Portugal, Coimbra',
 	locationLink: 'https://www.google.com/maps/place/Coimbra',
 	about: 'The dangerous combo of a curious yet anxious overthinker - I think coffee is also somewhere in the equation.',
-	summary: `Communication designer, who ultimately ended up self-converting to software development, due to a more akin liking over the exact sciences. 
-Started my career path by working in webdesign, embraced a few more challenges within the role of bringing said designs to life, and et voila, now we are here.
-Thrilled to continue my journey as a software developer, blending my design background with technical skills to build awesome things.`,
+	summary: `A communication designer turned software developer, driven by a deep passion for problem-solving and the precision of the exact sciences. \n
+My journey began in the world of web design, crafting intuitive and visually striking digital experiences. As my curiosity grew, I embraced the challenge of bringing those designs to life through code—blurring the lines between creativity and technical execution. This natural progression led me to fully immerse myself in software development, where I now thrive. \n
+I’m excited to continue building innovative solutions that merge design sensibility with technical expertise, leveraging my unique background to create meaningful and impactful digital experiences.`,
 	contact: {
 		email: 'hello@maria-adriana.com',
 		social: [

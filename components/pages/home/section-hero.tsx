@@ -67,7 +67,9 @@ export const SectionHero = () => {
 
 				<Avatar className="h-20 w-20 md:h-28 md:w-28">
 					<AvatarImage alt={data.name} src="images/avatar.jpeg" />
-					<AvatarFallback>{data.initials}</AvatarFallback>
+					<AvatarFallback>
+						{data.name.split(' ').map((part) => part[0].toUpperCase())}
+					</AvatarFallback>
 				</Avatar>
 			</div>
 		</Section>

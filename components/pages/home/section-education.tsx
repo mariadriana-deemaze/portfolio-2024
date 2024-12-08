@@ -31,7 +31,7 @@ export const SectionEducation = () => {
 										{degree}
 									</h4>
 								</div>
-								<div className="text-sm tabular-nums text-gray-500 flex flex-shrink-0">
+								<div className="font-mono text-sm text-gray-500 flex flex-shrink-0">
 									{start} - {end}
 								</div>
 							</div>

@@ -17,7 +17,7 @@ export function ProjectCard({ title, description, tags, link, medium, preview }:
 			<div className="flex relative bg-muted rounded-lg rounded-bl-none rounded-br-none h-full w-full overflow-hidden">
 				{preview && (
 					<Image
-						className="self-start group-hover:scale-105 group-active:scale-105 ease-in-out duration-1000"
+						className="aspect-auto object-cover w-full h-full self-center group-hover:scale-105 group-active:scale-105 ease-in-out duration-1000"
 						src={preview}
 						alt={`Image preview of project ${title}`}
 						height={400}
