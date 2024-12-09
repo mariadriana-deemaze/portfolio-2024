@@ -126,3 +126,24 @@
 .animate-fade-in-left {
 	@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
 }
+
+
+.blog-page h2 {
+	@apply text-xl font-bold leading-relaxed mt-5
+}
+
+.blog-page h3 {
+	@apply text-lg font-bold leading-relaxed mt-5
+}
+
+.blog-page p {
+	@apply text-pretty font-mono text-sm text-foreground
+}
+
+.blog-page code {
+	@apply border border-gray-800 p-2 rounded-md bg-secondary-foreground/20
+}
+
+.blog-page code > code {
+	@apply border-0 bg-transparent
+}
