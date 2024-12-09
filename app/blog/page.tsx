@@ -1,23 +1,50 @@
-import { Button } from '@/components/ui/button';
+import PostsList from '@/components/pages/blog/posts-list';
+import { getPosts } from '@/data/blog';
 import { data } from '@/data/main';
 import { Metadata } from 'next';
-import Link from 'next/link';
 
 export const metadata: Metadata = {
 	title: `${data.name} | ${data.about}`,
 	description: data.summary
 };
 
-export default function Page() {
+export async function generateStaticParams() {
+	const posts = await getPosts();
+	return posts.map((post) => ({ slug: post.slug }));
+}
+
+export default async function Page() {
+	//const posts = await getPosts();
+
+	// TODO: Simulation purposes
+	const posts = new Array(20).fill({
+		title: 'Hello world',
+		description: 'First Post',
+		date: 'Dec 12, 2024',
+		slug: 'hello-world',
+		body:
+			'\r\n' +
+			'\r\n' +
+			'## My first blog post via MDX parsing. Still figuring it out.\r\n' +
+			'\r\n' +
+			'<Image src="/blog/image.png" alt="Random image is random" width={600} height={400} />\r\n' +
+			'\r\n' +
+			"## Here's a list\r\n" +
+			' - Point one\r\n' +
+			' - Point two\r\n' +
+			'\r\n' +
+			'## Ahh look, a code snippet\r\n' +
+			'\r\n' +
+			'```ts \r\n' +
+			'const user: User = await UserFactory.create()\r\n' +
+			'```',
+		type: 'post'
+	});
+
+	console.log('posts ->', posts);
 	return (
-		<div className="flex flex-col justify-center items-center h-80">
-			<h2 className="text-4xl font-semibold">Coming soon.</h2>
-			<p className="mt-4">🚧 Page under construction 🚧</p>
-			<div className="flex flex-col mx-auto mt-10 gap-9">
-				<Button variant="outline" size="lg" asChild>
-					<Link href="/">Return Home</Link>
-				</Button>
-			</div>
+		<div className="flex flex-col justify-center items-center">
+			<PostsList posts={posts} />
 		</div>
 	);
 }
