@@ -8,6 +8,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkToc from 'remark-toc';
 import { mdxComponents } from '@/components/mdx/components';
+import { CalendarIcon } from '@radix-ui/react-icons';
 
 export async function generateStaticParams() {
 	const posts = await getPosts();
@@ -34,35 +35,38 @@ export default async function PostPage(props: {
 	return (
 		<div className="flex flex-col gap-2 blog-page">
 			<h1
-				className={`${clashDisplay.className} relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent`}
+				className={`${clashDisplay.className}`}
 			>
 				{title}
 			</h1>
-			<h2 className={`${clashDisplay.className} text-xl font-bold`}>{description}</h2>
-			<span className="text-pretty font-mono text-sm text-foreground text-gray-400">
+			<h2 className={`${clashDisplay.className}`}>{description}</h2>
+			<span className="flex flex-row gap-2 items-center text-pretty font-mono text-sm text-foreground text-gray-500">
+				<CalendarIcon />
 				{date}
 			</span>
-			<hr />
-			<MDXRemote
-				source={body}
-				options={{
-					mdxOptions: {
-						remarkPlugins: [
-							remarkGfm,
-							remarkFrontmatter,
-							[
-								remarkToc,
-								{
-									tight: true,
-									maxDepth: 5
-								}
-							]
-						],
-						rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings]
-					}
-				}}
-				components={mdxComponents}
-			/>
+			<hr className='mt-4' />
+			<div className="content">
+				<MDXRemote
+					source={body}
+					options={{
+						mdxOptions: {
+							remarkPlugins: [
+								remarkGfm,
+								remarkFrontmatter,
+								[
+									remarkToc,
+									{
+										tight: true,
+										maxDepth: 5
+									}
+								]
+							],
+							rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings]
+						}
+					}}
+					components={mdxComponents}
+				/>
+			</div>
 		</div>
 	);
 }

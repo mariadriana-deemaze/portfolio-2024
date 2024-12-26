@@ -102,9 +102,11 @@
 	.scroll-fade-reveal {
 		opacity: 0;
 		transform: translateY(20px);
-		transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+		transition:
+			opacity 0.5s ease-in-out,
+			transform 0.5s ease-in-out;
 	}
-	
+
 	.scroll-fade-reveal.scroll-fade-in {
 		opacity: 1;
 		transform: translateY(0);
@@ -127,23 +129,55 @@
 	@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
 }
 
+.text-fade-grad {
+	@apply bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent;
+}
+
+.blog-page h1 {
+	@apply text-fade-grad relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none;
+}
 
 .blog-page h2 {
-	@apply text-xl font-bold leading-relaxed mt-5
+	@apply text-xl font-bold leading-relaxed text-gray-600 dark:text-gray-400;
 }
 
-.blog-page h3 {
-	@apply text-lg font-bold leading-relaxed mt-5
+.blog-page .content {
+	@apply flex flex-col mt-2;
 }
 
-.blog-page p {
-	@apply text-pretty font-mono text-sm text-foreground
+.blog-page .content h2 {
+	@apply text-orange-400;
 }
 
-.blog-page code {
-	@apply border border-gray-800 p-2 rounded-md bg-secondary-foreground/20
+.blog-page .content h3 {
+	@apply text-lg font-bold leading-relaxed mt-5;
 }
 
-.blog-page code > code {
-	@apply border-0 bg-transparent
+.blog-page .content p {
+	@apply text-pretty font-mono text-sm text-foreground;
+}
+
+.blog-page .content ul {
+	@apply list-disc ml-4;
+}
+
+.blog-page .content h1,
+.blog-page .content h2,
+.blog-page .content h3,
+.blog-page .content h4,
+.blog-page .content h5,
+.blog-page .content h6 {
+	@apply mt-6 mb-2;
+}
+
+.blog-page .content img {
+	@apply border border-gray-400 dark:border-gray-700 self-center rounded-md;
+}
+
+.blog-page .content code {
+	@apply border border-gray-600 p-2 rounded-md bg-secondary-foreground/20;
+}
+
+.blog-page .content code > code {
+	@apply border-0 bg-transparent;
 }

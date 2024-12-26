@@ -27,7 +27,7 @@ export default async function Page() {
 			'\r\n' +
 			'## My first blog post via MDX parsing. Still figuring it out.\r\n' +
 			'\r\n' +
-			'<Image src="/blog/image.png" alt="Random image is random" width={600} height={400} />\r\n' +
+			'<Image src="/images/blog/star.gif" alt="Random image is random" width={600} height={400} />\r\n' +
 			'\r\n' +
 			"## Here's a list\r\n" +
 			' - Point one\r\n' +
