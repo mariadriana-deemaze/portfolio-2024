@@ -1,5 +1,5 @@
 import PostsList from '@/components/pages/blog/posts-list';
-import { getPosts } from '@/data/blog';
+import { BlogPost, getPosts } from '@/data/blog';
 import { data } from '@/data/main';
 import { Metadata } from 'next';
 
@@ -17,29 +17,37 @@ export default async function Page() {
 	//const posts = await getPosts();
 
 	// TODO: Simulation purposes
-	const posts = new Array(20).fill({
-		title: 'Hello world',
-		description: 'First Post',
-		date: 'Dec 12, 2024',
-		slug: 'hello-world',
-		body:
-			'\r\n' +
-			'\r\n' +
-			'## My first blog post via MDX parsing. Still figuring it out.\r\n' +
-			'\r\n' +
-			'<Image src="/images/blog/star.gif" alt="Random image is random" width={600} height={400} />\r\n' +
-			'\r\n' +
-			"## Here's a list\r\n" +
-			' - Point one\r\n' +
-			' - Point two\r\n' +
-			'\r\n' +
-			'## Ahh look, a code snippet\r\n' +
-			'\r\n' +
-			'```ts \r\n' +
-			'const user: User = await UserFactory.create()\r\n' +
-			'```',
-		type: 'post'
-	});
+	let posts: BlogPost[] = new Array(20)
+		.fill({
+			title: 'Hello world',
+			description: 'First Post',
+			date: 'Dec 12, 2024',
+			slug: 'hello-world',
+			body:
+				'\r\n' +
+				'\r\n' +
+				'## My first blog post via MDX parsing. Still figuring it out.\r\n' +
+				'\r\n' +
+				'<Image src="/images/blog/star.gif" alt="Random image is random" width={600} height={400} />\r\n' +
+				'\r\n' +
+				"## Here's a list\r\n" +
+				' - Point one\r\n' +
+				' - Point two\r\n' +
+				'\r\n' +
+				'## Ahh look, a code snippet\r\n' +
+				'\r\n' +
+				'```ts \r\n' +
+				'const user: User = await UserFactory.create()\r\n' +
+				'```',
+			type: 'post'
+		})
+		.map((post, index) => {
+			return {
+				...post,
+				slug: (post.slug = post.slug + '-' + (index + 1)),
+				title: (post.title = post.title + ' ' + (index + 1))
+			};
+		});
 
 	console.log('posts ->', posts);
 	return (
