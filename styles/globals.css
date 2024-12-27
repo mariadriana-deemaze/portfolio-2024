@@ -146,7 +146,7 @@
 }
 
 .blog-page .content h2 {
-	@apply text-orange-400;
+	@apply text-gray-600 font-bold;
 }
 
 .blog-page .content h3 {
@@ -167,7 +167,7 @@
 .blog-page .content h4,
 .blog-page .content h5,
 .blog-page .content h6 {
-	@apply mt-6 mb-2;
+	@apply mt-6 mb-2 font-clash;
 }
 
 .blog-page .content img {
