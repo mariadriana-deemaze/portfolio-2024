@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export function BGGrid({ children }: { children?: React.ReactNode }) {
 	return (
-		<div className="w-full relative">
+		<>
 			{children}
 			<div
 				className="fixed inset-0 z-[-1] bg-transparent h-screen w-screen bg-gradient-to-b from-muted to-background"
@@ -37,6 +37,6 @@ export function BGGrid({ children }: { children?: React.ReactNode }) {
 			/>
 			<div className="h-screen fixed border-l-[1px] border-orange-600 opacity-30 left-[5px] md:left-[10%] top-0 bottom-0" />
 			<div className="h-screen fixed border-l-[1px] border-orange-600 opacity-30 right-[5px] md:right-[10%] top-0 bottom-0" />
-		</div>
+		</>
 	);
 }

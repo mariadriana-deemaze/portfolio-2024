@@ -9,6 +9,23 @@ import remarkToc from 'remark-toc';
 import { mdxComponents } from '@/components/mdx/components';
 import { ArrowLeftIcon, CalendarIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
+import { data } from '@/data/main';
+
+export async function generateMetadata(props: {
+	params: Promise<{
+		slug: string;
+	}>;
+}) {
+	const params = await props.params;
+	const post = await getPost(params.slug);
+	return {
+		title: `${data.name} | ${data.role} :: ${post?.title}`,
+		description: post?.description + ' ' + data.summary,
+		alternates: {
+			canonical: `https://maria-adriana.com/blog/${post?.slug}`
+		}
+	};
+}
 
 export async function generateStaticParams() {
 	const posts = await getPosts();
@@ -36,7 +53,7 @@ export default async function PostPage(props: {
 				href="/blog"
 				className="flex flex-row gap-2 font-mono text-sm text-gray-500 dark:text-white/60 mb-8 items-center hover:underline hover:text-orange-500 hover:opacity-75 duration-200"
 			>
-				<span className="flex border border-gray-300/20 bg-card rounded-full h-7 w-7 items-center justify-center">
+				<span className="flex border border-gray-300 dark:border-white/20 bg-card rounded-full h-7 w-7 items-center justify-center">
 					<ArrowLeftIcon className="text-gray-500 dark:text-white/80" />
 				</span>
 				Go back

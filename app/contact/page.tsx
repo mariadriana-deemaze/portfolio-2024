@@ -1,5 +1,15 @@
 import { ContactForm } from '@/components/pages/contact/form';
 import { Section } from '@/components/ui/section';
+import { data } from '@/data/main';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: `${data.name} | ${data.role} :: Contact`,
+	description: 'Contact me → ' + data.summary,
+	alternates: {
+		canonical: 'https://maria-adriana.com/contact'
+	}
+};
 
 export default function Page() {
 	return (

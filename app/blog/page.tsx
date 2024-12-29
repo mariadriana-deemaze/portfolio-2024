@@ -4,8 +4,11 @@ import { data } from '@/data/main';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: `${data.name} | ${data.about}`,
-	description: data.summary
+	title: `${data.name} | ${data.role} :: Blog`,
+	description: 'My personal blog, for rambles and so on → ' + data.summary,
+	alternates: {
+		canonical: 'https://maria-adriana.com/blog'
+	}
 };
 
 export async function generateStaticParams() {
