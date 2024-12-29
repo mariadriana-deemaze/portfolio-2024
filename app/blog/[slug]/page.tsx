@@ -7,7 +7,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkToc from 'remark-toc';
 import { mdxComponents } from '@/components/mdx/components';
-import { CalendarIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, CalendarIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
 export async function generateStaticParams() {
@@ -32,8 +32,14 @@ export default async function PostPage(props: {
 
 	return (
 		<article className="flex flex-col gap-2 blog-page">
-			<Link href="/blog" className="font-mono text-sm text-gray-500 mb-8">
-				← Go back
+			<Link
+				href="/blog"
+				className="flex flex-row gap-2 font-mono text-sm text-gray-500 dark:text-white/60 mb-8 items-center hover:underline hover:text-orange-500 hover:opacity-75 duration-200"
+			>
+				<span className="flex border border-gray-300/20 bg-card rounded-full h-7 w-7 items-center justify-center">
+					<ArrowLeftIcon className="text-gray-500 dark:text-white/80" />
+				</span>
+				Go back
 			</Link>
 			<h1 className="font-clash">{title}</h1>
 			<p className="font-mono text-sm text-foreground line-clamp-3">{description}</p>

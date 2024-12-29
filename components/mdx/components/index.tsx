@@ -10,13 +10,10 @@ export const mdxComponents: MDXComponents = {
 		children,
 		...props
 	}: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLPreElement>) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		return <code {...props}>{children as any}</code>;
+		return <code {...props}>{children}</code>;
 	},
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	img: MDXImage as any,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	Image: NextImage as any,
+	img: MDXImage,
+	Image: NextImage,
 	Details: ({
 		children,
 		summary,
