@@ -55,7 +55,7 @@ export const CommandMenu = ({ links }: Props) => {
 								key={url}
 								onSelect={() => {
 									setOpen(false);
-									window.open(url);
+									window.location.href = url;
 								}}
 							>
 								<span>{title}</span>
