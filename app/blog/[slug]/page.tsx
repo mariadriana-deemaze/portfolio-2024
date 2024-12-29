@@ -10,6 +10,7 @@ import { mdxComponents } from '@/components/mdx/components';
 import { ArrowLeftIcon, CalendarIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { data } from '@/data/main';
+import rehypePrettyCode from 'rehype-pretty-code';
 
 export async function generateMetadata(props: {
 	params: Promise<{
@@ -60,7 +61,7 @@ export default async function PostPage(props: {
 			</Link>
 			<h1 className="font-clash">{title}</h1>
 			<p className="font-mono text-sm text-foreground line-clamp-3">{description}</p>
-			<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
+			<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
 				<CalendarIcon />
 				{date}
 			</time>
@@ -81,7 +82,7 @@ export default async function PostPage(props: {
 									}
 								]
 							],
-							rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings]
+							rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypePrettyCode]
 						}
 					}}
 					components={mdxComponents}

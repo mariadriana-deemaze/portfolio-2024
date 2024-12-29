@@ -171,10 +171,6 @@
 	@apply border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md;
 }
 
-.blog-page .content code {
-	@apply border border-gray-400 p-2 rounded-md bg-secondary-foreground/10;
-}
-
-.blog-page .content code > code {
-	@apply border-0 bg-transparent font-mono text-sm;
+.blog-page .content > figure > code {
+	@apply flex flex-row border border-gray-400 p-2 rounded-md bg-secondary-foreground/10;
 }
