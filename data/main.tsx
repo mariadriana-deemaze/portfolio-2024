@@ -11,6 +11,7 @@ enum Intervention {
 export const data = {
 	name: 'Maria Adriana',
 	role: 'Full stack developer',
+	github: 'https://github.com/mariadriana-deemaze',
 	mottos: [
 		'Full-Stack Designer',
 		'Front-end Developer',

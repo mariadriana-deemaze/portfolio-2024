@@ -1,8 +1,10 @@
-"use server"
+'use server';
 
 import fs from 'node:fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
+import { JSX } from 'react';
+import { STACKS } from '@/components/stacks';
 
 const PROJECTS_DIR = './data/projects';
 
@@ -10,9 +12,14 @@ export interface Project {
 	hero: string;
 	title: string;
 	description: string;
-	date: string;
+	year: string;
 	slug: string;
 	content: string;
+	technologies: {
+		label: string;
+		icon: JSX.Element;
+	}[];
+	repo:string;
 }
 
 export const getProjects = async () => {
@@ -25,14 +32,20 @@ export const getProjects = async () => {
 				const filePath = `${PROJECTS_DIR}/${file}`;
 				const projectContent = await fs.readFile(filePath, 'utf8');
 				const { data, content } = matter(projectContent);
-				return { ...data, content } as Project;
+
+				const technologies = data['technologies'].map(
+					// @ts-expect-error
+					(technology: string) => STACKS[technology]
+				);
+
+				return { ...data, technologies, content } as Project;
 			})
 	);
 
 	return projects
 		.filter((project) => project !== null)
 		.sort((a, b) =>
-			a && b ? new Date(b.date).getTime() - new Date(a.date).getTime() : 0
+			a && b ? new Date(b.year).getTime() - new Date(a.year).getTime() : 0
 		) as Project[];
 };
 
