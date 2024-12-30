@@ -50,8 +50,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 		return posts.map((post) => {
 			return {
 				url: `/blog/${post.slug}`,
-				title: `Blog - ${post.title}`,
-				type: 'internal'
+				title: post.title,
+				type: 'blog'
 			};
 		});
 	});

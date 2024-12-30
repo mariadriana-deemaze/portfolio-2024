@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -20,12 +20,13 @@ interface Props {
 }
 
 export const CommandMenu = ({ links }: Props) => {
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
 
-	const socialsLinks = links.filter((link) => link.type === 'social');
 	const internalLinks = links.filter((link) => link.type === 'internal');
+	const blogLinks = links.filter((link) => link.type === 'blog');
+	const socialsLinks = links.filter((link) => link.type === 'social');
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const down = (e: KeyboardEvent) => {
 			if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
 				e.preventDefault();
@@ -51,6 +52,20 @@ export const CommandMenu = ({ links }: Props) => {
 					<CommandEmpty>No results found.</CommandEmpty>
 					<CommandGroup heading="Links">
 						{internalLinks.map(({ url, title }) => (
+							<CommandItem
+								key={url}
+								onSelect={() => {
+									setOpen(false);
+									window.location.href = url;
+								}}
+							>
+								<span>{title}</span>
+							</CommandItem>
+						))}
+					</CommandGroup>
+					<CommandSeparator />
+					<CommandGroup heading="Blog">
+						{blogLinks.map(({ url, title }) => (
 							<CommandItem
 								key={url}
 								onSelect={() => {
