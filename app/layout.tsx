@@ -7,6 +7,8 @@ import { BGGrid } from '@/components/bg-grid';
 import '@/styles/globals.css';
 import { data } from '@/data/main';
 import Script from 'next/script';
+import ProgressIndicator from '@/components/progress-indicator';
+import { getPosts } from '@/data/blog';
 
 export const clashDisplay = localFont({
 	src: [
@@ -43,7 +45,16 @@ export const clashDisplay = localFont({
 	]
 });
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+	const postsLinks = await getPosts().then((posts) => {
+		return posts.map((post) => {
+			return {
+				url: `/blog/${post.slug}`,
+				title: post.title,
+				type: 'blog'
+			};
+		});
+	});
 	return (
 		<html lang="en" className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar">
 			<Head title={`${data.name} | ${data.role}`} url={`${process.env.NEXT_PUBLIC_URL}`} />
@@ -67,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				/>
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
+					<ProgressIndicator />
 					<main className="container relative mx-auto mt-28 overflow-auto print:p-12 overflow-y-scroll overflow-x-hidden no-scrollbar">
 						<BGGrid>{children}</BGGrid>
 						<CommandMenu
@@ -81,6 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 									title: 'Contact',
 									type: 'internal'
 								},
+								...postsLinks,
 								...data.contact.social.map((socialMediaLink) => ({
 									url: socialMediaLink.url,
 									title: socialMediaLink.name,

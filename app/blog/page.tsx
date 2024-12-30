@@ -1,23 +1,22 @@
-import { Button } from '@/components/ui/button';
+import PostsList from '@/components/pages/blog/posts-list';
+import { getPosts } from '@/data/blog';
 import { data } from '@/data/main';
 import { Metadata } from 'next';
-import Link from 'next/link';
 
 export const metadata: Metadata = {
-	title: `${data.name} | ${data.about}`,
-	description: data.summary
+	title: `${data.name} | ${data.role} :: Blog`,
+	description: 'My personal blog, for rambles and so on → ' + data.summary,
+	alternates: {
+		canonical: 'https://maria-adriana.com/blog'
+	}
 };
 
-export default function Page() {
-	return (
-		<div className="flex flex-col justify-center items-center h-80">
-			<h2 className="text-4xl font-semibold">Coming soon.</h2>
-			<p className="mt-4">🚧 Page under construction 🚧</p>
-			<div className="flex flex-col mx-auto mt-10 gap-9">
-				<Button variant="outline" size="lg" asChild>
-					<Link href="/">Return Home</Link>
-				</Button>
-			</div>
-		</div>
-	);
+export async function generateStaticParams() {
+	const posts = await getPosts();
+	return posts.map((post) => ({ slug: post.slug }));
+}
+
+export default async function Page() {
+	const posts = await getPosts();
+	return <PostsList posts={posts} />;
 }

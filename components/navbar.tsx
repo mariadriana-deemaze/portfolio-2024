@@ -54,7 +54,8 @@ export function Navbar() {
 									key={path}
 									href={path}
 									className={`transition-all hover:text-neutral-2 flex align-middle relative py-1 px-2 ${
-										pathname === path && 'dark:text-orange-200 text-orange-700'
+										pathname.split('/')[1] === path.replace('/', '') &&
+										'dark:text-orange-200 text-orange-700'
 									}`}
 								>
 									{name}
