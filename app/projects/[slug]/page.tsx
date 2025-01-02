@@ -11,7 +11,6 @@ import { ArrowLeftIcon, CalendarIcon, GitHubLogoIcon } from '@radix-ui/react-ico
 import Link from 'next/link';
 import { data } from '@/data/main';
 import rehypePrettyCode from 'rehype-pretty-code';
-import { ReactElement } from 'react';
 import { Badge } from '@/components/ui/badge';
 
 export async function generateMetadata(props: {
@@ -87,7 +86,7 @@ export default async function ProjectPage(props: {
 			</header>
 			<article className="flex flex-col gap-2 mt-4">
 				<section className="summary">
-					<Link className='flex flex-row gap-2' href={data.github + '/' + project.repo}>
+					<Link className="flex flex-row gap-2" href={data.github + '/' + project.repo}>
 						<GitHubLogoIcon /> Visit repo
 					</Link>
 					<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
