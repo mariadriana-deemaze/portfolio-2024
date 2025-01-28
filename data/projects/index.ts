@@ -20,6 +20,7 @@ export interface Project {
 		icon: JSX.Element;
 	}[];
 	repo:string;
+	liveUrl?:string;
 }
 
 export const getProjects = async () => {

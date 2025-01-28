@@ -9,6 +9,7 @@ import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Project } from '@/data/projects';
 import Image from 'next/image';
+import '@/styles/projects/index.css';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
 	const [hoveringPost, setHoveringPost] = useState<Project | null>(null);
@@ -74,7 +75,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 									</h1>
 									<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
 										<CalendarIcon />
-										{project.date}
+										{project.year}
 									</time>
 									<p className="py-4 font-mono text-sm text-foreground line-clamp-3">
 										{project.description}

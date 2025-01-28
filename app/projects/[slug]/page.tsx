@@ -61,13 +61,12 @@ export default async function ProjectPage(props: {
 					</span>
 					Go back
 				</Link>
-				<h1 className="font-clash">{title}</h1>
+				<h1 className="font-clash font-bold">{title}</h1>
 				<p className="font-mono text-sm text-foreground line-clamp-3">{description}</p>
-				{/* <time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
+				<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
 					<CalendarIcon />
-					{date}
-				</time> */}
-				{/* <hr className="mt-4" /> */}
+					{year}
+				</time>
 				<div className="mt-6 flex flex-wrap gap-1">
 					{technologies.map(({ label, icon }) => {
 						return (
@@ -85,14 +84,28 @@ export default async function ProjectPage(props: {
 				<hr className="mt-2" />
 			</header>
 			<article className="flex flex-col gap-2 mt-4">
-				<section className="summary">
-					<Link className="flex flex-row gap-2" href={data.github + '/' + project.repo}>
-						<GitHubLogoIcon /> Visit repo
-					</Link>
-					<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
-						<CalendarIcon />
-						{year}
-					</time>
+				<section className="summary flex gap-1 flex-row-reverse">
+					<Badge
+						className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+						variant="outline"
+					>
+						<Link
+							className="flex flex-row gap-2"
+							href={data.github + '/' + project.repo}
+						>
+							<GitHubLogoIcon /> Visit repo
+						</Link>
+					</Badge>
+					{project.liveUrl && (
+						<Badge
+							className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+							variant="outline"
+						>
+							<Link className="flex flex-row gap-2" href={project.liveUrl}>
+								<GitHubLogoIcon /> Live demo
+							</Link>
+						</Badge>
+					)}
 				</section>
 
 				<div className="content">
