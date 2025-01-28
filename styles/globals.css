@@ -111,6 +111,10 @@
 		opacity: 1;
 		transform: translateY(0);
 	}
+
+	.text-fade-grad {
+		@apply bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent max-w-min whitespace-nowrap;
+	}
 }
 
 .progress {
@@ -129,9 +133,7 @@
 	@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
 }
 
-.text-fade-grad {
-	@apply bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent max-w-min whitespace-nowrap;
-}
+
 
 .blog-page h1 {
 	@apply text-fade-grad relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none;
@@ -172,70 +174,5 @@
 }
 
 .blog-page .content > figure > code {
-	@apply flex flex-row border border-gray-400 p-2 rounded-md bg-secondary-foreground/10;
-}
-
-/**
-*
-*	Project page
-* 	TODO: Start splitting
-*
-**/
-
-.project-page {
-	@apply flex flex-col mt-2 font-mono;
-}
-
-.project-page header {
-	@apply flex flex-col gap-2
-}
-
-.project-page header h1 {
-	@apply text-fade-grad relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none;
-}
-
-.project-page .content h1,
-.project-page .content h2,
-.project-page .content h3,
-.project-page .content h4,
-.project-page .content h5,
-.project-page .content h6 {
-	@apply mt-6 mb-2 font-clash font-bold text-gray-600 dark:text-gray-200;
-}
-
-.project-page .content h1 {
-	@apply text-3xl
-}
-
-.project-page .content h2 {
-	@apply text-2xl
-}
-
-.project-page .content h3 {
-	@apply text-xl
-}
-
-.project-page .content h4 {
-	@apply text-lg
-}
-
-.project-page .content h5 {
-	@apply text-base
-}
-
-.project-page .content h6 {
-	@apply text-sm
-}
-
-.project-page .content ul {
-	@apply list-disc ml-4;
-}
-
-
-.project-page .content img {
-	@apply border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md;
-}
-
-.project-page .content > figure > code {
 	@apply flex flex-row border border-gray-400 p-2 rounded-md bg-secondary-foreground/10;
 }
