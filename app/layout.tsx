@@ -9,6 +9,7 @@ import { data } from '@/data/main';
 import Script from 'next/script';
 import ProgressIndicator from '@/components/progress-indicator';
 import { getPosts } from '@/data/blog';
+import { getProjects } from '@/data/projects';
 
 export const clashDisplay = localFont({
 	src: [
@@ -55,6 +56,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			};
 		});
 	});
+	const projectsLinks = await getProjects().then((projects) => {
+		return projects.map((project) => {
+			return {
+				url: `/projects/${project.slug}`,
+				title: project.title,
+				type: 'projects'
+			};
+		});
+	});
 	return (
 		<html lang="en" className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar">
 			<Head title={`${data.name} | ${data.role}`} url={`${process.env.NEXT_PUBLIC_URL}`} />
@@ -94,6 +104,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 									type: 'internal'
 								},
 								...postsLinks,
+								...projectsLinks,
 								...data.contact.social.map((socialMediaLink) => ({
 									url: socialMediaLink.url,
 									title: socialMediaLink.name,

@@ -24,6 +24,7 @@ export const CommandMenu = ({ links }: Props) => {
 
 	const internalLinks = links.filter((link) => link.type === 'internal');
 	const blogLinks = links.filter((link) => link.type === 'blog');
+	const projectsLinks = links.filter((link) => link.type === 'projects');
 	const socialsLinks = links.filter((link) => link.type === 'social');
 
 	useEffect(() => {
@@ -52,6 +53,20 @@ export const CommandMenu = ({ links }: Props) => {
 					<CommandEmpty>No results found.</CommandEmpty>
 					<CommandGroup heading="Links">
 						{internalLinks.map(({ url, title }) => (
+							<CommandItem
+								key={url}
+								onSelect={() => {
+									setOpen(false);
+									window.location.href = url;
+								}}
+							>
+								<span>{title}</span>
+							</CommandItem>
+						))}
+					</CommandGroup>
+					<CommandSeparator />
+					<CommandGroup heading="Projects">
+						{projectsLinks.map(({ url, title }) => (
 							<CommandItem
 								key={url}
 								onSelect={() => {
