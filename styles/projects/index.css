@@ -7,7 +7,7 @@
 }
 
 .project-page header h1 {
-	@apply text-fade-grad relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none;
+	@apply text-fade-grad relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-bold leading-none;
 }
 
 .project-page .content h1,
@@ -43,13 +43,18 @@
 	@apply text-sm
 }
 
+.project-page .content p {
+	@apply text-pretty font-mono text-sm text-foreground leading-6 mb-2;
+}
+
+
 .project-page .content ul {
 	@apply list-disc ml-4;
 }
 
 
 .project-page .content img {
-	@apply border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md bg-white/20;
+	@apply border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md bg-white/20 my-8;
 }
 
 .project-page .content > figure > code {

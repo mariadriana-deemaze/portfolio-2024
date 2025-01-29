@@ -7,7 +7,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkToc from 'remark-toc';
 import { mdxComponents } from '@/components/mdx/components';
-import { ArrowLeftIcon, CalendarIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, ArrowTopRightIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { data } from '@/data/main';
 import rehypePrettyCode from 'rehype-pretty-code';
@@ -47,7 +47,7 @@ export default async function ProjectPage(props: {
 		return notFound();
 	}
 
-	const { title, description, year, content, technologies } = project;
+	const { title, year, content, technologies } = project;
 
 	return (
 		<>
@@ -61,12 +61,10 @@ export default async function ProjectPage(props: {
 					</span>
 					Go back
 				</Link>
-				<h1 className="font-clash font-bold">{title}</h1>
-				<p className="font-mono text-sm text-foreground line-clamp-3">{description}</p>
 				<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
-					<CalendarIcon />
-					{year}
+					YEAR {year}
 				</time>
+				<h1 className="font-clash">{title}</h1>
 				<div className="mt-6 flex flex-wrap gap-1">
 					{technologies.map(({ label, icon }) => {
 						return (
@@ -92,6 +90,7 @@ export default async function ProjectPage(props: {
 						<Link
 							className="flex flex-row gap-2"
 							href={data.github + '/' + project.repo}
+							target="_blank"
 						>
 							<GitHubLogoIcon /> Visit repo
 						</Link>
@@ -101,8 +100,12 @@ export default async function ProjectPage(props: {
 							className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
 							variant="outline"
 						>
-							<Link className="flex flex-row gap-2" href={project.liveUrl}>
-								<GitHubLogoIcon /> Live demo
+							<Link
+								className="flex flex-row gap-2"
+								href={project.liveUrl}
+								target="_blank"
+							>
+								<ArrowTopRightIcon /> Live demo
 							</Link>
 						</Badge>
 					)}
