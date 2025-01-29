@@ -1,4 +1,3 @@
-import Head from '@/components/head';
 import localFont from 'next/font/local';
 import { CommandMenu } from '@/components/command-menu';
 import { Navbar } from '@/components/navbar';
@@ -67,7 +66,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	});
 	return (
 		<html lang="en" className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar">
-			<Head title={`${data.name} | ${data.role}`} url={`${process.env.NEXT_PUBLIC_URL}`} />
 			<body className="antialiased mb-10 lg:mx-auto">
 				<Script
 					strategy="afterInteractive"
