@@ -6,7 +6,7 @@ interface Props {
 	title: string;
 	description: string;
 	tags: readonly string[];
-	medium: 'web' | 'mobile';
+	medium: string;
 	preview?: string;
 	link?: string;
 }

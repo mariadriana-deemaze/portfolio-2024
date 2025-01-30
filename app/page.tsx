@@ -1,5 +1,6 @@
 import { HomeLayout } from '@/components/pages/home/layout';
 import { data } from '@/data/main';
+import { getProjects } from '@/data/projects';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 	}
 };
 
-export default function Page() {
-	return <HomeLayout />;
+export default async function Page() {
+	const projects = await getProjects();
+	return <HomeLayout projects={projects} />;
 }

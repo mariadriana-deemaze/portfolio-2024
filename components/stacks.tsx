@@ -6,6 +6,7 @@ import {
 	SiExpress,
 	SiFigma,
 	SiFirebase,
+	SiGo,
 	SiJest,
 	SiJquery,
 	SiKnexdotjs,
@@ -52,6 +53,10 @@ export const STACKS = {
 	},
 	Next: { label: 'NextJS', icon: <SiNextdotjs size={iconSize} /> },
 	React: { label: 'ReactJS', icon: <SiReact size={iconSize} className="text-sky-500" /> },
+	ReactNative: {
+		label: 'React Native',
+		icon: <SiReact size={iconSize} className="text-sky-800" />
+	},
 	Remix: { label: 'Remix', icon: <SiRemix size={iconSize} /> },
 	Expo: { label: 'Expo', icon: <SiExpo size={iconSize} /> },
 	TailwindCSS: {
@@ -77,6 +82,7 @@ export const STACKS = {
 		icon: <SiFirebase size={iconSize} className="text-yellow-500" />
 	},
 	NodeJS: { label: 'NodeJS', icon: <SiNodedotjs size={iconSize} className="text-green-600" /> },
+	Go: { label: 'Go', icon: <SiGo size={iconSize} className="text-blue-600" /> },
 	Redux: { label: 'Redux', icon: <SiRedux size={iconSize} className="text-purple-500" /> },
 	Webpack: { label: 'Webpack', icon: <SiWebpack size={iconSize} className="text-blue-500" /> },
 	StyledComponents: {

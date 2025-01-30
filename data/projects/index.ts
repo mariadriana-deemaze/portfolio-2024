@@ -12,6 +12,8 @@ export interface Project {
 	hero: string;
 	title: string;
 	description: string;
+	medium:string;
+	tags:string[];
 	year: string;
 	slug: string;
 	content: string;
