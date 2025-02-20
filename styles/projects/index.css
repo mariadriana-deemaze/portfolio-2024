@@ -53,7 +53,7 @@
 
 
 .project-page .content ul {
-	@apply list-disc ml-4;
+	@apply list-disc ml-4 font-mono;
 }
 
 
