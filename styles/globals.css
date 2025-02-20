@@ -111,6 +111,10 @@
 		opacity: 1;
 		transform: translateY(0);
 	}
+
+	.text-fade-grad {
+		@apply bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent max-w-min whitespace-nowrap;
+	}
 }
 
 .progress {
@@ -129,9 +133,6 @@
 	@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
 }
 
-.text-fade-grad {
-	@apply bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent max-w-min whitespace-nowrap;
-}
 
 .blog-page h1 {
 	@apply text-fade-grad relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none;
@@ -155,7 +156,7 @@
 }
 
 .blog-page .content ul {
-	@apply list-disc ml-4;
+	@apply list-disc ml-4 font-mono text-sm leading-6;
 }
 
 .blog-page .content h1,

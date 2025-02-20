@@ -7,8 +7,9 @@ import { SectionWorkExperience } from '@/components/pages/home/section-work-expe
 import ScrollFadeReveal from '@/components/ui/section-reveal';
 import ReactLenis from '@studio-freight/react-lenis';
 import { SectionHero } from './section-hero';
+import { Project } from '@/data/projects';
 
-export const HomeLayout = () => {
+export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
 			<section className="mx-auto w-full max-w-2xl space-y-48 md:space-y-32 print:space-y-6 animate-fade-in-left delay-500">
@@ -25,7 +26,7 @@ export const HomeLayout = () => {
 					<SectionEducation />
 				</ScrollFadeReveal>
 				<ScrollFadeReveal>
-					<SectionProjects />
+					<SectionProjects projects={projects} />
 				</ScrollFadeReveal>
 			</section>
 		</ReactLenis>

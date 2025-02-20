@@ -1,5 +1,5 @@
 import { STACKS } from '@/components/stacks';
-import { LuGithub, LuLinkedin, LuInstagram } from 'react-icons/lu';
+import { LuGithub, LuLinkedin, LuInstagram, LuDribbble, LuCodepen } from 'react-icons/lu';
 
 enum Intervention {
 	FrontEndDevelopment = 'Front-end',
@@ -11,6 +11,7 @@ enum Intervention {
 export const data = {
 	name: 'Maria Adriana',
 	role: 'Full stack developer',
+	github: 'https://github.com/mariadriana-deemaze',
 	mottos: [
 		'Full-Stack Designer',
 		'Front-end Developer',
@@ -40,6 +41,16 @@ I’m excited to continue building innovative solutions that merge design sensib
 				name: 'Instagram',
 				url: 'https://www.instagram.com/mariadriana94/',
 				icon: LuInstagram
+			},
+			{
+				name: 'CodePen',
+				url: 'https://codepen.io/mariaadriana94/',
+				icon: LuCodepen
+			},
+			{
+				name: 'Dribbble',
+				url: 'https://dribbble.com/mariadriana94/',
+				icon: LuDribbble
 			}
 		]
 	},
@@ -93,7 +104,7 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 			description: `
 				Developed cross-platform mobile apps with React Native (TS), Kalipso, and Axway Titanium for seamless experiences on multiple devices. Provided support for e-commerce stores, including customizing and maintaining systems built on WooCommerce and PrestaShop. Designed and implemented intuitive user interfaces that met client acceptance criteria and enhanced the overall user experience. Created visually appealing graphics for web and print materials, and edited video content for social media to promote the brand and drive engagement.`,
 			stack: [
-				STACKS.React,
+				STACKS.ReactNative,
 				STACKS.Expo,
 				STACKS.Appcelerator,
 				STACKS.PHP,
@@ -102,42 +113,6 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 				STACKS.Prestashop,
 				STACKS.Figma
 			]
-		}
-	],
-	projects: [
-		{
-			title: 'maria-adriana.com',
-			intervention: [Intervention.FullStackDevelopment, Intervention.Design],
-			medium: 'web',
-			description: 'This very site, built with Next.js.',
-			preview: '/images/projects/portfolio/preview.png',
-			link: {
-				label: 'maria-adriana.com',
-				href: 'https://maria-adriana.com/'
-			}
-		},
-		{
-			title: 'Eativity',
-			intervention: [Intervention.FullStackDevelopment, Intervention.Design],
-			medium: 'mobile',
-			description:
-				'A daily log mobile App for helping tracking adherence to a healthier life style.',
-			preview: '/images/projects/eativity/preview.png',
-			link: {
-				label: 'github repo',
-				href: 'https://github.com/mariadriana-deemaze/eativity'
-			}
-		},
-		{
-			title: 'Ask me anything',
-			intervention: [Intervention.FullStackDevelopment],
-			medium: 'web',
-			description: 'Web rooms of questions with websockets.',
-			preview: '/images/projects/ama/preview.png',
-			link: {
-				label: 'maria-adriana.com',
-				href: 'https://github.com/mariadriana-deemaze/AMA-go-react'
-			}
 		}
 	]
 } as const;

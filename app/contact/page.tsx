@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function Page() {
 	return (
 		<>
-			<header className="mx-auto w-full max-w-2xl space-y-2 animate-fade-in-left delay-500 mb-20">
+			<header className="mx-auto w-full max-w-2xl space-y-2 animate-fade-in-left delay-500 mb-4">
 				<h1 className="font-clash font-bold text-5xl text-fade-grad">Contact</h1>
 				<h4 className="font-clash font-medium text-md text-gray-500">Reach out</h4>
 				<p className="pb-10 text-pretty font-mono text-sm text-foreground leading-5">
@@ -28,8 +28,8 @@ export default function Page() {
 				</p>
 				<hr />
 			</header>
-			<Section className="mt-20 animate-fade-in-left delay-700">
-				<div className="flex flex-col justify-center items-center mt-20">
+			<Section className="animate-fade-in-left delay-700">
+				<div className="flex flex-col justify-center items-center">
 					<div className="flex flex-col items-center align-middle self-center max-w-2xl w-full gap-10">
 						<div className="flex flex-col w-full gap-4"></div>
 						<ContactForm />
