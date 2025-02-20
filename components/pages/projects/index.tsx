@@ -44,7 +44,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 				<h1 className="font-clash font-bold text-5xl text-fade-grad">Projects</h1>
 				<h4 className="font-clash font-medium text-md text-gray-500">Personal projects</h4>
 				<p className="pb-10 text-pretty font-mono text-sm text-foreground leading-5">
-					Personal projects that I've worked on in the mean time
+					Things that I've worked on in the mean time
 				</p>
 				<hr />
 			</header>
