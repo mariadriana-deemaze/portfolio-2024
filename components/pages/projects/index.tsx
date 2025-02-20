@@ -50,7 +50,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 			</header>
 			<section className="mx-auto w-full max-w-2xl space-y-48 md:space-y-32 print:space-y-6 animate-fade-in-left delay-500">
 				<ul className="flex flex-col gap-20 w-full h-full">
-					{projects.map((project, index) => (
+					{projects.map((project) => (
 						<li
 							key={`blogpost-${project.slug}`}
 							className="w-full border-b"
@@ -62,7 +62,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							<article>
 								<ScrollFadeReveal onLoadVisibility>
 									<Image
-									className='border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md'
+										className="border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md"
 										alt={`Hero image of the ${project.title} project.`}
 										width={800}
 										height={400}
