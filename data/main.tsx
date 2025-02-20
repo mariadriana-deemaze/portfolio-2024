@@ -1,5 +1,5 @@
 import { STACKS } from '@/components/stacks';
-import { LuGithub, LuLinkedin, LuInstagram } from 'react-icons/lu';
+import { LuGithub, LuLinkedin, LuInstagram, LuDribbble, LuCodepen } from 'react-icons/lu';
 
 enum Intervention {
 	FrontEndDevelopment = 'Front-end',
@@ -41,6 +41,16 @@ I’m excited to continue building innovative solutions that merge design sensib
 				name: 'Instagram',
 				url: 'https://www.instagram.com/mariadriana94/',
 				icon: LuInstagram
+			},
+			{
+				name: 'CodePen',
+				url: 'https://codepen.io/mariaadriana94/',
+				icon: LuCodepen
+			},
+			{
+				name: 'Dribbble',
+				url: 'https://dribbble.com/mariadriana94/',
+				icon: LuDribbble
 			}
 		]
 	},
@@ -104,5 +114,5 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 				STACKS.Figma
 			]
 		}
-	],
+	]
 } as const;
