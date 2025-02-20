@@ -134,7 +134,6 @@
 }
 
 
-
 .blog-page h1 {
 	@apply text-fade-grad relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none;
 }
@@ -157,7 +156,7 @@
 }
 
 .blog-page .content ul {
-	@apply list-disc ml-4 font-mono;
+	@apply list-disc ml-4 font-mono text-sm leading-6;
 }
 
 .blog-page .content h1,

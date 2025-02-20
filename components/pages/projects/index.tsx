@@ -44,7 +44,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 				<h1 className="font-clash font-bold text-5xl text-fade-grad">Projects</h1>
 				<h4 className="font-clash font-medium text-md text-gray-500">Personal projects</h4>
 				<p className="pb-10 text-pretty font-mono text-sm text-foreground leading-5">
-					Things that I've worked on in the mean time
+					Things that I've worked on in the mean time.
 				</p>
 				<hr />
 			</header>
@@ -62,15 +62,13 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							<article>
 								<ScrollFadeReveal onLoadVisibility>
 									<Image
+									className='border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md'
 										alt={`Hero image of the ${project.title} project.`}
 										width={800}
 										height={400}
 										src={project.hero}
 									/>
-									<h1 className="font-clash font-medium text-3xl text-fade-grad">
-										<span className="text-gray-600 bg-none opacity-20">
-											{index + 1}.
-										</span>{' '}
+									<h1 className="font-clash font-medium text-3xl text-fade-grad mt-5">
 										{project.title}
 									</h1>
 									<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
