@@ -44,7 +44,7 @@
     "shiki": "^1.24.4",
     "sonner": "^2.0.0",
     "swr": "^2.0.3",
-    "tailwind-merge": "^2.0.0",
+    "tailwind-merge": "^3.0.0",
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
