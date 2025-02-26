@@ -5,7 +5,8 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: `${data.name} | ${data.role} :: Contact`,
-	description: 'Contact me → ' + data.summary,
+	description:
+		'Get in touch with Maria Adriana to discuss web development, architecture challenges, or potential collaborations. Open to consulting opportunities in full stack development, scalable solutions, and modern web technologies.',
 	alternates: {
 		canonical: 'https://maria-adriana.com/contact'
 	}

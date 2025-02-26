@@ -22,7 +22,7 @@ export async function generateMetadata(props: {
 	const project = await getProject(params.slug);
 	return {
 		title: `${data.name} | ${data.role} :: ${project?.title}`,
-		description: project?.description + ' ' + data.summary,
+		description: `${data.name} | ${data.role} based in Portugal :: ${project?.description}. ${project?.technologies.map((tech) => `#${tech.label}`).join(" ")}`,
 		alternates: {
 			canonical: `https://maria-adriana.com/projects/${project?.slug}`
 		}

@@ -21,7 +21,7 @@ export async function generateMetadata(props: {
 	const post = await getPost(params.slug);
 	return {
 		title: `${data.name} | ${data.role} :: ${post?.title}`,
-		description: post?.description + ' ' + data.summary,
+		description: `${data.name} | ${data.role} based in Portugal :: ${post?.description}.`,
 		alternates: {
 			canonical: `https://maria-adriana.com/blog/${post?.slug}`
 		}

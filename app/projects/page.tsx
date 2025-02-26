@@ -5,7 +5,8 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: `${data.name} | ${data.role} :: Projects`,
-	description: 'My personal blog, for rambles and so on → ' + data.summary,
+	description:
+		'Explore Maria Adriana’s full stack development projects, featuring work with Node.js, NestJS, Next.js, TypeScript, Go and React. Discover scalable solutions, clean architecture, and modern web applications.',
 	alternates: {
 		canonical: 'https://maria-adriana.com/projects'
 	}
