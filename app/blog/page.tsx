@@ -5,7 +5,8 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: `${data.name} | ${data.role} :: Blog`,
-	description: 'My personal blog, for rambles and so on → ' + data.summary,
+	description:
+		'Explore Maria Adriana’s insights on Full Stack Development, with in-depth articles on problem-solving strategies, architecture decisions, performance optimization, and modern web technologies.',
 	alternates: {
 		canonical: 'https://maria-adriana.com/blog'
 	}

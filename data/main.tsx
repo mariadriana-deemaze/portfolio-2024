@@ -1,19 +1,12 @@
 import { STACKS } from '@/components/stacks';
 import { LuGithub, LuLinkedin, LuInstagram, LuDribbble, LuCodepen } from 'react-icons/lu';
 
-enum Intervention {
-	FrontEndDevelopment = 'Front-end',
-	BackEndDevelopment = 'Back-end',
-	FullStackDevelopment = 'Full stack',
-	Design = 'Design'
-}
-
 export const data = {
 	name: 'Maria Adriana',
-	role: 'Full stack developer',
+	role: 'Full Stack Developer',
 	github: 'https://github.com/mariadriana-deemaze',
 	mottos: [
-		'Full-Stack Designer',
+		'Full Stack Designer',
 		'Front-end Developer',
 		'Interaction Designer',
 		'Back-ender wannabe'
