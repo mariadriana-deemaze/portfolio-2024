@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { data } from '@/data/main';
 import rehypePrettyCode from 'rehype-pretty-code';
 import '@/styles/blog/index.css';
+import { format } from 'date-fns';
 
 export async function generateMetadata(props: {
 	params: Promise<{
@@ -60,12 +61,12 @@ export default async function PostPage(props: {
 				</span>
 				Go back
 			</Link>
-			<h1 className="font-clash text-wrap whitespace-break-spaces max-w-16 border border-orange-400">
+			<h1 className="font-clash max-w-16 whitespace-break-spaces">
 				{title}
 			</h1>
 			<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
 				<CalendarIcon />
-				{date}
+				{format(new Date(date), 'do MMMM yyyy')}
 			</time>
 			<hr className="mt-4" />
 			<div className="content">
@@ -84,7 +85,14 @@ export default async function PostPage(props: {
 									}
 								]
 							],
-							rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypePrettyCode]
+							rehypePlugins: [
+								rehypeSlug,
+								rehypeAutolinkHeadings,
+								() =>
+									rehypePrettyCode({
+										theme: 'github-dark-high-contrast'
+									})
+							]
 						}
 					}}
 					components={mdxComponents}

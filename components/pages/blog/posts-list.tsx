@@ -9,6 +9,7 @@ import useMousePosition from '@/hooks/use-mouse-position';
 import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import '@/styles/blog/index.css';
+import { format } from 'date-fns';
 
 export default function PostsList({ posts }: { posts: BlogPost[] }) {
 	const [hoveringPost, setHoveringPost] = useState<BlogPost | null>(null);
@@ -55,7 +56,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							Looks empty here - enter the void
 						</p>
 					)}
-					{posts.map((post, index) => (
+					{posts.map((post) => (
 						<li
 							key={`blogpost-${post.slug}`}
 							className="w-full border-b"
@@ -67,16 +68,13 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							<article>
 								<ScrollFadeReveal onLoadVisibility>
 									<h1 className="font-clash font-medium text-3xl text-fade-grad">
-										<span className="text-gray-600 bg-none opacity-20">
-											{index + 1}.
-										</span>{' '}
 										{post.title}
 									</h1>
 									<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
 										<CalendarIcon />
-										{post.date}
+										{format(new Date(post.date), 'do MMMM yyyy')}
 									</time>
-									<p className="py-4 font-mono text-sm text-foreground line-clamp-3">
+									<p className="my-4 font-mono text-sm text-foreground line-clamp-3">
 										{post.description}
 									</p>
 								</ScrollFadeReveal>
