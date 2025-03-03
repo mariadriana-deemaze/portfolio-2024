@@ -8,6 +8,7 @@ import { BlogPost } from '@/data/blog';
 import useMousePosition from '@/hooks/use-mouse-position';
 import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
+import '@/styles/blog/index.css';
 
 export default function PostsList({ posts }: { posts: BlogPost[] }) {
 	const [hoveringPost, setHoveringPost] = useState<BlogPost | null>(null);
@@ -49,6 +50,11 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 			</header>
 			<section className="mx-auto w-full max-w-2xl space-y-48 md:space-y-32 print:space-y-6 animate-fade-in-left delay-500">
 				<ul className="flex flex-col gap-20 w-full h-full">
+					{posts.length === 0 && (
+						<p className="pb-10 text-pretty font-mono text-sm text-foreground leading-5 text-center">
+							Looks empty here - enter the void
+						</p>
+					)}
 					{posts.map((post, index) => (
 						<li
 							key={`blogpost-${post.slug}`}

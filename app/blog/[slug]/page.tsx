@@ -11,6 +11,7 @@ import { ArrowLeftIcon, CalendarIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { data } from '@/data/main';
 import rehypePrettyCode from 'rehype-pretty-code';
+import '@/styles/blog/index.css';
 
 export async function generateMetadata(props: {
 	params: Promise<{
@@ -46,7 +47,7 @@ export default async function PostPage(props: {
 		return notFound();
 	}
 
-	const { title, description, date, body } = post;
+	const { title, date, body } = post;
 
 	return (
 		<article className="flex flex-col gap-2 blog-page">
@@ -59,8 +60,9 @@ export default async function PostPage(props: {
 				</span>
 				Go back
 			</Link>
-			<h1 className="font-clash">{title}</h1>
-			<p className="font-mono text-sm text-foreground line-clamp-3">{description}</p>
+			<h1 className="font-clash text-wrap whitespace-break-spaces max-w-16 border border-orange-400">
+				{title}
+			</h1>
 			<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
 				<CalendarIcon />
 				{date}
