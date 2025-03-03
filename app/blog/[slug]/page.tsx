@@ -61,9 +61,7 @@ export default async function PostPage(props: {
 				</span>
 				Go back
 			</Link>
-			<h1 className="font-clash max-w-16 whitespace-break-spaces">
-				{title}
-			</h1>
+			<h1>{title}</h1>
 			<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
 				<CalendarIcon />
 				{format(new Date(date), 'do MMMM yyyy')}

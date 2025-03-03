@@ -1,10 +1,22 @@
+@import '../globals.css';
+
 .text-fade-grad {
-	@apply bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent max-w-min whitespace-nowrap;
+	@apply bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent min-w-full;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+
+.no-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
 
 .blog-page h1 {
-	@apply text-fade-grad relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none;
+	@apply text-fade-grad font-clash relative w-full text-[40px] md:text-[50px] font-medium leading-none;
 }
+
 
 .blog-page h2 {
 	@apply text-xl font-bold leading-relaxed text-gray-600 dark:text-gray-400;
@@ -16,14 +28,6 @@
 
 .blog-page .content h3 {
 	@apply text-lg font-bold leading-relaxed;
-}
-
-.blog-page .content p {
-	@apply text-pretty font-mono text-foreground leading-8;
-}
-
-.blog-page .content ul {
-	@apply list-disc ml-4 font-mono text-sm leading-6;
 }
 
 .blog-page .content h1,
@@ -45,7 +49,15 @@
 }
 
 .blog-page .content p {
-	@apply mb-5;
+	@apply mb-5 font-mono leading-6;
+}
+
+.blog-page .content ul {
+	@apply list-disc ml-4 mb-5 font-mono leading-6;
+}
+
+.blog-page .content ul > li {
+	@apply mb-5 font-mono leading-6;
 }
 
 .blog-page .content a {
@@ -57,12 +69,11 @@
 }
 
 .blog-page .content > figure > code {
-	@apply block border border-gray-400 p-2 rounded-md bg-secondary-foreground/10 my-4;
+	@apply block border border-gray-700 p-2 rounded-md bg-secondary-foreground/10 my-4;
 }
 
-
 figure[data-rehype-pretty-code-figure] > code {
-	 @apply pl-1 whitespace-break-spaces leading-8 overflow-auto no-scrollbar;
+	@apply pl-1 whitespace-break-spaces leading-8 overflow-auto no-scrollbar;
 }
 
 figure[data-rehype-pretty-code-figure] > code ::selection {
