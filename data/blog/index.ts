@@ -20,7 +20,7 @@ export const getPosts = async () => {
 
 	const posts = await Promise.all(
 		content
-			.filter((file) => path.extname(file) === '.mdx')
+			.filter((file) => path.extname(file) === '.md')
 			.map(async (file) => {
 				const filePath = `${BLOG_DIR}/${file}`;
 				const postContent = await fs.readFile(filePath, 'utf8');
