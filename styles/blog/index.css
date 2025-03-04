@@ -1,7 +1,8 @@
+@import '../globals.css';
+
 .blog-page h1 {
 	@apply text-fade-grad font-clash relative w-full text-[40px] md:text-[50px] font-medium leading-none;
 }
-
 
 .blog-page h2 {
 	@apply text-xl font-bold leading-relaxed text-gray-600 dark:text-gray-400;
