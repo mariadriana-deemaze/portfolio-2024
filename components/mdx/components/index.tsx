@@ -1,9 +1,7 @@
-import { DetailedHTMLProps, HTMLAttributes } from 'react';
-import NextImage from 'next/image';
+import { DetailedHTMLProps, HTMLAttributes, ImgHTMLAttributes } from 'react';
 import { MDXComponents } from 'mdx/types';
 import { MDXNote } from './mdx-note';
-import { MDXImage } from './mdx-image';
-import { HomeIcon, InfoCircledIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 
 export const mdxComponents: MDXComponents = {
 	pre: ({
@@ -12,8 +10,22 @@ export const mdxComponents: MDXComponents = {
 	}: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLPreElement>) => {
 		return <code {...props}>{children}</code>;
 	},
-	img: MDXImage,
-	Image: NextImage,
+	Image: (props: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>) => {
+		if (!props.src || props.src === '') {
+			return <></>;
+		}
+		return props.style?.height && props.style?.width ? (
+			<Image
+				{...props}
+				width={Number(props.width)}
+				height={Number(props.height)}
+				src={props.src}
+				alt={props.alt || ''}
+			/>
+		) : (
+			<img {...props} />
+		);
+	},
 	Details: ({
 		children,
 		summary,
@@ -26,7 +38,5 @@ export const mdxComponents: MDXComponents = {
 			{children}
 		</details>
 	),
-	Note: MDXNote,
-	InfoIcon: InfoCircledIcon,
-	HomeIcon: HomeIcon
+	Note: MDXNote
 };

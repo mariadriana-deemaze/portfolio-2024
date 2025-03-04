@@ -7,10 +7,13 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkToc from 'remark-toc';
 import { mdxComponents } from '@/components/mdx/components';
-import { ArrowLeftIcon, CalendarIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, ArrowTopRightIcon, CalendarIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { data } from '@/data/main';
 import rehypePrettyCode from 'rehype-pretty-code';
+import '@/styles/blog/index.css';
+import { format } from 'date-fns';
+import { Badge } from '@/components/ui/badge';
 
 export async function generateMetadata(props: {
 	params: Promise<{
@@ -46,7 +49,7 @@ export default async function PostPage(props: {
 		return notFound();
 	}
 
-	const { title, description, date, body } = post;
+	const { title, date, body, keywords } = post;
 
 	return (
 		<article className="flex flex-col gap-2 blog-page">
@@ -59,13 +62,45 @@ export default async function PostPage(props: {
 				</span>
 				Go back
 			</Link>
-			<h1 className="font-clash">{title}</h1>
-			<p className="font-mono text-sm text-foreground line-clamp-3">{description}</p>
+			<h1>{title}</h1>
 			<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500 dark:text-gray-300">
 				<CalendarIcon />
-				{date}
+				{format(new Date(date), 'do MMMM yyyy')}
 			</time>
+
 			<hr className="mt-4" />
+
+			<section className="flex gap-1 flex-row justify-between">
+				<div className="mt-6 flex flex-wrap gap-1">
+					{keywords.map((keyword) => {
+						return (
+							<Badge
+								className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+								variant="outline"
+								key={post.slug + keyword}
+							>
+								<span>{keyword}</span>
+							</Badge>
+						);
+					})}
+				</div>
+
+				<div className="mt-6 flex flex-wrap gap-1 ">
+					<Badge
+						className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+						variant="outline"
+					>
+						<Link
+							className="flex flex-row gap-2"
+							href={post.external_link}
+							target="_blank"
+						>
+							<ArrowTopRightIcon /> On Medium
+						</Link>
+					</Badge>
+				</div>
+			</section>
+
 			<div className="content">
 				<MDXRemote
 					source={body}
@@ -82,7 +117,14 @@ export default async function PostPage(props: {
 									}
 								]
 							],
-							rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypePrettyCode]
+							rehypePlugins: [
+								rehypeSlug,
+								rehypeAutolinkHeadings,
+								() =>
+									rehypePrettyCode({
+										theme: 'github-dark-high-contrast'
+									})
+							]
 						}
 					}}
 					components={mdxComponents}

@@ -1,4 +1,4 @@
-"use server"
+'use server';
 
 import fs from 'node:fs/promises';
 import path from 'path';
@@ -13,6 +13,8 @@ export interface BlogPost {
 	slug: string;
 	body: string;
 	type: string;
+	external_link: string;
+	keywords: string[];
 }
 
 export const getPosts = async () => {
@@ -20,7 +22,7 @@ export const getPosts = async () => {
 
 	const posts = await Promise.all(
 		content
-			.filter((file) => path.extname(file) === '.mdx')
+			.filter((file) => path.extname(file) === '.md')
 			.map(async (file) => {
 				const filePath = `${BLOG_DIR}/${file}`;
 				const postContent = await fs.readFile(filePath, 'utf8');
@@ -30,7 +32,13 @@ export const getPosts = async () => {
 					return null;
 				}
 
-				return { ...data, body: content, type: 'post' } as BlogPost;
+				return {
+					...data,
+					keywords: data.keywords.split(',').map((word: string) => `#${word}`),
+					external_link: data.link,
+					body: content,
+					type: 'post'
+				} as BlogPost;
 			})
 	);
 
