@@ -70,8 +70,8 @@ export default async function PostPage(props: {
 
 			<hr className="mt-4" />
 
-			<section className="flex gap-1 flex-row justify-between">
-				<div className="mt-6 flex flex-wrap gap-1">
+			<section className="mt-6 flex gap-1 flex-row justify-between">
+				<div className=" flex flex-wrap gap-1">
 					{keywords.map((keyword) => {
 						return (
 							<Badge
@@ -85,20 +85,14 @@ export default async function PostPage(props: {
 					})}
 				</div>
 
-				<div className="mt-6 flex flex-wrap gap-1 ">
-					<Badge
-						className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-						variant="outline"
-					>
-						<Link
-							className="flex flex-row gap-2"
-							href={post.external_link}
-							target="_blank"
-						>
-							<ArrowTopRightIcon /> On Medium
-						</Link>
-					</Badge>
-				</div>
+				<Badge
+					className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default flex-shrink-0 self-start"
+					variant="outline"
+				>
+					<Link className="flex flex-row gap-2" href={post.external_link} target="_blank">
+						<ArrowTopRightIcon /> On Medium
+					</Link>
+				</Badge>
 			</section>
 
 			<div className="content">
