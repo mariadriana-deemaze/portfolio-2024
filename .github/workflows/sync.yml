@@ -12,6 +12,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: |
+          cd ${{ github.action_path }}
+          npm install
+          npm run prepare
+          npm run build
+
       - name: Run RSS Feed to Markdown Action
         uses: mariadriana-deemaze/rss_medium_to_markdown@v1
         with:
