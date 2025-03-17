@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run RSS Feed to Markdown Action
-        uses: your-github-username/rss_medium_to_markdown@v1
+        uses: mariadriana-deemaze/rss_medium_to_markdown@v1
         with:
           feed_url: "https://medium.com/feed/@mariaadriana15"
           template_file: "data/BLOG_TEMPLATE.md"
