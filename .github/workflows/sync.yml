@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cd ${{ github.action_path }}
+          cd ./_actions/mariadriana-deemaze/rss_medium_to_markdown/v1
           npm install
           npm run prepare
           npm run build
