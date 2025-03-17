@@ -17,13 +17,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Dependencies
-        run: |
-          cd ./_actions/mariadriana-deemaze/rss_medium_to_markdown/v1
-          npm install
-          npm run prepare
-          npm run build
-
       - name: Run RSS Feed to Markdown Action
         uses: mariadriana-deemaze/rss_medium_to_markdown@v1
         with:
