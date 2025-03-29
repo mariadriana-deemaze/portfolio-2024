@@ -23,7 +23,7 @@ export const mdxComponents: MDXComponents = {
 				alt={props.alt || ''}
 			/>
 		) : (
-			<img {...props} />
+			<img {...props} alt={props.alt ?? ''} />
 		);
 	},
 	Details: ({
