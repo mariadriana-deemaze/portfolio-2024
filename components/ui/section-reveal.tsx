@@ -1,5 +1,5 @@
 import { ReactNode, useRef } from 'react';
-import { useLenis } from '@studio-freight/react-lenis';
+import { useLenis } from 'lenis/react';
 import { cn } from '@/utils/utils';
 
 const ScrollFadeReveal = ({

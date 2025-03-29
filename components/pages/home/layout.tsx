@@ -5,7 +5,7 @@ import { SectionEducation } from '@/components/pages/home/section-education';
 import { SectionProjects } from '@/components/pages/home/section-projects';
 import { SectionWorkExperience } from '@/components/pages/home/section-work-experience';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
-import ReactLenis from '@studio-freight/react-lenis';
+import { ReactLenis } from 'lenis/react';
 import { SectionHero } from './section-hero';
 import { Project } from '@/data/projects';
 

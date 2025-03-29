@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import ReactLenis from '@studio-freight/react-lenis';
+import { ReactLenis } from 'lenis/react';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
 import useMousePosition from '@/hooks/use-mouse-position';
 import { cn } from '@/utils/utils';
