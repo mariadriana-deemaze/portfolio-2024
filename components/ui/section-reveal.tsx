@@ -11,7 +11,7 @@ const ScrollFadeReveal = ({
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 
-	// @ts-expect-error
+	// @ts-ignore
 	useLenis(({ isScrolling, velocity }) => {
 		if (ref.current) {
 			const elementTop = ref.current.offsetTop;
