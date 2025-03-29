@@ -1,5 +1,5 @@
 import { ReactNode, useRef } from 'react';
-import { useLenis } from '@studio-freight/react-lenis';
+import { useLenis } from 'lenis/react';
 import { cn } from '@/utils/utils';
 
 const ScrollFadeReveal = ({
@@ -11,7 +11,7 @@ const ScrollFadeReveal = ({
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 
-	// @ts-expect-error
+	// @ts-ignore
 	useLenis(({ isScrolling, velocity }) => {
 		if (ref.current) {
 			const elementTop = ref.current.offsetTop;
