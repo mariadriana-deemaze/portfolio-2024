@@ -13,19 +13,13 @@ import { data } from '@/data/main';
 import rehypePrettyCode from 'rehype-pretty-code';
 import { Badge } from '@/components/ui/badge';
 
-export async function generateMetadata(props: {
-	params: Promise<{
-		slug: string;
-	}>;
-}) {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;
 	const project = await getProject(params.slug);
 	return {
 		title: `${data.name} | ${data.role} :: ${project?.title}`,
 		description: `${data.name} | ${data.role} based in Portugal :: ${project?.description}. ${project?.technologies.map((tech) => `#${tech.label}`).join(' ')}`,
-		alternates: {
-			canonical: `https://maria-adriana.com/projects/${project?.slug}`
-		}
+		alternates: { canonical: `https://maria-adriana.com/projects/${project?.slug}` }
 	};
 }
 
@@ -34,11 +28,7 @@ export async function generateStaticParams() {
 	return projects.map((project) => ({ slug: project.slug }));
 }
 
-export default async function ProjectPage(props: {
-	params: Promise<{
-		slug: string;
-	}>;
-}) {
+export default async function ProjectPage(props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;
 
 	const project = await getProject(params.slug);
@@ -119,18 +109,13 @@ export default async function ProjectPage(props: {
 								remarkPlugins: [
 									remarkGfm,
 									remarkFrontmatter,
-									[
-										remarkToc,
-										{
-											tight: true,
-											maxDepth: 5
-										}
-									]
+									[remarkToc, { tight: true, maxDepth: 5 }]
 								],
 								rehypePlugins: [
 									rehypeSlug,
 									rehypeAutolinkHeadings,
-									rehypePrettyCode
+									// @ts-ignore
+									() => rehypePrettyCode({ theme: 'github-dark-high-contrast' })
 								]
 							}
 						}}

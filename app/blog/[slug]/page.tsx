@@ -114,6 +114,7 @@ export default async function PostPage(props: {
 							rehypePlugins: [
 								rehypeSlug,
 								rehypeAutolinkHeadings,
+								// @ts-ignore
 								() =>
 									rehypePrettyCode({
 										theme: 'github-dark-high-contrast'
