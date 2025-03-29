@@ -14,7 +14,7 @@ export const SectionEducation = () => {
 						<CardHeader>
 							<div className="flex flex-row items-start justify-between gap-x-4 text-base">
 								{preview && (
-									<div className="flex flex-shrink-0 border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl justify-center overflow-hidden">
+									<div className="flex shrink-0 border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl justify-center overflow-hidden">
 										<Image
 											className="self-center w-auto"
 											src={preview}
@@ -25,13 +25,13 @@ export const SectionEducation = () => {
 									</div>
 								)}
 
-								<div className="flex flex-col gap-2 flex-grow">
+								<div className="flex flex-col gap-2 grow">
 									<h3 className="font-semibold leading-none">{school}</h3>
 									<h4 className="font-mono text-sm leading-none opacity-50">
 										{degree}
 									</h4>
 								</div>
-								<div className="font-mono text-sm text-gray-500 flex flex-shrink-0">
+								<div className="font-mono text-sm text-gray-500 flex shrink-0">
 									{start} - {end}
 								</div>
 							</div>

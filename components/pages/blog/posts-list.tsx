@@ -106,7 +106,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 					top: `${(y || 0) - (linkWrapperRef.current?.clientHeight || 0) / 2}px`
 				}}
 				className={cn(
-					'cursor-none pointer-events-none fixed ease-in-out transition-all duration-300 h-24 w-24 bg-gradient-to-r from-orange-500 via-orange-500 to-orange-600 rounded-full flex flex-col justify-center',
+					'cursor-none pointer-events-none fixed ease-in-out transition-all duration-300 h-24 w-24 bg-linear-to-r from-orange-500 via-orange-500 to-orange-600 rounded-full flex flex-col justify-center',
 					{
 						'opacity-100 scale-100 -rotate-0': hoveringPost,
 						'opacity-0 scale-50 -rotate-45': hoveringPost === null
