@@ -16,7 +16,7 @@ export const SectionWorkExperience = () => {
 						<CardHeader>
 							<div className="flex flex-row gap-x-4">
 								{preview && (
-									<div className="flex flex-shrink-0 justify-center items-center border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl overflow-hidden">
+									<div className="flex shrink-0 justify-center items-center border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl overflow-hidden">
 										<Image
 											className="self-center w-auto"
 											src={preview}
@@ -26,7 +26,7 @@ export const SectionWorkExperience = () => {
 										/>
 									</div>
 								)}
-								<div className="flex flex-col flex-grow gap-2 items-start">
+								<div className="flex flex-col grow gap-2 items-start">
 									<h3 className="inline-flex items-center justify-center font-semibold leading-none">
 										<a className="hover:underline" href={link}>
 											{company}
@@ -37,7 +37,7 @@ export const SectionWorkExperience = () => {
 									</h4>
 								</div>
 
-								<div className="font-mono text-sm text-gray-500 flex flex-shrink-0">
+								<div className="font-mono text-sm text-gray-500 flex shrink-0">
 									{start} - {end}
 								</div>
 							</div>

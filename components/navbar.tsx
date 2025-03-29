@@ -45,7 +45,7 @@ export function Navbar() {
 		<nav
 			className={`${
 				show ? 'opacity-100 top-0' : 'opacity-0 top-[-400px]'
-			} ease-in-out transition-all duration-1000 w-full fixed z-10 pt-3 md:pt-10 border-b border-b-[#F3C6A7] dark:border-b-[#4D2512] from-white-600/10 dark:from-teal-200/10 via-white dark:via-black to-slate-600/10 dark:to-slate-600/10 backdrop-blur-sm`}
+			} ease-in-out transition-all duration-1000 w-full fixed z-10 pt-3 md:pt-10 border-b border-b-[#F3C6A7] dark:border-b-[#4D2512] from-white-600/10 dark:from-teal-200/10 via-white dark:via-black to-slate-600/10 dark:to-slate-600/10 backdrop-blur-xs`}
 		>
 			<div className="flex flex-row justify-between flex-wrap w-full container md:px-0 max-w-2xl mx-auto mb-2 md:mb-4 print:space-y-6 gap-2 md:gap-5 place-items-center">
 				<div className="flex flex-row pr-1 gap-2">

@@ -86,7 +86,7 @@ export default async function PostPage(props: {
 				</div>
 
 				<Badge
-					className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default flex-shrink-0 self-start"
+					className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default shrink-0 self-start"
 					variant="outline"
 				>
 					<Link className="flex flex-row gap-2" href={post.external_link} target="_blank">

@@ -1,5 +1,150 @@
-@tailwind base;
-@tailwind components;
+@import 'tailwindcss';
+
+@config '../tailwind.config.js';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility roles-slider {
+  @apply inline-flex align-top;
+
+  & .role-slide {
+    @apply absolute flex flex-wrap lg:flex-nowrap;
+  }
+
+  & .role-slide .letter {
+    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
+  }
+
+  & .role-slide .letter.out {
+    @apply opacity-50;
+    transform: rotateX(90deg) translateY(-10px);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+  }
+
+  & .role-slide .letter.in {
+    transition: 0.38s ease;
+    @apply opacity-100 ease-linear;
+  }
+
+  & .role-slide .letter.behind {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility role-slide {
+  .roles-slider & {
+    @apply absolute flex flex-wrap lg:flex-nowrap;
+  }
+
+  .roles-slider & .letter {
+    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
+  }
+
+  .roles-slider & .letter.out {
+    @apply opacity-50;
+    transform: rotateX(90deg) translateY(-10px);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+  }
+
+  .roles-slider & .letter.in {
+    transition: 0.38s ease;
+    @apply opacity-100 ease-linear;
+  }
+
+  .roles-slider & .letter.behind {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility letter {
+  .roles-slider .role-slide & {
+    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
+  }
+
+  .roles-slider .role-slide &.out {
+    @apply opacity-50;
+    transform: rotateX(90deg) translateY(-10px);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+  }
+
+  .roles-slider .role-slide &.in {
+    transition: 0.38s ease;
+    @apply opacity-100 ease-linear;
+  }
+
+  .roles-slider .role-slide &.behind {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility out {
+  .roles-slider .role-slide &.letter {
+    @apply opacity-50;
+    transform: rotateX(90deg) translateY(-10px);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+  }
+}
+
+@utility in {
+  .roles-slider .role-slide &.letter {
+    transition: 0.38s ease;
+    @apply opacity-100 ease-linear;
+  }
+}
+
+@utility behind {
+  .roles-slider .role-slide &.letter {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility scroll-fade-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
+
+  &.scroll-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility scroll-fade-in {
+  &.scroll-fade-reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility text-fade-grad {
+  @apply bg-clip-text text-transparent min-w-full bg-radial-[at_85%_100%] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800
+}
 
 @layer base {
 	:root {
@@ -61,75 +206,20 @@
 	}
 }
 
-@layer utilities {
-	.no-scrollbar::-webkit-scrollbar {
-		display: none;
-	}
+@layer components {
+  .progress {
+    height: 0.18rem;
+  }
 
-	.no-scrollbar {
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-	}
+  .progress .progress-bar {
+    height: 0.2rem;
+    transform-origin: left;
+    will-change: transform;
+    transform: scaleX(0);
+    @apply w-full bg-orange-600;
+  }
 
-	.roles-slider {
-		@apply inline-flex align-top;
-	}
-
-	.roles-slider .role-slide {
-		@apply absolute flex flex-wrap lg:flex-nowrap;
-	}
-
-	.roles-slider .role-slide .letter {
-		@apply origin-[center_center_5px] opacity-0 whitespace-pre;
-	}
-
-	.roles-slider .role-slide .letter.out {
-		@apply opacity-50;
-		transform: rotateX(90deg) translateY(-10px);
-		transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
-	}
-
-	.roles-slider .role-slide .letter.in {
-		transition: 0.38s ease;
-		@apply opacity-100 ease-linear;
-	}
-
-	.roles-slider .role-slide .letter.behind {
-		transform: rotateX(-90deg);
-	}
-
-	.scroll-fade-reveal {
-		opacity: 0;
-		transform: translateY(20px);
-		transition:
-			opacity 0.5s ease-in-out,
-			transform 0.5s ease-in-out;
-	}
-
-	.scroll-fade-reveal.scroll-fade-in {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	.text-fade-grad {
-		@apply bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800 bg-clip-text text-transparent min-w-full;
-	}
+  .animate-fade-in-left {
+    @apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
+  }
 }
-
-.progress {
-	height: 0.18rem;
-}
-
-.progress .progress-bar {
-	height: 0.2rem;
-	transform-origin: left;
-	will-change: transform;
-	transform: scaleX(0);
-	@apply w-full bg-orange-600;
-}
-
-.animate-fade-in-left {
-	@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
-}
-
-@tailwind utilities;

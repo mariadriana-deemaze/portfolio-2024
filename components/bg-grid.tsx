@@ -7,7 +7,7 @@ export function BGGrid({ children }: { children?: React.ReactNode }) {
 		<>
 			{children}
 			<div
-				className="fixed inset-0 z-[-1] bg-transparent h-screen w-screen bg-gradient-to-b from-muted to-background"
+				className="fixed inset-0 z-[-1] bg-transparent h-screen w-screen bg-linear-to-b from-muted to-background"
 				style={{
 					backgroundImage: 'linear-gradient(hsl(var(--muted)), hsl(var(--background)))'
 				}}
