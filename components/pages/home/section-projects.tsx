@@ -13,7 +13,7 @@ export const SectionProjects = ({ projects }: { projects: Project[] }) => {
 					return (
 						<ProjectCard
 							key={slug}
-							link={data.github + repo}
+							link={`${data.github}/${repo}`}
 							preview={hero}
 							{...rest}
 						/>
