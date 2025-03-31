@@ -12,8 +12,9 @@ export interface Project {
 	hero: string;
 	title: string;
 	description: string;
-	medium:string;
-	tags:string[];
+	medium: string;
+	tags: string[];
+	colors: string[];
 	year: string;
 	slug: string;
 	content: string;
@@ -21,8 +22,8 @@ export interface Project {
 		label: string;
 		icon: JSX.Element;
 	}[];
-	repo:string;
-	liveUrl?:string;
+	repo: string;
+	liveUrl?: string;
 }
 
 export const getProjects = async () => {

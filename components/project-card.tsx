@@ -6,22 +6,28 @@ interface Props {
 	title: string;
 	description: string;
 	tags: readonly string[];
+	colors: string[];
 	medium: string;
 	preview?: string;
 	link?: string;
 }
 
-export function ProjectCard({ title, description, tags, link, medium, preview }: Props) {
+export function ProjectCard({ title, description, tags, link, medium, preview, colors }: Props) {
 	return (
 		<Card className="group relative flex flex-col h-48 overflow-hidden">
-			<div className="flex relative bg-muted rounded-lg rounded-bl-none rounded-br-none h-full w-full overflow-hidden">
+			<div
+				className="flex relative rounded-lg rounded-bl-none rounded-br-none h-full w-full overflow-hidden"
+				style={{
+					background: `linear-gradient(150deg, ${colors[0]} 0%, ${colors[1]} 35%, ${colors[2]} 100%)`
+				}}
+			>
 				{preview && (
 					<Image
 						className="aspect-auto object-cover w-full h-full self-center group-hover:scale-105 group-active:scale-105 ease-in-out duration-1000"
 						src={preview}
 						alt={`Image preview of project ${title}`}
-						height={400}
-						width={800}
+						height={200}
+						width={400}
 					/>
 				)}
 			</div>
