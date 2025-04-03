@@ -58,7 +58,7 @@
     "@typescript-eslint/parser": "8.29.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "7.37.4",
+    "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "5.2.0",
     "postcss": "^8.4.23",
     "prettier": "^3.0.0",
