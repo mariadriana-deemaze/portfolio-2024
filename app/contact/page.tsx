@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function Page() {
 	return (
 		<>
-			<header className="mx-auto w-full max-w-2xl space-y-2 animate-fade-in-left delay-500 mb-4">
+			<header className="mt-28 mx-auto w-full max-w-2xl space-y-2 animate-fade-in-left delay-500 mb-4">
 				<h1 className="font-clash font-bold text-5xl text-fade-grad">Contact</h1>
 				<h4 className="font-clash font-medium text-md text-gray-500">Reach out</h4>
 				<p className="pb-10 text-pretty font-mono text-sm text-foreground leading-5">

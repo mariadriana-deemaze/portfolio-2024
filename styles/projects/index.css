@@ -1,7 +1,7 @@
 @import '../globals.css';
 
 .project-page {
-	@apply flex flex-col mt-2 font-mono;
+	@apply flex flex-col font-mono;
 }
 
 .project-page header {

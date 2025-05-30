@@ -87,7 +87,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				<ThemeProvider attribute="class" defaultTheme="dark">
 					<Navbar />
 					<ProgressIndicator />
-					<main className="container relative mx-auto mt-28 overflow-auto print:p-12 overflow-y-scroll overflow-x-hidden no-scrollbar">
+					<main className="container relative mx-auto overflow-auto print:p-12 overflow-y-scroll overflow-x-hidden no-scrollbar">
 						<BGGrid>{children}</BGGrid>
 						<CommandMenu
 							links={[
