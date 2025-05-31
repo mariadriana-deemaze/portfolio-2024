@@ -12,7 +12,7 @@ export const SectionAbout = () => {
 				.map((paragraph, index) => (
 					<p
 						key={`section_about_paragraph_${index}`}
-						className="text-pretty font-mono text-sm text-foreground"
+						className="text-pretty font-mono text-sm text-foreground leading-6"
 					>
 						{paragraph}
 					</p>
