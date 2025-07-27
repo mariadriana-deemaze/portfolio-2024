@@ -11,7 +11,7 @@ export const mdxComponents: MDXComponents = {
 		return <code {...props}>{children}</code>;
 	},
 	Image: (props: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>) => {
-		if (!props.src || props.src === '') {
+		if (!props.src || props.src === '' || typeof props.src !== 'string') {
 			return <></>;
 		}
 		return props.style?.height && props.style?.width ? (
