@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "ssr": "npm run build && node server/index.js"
+    "build:server": "tsc -b tsconfig.node.json -f --listEmittedFiles",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist/ssr",
+    "build": "yarn clean:server && yarn build:server && yarn build:client && yarn build:ssr",
+    "start": "node --enable-source-maps dist/server/start.js"
   },
   "dependencies": {
     "@babel/preset-env": "^7.28.3",
