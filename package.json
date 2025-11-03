@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:ssr": "tsx watch server.ts --hmr",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
