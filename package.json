@@ -4,13 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build:server": "tsc -b tsconfig.node.json -f --listEmittedFiles",
-    "build:client": "vite build",
-    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist/ssr",
-    "build": "yarn clean:server && yarn build:server && yarn build:client && yarn build:ssr",
-    "start": "node --enable-source-maps dist/server/start.js"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "build:ssr": "vite build --outDir dist-ssr --ssr src/entry-server.tsx",
+    "serve": "tsx server.ts"
   },
   "dependencies": {
+    "express": "^5.1.0",
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
     "@babel/register": "^7.28.3",
@@ -27,7 +29,6 @@
     "cmdk": "^1.0.0",
     "date-fns": "^4.0.0",
     "dotenv": "^17.0.0",
-    "express": "^5.1.0",
     "ignore-styles": "^5.0.1",
     "lenis": "^1.2.3",
     "react": "^19.1.1",
@@ -45,25 +46,21 @@
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
-    "@eslint/js": "^9.36.0",
-    "@types/express": "^5.0.3",
-    "@types/node": "^24.9.0",
-    "@types/react": "^19.1.16",
-    "@types/react-dom": "^19.1.9",
-    "@types/react-router-dom": "^5.3.3",
-    "@vitejs/plugin-react": "^5.0.4",
-    "babel-plugin-react-compiler": "^19.1.0-rc.3",
-    "eslint": "^9.36.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.22",
-    "globals": "^16.4.0",
+    "@eslint/js": "^9.21.0",
+    "@types/node": "^22.7.9",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3",
+    "vite": "^6.2.0",
     "postcss": "^8.4.23",
     "prettier": "^3.0.0",
     "prettier-eslint": "16.4.2",
-    "tailwindcss": "^4.0.17",
-    "tsx": "^4.20.6",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.45.0",
-    "vite": "^7.1.7"
+    "tailwindcss": "^4.0.17"
   }
 }

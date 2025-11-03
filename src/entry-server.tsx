@@ -1,16 +1,15 @@
-import { StaticRouter } from "react-router";
-import { HelmetProvider, type HelmetServerState } from "react-helmet-async";
-import App from "./App";
+import { renderToString } from 'react-dom/server';
+import { MemoryRouter } from 'react-router-dom';
+import App, { type AppProps } from './App';
 
-export function createApp(
-  url: string,
-  helmetContext: { helmet?: HelmetServerState }
-) {
-  return (
-    <HelmetProvider context={helmetContext}>
-      <StaticRouter location={url}>
-        <App />
-      </StaticRouter>
-    </HelmetProvider>
+export interface RenderProps extends AppProps {
+  location: string;
+}
+
+export function render(props: RenderProps): string {
+  return renderToString(
+    <MemoryRouter initialEntries={[props.location]} initialIndex={0}>
+      <App {...props} />
+    </MemoryRouter>
   );
 }

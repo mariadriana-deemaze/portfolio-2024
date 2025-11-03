@@ -1,17 +1,20 @@
-import React from "react";
-import { hydrateRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
-import App from "./App";
+import { hydrateRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App, { type AppProps } from './App';
 
-const el = document.getElementById("root")!;
-hydrateRoot(
-  el,
-  <React.StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>
-  </React.StrictMode>
-);
+declare global {
+  interface Window {
+    __INITIAL_PROPS__?: AppProps;
+  }
+}
+
+const rootElement = document.getElementById('root');
+const initialProps: AppProps | undefined = window.__INITIAL_PROPS__;
+if (rootElement) {
+  hydrateRoot(
+    rootElement,
+    <BrowserRouter>
+      <App {...(initialProps ?? {})} />
+    </BrowserRouter>
+  );
+}
