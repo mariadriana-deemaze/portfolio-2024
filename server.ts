@@ -1,9 +1,13 @@
 import express, { type Request, type Response, type NextFunction } from 'express'
+import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
 import http from 'node:http'
 import type { Seo } from './server/types'
 import { matchRoute } from './server/routes'
+import apiRouter from './server/routes/api'
+
+dotenv.config()
 
 const PORT = Number(process.env.PORT || 3000)
 const USE_HMR = process.argv.includes('--hmr') || process.env.SSR_HMR === '1' || process.env.NODE_ENV === 'development'
@@ -58,6 +62,8 @@ async function start() {
       logLevel: 'info',
     })
 
+    app.use(express.json())
+    app.use('/api', apiRouter)
     app.use(vite.middlewares)
 
     async function handleRender(req: Request, res: Response, status = 200) {
@@ -92,6 +98,8 @@ async function start() {
   // Production server (prebuilt client + SSR bundle)
   const app = express()
   const { render } = await import('./dist-ssr/entry-server.js')
+  app.use(express.json())
+  app.use('/api', apiRouter)
 
   app.get(['/', '/work', '/about', '/blog'], (req: Request, res: Response, _next: NextFunction) => {
     const htmlFilePath = path.resolve('dist/index.html')
@@ -136,4 +144,3 @@ start().catch((err) => {
   console.error(err)
   process.exit(1)
 })
-
