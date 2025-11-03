@@ -1,5 +1,5 @@
 import { JSX, useEffect, useState, type CSSProperties } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Work from './pages/Work';
 import About from './pages/About';
@@ -22,19 +22,11 @@ export default function App(props: AppProps = {}): JSX.Element {
   return (
     <div>
       <header>
-        <nav style={{  display: 'flex' }}>
-          <Link to="/">
-            Home
-          </Link>
-          <Link to="/work">
-            Work
-          </Link>
-          <Link to="/about">
-            About
-          </Link>
-          <Link to="/blog">
-            Blog
-          </Link>
+        <nav style={{  display: 'flex', gap: '1rem' }}>
+          <a href="/">Home</a>
+          <a href="/work">Work</a>
+          <a href="/about">About</a>
+          <a href="/blog">Blog</a>
         </nav>
       </header>
 

@@ -1,6 +1,8 @@
 import express, { type Request, type Response, type NextFunction } from 'express'
 import fs from 'fs'
 import path from 'path'
+import type { Seo } from './server/routeTypes'
+import { matchRoute } from './server/routes'
 
 const app = express()
 const PORT = 3000
@@ -21,43 +23,6 @@ function escapeHtml(text: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
-}
-
-type Seo = { title: string; description: string; image: string }
-
-function seoForPath(pathname: string): Seo {
-  switch (pathname) {
-    case '/':
-      return {
-        title: 'Home | Portfolio',
-        description: 'Welcome to my portfolio homepage.',
-        image: 'https://fastly.picsum.photos/id/705/800/1000.jpg?hmac=B4yaMDEw4yUnMYwvwKGpCz61k9acVLaWj2XoM83Ycm8',
-      }
-    case '/work':
-      return {
-        title: 'Work | Portfolio',
-        description: 'Selected projects and professional work.',
-        image: 'https://fastly.picsum.photos/id/705/800/1000.jpg?hmac=B4yaMDEw4yUnMYwvwKGpCz61k9acVLaWj2XoM83Ycm8',
-      }
-    case '/about':
-      return {
-        title: 'About | Portfolio',
-        description: 'About me and this site.',
-        image: 'https://fastly.picsum.photos/id/705/800/1000.jpg?hmac=B4yaMDEw4yUnMYwvwKGpCz61k9acVLaWj2XoM83Ycm8',
-      }
-    case '/blog':
-      return {
-        title: 'Blog | Portfolio',
-        description: 'Thoughts, writing, and updates.',
-        image: 'https://fastly.picsum.photos/id/705/800/1000.jpg?hmac=B4yaMDEw4yUnMYwvwKGpCz61k9acVLaWj2XoM83Ycm8',
-      }
-    default:
-      return {
-        title: '404 | Page Not Found',
-        description: 'The page you requested could not be found.',
-        image: 'https://fastly.picsum.photos/id/705/800/1000.jpg?hmac=B4yaMDEw4yUnMYwvwKGpCz61k9acVLaWj2XoM83Ycm8',
-      }
-  }
 }
 
 function assembleHtml(template: string, appHtml: string, props: object, seo: Seo): string {
@@ -91,10 +56,10 @@ app.get(['/', '/work', '/about', '/blog'], (req: Request, res: Response, _next: 
       console.error(err)
       return res.status(500).send('Some error happened')
     }
-    const initialData = req.path === '/about' ? { message: 'Hello world' } : undefined
-    const props = { location: req.url, initialData }
+    const route = matchRoute(req)
+    const props = route.getProps({ url: req.url })
     const appHtml = render(props)
-    const seo = seoForPath(req.path)
+    const seo = route.getSeo({ path: req.path, url: req.url })
     const finalHtml = assembleHtml(template, appHtml, props, seo)
 
     return res.send(finalHtml)
@@ -110,9 +75,10 @@ app.get(/.*/, (req: Request, res: Response) => {
       console.error(err)
       return res.status(500).send('Some error happened')
     }
-    const props = { location: req.url }
+    const route = matchRoute(req)
+    const props = route.getProps({ url: req.url })
     const appHtml = render(props)
-    const seo = seoForPath(req.path)
+    const seo = route.getSeo({ path: req.path, url: req.url })
     const finalHtml = assembleHtml(template, appHtml, props, seo)
     return res.status(404).send(finalHtml)
   })

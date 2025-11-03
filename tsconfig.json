@@ -17,6 +17,6 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true
   },
-  "include": ["src", "index.html", "vite.config.*", "server.ts"],
+  "include": ["src", "index.html", "vite.config.*", "server/**/*.ts"],
   "exclude": ["dist", "dist-ssr", "node_modules"]
 }
