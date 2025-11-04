@@ -1,14 +1,14 @@
 'use client';
 
-import useSWR from 'swr';
-import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { NowPlayingData } from '@/types/spotify';
+import { useQuery } from '@tanstack/react-query';
+import { Badge } from './ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../components/ui/tooltip';
+import { NowPlayingData } from '../types/spotify';
 
 export const NowPlaying = () => {
-	const { data: nowPlaying } = useSWR<{ data: NowPlayingData }>('/api/spotify/me/current', {
-		fetcher: () => fetch('/api/spotify/me/current').then((r) => r.json())
+	const { data: nowPlaying } = useQuery<{ data: NowPlayingData }>({
+		queryKey: ['nowPlaying'],
+		queryFn: async () => fetch('/api/spotify/me/current').then((r) => r.json())
 	});
 
 	return (
@@ -16,7 +16,7 @@ export const NowPlaying = () => {
 			<Tooltip>
 				<TooltipTrigger>
 					{nowPlaying?.data.isPlaying ? (
-						<Link href={nowPlaying?.data.songUrl} target="_blank">
+						<a href={nowPlaying?.data.songUrl} target="_blank">
 							<div className="flex items-center">
 								<Badge variant="outline" className="bg-card text-card-foreground">
 									<h1 className="text-left line-clamp-1">
@@ -32,7 +32,7 @@ export const NowPlaying = () => {
 									</svg>
 								</span>
 							</div>
-						</Link>
+						</a>
 					) : (
 						<div className="flex items-center">
 							<Badge variant="outline" className="bg-card text-card-foreground">

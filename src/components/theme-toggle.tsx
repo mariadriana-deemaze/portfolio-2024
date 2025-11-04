@@ -1,17 +1,23 @@
 'use client';
 
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
-import { Button } from '@/components/ui/button';
+import { Button } from '../components/ui/button';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import { useTheme } from 'next-themes';
+} from '../components/ui/dropdown-menu';
+
+function applyTheme(theme: 'light' | 'dark' | 'system') {
+  const root = document.documentElement
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  const resolved = theme === 'system' ? (systemPrefersDark ? 'dark' : 'light') : theme
+  root.classList.toggle('dark', resolved === 'dark')
+  try { localStorage.setItem('theme', theme) } catch {}
+}
 
 export function ThemeToggle() {
-	const { setTheme } = useTheme();
 
 	return (
 		<DropdownMenu>
@@ -27,9 +33,9 @@ export function ThemeToggle() {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="start">
-				<DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => applyTheme('light')}>Light</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => applyTheme('dark')}>Dark</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => applyTheme('system')}>System</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

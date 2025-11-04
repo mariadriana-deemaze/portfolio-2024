@@ -9,7 +9,7 @@ import {
 	CommandItem,
 	CommandList,
 	CommandSeparator
-} from '@/components/ui/command';
+} from './ui/command';
 
 interface Props {
 	links: {
