@@ -1,7 +1,6 @@
 import { DetailedHTMLProps, HTMLAttributes, ImgHTMLAttributes } from 'react';
-import { MDXComponents } from 'mdx/types';
+import { MDXComponents } from './mdx/types';
 import { MDXNote } from './mdx-note';
-import Image from 'next/image';
 
 export const mdxComponents: MDXComponents = {
 	pre: ({
@@ -15,7 +14,7 @@ export const mdxComponents: MDXComponents = {
 			return <></>;
 		}
 		return props.style?.height && props.style?.width ? (
-			<Image
+			<img
 				{...props}
 				width={Number(props.width)}
 				height={Number(props.height)}

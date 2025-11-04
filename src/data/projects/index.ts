@@ -4,9 +4,9 @@ import fs from 'node:fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 import { JSX } from 'react';
-import { STACKS } from '@/components/stacks';
+import { STACKS } from '../../components/stacks';
 
-const PROJECTS_DIR = './data/projects';
+const PROJECTS_DIR = './src/data/projects';
 
 export interface Project {
 	hero: string;
@@ -38,7 +38,6 @@ export const getProjects = async () => {
 				const { data, content } = matter(projectContent);
 
 				const technologies = data['technologies'].map(
-					// @ts-expect-error
 					(technology: string) => STACKS[technology]
 				);
 
@@ -46,6 +45,7 @@ export const getProjects = async () => {
 			})
 	);
 
+	console.log('🚀 ~ getProjects ~ projects:', projects);
 	return projects
 		.filter((project) => project !== null)
 		.sort((a, b) =>

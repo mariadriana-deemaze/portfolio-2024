@@ -1,10 +1,10 @@
-import { clashDisplay } from '@/app/layout';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Section } from '@/components/ui/section';
-import { data } from '@/data/main';
-import Image from 'next/image';
+import { clashDisplay } from '../../../app/layout';
+import { Badge } from '../../../components/ui/badge';
+import { Card, CardContent, CardFooter, CardHeader } from '../../../components/ui/card';
+import { Section } from '../../../components/ui/section';
+import { data } from '../../../data/main';
 import { ReactElement } from 'react';
+ 
 
 export const SectionWorkExperience = () => {
 	return (
@@ -17,7 +17,7 @@ export const SectionWorkExperience = () => {
 							<div className="flex flex-row gap-x-4">
 								{preview && (
 									<div className="flex shrink-0 justify-center items-center border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl overflow-hidden">
-										<Image
+										<img
 											className="self-center w-auto"
 											src={preview}
 											alt={`Logo of ${title}`}

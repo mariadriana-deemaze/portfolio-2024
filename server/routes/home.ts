@@ -1,10 +1,20 @@
 import type { RouteModule } from '../types'
+import { getProjects, type Project } from '../../src/data/projects'
 
-type HomeData = Record<string, never>
+type HomeData = { projects: Project[] }
 
 const homeRoute: RouteModule<HomeData> = {
   path: '/',
   getProps: (req) => ({ location: req.url }),
+  async getInitialData() {
+    try {
+      const projects = await getProjects()
+      return { projects }
+    } catch (e) {
+      console.error('Failed to load home projects', e)
+      return { projects: [] }
+    }
+  },
   getSeo: (_ctx) => ({
     title: 'Home | Portfolio',
     description: 'Welcome to my portfolio homepage.',

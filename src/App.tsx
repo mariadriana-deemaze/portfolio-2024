@@ -24,7 +24,7 @@ export default function App(props: AppProps = {}): JSX.Element {
   return (
     <Layout commandLinks={props.initialData?.commandLinks}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home projects={(props.initialData as any)?.projects ?? []} />} />
         <Route path="/work" element={<Work />} />
         <Route path="/about" element={<About message={props.initialData?.message} />} />
         <Route path="/blog" element={<Blog />} />

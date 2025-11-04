@@ -61,7 +61,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 						>
 							<article>
 								<ScrollFadeReveal onLoadVisibility>
-									<Image
+									<img
 										className="border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md"
 										alt={`Hero image of the ${project.title} project.`}
 										width={800}

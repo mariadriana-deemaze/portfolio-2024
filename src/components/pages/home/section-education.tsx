@@ -1,8 +1,7 @@
-import { clashDisplay } from '@/app/layout';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Section } from '@/components/ui/section';
-import { data } from '@/data/main';
-import Image from 'next/image';
+import { clashDisplay } from '../../../app/layout';
+import { Card, CardContent, CardHeader } from '../../../components/ui/card';
+import { Section } from '../../../components/ui/section';
+import { data } from '../../../data/main';
 
 export const SectionEducation = () => {
 	return (
@@ -15,7 +14,7 @@ export const SectionEducation = () => {
 							<div className="flex flex-row items-start justify-between gap-x-4 text-base">
 								{preview && (
 									<div className="flex shrink-0 border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl justify-center overflow-hidden">
-										<Image
+										<img
 											className="self-center w-auto"
 											src={preview}
 											alt={`Logo of ${school}`}

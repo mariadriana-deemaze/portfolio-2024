@@ -54,7 +54,23 @@ function assembleHtml(template: string, appHtml: string, props: object, seo: Seo
 	return html;
 }
 
-// Build command menu links for Layout from frontmatter
+async function enrichInitialData(route: ReturnType<typeof matchRoute>, req: Request, props: any) {
+  try {
+    const commandLinks = await generateCommandLinks();
+    props.initialData = { ...(props.initialData || {}), commandLinks };
+  } catch (e) {
+    console.error('Failed to build command links', e);
+  }
+  try {
+    if (typeof route.getInitialData === 'function') {
+      const data = await (route as any).getInitialData({ url: req.url });
+      props.initialData = { ...(props.initialData || {}), ...(data as object) };
+    }
+  } catch (e) {
+    console.error('Failed to load route initial data', e);
+  }
+}
+
 async function generateCommandLinks(): Promise<{ url: string; title: string; type: 'internal' | 'blog' | 'projects' }[]> {
   const blogDir = path.resolve('src/data/blog')
   const projectsDir = path.resolve('src/data/projects')
@@ -188,12 +204,7 @@ async function start() {
 				const { render } = await vite.ssrLoadModule('/src/entry-server.tsx');
 				const route = matchRoute(req);
 				const props = route.getProps({ url: req.url });
-				try {
-					const commandLinks = await generateCommandLinks();
-					(props as any).initialData = { ...(props as any).initialData, commandLinks };
-				} catch (e) {
-					console.error('Failed to build command links', e);
-				}
+				await enrichInitialData(route, req, props);
 				const appHtml = render(props);
 				const seo = route.getSeo({ path: req.path, url: req.url });
 				const html = assembleHtml(template, appHtml, props, seo);
@@ -244,21 +255,20 @@ async function start() {
 				}
 				const route = matchRoute(req);
 				const props = route.getProps({ url: req.url });
-				generateCommandLinks()
-					.then((commandLinks) => {
-						(props as any).initialData = { ...(props as any).initialData, commandLinks };
-						const appHtml = render(props);
-						const seo = route.getSeo({ path: req.path, url: req.url });
-						const finalHtml = assembleHtml(template, appHtml, props, seo);
-						return res.send(finalHtml);
-					})
-					.catch((e) => {
-						console.error(e);
-						const appHtml = render(props);
-						const seo = route.getSeo({ path: req.path, url: req.url });
-						const finalHtml = assembleHtml(template, appHtml, props, seo);
-						return res.send(finalHtml);
-					});
+					Promise.resolve(enrichInitialData(route, req, props))
+						.then(() => {
+							const appHtml = render(props);
+							const seo = route.getSeo({ path: req.path, url: req.url });
+							const finalHtml = assembleHtml(template, appHtml, props, seo);
+							return res.send(finalHtml);
+						})
+						.catch((e) => {
+							console.error(e);
+							const appHtml = render(props);
+							const seo = route.getSeo({ path: req.path, url: req.url });
+							const finalHtml = assembleHtml(template, appHtml, props, seo);
+							return res.send(finalHtml);
+						});
 			});
 		}
 	);
@@ -274,21 +284,20 @@ async function start() {
 			}
 			const route = matchRoute(req);
 			const props = route.getProps({ url: req.url });
-			generateCommandLinks()
-				.then((commandLinks) => {
-					(props as any).initialData = { ...(props as any).initialData, commandLinks };
-					const appHtml = render(props);
-					const seo = route.getSeo({ path: req.path, url: req.url });
-					const finalHtml = assembleHtml(template, appHtml, props, seo);
-					return res.status(404).send(finalHtml);
-				})
-				.catch((e) => {
-					console.error(e);
-					const appHtml = render(props);
-					const seo = route.getSeo({ path: req.path, url: req.url });
-					const finalHtml = assembleHtml(template, appHtml, props, seo);
-					return res.status(404).send(finalHtml);
-				});
+				Promise.resolve(enrichInitialData(route, req, props))
+					.then(() => {
+						const appHtml = render(props);
+						const seo = route.getSeo({ path: req.path, url: req.url });
+						const finalHtml = assembleHtml(template, appHtml, props, seo);
+						return res.status(404).send(finalHtml);
+					})
+					.catch((e) => {
+						console.error(e);
+						const appHtml = render(props);
+						const seo = route.getSeo({ path: req.path, url: req.url });
+						const finalHtml = assembleHtml(template, appHtml, props, seo);
+						return res.status(404).send(finalHtml);
+					});
 		});
 	});
 

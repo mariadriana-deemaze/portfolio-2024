@@ -1,6 +1,5 @@
 import { Card, CardHeader, CardContent, CardDescription, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
-import Image from 'next/image';
 
 interface Props {
 	title: string;
@@ -22,7 +21,7 @@ export function ProjectCard({ title, description, tags, link, medium, preview, c
 				}}
 			>
 				{preview && (
-					<Image
+					<img
 						className="aspect-auto object-cover w-full h-full self-center group-hover:scale-105 group-active:scale-105 ease-in-out duration-1000"
 						src={preview}
 						alt={`Image preview of project ${title}`}
