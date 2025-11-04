@@ -1,4 +1,4 @@
-import { STACKS } from '@/components/stacks';
+import { STACKS } from '../components/stacks';
 import { LuGithub, LuLinkedin, LuInstagram, LuDribbble, LuCodepen } from 'react-icons/lu';
 
 export const data = {
