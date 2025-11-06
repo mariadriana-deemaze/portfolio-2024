@@ -15,7 +15,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src", "index.html", "vite.config.*", "server/**/*.ts"],
   "exclude": ["dist", "dist-ssr", "node_modules"]
