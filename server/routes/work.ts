@@ -1,16 +1,29 @@
-import type { RouteModule } from '../types'
+import type { RouteModule } from '../types';
+import { getProjects, type Project } from '../../src/data/projects';
+import { data } from '@/data/main';
 
-type WorkData = Record<string, never>
+type WorkData = { projects: Project[] };
 
 const workRoute: RouteModule<WorkData> = {
-  path: '/work',
-  getProps: (req) => ({ location: req.url }),
-  getSeo: (_ctx) => ({
-    title: 'Work | Portfolio',
-    description: 'Selected projects and professional work.',
-    image:
-      'https://fastly.picsum.photos/id/705/800/1000.jpg?hmac=B4yaMDEw4yUnMYwvwKGpCz61k9acVLaWj2XoM83Ycm8',
-  }),
-}
+	path: '/work',
+	getProps: (req) => ({ location: req.url }),
+	async getInitialData() {
+		try {
+			const projects = await getProjects();
+			return { projects };
+		} catch (e) {
+			console.error('Failed to load work projects', e);
+			return { projects: [] };
+		}
+	},
+	getSeo: (_ctx) => ({
+		title: `${data.name} | ${data.role} :: Projects`,
+		description:
+			'Explore Maria Adriana’s full stack development projects, featuring work with Node.js, NestJS, Next.js, TypeScript, Go and React. Discover scalable solutions, clean architecture, and modern web applications.'
+		/* 	alternates: {
+		canonical: 'https://maria-adriana.com/projects'
+	} */
+	})
+};
 
-export default workRoute
+export default workRoute;

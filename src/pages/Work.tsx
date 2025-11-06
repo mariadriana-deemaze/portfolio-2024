@@ -1,11 +1,7 @@
-import { JSX } from "react";
+import { JSX } from 'react'
+import ProjectsList from '@/components/pages/projects'
+import { type Project } from '@/data/projects'
 
-export default function Work(): JSX.Element {
-  return (
-    <div>
-      <h1>WORK</h1>
-      <p>Showcase of projects and professional experience coming soon.</p>
-    </div>
-  )
+export default function Work({ projects = [] }: { projects?: Project[] }): JSX.Element {
+  return <ProjectsList projects={projects} />
 }
-

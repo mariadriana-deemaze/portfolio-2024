@@ -5,6 +5,7 @@ import Work from './pages/Work';
 import About from './pages/About';
 import Blog from './pages/Blog';
 import Contact from './pages/Contact';
+import ProjectShow from './pages/ProjectShow';
 import NotFound from './pages/NotFound';
 import Layout from './components/Layout';
 
@@ -26,7 +27,11 @@ export default function App(props: AppProps = {}): JSX.Element {
     <Layout commandLinks={props.initialData?.commandLinks}>
       <Routes>
         <Route path="/" element={<Home projects={(props.initialData as any)?.projects ?? []} />} />
-        <Route path="/work" element={<Work />} />
+        <Route path="/work" element={<Work projects={(props.initialData as any)?.projects ?? []} />} />
+        <Route
+          path="/work/:slug"
+          element={<ProjectShow project={(props.initialData as any)?.project} html={(props.initialData as any)?.projectHtml} />}
+        />
         <Route path="/about" element={<About message={props.initialData?.message} />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />

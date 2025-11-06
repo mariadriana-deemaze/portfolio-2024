@@ -1,14 +1,12 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Link from 'next/link';
 import { ReactLenis } from 'lenis/react';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
 import useMousePosition from '@/hooks/use-mouse-position';
 import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Project } from '@/data/projects';
-import Image from 'next/image';
 import '@/styles/projects/index.css';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
@@ -99,10 +97,10 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 					}
 				)}
 			>
-				<Link
+				<a
 					ref={anchorLinkRef}
 					className="cursor-none flex flex-row self-center -skew-y-12 leading-4 font-clash font-bold text-white uppercase"
-					href={`projects/${hoveringPost?.slug}`}
+					href={`/work/${hoveringPost?.slug}`}
 				>
 					<span className="block w-14 text-wrap">Read more </span>
 					<svg
@@ -120,7 +118,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							strokeWidth="4"
 						></path>
 					</svg>
-				</Link>
+				</a>
 			</div>
 		</ReactLenis>
 	);

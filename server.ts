@@ -34,16 +34,21 @@ function escapeHtml(text: string): string {
 function assembleHtml(template: string, appHtml: string, props: object, seo: Seo): string {
 	let html = template.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
 	html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(seo.title)}</title>`);
-	const metas = [
+	const metasParts: string[] = [
 		`<meta name="description" content="${escapeHtml(seo.description)}" />`,
 		`<meta property="og:title" content="${escapeHtml(seo.title)}" />`,
 		`<meta property="og:description" content="${escapeHtml(seo.description)}" />`,
-		`<meta property="og:image" content="${escapeHtml(seo.image)}" />`,
-		`<meta name="twitter:card" content="summary_large_image" />`,
-		`<meta name="twitter:title" content="${escapeHtml(seo.title)}" />`,
-		`<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`,
-		`<meta name="twitter:image" content="${escapeHtml(seo.image)}" />`
-	].join('\n    ');
+	];
+	if (seo.image) {
+		metasParts.push(
+			`<meta property="og:image" content="${escapeHtml(seo.image)}" />`,
+			`<meta name="twitter:card" content="summary_large_image" />`,
+			`<meta name="twitter:title" content="${escapeHtml(seo.title)}" />`,
+			`<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`,
+			`<meta name="twitter:image" content="${escapeHtml(seo.image)}" />`
+		);
+	}
+	const metas = metasParts.join('\n    ');
 	html = html.replace('</head>', `  ${metas}\n  </head>`);
 
 	const serialized = serializeProps(props);

@@ -1,7 +1,7 @@
 export interface Seo {
   title: string;
   description: string;
-  image: string;
+  image?: string;
 }
 
 export type SeoContext = {

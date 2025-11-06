@@ -2,11 +2,12 @@ import type { Request } from 'express'
 import type { RouteModule } from '../types'
 import home from './home'
 import work from './work'
+import workItem from './work_item'
 import about from './about'
 import blog from './blog'
 import notfound from './notfound'
 
-export const routes: RouteModule[] = [home, work, about, blog]
+export const routes: RouteModule[] = [home, workItem, work, about, blog]
 
 export function matchRoute(req: Request): RouteModule {
   for (const r of routes) {
