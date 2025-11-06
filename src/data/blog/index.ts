@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
 
-const BLOG_DIR = './data/blog';
+const BLOG_DIR = './src/data/blog';
 
 export interface BlogPost {
 	title: string;
