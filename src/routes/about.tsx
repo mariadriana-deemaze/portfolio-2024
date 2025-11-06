@@ -1,11 +1,15 @@
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { JSX, useState, type FormEvent } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
-export interface AboutProps {
-  message?: string
-}
+export const Route = createFileRoute('/about')({
+  component: AboutRoute,
+})
 
-export default function About({ message }: AboutProps): JSX.Element {
+function AboutRoute(): JSX.Element {
+  const router = useRouter()
+  const message = (router.options.context as any)?.initialData?.message as string | undefined
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [subject, setSubject] = useState('')

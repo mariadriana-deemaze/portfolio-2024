@@ -1,15 +1,22 @@
-import { JSX } from 'react'
+import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
 import { Badge } from '@/components/ui/badge'
-import { type BlogPost } from '@/data/blog'
 
-export default function BlogShow({ post, html = '' }: { post?: BlogPost; html?: string }): JSX.Element {
+export const Route = createFileRoute('/blog/$slug')({
+  component: BlogShowRoute,
+})
+
+function BlogShowRoute() {
+  const router = useRouter()
+  const post = (router.options.context as any)?.initialData?.post
+  const html = (router.options.context as any)?.initialData?.postHtml
+
   if (!post) {
     return (
       <div>
         <h1>Post not found</h1>
         <p>The requested blog post could not be located.</p>
         <p>
-          <a href="/blog">Back to blog</a>
+          <Link to="/blog">Back to blog</Link>
         </p>
       </div>
     )
@@ -20,19 +27,17 @@ export default function BlogShow({ post, html = '' }: { post?: BlogPost; html?: 
   return (
     <div className="mx-auto w-full max-w-2xl space-y-4">
       <p className="font-mono text-sm text-gray-500">
-        <a href="/blog" className="hover:underline">&larr; Back to blog</a>
+        <Link to="/blog" className="hover:underline">
+          &larr; Back to blog
+        </Link>
       </p>
       <header className="space-y-2">
         <h1 className="font-clash text-3xl">{title}</h1>
         <p className="font-mono text-sm text-foreground">{description}</p>
         {keywords.length ? (
           <div className="mt-2 flex flex-wrap gap-1">
-            {keywords.map((label) => (
-              <Badge
-                key={`${post.slug}-${label}`}
-                className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-                variant="outline"
-              >
+            {keywords.map((label: string) => (
+              <Badge key={`${post.slug}-${label}`} className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default" variant="outline">
                 <span>{label}</span>
               </Badge>
             ))}
@@ -45,4 +50,3 @@ export default function BlogShow({ post, html = '' }: { post?: BlogPost; html?: 
     </div>
   )
 }
-

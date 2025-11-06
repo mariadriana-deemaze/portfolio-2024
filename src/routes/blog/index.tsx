@@ -1,9 +1,13 @@
-import { JSX } from 'react'
-import { Link } from 'react-router-dom'
-import { type BlogPost } from '@/data/blog'
+import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
 import { Badge } from '@/components/ui/badge'
 
-export default function Blog({ posts = [] }: { posts?: BlogPost[] }): JSX.Element {
+export const Route = createFileRoute('/blog/')({
+  component: BlogIndexRoute,
+})
+
+function BlogIndexRoute() {
+  const router = useRouter()
+  const posts = (router.options.context as any)?.initialData?.posts ?? []
   return (
     <div className="mx-auto w-full max-w-2xl space-y-6">
       <header className="space-y-2">
@@ -12,25 +16,21 @@ export default function Blog({ posts = [] }: { posts?: BlogPost[] }): JSX.Elemen
       </header>
       <section>
         {posts.length === 0 && (
-          <p className="font-mono text-sm text-foreground text-center">
-            Looks empty here - enter the void
-          </p>
+          <p className="font-mono text-sm text-foreground text-center">Looks empty here - enter the void</p>
         )}
         <ul className="flex flex-col gap-8">
-          {posts.map((post) => (
+          {posts.map((post: any) => (
             <li key={`blogpost-${post.slug}`} className="border-b pb-6">
               <article>
                 <h2 className="font-clash text-2xl">
-                  <a href={`/blog/${post.slug}`} className="hover:underline">
+                  <Link to="/blog/$slug" params={{ slug: post.slug }} className="hover:underline">
                     {post.title}
-                  </a>
+                  </Link>
                 </h2>
-                <p className="mt-2 font-mono text-sm text-foreground">
-                  {post.description}
-                </p>
+                <p className="mt-2 font-mono text-sm text-foreground">{post.description}</p>
                 {post.keywords?.length ? (
                   <div className="mt-3 flex flex-wrap gap-1">
-                    {post.keywords.map((k) => (
+                    {post.keywords.map((k: string) => (
                       <Badge key={`${post.slug}-${k}`} variant="outline" className="py-1 px-3 text-[10px]">
                         <span>{k}</span>
                       </Badge>

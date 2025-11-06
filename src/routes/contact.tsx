@@ -1,8 +1,13 @@
+import { createFileRoute } from '@tanstack/react-router'
 import { JSX } from 'react'
 import { Section } from '@/components/ui/section'
 import { ContactForm } from '@/components/pages/contact/form'
 
-export default function Contact(): JSX.Element {
+export const Route = createFileRoute('/contact')({
+  component: ContactRoute,
+})
+
+function ContactRoute(): JSX.Element {
   return (
     <>
       <header className="mx-auto w-full max-w-2xl space-y-2 animate-fade-in-left delay-500 mb-4">
@@ -31,4 +36,3 @@ export default function Contact(): JSX.Element {
     </>
   )
 }
-

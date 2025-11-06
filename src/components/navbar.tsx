@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useRouterState } from '@tanstack/react-router';
 import { NowPlaying } from './now-playing';
 import { ThemeToggle } from './theme-toggle';
 
@@ -24,7 +24,7 @@ export function Navbar() {
 	const [show, setShow] = useState(true);
 	const [lastScrollY, setLastScrollY] = useState(0);
 
-	const location = useLocation();
+	const location = useRouterState({ select: (s) => s.location });
 
 	const controlNavbarVisibility = () => {
 		if (window.scrollY > lastScrollY) {
@@ -52,16 +52,16 @@ export function Navbar() {
 					<div className="flex flex-row pr-1 gap-2">
 						{Object.entries(navItems).map(([path, { name }]) => {
 							return (
-								<a
+								<Link
 									key={path}
-									href={path}
+									to={path}
 									className={`transition-all hover:text-neutral-2 flex align-middle relative py-1 px-2 ${
 										location.pathname.split('/')[1] === path.replace('/', '') &&
 										'dark:text-orange-200 text-orange-700'
 									}`}
 								>
 									{name}
-								</a>
+								</Link>
 							);
 						})}
 					</div>
