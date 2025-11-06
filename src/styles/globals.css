@@ -1,5 +1,33 @@
 @import 'tailwindcss';
 
+/* Local font faces for ClashDisplay from /public/fonts */
+@layer base {
+  /* Variable font covers 200–700 weights */
+  @font-face {
+    font-family: 'ClashDisplay';
+    src: url('/fonts/ClashDisplay-Variable.ttf') format('truetype');
+    font-weight: 200 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  /* Static regular as fallback if variable not supported */
+  @font-face {
+    font-family: 'ClashDisplay';
+    src: url('/fonts/ClashDisplay-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  /* Static bold as fallback */
+  @font-face {
+    font-family: 'ClashDisplay';
+    src: url('/fonts/ClashDisplay-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
 @config '../../tailwind.config.js';
 
 /*

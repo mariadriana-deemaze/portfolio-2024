@@ -1,3 +1,4 @@
+import '@/styles/globals.css';
 import { hydrateRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App, { type AppProps } from './App';
