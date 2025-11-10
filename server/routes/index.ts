@@ -11,11 +11,11 @@ import notfound from './notfound'
 export const routes: RouteModule[] = [home, workItem, work, about, blogItem, blog]
 
 export function matchRoute(req: Request): RouteModule {
-  for (const r of routes) {
-    if (typeof r.path === 'string') {
-      if (req.path === r.path) return r
+  for (const route of routes) {
+    if (typeof route.path === 'string') {
+      if (req.path === route.path) return route
     } else {
-      if (r.path.test(req.path)) return r
+      if (route.path.test(req.path)) return route
     }
   }
   return notfound

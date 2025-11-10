@@ -5,7 +5,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-type BlogItemData = { post?: BlogPost; postHtml?: string }
+type BlogItemData = { post?: BlogPost; postHtml?: string };
 
 const blogItemRoute: RouteModule<BlogItemData> = {
   path: /^\/blog\/([^/]+)$/,
@@ -23,44 +23,20 @@ const blogItemRoute: RouteModule<BlogItemData> = {
       return { post: undefined }
     }
   },
-  getSeo: (ctx) => {
-    try {
-      const slug = ctx.path.split('/').pop() || ''
-      if (slug) {
-        const dir = path.resolve('src/data/blog')
-        try {
-          const files = fs.readdirSync(dir).filter((f) => f.toLowerCase().endsWith('.md'))
-          for (const file of files) {
-            const content = fs.readFileSync(path.join(dir, file), 'utf8')
-            const { data } = matter(content)
-            if ((data as any)?.slug === slug) {
-              const title = (data as any)?.title
-              const description = (data as any)?.description
-              if (title && description) {
-                return {
-                  title: `${title} | Blog`,
-                  description,
-                }
-              }
-              break
-            }
-          }
-        } catch {
-          // noop
-        }
-      }
-      return {
-        title: 'Blog Post',
-        description: 'Blog article.',
-      }
-    } catch {
-      return {
-        title: 'Blog Post',
-        description: 'Blog article.',
-      }
+  async getSeo(ctx) {
+    const slug = ctx.path.split('/').pop() || '';
+    const post = await getPost(slug);
+    
+    if (!post) {
+      const notFound = require('./notfound').default as RouteModule
+      return notFound.getSeo(ctx)
+    }
+
+    return {
+      title: `${post.title} | Blog`,
+      description: post.description,
     }
   },
 }
 
 export default blogItemRoute
-

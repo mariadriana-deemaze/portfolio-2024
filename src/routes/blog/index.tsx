@@ -1,4 +1,6 @@
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
+import { getPostsClient } from '@/data/blog/client'
 import { Badge } from '@/components/ui/badge'
 
 export const Route = createFileRoute('/blog/')({
@@ -7,7 +9,17 @@ export const Route = createFileRoute('/blog/')({
 
 function BlogIndexRoute() {
   const router = useRouter()
-  const posts = (router.options.context as any)?.initialData?.posts ?? []
+  const ssrPosts = (router.options.context as any)?.initialData?.posts ?? []
+  const [posts, setPosts] = useState<any[]>(ssrPosts)
+
+  useEffect(() => {
+    if (!ssrPosts || ssrPosts.length === 0) {
+      getPostsClient()
+        .then((data) => setPosts(data))
+        .catch(() => setPosts([]))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <div className="mx-auto w-full max-w-2xl space-y-6">
       <header className="space-y-2">

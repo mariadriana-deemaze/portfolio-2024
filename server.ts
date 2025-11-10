@@ -22,7 +22,8 @@ function serializeProps(props: object): string {
 		.replace(/\u2029/g, '\\u2029');
 }
 
-function escapeHtml(text: string): string {
+function escapeHtml(text: string = ""): string {
+	console.log("🚀 ~ escapeHtml ~ text:", text)
 	return text
 		.replace(/&/g, '&amp;')
 		.replace(/</g, '&lt;')
@@ -290,16 +291,16 @@ async function start() {
 			const route = matchRoute(req);
 			const props = route.getProps({ url: req.url });
 				Promise.resolve(enrichInitialData(route, req, props))
-					.then(() => {
+					.then(async () => {
 						const appHtml = render(props);
-						const seo = route.getSeo({ path: req.path, url: req.url });
+						const seo = await route.getSeo({ path: req.path, url: req.url });
 						const finalHtml = assembleHtml(template, appHtml, props, seo);
 						return res.status(404).send(finalHtml);
 					})
-					.catch((e) => {
+					.catch(async (e) => {
 						console.error(e);
 						const appHtml = render(props);
-						const seo = route.getSeo({ path: req.path, url: req.url });
+						const seo = await route.getSeo({ path: req.path, url: req.url });
 						const finalHtml = assembleHtml(template, appHtml, props, seo);
 						return res.status(404).send(finalHtml);
 					});

@@ -1,10 +1,11 @@
 import type { RouteModule } from '../types'
 import { getPosts, type BlogPost } from '../../src/data/blog'
+import { data } from '@/data/main'
 
 type BlogData = { posts?: BlogPost[] }
 
 const blogRoute: RouteModule<BlogData> = {
-  path: '/blog',
+  path: /^\/blog\/?$/,
   getProps: (req) => ({ location: req.url }),
   async getInitialData(_req) {
     try {
@@ -16,10 +17,12 @@ const blogRoute: RouteModule<BlogData> = {
     }
   },
   getSeo: (_ctx) => ({
-    title: 'Blog | Portfolio',
-    description: 'Thoughts, writing, and updates.',
-    image:
-      'https://fastly.picsum.photos/id/705/800/1000.jpg?hmac=B4yaMDEw4yUnMYwvwKGpCz61k9acVLaWj2XoM83Ycm8',
+   title: `${data.name} | ${data.role} :: Blog`,
+	description:
+		'Explore Maria Adriana’s insights on Full Stack Development, with in-depth articles on problem-solving strategies, architecture decisions, performance optimization, and modern web technologies.',
+	/* alternates: {
+		canonical: 'https://maria-adriana.com/blog'
+	} */
   }),
 }
 

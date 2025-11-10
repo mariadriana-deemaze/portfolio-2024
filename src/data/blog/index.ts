@@ -6,13 +6,23 @@ import matter from 'gray-matter';
 
 const BLOG_DIR = './src/data/blog';
 
+export interface BlogPostRaw {
+	id: string;
+	slug: string;
+	link: string;
+	title: string;
+	description: string;
+	date: string;
+	keywords: string[];
+	published: boolean;
+}
+
 export interface BlogPost {
 	title: string;
 	description: string;
 	date: string;
 	slug: string;
 	body: string;
-	type: string;
 	external_link: string;
 	keywords: string[];
 }
@@ -25,20 +35,19 @@ export const getPosts = async () => {
 			.filter((file) => path.extname(file) === '.md')
 			.map(async (file) => {
 				const filePath = `${BLOG_DIR}/${file}`;
-				const postContent = await fs.readFile(filePath, 'utf8');
-				const { data, content } = matter(postContent);
+				const raw = await fs.readFile(filePath, 'utf8');
 
-				if (data.published === false) {
-					return null;
-				}
+				const { data, content } = matter(raw) as unknown as { data: BlogPostRaw; content: string };
 
-				return {
+				if (data.published === false) return null;
+
+				const post: BlogPost = {
 					...data,
-					keywords: data.keywords.split(',').map((word: string) => `#${word}`),
-					external_link: data.link,
+					keywords: Array.isArray(data?.keywords) ? (data.keywords).map((w) => `#${w}`) : [],
+					external_link: data?.link,
 					body: content,
-					type: 'post'
-				} as BlogPost;
+				};
+				return post;
 			})
 	);
 

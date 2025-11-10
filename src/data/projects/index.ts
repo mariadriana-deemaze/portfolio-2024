@@ -8,6 +8,19 @@ import { STACKS } from '../../components/stacks';
 
 const PROJECTS_DIR = './src/data/projects';
 
+export interface ProjectRaw {
+	hero: string;
+	title: string;
+	description: string;
+	year: string;
+	slug: string;
+	repo: string;
+	medium: string;
+	tags: string[];
+	colors: string[];
+	technologies: string[];
+}
+
 export interface Project {
 	hero: string;
 	title: string;
@@ -35,17 +48,18 @@ export const getProjects = async () => {
 			.map(async (file) => {
 				const filePath = `${PROJECTS_DIR}/${file}`;
 				const projectContent = await fs.readFile(filePath, 'utf8');
-				const { data, content } = matter(projectContent);
 
-				const technologies = data['technologies'].map(
-					(technology: string) => STACKS[technology]
-				);
+				const { data, content } = matter(projectContent) as unknown as { data: ProjectRaw, content: string };
 
-				return { ...data, technologies, content } as Project;
+				const project: Project = {
+					...data,
+					technologies: data.technologies.map((technology) => STACKS[technology]),
+					content
+				};
+				return project;
 			})
 	);
 
-	console.log('🚀 ~ getProjects ~ projects:', projects);
 	return projects
 		.filter((project) => project !== null)
 		.sort((a, b) =>

@@ -18,5 +18,5 @@ export interface RouteModule<D = unknown> {
   path: string | RegExp;
   getProps: (req: { url: string }) => RouteProps<D>;
   getInitialData?: (req: { url: string }) => Promise<D> | D;
-  getSeo: (ctx: SeoContext) => Seo;
+  getSeo: (ctx: SeoContext) => Promise<Seo> | Seo;
 }
