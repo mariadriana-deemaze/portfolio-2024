@@ -1,7 +1,7 @@
-import { clashDisplay } from '../../../app/layout';
-import { Card, CardContent, CardHeader } from '../../../components/ui/card';
-import { Section } from '../../../components/ui/section';
-import { data } from '../../../data/main';
+import { clashDisplay } from '@/app/layout';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Section } from '@/components/ui/section';
+import { data } from '@/data/main';
 
 export const SectionEducation = () => {
 	return (

@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<AppContext>()({
 
 function RootComponent() {
   const router = useRouter()
-  const commandLinks = (router.options.context as AppContext).initialData?.commandLinks
+  const commandLinks = router.options.context.initialData.commandLinks
   return (
     <Layout commandLinks={commandLinks}>
       <Outlet />

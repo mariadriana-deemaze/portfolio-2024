@@ -13,15 +13,12 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 		words.forEach((word) => {
 			const letters = word.textContent?.split('');
 			word.textContent = '';
-
-			if (letters) {
-				letters.forEach((letter) => {
-					const span = document.createElement('span');
-					span.textContent = letter;
-					span.className = 'letter';
-					word.append(span);
-				});
-			}
+			letters.forEach((letter) => {
+				const span = document.createElement('span');
+				span.textContent = letter;
+				span.className = 'letter';
+				word.append(span);
+			});
 		});
 	};
 

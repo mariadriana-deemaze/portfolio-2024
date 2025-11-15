@@ -23,7 +23,6 @@ function serializeProps(props: object): string {
 }
 
 function escapeHtml(text: string = ""): string {
-	console.log("🚀 ~ escapeHtml ~ text:", text)
 	return text
 		.replace(/&/g, '&amp;')
 		.replace(/</g, '&lt;')

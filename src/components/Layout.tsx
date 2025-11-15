@@ -13,18 +13,8 @@ export interface LayoutProps {
 }
 
 export default function Layout({ children, commandLinks = [] }: LayoutProps): JSX.Element {
-  const internalDefaults: CommandLink[] = useMemo(
-    () => [
-      { url: '/blog', title: 'Blog', type: 'internal' },
-      { url: '/contact', title: 'Contact', type: 'internal' },
-    ],
-    []
-  )
-  const links = (commandLinks?.length ? commandLinks : []).concat(internalDefaults)
-
   return (
     <div className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar antialiased mb-10 lg:mx-auto">
-      {/* Google Analytics */}
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZSZBWDZK9T"></script>
       <script
         dangerouslySetInnerHTML={{
@@ -41,7 +31,7 @@ export default function Layout({ children, commandLinks = [] }: LayoutProps): JS
       <ProgressIndicator />
       <main className="container relative mx-auto mt-28 overflow-auto print:p-12 overflow-y-scroll overflow-x-hidden no-scrollbar">
         <BGGrid>{children}</BGGrid>
-        <CommandMenu links={links} />
+        <CommandMenu links={commandLinks} />
       </main>
     </div>
   )
