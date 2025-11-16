@@ -1,4 +1,3 @@
-import { clashDisplay } from '@/app/layout';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Section } from '@/components/ui/section';
@@ -9,7 +8,7 @@ import { ReactElement } from 'react';
 export const SectionWorkExperience = () => {
 	return (
 		<Section className="animate-fade-in-left delay-500">
-			<h2 className={`${clashDisplay.className} text-xl font-bold`}>Work Experience</h2>
+			<h2 className="font-clash text-xl font-bold">Work Experience</h2>
 			{data.work.map(({ company, title, description, link, preview, stack, start, end }) => {
 				return (
 					<Card key={company} className="bg-card/35 shadow-xl">

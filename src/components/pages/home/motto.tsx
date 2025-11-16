@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { clashDisplay } from '@/app/layout';
 import { cn } from '@/utils/utils';
 
 export const AnimatedMottos = ({ data, className }: { data: string[]; className?: string }) => {
@@ -76,7 +75,7 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 
 	return (
 		<h6
-			className={`h-5 w-full relative roles-slider ${clashDisplay.className} text-lg font-normal`}
+			className="h-5 w-full relative roles-slider font-clash text-lg font-normal"
 		>
 			{data.map((item, index) => (
 				<span className={cn('role-slide', className)} key={`motto_item_${index}`}>

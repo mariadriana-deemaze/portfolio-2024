@@ -14,7 +14,9 @@ function applyTheme(theme: 'light' | 'dark' | 'system') {
   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   const resolved = theme === 'system' ? (systemPrefersDark ? 'dark' : 'light') : theme
   root.classList.toggle('dark', resolved === 'dark')
-  try { localStorage.setItem('theme', theme) } catch {}
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('theme', theme)
+  }
 }
 
 export function ThemeToggle() {

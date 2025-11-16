@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { getPostsClient } from '@/data/blog/client'
 import { Badge } from '@/components/ui/badge'
 import type { BlogPost } from '@/data/blog'
@@ -10,7 +10,8 @@ export const Route = createFileRoute('/blog/')({
 
 function BlogIndexRoute() {
   const router = useRouter()
-  const ssrPosts = router.options.context.initialData?.posts ?? []
+  const ssrPostsRaw = router.options.context.initialData?.posts
+  const ssrPosts = useMemo(() => ssrPostsRaw ?? [], [ssrPostsRaw])
   const [posts, setPosts] = useState<BlogPost[]>(ssrPosts)
 
   useEffect(() => {
@@ -19,12 +20,11 @@ function BlogIndexRoute() {
         .then((data) => setPosts(data))
         .catch(() => setPosts([]))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [ssrPosts])
   return (
     <div className="mx-auto w-full max-w-2xl space-y-6">
       <header className="space-y-2">
-        <h1 className="font-clash font-bold text-5xl">Blog</h1>
+        <h1 className="font-clash font-bold text-5xl text-fade-grad">Blog</h1>
         <h4 className="font-clash font-medium text-md text-gray-500">Articles list</h4>
       </header>
       <section>

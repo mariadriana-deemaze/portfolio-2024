@@ -1,4 +1,3 @@
-import { clashDisplay } from '@/app/layout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Section } from '@/components/ui/section';
@@ -14,7 +13,7 @@ export const SectionHero = () => {
 					<div className="flex-1 group">
 						<div className="relative w-min">
 							<h1
-								className={`${clashDisplay.className} relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none text-fade-grad`}
+								className="font-clash relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none text-fade-grad"
 							>
 								{data.name}
 							</h1>

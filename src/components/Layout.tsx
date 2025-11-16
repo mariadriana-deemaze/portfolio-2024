@@ -1,4 +1,4 @@
-import { JSX, useMemo } from 'react'
+import { JSX } from 'react'
 import { CommandMenu } from './command-menu'
 import { BGGrid } from './bg-grid'
 import ProgressIndicator from './progress-indicator'

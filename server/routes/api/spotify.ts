@@ -34,7 +34,6 @@ async function getAccessToken(): Promise<string> {
 
 router.get('/me/current', async (_req: Request, res: Response) => {
   const accessToken = await getAccessToken()
-  console.log("🚀 ~ accessToken:", accessToken)
 
   if (!accessToken) {
     return res.status(200).json({ data: { isPlaying: false } })

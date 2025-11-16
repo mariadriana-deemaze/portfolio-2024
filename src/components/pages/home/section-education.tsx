@@ -1,4 +1,3 @@
-import { clashDisplay } from '@/app/layout';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
@@ -6,7 +5,7 @@ import { data } from '@/data/main';
 export const SectionEducation = () => {
 	return (
 		<Section className="animate-fade-in-left delay-300">
-			<h2 className={`${clashDisplay.className} text-xl font-bold`}>Education</h2>
+			<h2 className="font-clash text-xl font-bold">Education</h2>
 			{data.education.map(({ school, preview, summary, start, end, degree }) => {
 				return (
 					<Card key={school} className="bg-card/35 shadow-xl">

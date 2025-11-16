@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { NowPlaying } from './now-playing';
 import { ThemeToggle } from './theme-toggle';
@@ -26,19 +26,19 @@ export function Navbar() {
 
 	const location = useRouterState({ select: (s) => s.location });
 
-	const controlNavbarVisibility = () => {
+	const controlNavbarVisibility = useCallback(() => {
 		if (window.scrollY > lastScrollY) {
 			setShow(false);
 		} else {
 			setShow(true);
 		}
 		setLastScrollY(window.scrollY);
-	};
+	}, [lastScrollY]);
 
 	useEffect(() => {
 		window.addEventListener('scroll', controlNavbarVisibility);
 		return () => window.removeEventListener('scroll', controlNavbarVisibility);
-	}, [lastScrollY]);
+	}, [controlNavbarVisibility]);
 
 	return (
 		<nav
