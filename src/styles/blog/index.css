@@ -1,5 +1,18 @@
 @import '../globals.css';
 
+.content .prose {
+	@apply font-mono;
+}
+
+.content .prose h1,
+.content .prose h2,
+.content .prose h3,
+.content .prose h4,
+.content .prose h5,
+.content .prose h6 {
+	@apply font-clash;
+}
+
 .blog-page h1 {
 	@apply text-fade-grad font-clash relative w-full text-[40px] md:text-[50px] font-medium leading-none;
 }

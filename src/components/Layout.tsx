@@ -4,6 +4,7 @@ import { BGGrid } from './bg-grid'
 import ProgressIndicator from './progress-indicator'
 import { Navbar } from './navbar'
 import '../styles/globals.css'
+import '../styles/blog/index.css'
 
 export type CommandLink = { url: string; title: string; type: 'internal' | 'blog' | 'projects' | 'social' }
 

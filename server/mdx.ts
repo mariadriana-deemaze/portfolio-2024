@@ -33,7 +33,7 @@ export async function renderMdxToHtml(source: string): Promise<string> {
     React.createElement(MDXContent, {
       components: {
         Image: props => React.createElement('img', props),
-        pre: props => React.createElement('code', props),
+        pre: props => React.createElement('pre', props),
       },
     })
   )
