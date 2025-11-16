@@ -1,0 +1,253 @@
+@import 'tailwindcss';
+
+/* Local font faces for ClashDisplay from /public/fonts */
+@layer base {
+  /* Variable font covers 200–700 weights */
+  @font-face {
+    font-family: 'ClashDisplay';
+    src: url('/fonts/ClashDisplay-Variable.ttf') format('truetype');
+    font-weight: 200 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  /* Static regular as fallback if variable not supported */
+  @font-face {
+    font-family: 'ClashDisplay';
+    src: url('/fonts/ClashDisplay-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  /* Static bold as fallback */
+  @font-face {
+    font-family: 'ClashDisplay';
+    src: url('/fonts/ClashDisplay-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
+@config '../../tailwind.config.ts';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility roles-slider {
+  @apply inline-flex align-top;
+
+  & .role-slide {
+    @apply absolute flex flex-wrap lg:flex-nowrap;
+  }
+
+  & .role-slide .letter {
+    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
+  }
+
+  & .role-slide .letter.out {
+    @apply opacity-50;
+    transform: rotateX(90deg) translateY(-10px);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+  }
+
+  & .role-slide .letter.in {
+    transition: 0.38s ease;
+    @apply opacity-100 ease-linear;
+  }
+
+  & .role-slide .letter.behind {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility role-slide {
+  .roles-slider & {
+    @apply absolute flex flex-wrap lg:flex-nowrap;
+  }
+
+  .roles-slider & .letter {
+    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
+  }
+
+  .roles-slider & .letter.out {
+    @apply opacity-50;
+    transform: rotateX(90deg) translateY(-10px);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+  }
+
+  .roles-slider & .letter.in {
+    transition: 0.38s ease;
+    @apply opacity-100 ease-linear;
+  }
+
+  .roles-slider & .letter.behind {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility letter {
+  .roles-slider .role-slide & {
+    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
+  }
+
+  .roles-slider .role-slide &.out {
+    @apply opacity-50;
+    transform: rotateX(90deg) translateY(-10px);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+  }
+
+  .roles-slider .role-slide &.in {
+    transition: 0.38s ease;
+    @apply opacity-100 ease-linear;
+  }
+
+  .roles-slider .role-slide &.behind {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility out {
+  .roles-slider .role-slide &.letter {
+    @apply opacity-50;
+    transform: rotateX(90deg) translateY(-10px);
+    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+  }
+}
+
+@utility in {
+  .roles-slider .role-slide &.letter {
+    transition: 0.38s ease;
+    @apply opacity-100 ease-linear;
+  }
+}
+
+@utility behind {
+  .roles-slider .role-slide &.letter {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility scroll-fade-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
+
+  &.scroll-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility scroll-fade-in {
+  &.scroll-fade-reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility text-fade-grad {
+  @apply bg-clip-text text-transparent min-w-full bg-radial-[at_85%_100%] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800
+}
+
+@layer base {
+	:root {
+		--flexoki-bg: 48 100% 97%;
+		--flexoki-bg-2: 51 33% 92%;
+		--flexoki-ui: 51 21% 88%;
+		--flexoki-ui-2: 50 14% 83%;
+		--flexoki-ui-3: 55 10% 79%;
+		--flexoki-tx: 0 3% 6%;
+		--flexoki-tx-2: 50 3% 42%;
+		--flexoki-tx-3: 49 7% 70%;
+		--flexoki-re: 3 62% 42%;
+		--flexoki-cy: 175, 57%, 33%;
+	}
+
+	.dark {
+		--flexoki-bg: 0 3% 6%;
+		--flexoki-bg-2: 30 4% 11%;
+		--flexoki-ui: 30 3% 15%;
+		--flexoki-ui-2: 40 3% 20%;
+		--flexoki-ui-3: 30 3% 24%;
+		--flexoki-tx: 55 10% 79%;
+		--flexoki-tx-2: 43 3% 52%;
+		--flexoki-tx-3: 45 2% 33%;
+		--flexoki-re: 5 61% 54%;
+		--flexoki-cy: 175, 57%, 33%;
+	}
+
+	:root {
+		--background: var(--flexoki-bg);
+		--foreground: var(--flexoki-tx);
+		--card: var(--flexoki-bg);
+		--card-foreground: var(--flexoki-tx);
+		--popover: var(--flexoki-bg);
+		--popover-foreground: var(--flexoki-tx);
+		--primary: var(--flexoki-tx);
+		--primary-foreground: var(--flexoki-bg);
+		--secondary: var(--flexoki-ui-2);
+		--secondary-foreground: var(--flexoki-tx-2);
+		--muted: var(--flexoki-bg-2);
+		--muted-foreground: var(--flexoki-tx-3);
+		--accent: var(--flexoki-ui);
+		--accent-foreground: var(--flexoki-tx-2);
+		--destructive: var(--flexoki-re);
+		--destructive-foreground: var(--flexoki-bg);
+		--border: var(--flexoki-ui-2);
+		--input: var(--flexoki-ui-2);
+		--ring: var(--flexoki-ui-3);
+		--radius: 0.5rem;
+		--cyan-flexoki: var(--flexoki-cy);
+	}
+
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+@layer components {
+  .progress {
+    height: 0.18rem;
+  }
+
+  .progress .progress-bar {
+    height: 0.2rem;
+    transform-origin: left;
+    will-change: transform;
+    transform: scaleX(0);
+    @apply w-full bg-orange-600;
+  }
+
+  .animate-fade-in-left {
+    @apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
+  }
+}
