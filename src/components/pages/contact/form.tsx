@@ -23,8 +23,11 @@ export const ContactForm = () => {
 			return;
 		}
 
-		const request = await fetch('api/send', {
+		const request = await fetch('/api/send', {
 			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
 			body: JSON.stringify(data)
 		});
 
