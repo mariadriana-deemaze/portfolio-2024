@@ -1,54 +1,55 @@
-
 ![Preview](preview.png)
-
-![Vercel Deploy](https://deploy-badge.vercel.app/vercel/portfolio-2024-livid-xi)
 
 # 🚀 maria-adriana.com
 
-- **Framework**: [Next.js 14](https://nextjs.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with [Shadcn/ui](https://ui.shadcn.com/)
-- **Deployment**: [Vercel](https://vercel.com)
+- Framework: Vite + React 19 with TanStack Router
+- Rendering: Server-Side Rendering (SSR) via custom Express server
+- Styling: Tailwind CSS 4 + shadcn/ui components
+- Content: MD/MDX-based blog and projects
+- Deployment: Hosted on Raspeberry PI w/ Coolify
 
-## Project Overview
+## Architecture
 
-- `app/api/*` - [API routes](https://nextjs.org/docs/api-routes/introduction) powering e-mail sending and spotify features.
-- `app/**` - Static content.
-- `@components/**` - Various components used throughout the site, and namespace by page.
-- `@public/**` - Static assets like images and fonts.
-- `@utils/**` - Collection of helpful utilities or code for external services.
-- `@styles/**` - Custom styles allocation.
-- `@types/**` - Allocation of shared types.
-- `@data/**` - Static data.
+- Vite drives both client build and SSR dev HMR.
+- Express server handles SSR HTML, static assets, sitemap, and JSON APIs.
+- Routes are defined with TanStack Router (`src/routes/**`), rendered on the server with `src/entry-server.tsx`.
+- Static content is sourced from `src/data/blog/*.md` and `src/data/projects/*.mdx` and hydrated into pages.
+- API endpoints live under `server/routes/api/**` (e.g., contact form, Spotify, projects).
 
-## Running the project
+## Project Structure
 
-Firstly, create an `.env` file with the variables listed in `.env.sample`.
+- `src/routes/**` - Route files for TanStack Router (e.g., `index.tsx`, `blog/$slug.tsx`).
+- `src/components/**` - UI components, shadcn/ui wrappers, and page sections.
+- `src/styles/**` - Tailwind/global CSS and page-specific styles.
+- `src/data/**` - Markdown/MDX content for blog and projects.
+- `server.ts` - Dev/prod Express server with SSR.
+- `server/routes/**` - Route matching helpers and API handlers.
+- `public/**` - Static assets (images, fonts, favicon).
+- `index.html` - Vite HTML template used in SSR assembly.
 
-Then, run the development server:
+## Scripts
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- `dev` - Vite dev server (client-only; default Vite port).
+- `dev:ssr` - Express + Vite middleware with SSR and HMR at `http://localhost:3000`.
+- `build` - Client production build to `dist/`.
+- `build:ssr` - SSR build of `src/entry-server.tsx` to `dist-ssr/`.
+- `serve` - Start the Express server (expects prior `build` + `build:ssr`).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run Locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1) Copy `.env.sample` to `.env` and fill values.
 
-## Learn More
+2) Run `npm run dev:ssr` then open `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+3) Production preview:
+- `npm run build && npm run build:ssr`
+- `npm run serve` then open `http://localhost:3000`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- The server exposes `GET /sitemap.xml` and `/api/*` endpoints.
+- Initial route data (blog/projects) is read from `src/data/**` at request time.
 
-## 📄 License
+## License
 
 MIT © [Maria Adriana](https://github.com/mariadriana-deemaze/portfolio-2024/blob/main/LICENSE)
