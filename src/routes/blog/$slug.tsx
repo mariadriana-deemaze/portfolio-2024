@@ -16,7 +16,7 @@ function BlogShowRoute() {
         <h1>Post not found</h1>
         <p>The requested blog post could not be located.</p>
         <p>
-          <Link to="/blog">Back to blog</Link>
+          <a href="/blog">Back to blog</a>
         </p>
       </div>
     )
@@ -27,9 +27,9 @@ function BlogShowRoute() {
   return (
     <div className="mx-auto w-full max-w-2xl space-y-4">
       <p className="font-mono text-sm text-gray-500">
-        <Link to="/blog" className="hover:underline">
+        <a href="/blog" className="hover:underline">
           &larr; Back to blog
-        </Link>
+        </a>
       </p>
       <header className="space-y-2">
         <h1 className="font-clash text-3xl">{title}</h1>

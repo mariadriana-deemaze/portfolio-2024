@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Link from 'next/link';
 import { ReactLenis } from 'lenis/react';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
 import { BlogPost } from '@/data/blog';
@@ -113,7 +112,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 					}
 				)}
 			>
-				<Link
+				<a
 					ref={anchorLinkRef}
 					className="cursor-none flex flex-row self-center -skew-y-12 leading-4 font-clash font-bold text-white uppercase"
 					href={`blog/${hoveringPost?.slug}`}
@@ -134,7 +133,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							strokeWidth="4"
 						></path>
 					</svg>
-				</Link>
+				</a>
 			</div>
 		</ReactLenis>
 	);

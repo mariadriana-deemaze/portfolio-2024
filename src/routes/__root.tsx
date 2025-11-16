@@ -30,7 +30,7 @@ function NotFoundRoute() {
         <i>Have you tried looking under the bed?</i>
       </p>
       <Button variant="outline" size="lg" className="mt-10" asChild>
-        <Link to="/">Feeling lucky ✨</Link>
+        <a href="/">Feeling lucky ✨</a>
       </Button>
     </div>
   )

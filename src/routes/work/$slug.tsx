@@ -20,7 +20,7 @@ function WorkItemRoute(): JSX.Element {
         <h1>Project not found</h1>
         <p>The requested project could not be located.</p>
         <p>
-          <Link to="/work">Back to projects</Link>
+          <a href="/work">Back to projects</a>
         </p>
       </div>
     )
@@ -31,9 +31,9 @@ function WorkItemRoute(): JSX.Element {
   return (
     <div className="mx-auto w-full max-w-2xl space-y-4">
       <p className="font-mono text-sm text-gray-500">
-        <Link to="/work" className="hover:underline">
+        <a href="/work" className="hover:underline">
           &larr; Back to projects
-        </Link>
+        </a>
       </p>
       <header className="space-y-2">
         <time className="font-mono text-xs text-gray-500">YEAR {year}</time>

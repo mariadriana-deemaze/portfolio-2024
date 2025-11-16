@@ -52,16 +52,16 @@ export function Navbar() {
 					<div className="flex flex-row pr-1 gap-2">
 						{Object.entries(navItems).map(([path, { name }]) => {
 							return (
-								<Link
+								<a
 									key={path}
-									to={path}
+									href={path}
 									className={`transition-all hover:text-neutral-2 flex align-middle relative py-1 px-2 ${
 										location.pathname.split('/')[1] === path.replace('/', '') &&
 										'dark:text-orange-200 text-orange-700'
 									}`}
 								>
 									{name}
-								</Link>
+								</a>
 							);
 						})}
 					</div>

@@ -36,9 +36,9 @@ function BlogIndexRoute() {
             <li key={`blogpost-${post.slug}`} className="border-b pb-6">
               <article>
                 <h2 className="font-clash text-2xl">
-                  <Link to="/blog/$slug" params={{ slug: post.slug }} className="hover:underline">
+                  <a href={`/blog/${post.slug}`} className="hover:underline">
                     {post.title}
-                  </Link>
+                  </a>
                 </h2>
                 <p className="mt-2 font-mono text-sm text-foreground">{post.description}</p>
                 {post.keywords?.length ? (
