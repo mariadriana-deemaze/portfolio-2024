@@ -41,7 +41,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
 			<header className="mx-auto w-full max-w-2xl space-y-2 animate-fade-in-left delay-500 mb-10">
-				<h1 className="font-clash font-medium text-3xl text-fade-grad mt-5">Blog</h1>
+				<h1 className="font-clash font-bold text-5xl text-fade-grad">Blog</h1>
 				<h4 className="font-clash font-medium text-md text-gray-500">Articles list</h4>
 				<p className="pb-10 text-pretty font-mono text-sm text-foreground leading-5">
 					My own personal and biased musings in thinkering around in engineering and
