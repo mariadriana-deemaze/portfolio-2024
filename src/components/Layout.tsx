@@ -26,7 +26,6 @@ export default function Layout({ children, commandLinks = [] }: LayoutProps): JS
           `,
         }}
       />
-
       <Navbar />
       <ProgressIndicator />
       <main className="container relative mx-auto mt-28 overflow-auto print:p-12 overflow-y-scroll overflow-x-hidden no-scrollbar">

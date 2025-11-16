@@ -3,12 +3,11 @@ import type { RouteModule } from '../types'
 import home from './home'
 import work from './work'
 import workItem from './work_item'
-import about from './about'
 import blog from './blog'
 import blogItem from './blog_item'
 import notfound from './notfound'
 
-export const routes: RouteModule[] = [home, workItem, work, about, blogItem, blog]
+export const routes: RouteModule[] = [home, workItem, work, blogItem, blog]
 
 export function matchRoute(req: Request): RouteModule {
   for (const route of routes) {

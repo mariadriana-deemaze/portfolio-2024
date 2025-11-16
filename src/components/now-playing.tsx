@@ -8,7 +8,8 @@ import { NowPlayingData } from '../types/spotify';
 export const NowPlaying = () => {
 	const { data: nowPlaying } = useQuery<{ data: NowPlayingData }>({
 		queryKey: ['nowPlaying'],
-		queryFn: async () => fetch('/api/spotify/me/current').then((r) => r.json())
+		queryFn: async () => fetch('/api/spotify/me/current').then((r) => r.json()),
+		refetchInterval: 5000
 	});
 
 	return (

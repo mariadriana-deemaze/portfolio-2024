@@ -14,27 +14,26 @@ export async function renderMdxToHtml(source: string): Promise<string> {
     remarkPlugins: [
       remarkGfm,
       remarkFrontmatter,
-      [remarkToc as any, { tight: true, maxDepth: 5 }],
+      [remarkToc, { tight: true, maxDepth: 5 }],
     ],
     rehypePlugins: [
       rehypeSlug,
       rehypeAutolinkHeadings,
-      // @ts-expect-error types for plugin options
       [rehypePrettyCode, { theme: 'github-dark-high-contrast' }],
     ],
     development: false,
     outputFormat: 'function-body',
     format: 'mdx',
-  } as any)
+  })
 
   const mod = await run(compiled, { ...runtime, Fragment: React.Fragment })
-  const MDXContent = (mod as any).default as React.ComponentType<any>
+  const MDXContent = mod.default as React.ComponentType<any>
 
   const html = renderToString(
     React.createElement(MDXContent, {
       components: {
-        Image: (props: any) => React.createElement('img', props),
-        pre: (props: any) => React.createElement('code', props),
+        Image: props => React.createElement('img', props),
+        pre: props => React.createElement('code', props),
       },
     })
   )

@@ -2,6 +2,7 @@ import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { getPostsClient } from '@/data/blog/client'
 import { Badge } from '@/components/ui/badge'
+import type { BlogPost } from '@/data/blog'
 
 export const Route = createFileRoute('/blog/')({
   component: BlogIndexRoute,
@@ -9,8 +10,8 @@ export const Route = createFileRoute('/blog/')({
 
 function BlogIndexRoute() {
   const router = useRouter()
-  const ssrPosts = (router.options.context as any)?.initialData?.posts ?? []
-  const [posts, setPosts] = useState<any[]>(ssrPosts)
+  const ssrPosts = router.options.context.initialData?.posts ?? []
+  const [posts, setPosts] = useState<BlogPost[]>(ssrPosts)
 
   useEffect(() => {
     if (!ssrPosts || ssrPosts.length === 0) {
@@ -31,7 +32,7 @@ function BlogIndexRoute() {
           <p className="font-mono text-sm text-foreground text-center">Looks empty here - enter the void</p>
         )}
         <ul className="flex flex-col gap-8">
-          {posts.map((post: any) => (
+          {posts.map((post) => (
             <li key={`blogpost-${post.slug}`} className="border-b pb-6">
               <article>
                 <h2 className="font-clash text-2xl">
@@ -42,9 +43,9 @@ function BlogIndexRoute() {
                 <p className="mt-2 font-mono text-sm text-foreground">{post.description}</p>
                 {post.keywords?.length ? (
                   <div className="mt-3 flex flex-wrap gap-1">
-                    {post.keywords.map((k: string) => (
-                      <Badge key={`${post.slug}-${k}`} variant="outline" className="py-1 px-3 text-[10px]">
-                        <span>{k}</span>
+                    {post.keywords.map((keyword) => (
+                      <Badge key={`${post.slug}-${keyword}`} variant="outline" className="py-1 px-3 text-[10px]">
+                        <span>{keyword}</span>
                       </Badge>
                     ))}
                   </div>

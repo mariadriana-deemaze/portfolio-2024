@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { Router, type Request, type Response } from 'express'
 import { Buffer } from 'node:buffer'
 
@@ -33,6 +34,8 @@ async function getAccessToken(): Promise<string> {
 
 router.get('/me/current', async (_req: Request, res: Response) => {
   const accessToken = await getAccessToken()
+  console.log("🚀 ~ accessToken:", accessToken)
+
   if (!accessToken) {
     return res.status(200).json({ data: { isPlaying: false } })
   }
@@ -42,11 +45,15 @@ router.get('/me/current', async (_req: Request, res: Response) => {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
 
+    console.log("🚀 ~ response:", response);
+    
     if (response.status === 204 || response.status > 404) {
       return res.status(200).json({ data: { isPlaying: false } })
     }
 
-    const song: any = await response.json()
+    const song = await response.json();
+    console.log("🚀 ~ song:", song);
+
     const data = {
       isPlaying: Boolean(song?.is_playing),
       ...(song?.is_playing && {
@@ -62,7 +69,7 @@ router.get('/me/current', async (_req: Request, res: Response) => {
       }),
     }
 
-    return res.status(200).json({ revalidated: false, now: Date.now(), data })
+    return res.status(200).json({ now: Date.now(), data })
   } catch (error) {
     console.error('Spotify now playing error:', error)
     return res.status(404).json({ data: { isPlaying: false } })
@@ -70,4 +77,3 @@ router.get('/me/current', async (_req: Request, res: Response) => {
 })
 
 export default router
-

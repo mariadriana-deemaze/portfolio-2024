@@ -7,8 +7,8 @@ export const Route = createFileRoute('/blog/$slug')({
 
 function BlogShowRoute() {
   const router = useRouter()
-  const post = (router.options.context as any)?.initialData?.post
-  const html = (router.options.context as any)?.initialData?.postHtml
+  const post = router.options.context.initialData?.post
+  const html = router.options.context.initialData?.postHtml
 
   if (!post) {
     return (

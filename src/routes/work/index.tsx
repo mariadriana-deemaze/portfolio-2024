@@ -7,6 +7,6 @@ export const Route = createFileRoute('/work/')({
 
 function WorkRoute() {
   const router = useRouter()
-  const projects = (router.options.context as any)?.initialData?.projects ?? []
+  const projects = router.options.context.initialData?.projects ?? []
   return <ProjectsList projects={projects} />
 }

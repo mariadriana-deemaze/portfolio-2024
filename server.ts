@@ -60,64 +60,64 @@ function assembleHtml(template: string, appHtml: string, props: object, seo: Seo
 }
 
 async function enrichInitialData(route: ReturnType<typeof matchRoute>, req: Request, props: any) {
-  try {
-    const commandLinks = await generateCommandLinks();
-    props.initialData = { ...(props.initialData || {}), commandLinks };
-  } catch (e) {
-    console.error('Failed to build command links', e);
-  }
-  try {
-    if (typeof route.getInitialData === 'function') {
-      const data = await (route as any).getInitialData({ url: req.url });
-      props.initialData = { ...(props.initialData || {}), ...(data as object) };
-    }
-  } catch (e) {
-    console.error('Failed to load route initial data', e);
-  }
+	try {
+		const commandLinks = await generateCommandLinks();
+		props.initialData = { ...(props.initialData || {}), commandLinks };
+	} catch (e) {
+		console.error('Failed to build command links', e);
+	}
+	try {
+		if (typeof route.getInitialData === 'function') {
+			const data = await route.getInitialData({ url: req.url });
+			props.initialData = { ...(props.initialData || {}), ...(data as object) };
+		}
+	} catch (e) {
+		console.error('Failed to load route initial data', e);
+	}
 }
 
 async function generateCommandLinks(): Promise<{ url: string; title: string; type: 'internal' | 'blog' | 'projects' }[]> {
-  const blogDir = path.resolve('src/data/blog')
-  const projectsDir = path.resolve('src/data/projects')
+	const blogDir = path.resolve('src/data/blog')
+	const projectsDir = path.resolve('src/data/projects')
 
-  async function listFromDir(dir: string, exts: string[]): Promise<{ slug: string; title: string }[]> {
-    try {
-      const entries = await fs.promises.readdir(dir)
-      const files = entries.filter((f) => exts.some((ext) => f.toLowerCase().endsWith(ext)))
-      const results: { slug: string; title: string }[] = []
-      for (const file of files) {
-        const content = await fs.promises.readFile(path.join(dir, file), 'utf8')
-        let fm = ''
-        if (content.startsWith('---')) {
-          const end = content.indexOf('\n---', 3)
-          fm = end !== -1 ? content.slice(3, end).trim() : ''
-        }
-        const slugMatch = /\bslug:\s*([^\n\r]+)/.exec(fm)
-        const titleMatch = /\btitle:\s*([^\n\r]+)/.exec(fm)
-        const publishedMatch = /\bpublished:\s*([^\n\r]+)/.exec(fm)
-        const published = publishedMatch ? publishedMatch[1].trim().toLowerCase() !== 'false' : true
-        const slug = (slugMatch ? slugMatch[1] : '').trim()
-        const title = (titleMatch ? titleMatch[1] : '').trim()
-        if (slug && title && published) results.push({ slug, title })
-      }
-      return results
-    } catch {
-      return []
-    }
-  }
+	async function listFromDir(dir: string, exts: string[]): Promise<{ slug: string; title: string }[]> {
+		try {
+			const entries = await fs.promises.readdir(dir)
+			const files = entries.filter((f) => exts.some((ext) => f.toLowerCase().endsWith(ext)))
+			const results: { slug: string; title: string }[] = []
+			for (const file of files) {
+				const content = await fs.promises.readFile(path.join(dir, file), 'utf8')
+				let fm = ''
+				if (content.startsWith('---')) {
+					const end = content.indexOf('\n---', 3)
+					fm = end !== -1 ? content.slice(3, end).trim() : ''
+				}
+				const slugMatch = /\bslug:\s*([^\n\r]+)/.exec(fm)
+				const titleMatch = /\btitle:\s*([^\n\r]+)/.exec(fm)
+				const publishedMatch = /\bpublished:\s*([^\n\r]+)/.exec(fm)
+				const published = publishedMatch ? publishedMatch[1].trim().toLowerCase() !== 'false' : true
+				const slug = (slugMatch ? slugMatch[1] : '').trim()
+				const title = (titleMatch ? titleMatch[1] : '').trim()
+				if (slug && title && published) results.push({ slug, title })
+			}
+			return results
+		} catch {
+			return []
+		}
+	}
 
-  const [posts, projects] = await Promise.all([
-    listFromDir(blogDir, ['.md']),
-    listFromDir(projectsDir, ['.mdx'])
-  ])
+	const [posts, projects] = await Promise.all([
+		listFromDir(blogDir, ['.md']),
+		listFromDir(projectsDir, ['.mdx'])
+	])
 
-  const internal = [
-    { url: '/blog', title: 'Blog', type: 'internal' as const },
-    { url: '/contact', title: 'Contact', type: 'internal' as const },
-  ]
-  const postLinks = posts.map((p) => ({ url: `/blog/${p.slug}`, title: p.title, type: 'blog' as const }))
-  const projectLinks = projects.map((p) => ({ url: `/work/${p.slug}`, title: p.title, type: 'projects' as const }))
-  return [...internal, ...postLinks, ...projectLinks]
+	const internal = [
+		{ url: '/blog', title: 'Blog', type: 'internal' as const },
+		{ url: '/contact', title: 'Contact', type: 'internal' as const },
+	]
+	const postLinks = posts.map((p) => ({ url: `/blog/${p.slug}`, title: p.title, type: 'blog' as const }))
+	const projectLinks = projects.map((p) => ({ url: `/work/${p.slug}`, title: p.title, type: 'projects' as const }))
+	return [...internal, ...postLinks, ...projectLinks]
 }
 
 async function generateSitemapXml(): Promise<string> {
@@ -157,7 +157,7 @@ async function generateSitemapXml(): Promise<string> {
 		listSlugsFromDir(projectsDir, ['.mdx'])
 	]);
 
-	const staticPaths = ['/', '/work', '/about', '/blog', '/contact'];
+	const staticPaths = ['/', '/work', '/blog', '/contact'];
 	const dynamicPaths = [
 		...posts.map((p) => `/blog/${p.slug}`),
 		...projects.map((p) => `/work/${p.slug}`)
@@ -221,7 +221,7 @@ async function start() {
 			}
 		}
 
-		app.get(['/', '/work', '/about', '/blog', '/contact'], (req, res) =>
+		app.get(['/', '/work', '/blog', '/contact'], (req, res) =>
 			handleRender(req, res)
 		);
 		app.get(/.*/, (req, res) => handleRender(req, res, 404));
@@ -250,7 +250,7 @@ async function start() {
 	});
 
 	app.get(
-		['/', '/work', '/about', '/blog', '/contact'],
+		['/', '/work', '/blog', '/contact'],
 		(req: Request, res: Response, _next: NextFunction) => {
 			const htmlFilePath = path.resolve('dist/index.html');
 			fs.readFile(htmlFilePath, 'utf-8', (err, template) => {
@@ -260,20 +260,20 @@ async function start() {
 				}
 				const route = matchRoute(req);
 				const props = route.getProps({ url: req.url });
-					Promise.resolve(enrichInitialData(route, req, props))
-						.then(() => {
-							const appHtml = render(props);
-							const seo = route.getSeo({ path: req.path, url: req.url });
-							const finalHtml = assembleHtml(template, appHtml, props, seo);
-							return res.send(finalHtml);
-						})
-						.catch((e) => {
-							console.error(e);
-							const appHtml = render(props);
-							const seo = route.getSeo({ path: req.path, url: req.url });
-							const finalHtml = assembleHtml(template, appHtml, props, seo);
-							return res.send(finalHtml);
-						});
+				Promise.resolve(enrichInitialData(route, req, props))
+					.then(() => {
+						const appHtml = render(props);
+						const seo = route.getSeo({ path: req.path, url: req.url });
+						const finalHtml = assembleHtml(template, appHtml, props, seo);
+						return res.send(finalHtml);
+					})
+					.catch((e) => {
+						console.error(e);
+						const appHtml = render(props);
+						const seo = route.getSeo({ path: req.path, url: req.url });
+						const finalHtml = assembleHtml(template, appHtml, props, seo);
+						return res.send(finalHtml);
+					});
 			});
 		}
 	);
@@ -289,20 +289,20 @@ async function start() {
 			}
 			const route = matchRoute(req);
 			const props = route.getProps({ url: req.url });
-				Promise.resolve(enrichInitialData(route, req, props))
-					.then(async () => {
-						const appHtml = render(props);
-						const seo = await route.getSeo({ path: req.path, url: req.url });
-						const finalHtml = assembleHtml(template, appHtml, props, seo);
-						return res.status(404).send(finalHtml);
-					})
-					.catch(async (e) => {
-						console.error(e);
-						const appHtml = render(props);
-						const seo = await route.getSeo({ path: req.path, url: req.url });
-						const finalHtml = assembleHtml(template, appHtml, props, seo);
-						return res.status(404).send(finalHtml);
-					});
+			Promise.resolve(enrichInitialData(route, req, props))
+				.then(async () => {
+					const appHtml = render(props);
+					const seo = await route.getSeo({ path: req.path, url: req.url });
+					const finalHtml = assembleHtml(template, appHtml, props, seo);
+					return res.status(404).send(finalHtml);
+				})
+				.catch(async (e) => {
+					console.error(e);
+					const appHtml = render(props);
+					const seo = await route.getSeo({ path: req.path, url: req.url });
+					const finalHtml = assembleHtml(template, appHtml, props, seo);
+					return res.status(404).send(finalHtml);
+				});
 		});
 	});
 

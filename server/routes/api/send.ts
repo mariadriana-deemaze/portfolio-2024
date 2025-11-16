@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { Router, type Request, type Response } from 'express'
 import nodemailer from 'nodemailer'
 
@@ -60,4 +61,3 @@ router.post('/', async (req: Request, res: Response) => {
 })
 
 export default router
-

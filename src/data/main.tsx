@@ -6,10 +6,9 @@ export const data = {
 	role: 'Full Stack Developer',
 	github: 'https://github.com/mariadriana-deemaze',
 	mottos: [
-		'Full Stack Designer',
+		'Full Stack Developer',
 		'Front-end Developer',
-		'Interaction Designer',
-		'Back-ender wannabe'
+		'Back-end Developer'
 	],
 	location: 'Portugal, Coimbra',
 	locationLink: 'https://www.google.com/maps/place/Coimbra',
@@ -75,6 +74,7 @@ As a highlight, represented EUAC, with my peers, in a group project at the 2015 
 				STACKS.Remix,
 				STACKS.TypeScript,
 				STACKS.NestJS,
+				STACKS.Express,
 				STACKS.Prisma,
 				STACKS.KnexJS,
 				STACKS.MikroORM,
