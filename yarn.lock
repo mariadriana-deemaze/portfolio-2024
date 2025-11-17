@@ -3905,9 +3905,9 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
 lenis@^1.2.3:
-  version "1.3.14"
-  resolved "https://registry.yarnpkg.com/lenis/-/lenis-1.3.14.tgz#249c7f6e1f0c2872c6726c6aee5c15140d229339"
-  integrity sha512-XtJel1HnrQjIR4hgGveRC07IyUCe0S2x3Bt4rLCv2o1zbFtWOJ8h42Gy2JR+B6HRrwMtJj5DfMNYKlUyrO9NJg==
+  version "1.3.15"
+  resolved "https://registry.yarnpkg.com/lenis/-/lenis-1.3.15.tgz#676fe29ff62c3165436d98a94009064475da5775"
+  integrity sha512-zSYOFs0ydafX70uygFoipaHHQouPeE4DpZZhdOUyLJxVf2ZVvBCBBaolDDaQztTRsa6+stBlxq2GmFGJPAVryQ==
 
 levn@^0.4.1:
   version "0.4.1"
