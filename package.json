@@ -34,7 +34,7 @@
 		"ignore-styles": "^5.0.1",
 		"gray-matter": "^4.0.3",
 		"lenis": "^1.2.3",
-		"nodemailer": "^6.9.0",
+		"nodemailer": "^7.0.0",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",
 		"react-helmet-async": "^2.0.5",
