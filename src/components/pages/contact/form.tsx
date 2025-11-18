@@ -1,6 +1,8 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,11 +13,18 @@ import { REGEX_EMAIL } from '@/utils/regex';
 import { ContactInfo, ContactResponse } from '@/types/contact';
 
 export const ContactForm = () => {
+	const contactSchema = z.object({
+		name: z.string().min(1, 'Required field.'),
+		email: z.email('Invalid e-mail.'),
+		subject: z.string().min(1, 'Required field.'),
+		message: z.string().min(1, 'Required field.')
+	});
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors, isValid, isSubmitting }
-	} = useForm<ContactInfo>();
+	} = useForm<ContactInfo>({ resolver: zodResolver(contactSchema), mode: 'onChange' });
 
 	const onSubmit: SubmitHandler<ContactInfo> = async (data) => {
 		if (!isValid) {
