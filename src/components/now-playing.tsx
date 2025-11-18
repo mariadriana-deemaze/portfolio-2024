@@ -3,12 +3,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { Badge } from './ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../components/ui/tooltip';
-import { NowPlayingData } from '../types/spotify';
+import { NowPlayingData } from '../../server/routes/api/types/spotify';
 
 export const NowPlaying = () => {
 	const { data: nowPlaying } = useQuery<{ data: NowPlayingData }>({
 		queryKey: ['nowPlaying'],
-		queryFn: async () => fetch('/api/spotify/me/current').then((r) => r.json()),
+		queryFn: async () => fetch('/api/spotify/currently-playing').then((r) => r.json()),
 		refetchInterval: 5000
 	});
 

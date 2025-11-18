@@ -21,6 +21,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "index.html", "vite.config.*", "server/**/*.ts"],
+  "include": ["src", "index.html", "vite.config.*", "server/**/*.ts", "server/routes/api/types"],
   "exclude": ["dist", "dist-ssr", "node_modules"]
 }

@@ -2,6 +2,30 @@ import 'dotenv/config'
 import { Router, type Request, type Response } from 'express'
 import { Buffer } from 'node:buffer'
 
+type SpotifyImage = { url: string; height?: number; width?: number };
+
+type SpotifyExternalUrls = { spotify?: string };
+
+type SpotifyArtist = { name?: string };
+
+type SpotifyAlbum = {
+  name?: string
+  external_urls?: SpotifyExternalUrls
+  images?: SpotifyImage[]
+}
+
+type SpotifyTrack = {
+  name?: string
+  artists?: SpotifyArtist[]
+  album?: SpotifyAlbum
+  external_urls?: SpotifyExternalUrls
+}
+
+type SpotifyCurrentlyPlayingResponse = {
+  is_playing?: boolean
+  item?: SpotifyTrack
+}
+
 const router = Router()
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || ''
@@ -9,6 +33,7 @@ const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || ''
 const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN || ''
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token'
 const NOW_PLAYING_ENDPOINT = 'https://api.spotify.com/v1/me/player/currently-playing'
+
 
 async function getAccessToken(): Promise<string> {
   const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')
@@ -32,7 +57,7 @@ async function getAccessToken(): Promise<string> {
   }
 }
 
-router.get('/me/current', async (_req: Request, res: Response) => {
+router.get('/currently-playing', async (_req: Request, res: Response) => {
   const accessToken = await getAccessToken()
 
   if (!accessToken) {
@@ -44,28 +69,28 @@ router.get('/me/current', async (_req: Request, res: Response) => {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
 
-    console.log("🚀 ~ response:", response);
-    
     if (response.status === 204 || response.status > 404) {
       return res.status(200).json({ data: { isPlaying: false } })
     }
 
-    const song = await response.json();
-    console.log("🚀 ~ song:", song);
+
+    const song: SpotifyCurrentlyPlayingResponse = await response.json()
+
+    if (!song.item || !song.is_playing) {
+      return res.status(200).json({ data: { isPlaying: false } })
+    }
 
     const data = {
-      isPlaying: Boolean(song?.is_playing),
-      ...(song?.is_playing && {
-        title: song?.item?.name ?? 'No song playing',
-        artist: (song?.item?.artists ?? [])
-          .map((a: { name: string }) => a?.name)
-          .filter(Boolean)
-          .join(', ') || 'No artist',
-        album: song?.item?.album?.name ?? 'No album',
-        albumUrl: song?.item?.album?.external_urls?.spotify ?? 'No album url',
-        albumImageUrl: song?.item?.album?.images?.[0]?.url ?? 'No album image url',
-        songUrl: song?.item?.external_urls?.spotify ?? 'No song url',
-      }),
+      isPlaying: true,
+      title: song.item.name ?? 'No title',
+      artist: (song.item?.artists ?? [])
+        .map((artist: SpotifyArtist) => artist.name)
+        .filter(Boolean)
+        .join(', ') || 'No artist',
+      album: song.item.album?.name ?? 'No album',
+      albumUrl: song.item?.album?.external_urls?.spotify ?? 'No album url',
+      albumImageUrl: song.item?.album?.images?.[0]?.url ?? 'No album image url',
+      songUrl: song.item?.external_urls?.spotify ?? 'No song url',
     }
 
     return res.status(200).json({ now: Date.now(), data })

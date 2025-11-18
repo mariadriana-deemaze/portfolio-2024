@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Toaster } from '@/components/ui/sonner';
 import { Button } from '@/components/ui/button';
 import { REGEX_EMAIL } from '@/utils/regex';
-import { ContactInfo, ContactResponse } from '@/types/contact';
+import { ContactInfo, ContactResponse } from 'server/routes/api/types/contact';
 
 export const ContactForm = () => {
 	const contactSchema = z.object({
