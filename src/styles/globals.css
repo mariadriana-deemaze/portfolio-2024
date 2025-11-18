@@ -229,9 +229,22 @@
 		@apply border-border;
 	}
 
+	html,
 	body {
-		@apply bg-background text-foreground;
+		min-height: 100%;
+		scrollbar-width: none;
 	}
+
+	html::-webkit-scrollbar,
+	body::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+	}
+
+		body {
+			@apply bg-background text-foreground overflow-y-auto overflow-x-hidden;
+			-ms-overflow-style: none;
+		}
 }
 
 @layer components {
