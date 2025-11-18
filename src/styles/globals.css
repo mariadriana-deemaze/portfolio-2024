@@ -171,7 +171,15 @@
 }
 
 @utility text-fade-grad {
-  @apply bg-clip-text text-transparent min-w-full bg-radial-[at_85%_100%] from-transparent dark:via-gray-100 via-slate-800 dark:to-white to-slate-800
+  @apply bg-clip-text text-transparent inline-block;
+  background-image: radial-gradient(ellipse at 85% 100%, transparent 0%, #1f2937 60%, #1f2937 100%);
+  background-repeat: no-repeat;
+}
+
+@layer utilities {
+  .dark .text-fade-grad {
+    background-image: radial-gradient(ellipse at 85% 100%, transparent 0%, #f3f4f6 60%, #ffffff 100%);
+  }
 }
 
 @layer base {
