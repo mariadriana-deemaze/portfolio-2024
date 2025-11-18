@@ -9,15 +9,7 @@ import {
 	DropdownMenuTrigger
 } from '../components/ui/dropdown-menu';
 
-function applyTheme(theme: 'light' | 'dark' | 'system') {
-  const root = document.documentElement
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  const resolved = theme === 'system' ? (systemPrefersDark ? 'dark' : 'light') : theme
-  root.classList.toggle('dark', resolved === 'dark')
-  if (typeof localStorage !== 'undefined') {
-    localStorage.setItem('theme', theme)
-  }
-}
+import { applyTheme } from '@/utils/theme';
 
 export function ThemeToggle() {
 
