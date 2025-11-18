@@ -1,62 +1,26 @@
-export type SpotifyAccessToken = {
-	access_token: string;
-};
+export type SpotifyImage = { url: string; height?: number; width?: number };
 
-export type Tracks = {
-	items: TracksItem[];
-};
+export type SpotifyExternalUrls = { spotify?: string };
 
-export type TracksItem = {
-	track: Track;
-	played_at: string;
-};
+export type SpotifyArtist = { name?: string };
 
-export type Track = {
-	album: {
-		images: {
-			url: string;
-		}[];
-		name: string;
-		external_urls: {
-			spotify: string;
-		};
-	};
-	artists: {
-		name: string;
-		external_urls: {
-			spotify: string;
-		};
-	}[];
-	external_urls: {
-		spotify: string;
-	};
-	name: string;
-};
+export type SpotifyAlbum = {
+  name?: string
+  external_urls?: SpotifyExternalUrls
+  images?: SpotifyImage[]
+}
 
-export type Song = {
-	item: {
-		album: {
-			images: {
-				url: string;
-			}[];
-			name: string;
-			external_urls: {
-				spotify: string;
-			};
-		};
-		artists: {
-			name: string;
-			external_urls: {
-				spotify: string;
-			};
-		}[];
-		external_urls: {
-			spotify: string;
-		};
-		name: string;
-	};
-	is_playing: boolean;
-};
+export type SpotifyTrack = {
+  name?: string
+  artists?: SpotifyArtist[]
+  album?: SpotifyAlbum
+  external_urls?: SpotifyExternalUrls
+}
+
+export type SpotifyCurrentlyPlayingResponse = {
+  is_playing?: boolean
+  item?: SpotifyTrack
+}
 
 export type NowPlayingData = {
 	album: string | null;

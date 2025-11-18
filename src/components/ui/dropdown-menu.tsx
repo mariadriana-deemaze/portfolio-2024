@@ -172,6 +172,7 @@ export {
 	DropdownMenuTrigger,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	/* 
 	DropdownMenuCheckboxItem,
 	DropdownMenuRadioItem,
 	DropdownMenuLabel,
@@ -182,5 +183,6 @@ export {
 	DropdownMenuSub,
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger,
-	DropdownMenuRadioGroup
+	DropdownMenuRadioGroup 
+	*/
 };

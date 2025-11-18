@@ -1,30 +1,7 @@
 import 'dotenv/config'
 import { Router, type Request, type Response } from 'express'
 import { Buffer } from 'node:buffer'
-
-type SpotifyImage = { url: string; height?: number; width?: number };
-
-type SpotifyExternalUrls = { spotify?: string };
-
-type SpotifyArtist = { name?: string };
-
-type SpotifyAlbum = {
-  name?: string
-  external_urls?: SpotifyExternalUrls
-  images?: SpotifyImage[]
-}
-
-type SpotifyTrack = {
-  name?: string
-  artists?: SpotifyArtist[]
-  album?: SpotifyAlbum
-  external_urls?: SpotifyExternalUrls
-}
-
-type SpotifyCurrentlyPlayingResponse = {
-  is_playing?: boolean
-  item?: SpotifyTrack
-}
+import type { SpotifyArtist, SpotifyCurrentlyPlayingResponse } from './types/spotify'
 
 const router = Router()
 
@@ -33,7 +10,6 @@ const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || ''
 const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN || ''
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token'
 const NOW_PLAYING_ENDPOINT = 'https://api.spotify.com/v1/me/player/currently-playing'
-
 
 async function getAccessToken(): Promise<string> {
   const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')
