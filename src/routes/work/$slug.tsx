@@ -36,10 +36,12 @@ function WorkItemRoute(): JSX.Element {
         </a>
       </p>
       <header className="space-y-2">
-        <time className="font-mono text-xs text-gray-500">YEAR {year}</time>
-        <h1 className="font-clash font-bold text-5xl text-fade-grad">{title}</h1>
+        <div className='flex flex-col mt-6'>
+          <time className="font-mono text-xs text-gray-500">YEAR {year}</time>
+          <h1 className="font-clash font-bold text-5xl text-fade-grad">{title}</h1>
+        </div>
         <p className="font-mono text-sm text-foreground">{description}</p>
-        <div className="mt-2 flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1 my-6">
           {technologies.map(({ label, icon }) => {
             const resolvedIcon = isValidElement(icon) ? icon : Object.values(STACKS).find((t) => t.label === label)?.icon ?? null;
             return (
@@ -52,7 +54,7 @@ function WorkItemRoute(): JSX.Element {
         </div>
         <hr className="mt-2" />
       </header>
-      <section className="summary flex gap-1 flex-row-reverse">
+      <section className="summary flex gap-1 flex-row-reverse mb-8">
         <Badge className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default" variant="outline">
           <a className="flex flex-row gap-2" href={repo ? `${data.github}/${repo}` : '#'} target="_blank" rel="noreferrer">
             View repo
