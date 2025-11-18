@@ -1,5 +1,6 @@
 import type { RouteModule } from '../types'
 import { getProjects, type Project } from '../../src/data/projects'
+import { data } from '@/data/main'
 
 type HomeData = { projects: Project[] }
 
@@ -16,11 +17,13 @@ const homeRoute: RouteModule<HomeData> = {
     }
   },
   getSeo: (_ctx) => ({
-    title: 'Home | Portfolio',
-    description: 'Welcome to my portfolio homepage.',
-    image:
-      'https://fastly.picsum.photos/id/705/800/1000.jpg?hmac=B4yaMDEw4yUnMYwvwKGpCz61k9acVLaWj2XoM83Ycm8',
-  }),
+    title: `${data.name} | ${data.role}`,
+    description:
+      'Maria Adriana is a full stack developer based in Portugal, specializing in modern web technologies including Node.js, NestJS, Next.js, TypeScript, and React. Passionate about building scalable, maintainable, and high-performance applications.',
+    /*  alternates: {
+       canonical: 'https://maria-adriana.com/'
+     } */
+  })
 }
 
 export default homeRoute
