@@ -26,8 +26,8 @@ jobs:
         uses: mariadriana-deemaze/rss_medium_to_markdown@v1
         with:
           feed_url: "https://medium.com/feed/@mariaadriana15"
-          template_file: "data/BLOG_TEMPLATE.md"
-          output_dir: "data/blog/"
+          template_file: "src/data/BLOG_TEMPLATE.md"
+          output_dir: "src/data/blog/"
 
       - name: Commit and Push Changes
         run: |
