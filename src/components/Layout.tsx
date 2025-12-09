@@ -5,7 +5,6 @@ import { BGGrid } from './bg-grid'
 import ProgressIndicator from './progress-indicator'
 import { Navbar } from './navbar'
 import '../styles/globals.css'
-import '../styles/blog/index.css'
 
 const GA_TRACKING_ID = 'G-ZSZBWDZK9T'
 const GA_SCRIPT_SRC = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`

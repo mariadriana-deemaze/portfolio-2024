@@ -7,7 +7,6 @@ import useMousePosition from '@/hooks/use-mouse-position';
 import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Project } from '@/data/projects';
-import '@/styles/projects/index.css';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
 	const [hoveringPost, setHoveringPost] = useState<Project | null>(null);

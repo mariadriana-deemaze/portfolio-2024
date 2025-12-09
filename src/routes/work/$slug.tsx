@@ -3,11 +3,82 @@ import { JSX, isValidElement } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { data } from '@/data/main'
 import { STACKS } from '@/components/stacks'
-import "@/styles/projects/index.css"
+import type { RouteModule } from '../../../server/types'
+import { getProject, type Project } from '@/data/projects'
+import { renderMdxToHtml } from '../../../server/mdx'
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import { BASE_URL } from '@/data/main'
 
 export const Route = createFileRoute('/work/$slug')({
   component: WorkItemRoute,
 })
+
+type WorkItemData = { project?: Project; projectHtml?: string }
+
+export const getServerSideProps: RouteModule<WorkItemData>['getInitialData'] = async (req) => {
+  try {
+    const match = /^\/work\/([^/]+)$/.exec(new URL(req.url, 'http://localhost').pathname)
+    const slug = match?.[1]
+    if (!slug) return { project: undefined }
+    const project = await getProject(slug)
+    const projectHtml = project?.content ? await renderMdxToHtml(project.content) : undefined
+    return { project, projectHtml }
+  } catch (e) {
+    console.error('Failed to load work item project', e)
+    return { project: undefined }
+  }
+}
+
+export const SeoMetadata: RouteModule<WorkItemData>['getSeo'] = (ctx) => {
+  try {
+    const slug = ctx.path.split('/').pop() || ''
+    if (slug) {
+      const dir = path.resolve('src/data/projects')
+      try {
+        const files = fs.readdirSync(dir).filter((f) => f.toLowerCase().endsWith('.mdx'))
+        for (const file of files) {
+          const content = fs.readFileSync(path.join(dir, file), 'utf8')
+          const { data } = matter(content)
+          if (data?.slug === slug) {
+            const title = data?.title;
+            const description = data.description;
+            const hero = data.hero;
+            if (title && description) {
+              return {
+                title: `${title} | Project`,
+                description,
+                image: hero,
+                alternates: {
+                  canonical: `${BASE_URL}${ctx.path}`,
+                },
+              }
+            }
+            break
+          }
+        }
+      } catch {
+        // noop
+      }
+    }
+    return {
+      title: 'Project',
+      description: 'Project details and information.',
+      alternates: {
+        canonical: `${BASE_URL}${ctx.path}`,
+      },
+    }
+  } catch {
+    return {
+      title: 'Project',
+      description: 'Project details and information.',
+      alternates: {
+        canonical: `${BASE_URL}${ctx.path}`,
+      },
+    }
+  }
+}
 
 function WorkItemRoute(): JSX.Element {
   const router = useRouter()

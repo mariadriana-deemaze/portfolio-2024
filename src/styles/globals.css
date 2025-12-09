@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import './projects/index.css';
+@import './blog/index.css';
 
 /* Local font faces for ClashDisplay from /public/fonts */
 @layer base {

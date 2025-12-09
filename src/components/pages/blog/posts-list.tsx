@@ -7,7 +7,6 @@ import { BlogPost } from '@/data/blog';
 import useMousePosition from '@/hooks/use-mouse-position';
 import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
-import '@/styles/blog/index.css';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 

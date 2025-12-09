@@ -1,6 +1,8 @@
 import { STACKS } from '../components/stacks';
 import { LuGithub, LuLinkedin, LuInstagram, LuDribbble, LuCodepen } from 'react-icons/lu';
 
+export const BASE_URL = 'https://www.maria-adriana.com';
+
 export const data = {
 	name: 'Maria Adriana',
 	role: 'Full Stack Developer',
