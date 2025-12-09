@@ -48,8 +48,13 @@ function assembleHtml(template: string, appHtml: string, props: object, seo: Seo
 			`<meta name="twitter:image" content="${escapeHtml(seo.image)}" />`
 		);
 	}
-	const metas = metasParts.join('\n    ');
-	html = html.replace('</head>', `  ${metas}\n  </head>`);
+	const linkParts: string[] = [];
+	if (seo.alternates?.canonical) {
+		linkParts.push(`<link rel="canonical" href="${escapeHtml(seo.alternates.canonical)}" />`);
+	}
+	const headParts = [...metasParts, ...linkParts];
+	const head = headParts.join('\n    ');
+	html = html.replace('</head>', `  ${head}\n  </head>`);
 
 	const serialized = serializeProps(props);
 	html = html.replace(
@@ -211,7 +216,7 @@ async function start() {
 				const props = route.getProps({ url: req.url });
 				await enrichInitialData(route, req, props);
 				const appHtml = render(props);
-				const seo = route.getSeo({ path: req.path, url: req.url });
+				const seo = await route.getSeo({ path: req.path, url: req.url });
 				const html = assembleHtml(template, appHtml, props, seo);
 				res.status(status).setHeader('Content-Type', 'text/html').end(html);
 			} catch (e: any) {
@@ -258,23 +263,23 @@ async function start() {
 					console.error(err);
 					return res.status(500).send('Some error happened');
 				}
-				const route = matchRoute(req);
-				const props = route.getProps({ url: req.url });
-				Promise.resolve(enrichInitialData(route, req, props))
-					.then(() => {
-						const appHtml = render(props);
-						const seo = route.getSeo({ path: req.path, url: req.url });
-						const finalHtml = assembleHtml(template, appHtml, props, seo);
-						return res.send(finalHtml);
-					})
-					.catch((e) => {
-						console.error(e);
-						const appHtml = render(props);
-						const seo = route.getSeo({ path: req.path, url: req.url });
-						const finalHtml = assembleHtml(template, appHtml, props, seo);
-						return res.send(finalHtml);
-					});
-			});
+			const route = matchRoute(req);
+			const props = route.getProps({ url: req.url });
+			Promise.resolve(enrichInitialData(route, req, props))
+				.then(async () => {
+					const appHtml = render(props);
+					const seo = await route.getSeo({ path: req.path, url: req.url });
+					const finalHtml = assembleHtml(template, appHtml, props, seo);
+					return res.send(finalHtml);
+				})
+				.catch(async (e) => {
+					console.error(e);
+					const appHtml = render(props);
+					const seo = await route.getSeo({ path: req.path, url: req.url });
+					const finalHtml = assembleHtml(template, appHtml, props, seo);
+					return res.send(finalHtml);
+				});
+		});
 		}
 	);
 

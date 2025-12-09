@@ -9,6 +9,8 @@ import notfound from './notfound'
 
 const routes: RouteModule[] = [home, workItem, work, blogItem, blog]
 
+export const BASE_URL = 'https://www.maria-adriana.com';
+
 export function matchRoute(req: Request): RouteModule {
   for (const route of routes) {
     if (typeof route.path === 'string') {

@@ -4,6 +4,7 @@ import { renderMdxToHtml } from '../mdx'
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { BASE_URL } from './index'
 
 type WorkItemData = { project?: Project; projectHtml?: string }
 
@@ -42,6 +43,9 @@ const workItemRoute: RouteModule<WorkItemData> = {
                   title: `${title} | Project`,
                   description,
                   image: hero,
+                  alternates: {
+                    canonical: `${BASE_URL}${ctx.path}`,
+                  },
                 }
               }
               break
@@ -54,11 +58,17 @@ const workItemRoute: RouteModule<WorkItemData> = {
       return {
         title: 'Project',
         description: 'Project details and information.',
+        alternates: {
+          canonical: `${BASE_URL}${ctx.path}`,
+        },
       }
     } catch {
       return {
         title: 'Project',
         description: 'Project details and information.',
+        alternates: {
+          canonical: `${BASE_URL}${ctx.path}`,
+        },
       }
     }
   },

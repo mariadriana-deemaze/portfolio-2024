@@ -4,6 +4,7 @@ import { renderMdxToHtml } from '../mdx'
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { BASE_URL } from './index'
 
 type BlogItemData = { post?: BlogPost; postHtml?: string };
 
@@ -35,6 +36,9 @@ const blogItemRoute: RouteModule<BlogItemData> = {
     return {
       title: `${post.title} | Blog`,
       description: post.description,
+      alternates: {
+        canonical: `${BASE_URL}${ctx.path}`,
+      },
     }
   },
 }
