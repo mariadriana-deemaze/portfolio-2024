@@ -4,6 +4,6 @@
     "config:recommended"
   ],
   "schedule": [
-    "before 5am on monday"
+    "on the first day of the month"
   ]
 }
