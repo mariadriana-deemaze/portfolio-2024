@@ -31,6 +31,14 @@ export function GoogleAnalytics(): null {
     if (typeof window === 'undefined') {
       return
     }
+    ensureScript(GA_SCRIPT_ATTR, GA_TRACKING_ID, () => {
+      const script = document.createElement('script')
+      script.async = true
+      script.src = GA_SCRIPT_SRC
+      script.dataset.analytics = GA_TRACKING_ID
+      return script
+    })
+
     ensureScript(GA_INLINE_ATTR, GA_TRACKING_ID, () => {
       const inlineScript = document.createElement('script')
       inlineScript.dataset.analyticsInline = GA_TRACKING_ID
@@ -38,16 +46,9 @@ export function GoogleAnalytics(): null {
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
+gtag('config', '${GA_TRACKING_ID}', { page_path: window.location.pathname });
 `
       return inlineScript
-    })
-
-    ensureScript(GA_SCRIPT_ATTR, GA_TRACKING_ID, () => {
-      const script = document.createElement('script')
-      script.async = true
-      script.src = GA_SCRIPT_SRC
-      script.dataset.analytics = GA_TRACKING_ID
-      return script
     })
   }, [])
 
