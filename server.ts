@@ -6,6 +6,7 @@ import http from 'node:http';
 import type { Seo } from './server/types';
 import { matchRoute } from './server/routes';
 import apiRouter from './server/routes/api';
+import { ROUTES, STATIC_ROUTES, toBlogSlug, toProjectsSlug } from './src/utils/routes.ts';
 
 dotenv.config();
 
@@ -117,11 +118,11 @@ async function generateCommandLinks(): Promise<{ url: string; title: string; typ
 	])
 
 	const internal = [
-		{ url: '/blog', title: 'Blog', type: 'internal' as const },
-		{ url: '/contact', title: 'Contact', type: 'internal' as const },
+		{ url: ROUTES.blog, title: 'Blog', type: 'internal' as const },
+		{ url: ROUTES.contact, title: 'Contact', type: 'internal' as const },
 	]
-	const postLinks = posts.map((p) => ({ url: `/blog/${p.slug}`, title: p.title, type: 'blog' as const }))
-	const projectLinks = projects.map((p) => ({ url: `/work/${p.slug}`, title: p.title, type: 'projects' as const }))
+	const postLinks = posts.map((p) => ({ url: toBlogSlug(p.slug), title: p.title, type: 'blog' as const }))
+	const projectLinks = projects.map((p) => ({ url: toProjectsSlug(p.slug), title: p.title, type: 'projects' as const }))
 	return [...internal, ...postLinks, ...projectLinks]
 }
 
@@ -162,10 +163,10 @@ async function generateSitemapXml(): Promise<string> {
 		listSlugsFromDir(projectsDir, ['.mdx'])
 	]);
 
-	const staticPaths = ['/', '/work', '/blog', '/contact'];
+	const staticPaths = Array.from(STATIC_ROUTES);
 	const dynamicPaths = [
-		...posts.map((p) => `/blog/${p.slug}`),
-		...projects.map((p) => `/work/${p.slug}`)
+		...posts.map((p) => toBlogSlug(p.slug)),
+		...projects.map((p) => toProjectsSlug(p.slug))
 	];
 
 	const urls = [...staticPaths, ...dynamicPaths];
@@ -226,7 +227,7 @@ async function start() {
 			}
 		}
 
-		app.get(['/', '/work', '/blog', '/contact'], (req, res) =>
+		app.get(Array.from(STATIC_ROUTES), (req, res) =>
 			handleRender(req, res)
 		);
 		app.get(/.*/, (req, res) => handleRender(req, res, 404));
@@ -255,7 +256,7 @@ async function start() {
 	});
 
 	app.get(
-		['/', '/work', '/blog', '/contact'],
+		Array.from(STATIC_ROUTES),
 		(req: Request, res: Response, _next: NextFunction) => {
 			const htmlFilePath = path.resolve('dist/index.html');
 			fs.readFile(htmlFilePath, 'utf-8', (err, template) => {

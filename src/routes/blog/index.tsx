@@ -6,6 +6,7 @@ import PostsList from '@/components/pages/blog/posts-list'
 import type { RouteModule } from '../../../server/types'
 import { getPosts } from '@/data/blog'
 import { data, BASE_URL } from '@/data/main'
+import { ROUTES } from '@/utils/routes'
 
 export const Route = createFileRoute('/blog/')({
   component: BlogIndexRoute,
@@ -44,6 +45,6 @@ export const SeoMetadata: RouteModule<BlogData>['getSeo'] = () => ({
   description:
     "Explore Maria Adriana's insights on Full Stack Development, with in-depth articles on problem-solving strategies, architecture decisions, performance optimization, and modern web technologies.",
   alternates: {
-    canonical: `${BASE_URL}/blog`,
+    canonical: `${BASE_URL}${ROUTES.blog}`,
   }
 })

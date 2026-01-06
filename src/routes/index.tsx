@@ -3,6 +3,7 @@ import { HomeLayout } from '@/components/pages/home/layout'
 import type { RouteModule } from '../../server/types'
 import { getProjects, type Project } from '@/data/projects'
 import { data, BASE_URL } from '@/data/main'
+import { ROUTES } from '@/utils/routes'
 
 type HomeData = { projects: Project[] }
 
@@ -25,7 +26,7 @@ export const SeoMetadata: RouteModule<HomeData>['getSeo'] = () => ({
   description:
     'Maria Adriana is a full stack developer based in Portugal, specializing in modern web technologies including Node.js, NestJS, Next.js, TypeScript, and React. Passionate about building scalable, maintainable, and high-performance applications.',
   alternates: {
-    canonical: `${BASE_URL}/`,
+    canonical: `${BASE_URL}${ROUTES.home}`,
   },
 })
 

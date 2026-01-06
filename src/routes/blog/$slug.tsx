@@ -4,6 +4,7 @@ import type { RouteModule } from '../../../server/types'
 import { getPost, type BlogPost } from '@/data/blog'
 import { renderMdxToHtml } from '../../../server/mdx'
 import { BASE_URL } from '@/data/main'
+import { ROUTES, ROUTE_PATTERNS } from '@/utils/routes'
 
 const notFoundRoute: RouteModule = {
   path: /.*/,
@@ -22,7 +23,7 @@ type BlogItemData = { post?: BlogPost; postHtml?: string }
 
 export const getServerSideProps: RouteModule<BlogItemData>['getInitialData'] = async (req) => {
   try {
-    const match = /^\/blog\/([^/]+)$/.exec(new URL(req.url, 'http://localhost').pathname)
+    const match = ROUTE_PATTERNS.blogItem.exec(new URL(req.url, 'http://localhost').pathname)
     const slug = match?.[1]
     if (!slug) return { post: undefined }
     const post = await getPost(slug)
@@ -63,7 +64,7 @@ function BlogShowRoute() {
         <h1>Post not found</h1>
         <p>The requested blog post could not be located.</p>
         <p>
-          <a href="/blog">Back to blog</a>
+          <a href={ROUTES.blog}>Back to blog</a>
         </p>
       </div>
     )
@@ -74,7 +75,7 @@ function BlogShowRoute() {
   return (
     <div className="mx-auto w-full max-w-2xl space-y-4">
       <p className="font-mono text-sm text-gray-500">
-        <a href="/blog" className="hover:underline">
+        <a href={ROUTES.blog} className="hover:underline">
           &larr; Back to blog
         </a>
       </p>

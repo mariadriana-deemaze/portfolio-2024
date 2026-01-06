@@ -8,6 +8,7 @@ import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
+import { ROUTES, toBlogSlug } from '@/utils/routes';
 
 export default function PostsList({ posts }: { posts: BlogPost[] }) {
 	const [hoveringPost, setHoveringPost] = useState<BlogPost | null>(null);
@@ -113,7 +114,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 				<a
 					ref={anchorLinkRef}
 					className="cursor-none flex flex-row self-center -skew-y-12 leading-4 font-clash font-bold text-white uppercase"
-					href={`blog/${hoveringPost?.slug}`}
+					href={hoveringPost ? toBlogSlug(hoveringPost.slug) : ROUTES.blog}
 				>
 					<span className="block w-14 text-wrap">Read more </span>
 					<svg

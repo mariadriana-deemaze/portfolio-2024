@@ -1,11 +1,12 @@
 import type { Request } from 'express'
 import type { RouteModule } from '../types'
 import { getServerSideProps as getHomeServerSideProps, SeoMetadata as homeSeo } from '../../src/routes/index'
-import { getServerSideProps as getWorkServerSideProps, SeoMetadata as workSeo } from '../../src/routes/work/index'
-import { getServerSideProps as getWorkItemServerSideProps, SeoMetadata as workItemSeo } from '../../src/routes/work/$slug'
+import { getServerSideProps as getProjectServerSideProps, SeoMetadata as projectSeo } from '../../src/routes/projects/index'
+import { getServerSideProps as getProjectItemServerSideProps, SeoMetadata as projectItemSeo } from '../../src/routes/projects/$slug'
 import { getServerSideProps as getBlogServerSideProps, SeoMetadata as blogSeo } from '../../src/routes/blog/index'
 import { getServerSideProps as getBlogItemServerSideProps, SeoMetadata as blogItemSeo } from '../../src/routes/blog/$slug'
 import { data, BASE_URL } from '../../src/data/main'
+import { ROUTE_PATTERNS, ROUTES } from '@/utils/routes'
 
 const notFoundRoute: RouteModule = {
   path: /.*/,
@@ -24,31 +25,31 @@ const notFoundRoute: RouteModule = {
 
 const routes: RouteModule[] = [
   {
-    path: '/',
+    path: ROUTES.home,
     getProps: (req) => ({ location: req.url }),
     getInitialData: getHomeServerSideProps,
     getSeo: homeSeo,
   },
   {
-    path: /^\/work\/([^/]+)$/,
+    path: ROUTE_PATTERNS.projectsItem,
     getProps: (req) => ({ location: req.url }),
-    getInitialData: getWorkItemServerSideProps,
-    getSeo: workItemSeo,
+    getInitialData: getProjectItemServerSideProps,
+    getSeo: projectItemSeo,
   },
   {
-    path: '/work',
+    path: ROUTE_PATTERNS.projectsIndex,
     getProps: (req) => ({ location: req.url }),
-    getInitialData: getWorkServerSideProps,
-    getSeo: workSeo,
+    getInitialData: getProjectServerSideProps,
+    getSeo: projectSeo,
   },
   {
-    path: /^\/blog\/([^/]+)$/,
+    path: ROUTE_PATTERNS.blogItem,
     getProps: (req) => ({ location: req.url }),
     getInitialData: getBlogItemServerSideProps,
     getSeo: blogItemSeo,
   },
   {
-    path: /^\/blog\/?$/,
+    path: ROUTE_PATTERNS.blogIndex,
     getProps: (req) => ({ location: req.url }),
     getInitialData: getBlogServerSideProps,
     getSeo: blogSeo,

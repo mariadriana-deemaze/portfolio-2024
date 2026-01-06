@@ -3,21 +3,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { NowPlaying } from './now-playing';
 import { ThemeToggle } from './theme-toggle';
+import { ROUTES } from '@/utils/routes';
 
-const navItems = {
-	'/': {
-		name: 'home'
-	},
-	'/work': {
-		name: 'work'
-	},
-	'/blog': {
-		name: 'blog'
-	},
-	'/contact': {
-		name: 'contact'
-	}
-};
+const navItems = [
+	{ path: ROUTES.home, name: 'home' },
+	{ path: ROUTES.projects, name: 'projects' },
+	{ path: ROUTES.blog, name: 'blog' },
+	{ path: ROUTES.contact, name: 'contact' },
+];
 
 export function Navbar() {
 	const [show, setShow] = useState(true);
@@ -49,7 +42,7 @@ export function Navbar() {
 				<div className="flex flex-row pr-1 gap-2">
 					<ThemeToggle />
 					<div className="flex flex-row pr-1 gap-2">
-						{Object.entries(navItems).map(([path, { name }]) => {
+						{navItems.map(({ path, name }) => {
 							return (
 								<a
 									key={path}
@@ -72,4 +65,3 @@ export function Navbar() {
 		</nav>
 	);
 }
-
