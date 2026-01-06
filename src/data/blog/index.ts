@@ -1,4 +1,3 @@
-'use server';
 
 import fs from 'node:fs/promises';
 import path from 'path';
@@ -62,3 +61,4 @@ export async function getPost(slug: string) {
 	const posts = await getPosts();
 	return posts.find((post) => post.slug === slug);
 }
+

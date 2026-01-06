@@ -1,4 +1,3 @@
-'use client';
 
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useRouterState } from '@tanstack/react-router';
@@ -73,3 +72,4 @@ export function Navbar() {
 		</nav>
 	);
 }
+

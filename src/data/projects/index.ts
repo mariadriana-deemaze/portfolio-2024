@@ -1,4 +1,3 @@
-'use server';
 
 import fs from 'node:fs/promises';
 import path from 'path';
@@ -71,3 +70,4 @@ export async function getProject(slug: string) {
 	const projects = await getProjects();
 	return projects.find((project) => project.slug === slug);
 }
+

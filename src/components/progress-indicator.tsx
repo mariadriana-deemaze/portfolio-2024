@@ -1,4 +1,3 @@
-'use client';
 
 import { useEffect, useState } from 'react';
 
@@ -29,3 +28,4 @@ const ProgressIndicator = () => {
 };
 
 export default ProgressIndicator;
+

@@ -1,4 +1,3 @@
-'use client';
 
 import { useRef, useState } from 'react';
 import { ReactLenis } from 'lenis/react';
@@ -137,3 +136,4 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 		</ReactLenis>
 	);
 }
+

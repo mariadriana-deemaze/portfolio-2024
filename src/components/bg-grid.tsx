@@ -1,4 +1,3 @@
-'use client';
 
 export function BGGrid({ children }: { children?: React.ReactNode }) {
 	return (
@@ -40,3 +39,4 @@ export function BGGrid({ children }: { children?: React.ReactNode }) {
 		</>
 	);
 }
+

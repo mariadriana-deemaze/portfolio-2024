@@ -1,4 +1,3 @@
-'use client';
 
 import { SectionAbout } from '@/components/pages/home/section-about';
 import { SectionEducation } from '@/components/pages/home/section-education';
@@ -32,3 +31,4 @@ export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 		</ReactLenis>
 	);
 };
+

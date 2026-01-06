@@ -1,4 +1,3 @@
-'use client';
 
 import type React from 'react'
 import { Toaster as Sonner } from 'sonner'
@@ -25,3 +24,4 @@ const Toaster = (props: ToasterProps) => {
 }
 
 export { Toaster }
+

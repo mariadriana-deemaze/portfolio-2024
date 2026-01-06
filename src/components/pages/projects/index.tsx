@@ -1,4 +1,3 @@
-'use client';
 
 import { useRef, useState } from 'react';
 import { ReactLenis } from 'lenis/react';
@@ -122,3 +121,4 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 		</ReactLenis>
 	);
 }
+

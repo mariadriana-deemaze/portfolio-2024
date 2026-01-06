@@ -1,4 +1,3 @@
-'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -109,3 +108,4 @@ export const ContactForm = () => {
 		</form>
 	);
 };
+

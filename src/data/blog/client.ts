@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 
-'use client';
 
 import matter from 'gray-matter';
 import type { BlogPost, BlogPostRaw } from './index';
@@ -32,4 +31,5 @@ export async function getPostsClient(): Promise<BlogPost[]> {
     .filter((p): p is BlogPost => !!p)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
+
 
