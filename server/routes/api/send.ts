@@ -1,7 +1,7 @@
+import { normalizeString } from '@/utils/string'
 import 'dotenv/config'
 import { Router, type Request, type Response } from 'express'
 import nodemailer from 'nodemailer'
-
 const router = Router()
 
 const transporter = nodemailer.createTransport({
@@ -14,12 +14,27 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+const RATE_LIMIT_WINDOW_MS = 3 * 60 * 1000
+const recentByEmail = new Map<string, number>()
+
 router.post('/', async (req: Request, res: Response) => {
   const { name, email, subject, message } = req.body ?? {}
 
   if (!name || !email || !subject || !message) {
     return res.status(400).json({ message: 'Missing required fields.' })
   }
+
+  const normalizedEmail = normalizeString(email)
+  
+  const now = Date.now()
+  const lastSendAt = recentByEmail.get(normalizedEmail)
+  if (lastSendAt && now - lastSendAt < RATE_LIMIT_WINDOW_MS) {
+    return res
+      .status(429)
+      .json({ message: 'Please wait a few minutes before sending again.' })
+  }
+
+  recentByEmail.set(normalizedEmail, now)
 
   try {
     const info = await transporter.sendMail({
@@ -35,7 +50,7 @@ router.post('/', async (req: Request, res: Response) => {
             <body>
               <div class="container" style="margin-left: 20px;margin-right: 20px;">
                 <h3>You've got a new mail from ${name}, their email is:
-                  <br> ✉️${email}
+                  <br> ✉️${normalizedEmail}
                 </h3>
                 <div style="font-size: 16px;">
                   <p>Message:</p>
@@ -55,6 +70,7 @@ router.post('/', async (req: Request, res: Response) => {
 
     return res.json({ message: info.response })
   } catch (error) {
+    recentByEmail.delete(normalizedEmail)
     console.error('Error sending email:', error)
     return res.status(500).json({ message: 'Error sending email.' })
   }
