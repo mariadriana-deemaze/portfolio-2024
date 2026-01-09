@@ -41,9 +41,14 @@ export const ContactForm = () => {
 
 		const response: ContactResponse = await request.json();
 
+		if (!request.ok) {
+			toast.error(response.message || 'Failed to submit. Please try again.');
+			return;
+		}
+
 		if (!response.message) {
 			console.log(response);
-			toast.error(response.message);
+			toast.error('Unexpected response from server.');
 			return;
 		}
 
