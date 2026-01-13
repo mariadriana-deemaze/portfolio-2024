@@ -7,9 +7,10 @@ export default defineConfig(() => {
   return {
     plugins: [tanstackRouter(), react()],
     resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src'),
-      },
+      alias: [
+        { find: '@/server', replacement: path.resolve(__dirname, 'server') },
+        { find: '@', replacement: path.resolve(__dirname, 'src') },
+      ],
     },
   }
 })

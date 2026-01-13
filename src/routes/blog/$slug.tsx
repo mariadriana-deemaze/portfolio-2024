@@ -1,8 +1,8 @@
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
 import { Badge } from '@/components/ui/badge'
-import type { RouteModule } from '../../../server/types'
+import type { RouteModule } from '@/server/types'
 import { getPost, type BlogPost } from '@/data/blog'
-import { renderMdxToHtml } from '../../../server/mdx'
+import { renderMdxToHtml } from '@/server/mdx'
 import { BASE_URL } from '@/data/main'
 import { ROUTES, ROUTE_PATTERNS } from '@/utils/routes'
 

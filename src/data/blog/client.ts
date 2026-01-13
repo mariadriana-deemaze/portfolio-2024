@@ -2,7 +2,7 @@
 
 
 import matter from 'gray-matter';
-import type { BlogPost, BlogPostRaw } from './index';
+import type { BlogPost, BlogPostRaw } from '@/data/blog';
 
 export async function getPostsClient(): Promise<BlogPost[]> {
   const modules = import.meta.glob('/src/data/blog/*.md', { query: "?raw", import: "default" });

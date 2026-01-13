@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
 import { HiOutlineGlobe } from 'react-icons/hi';
-import { AnimatedMottos } from './motto';
+import { AnimatedMottos } from '@/components/pages/home/motto';
 
 export const SectionHero = () => {
 	return (

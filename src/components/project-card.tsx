@@ -1,5 +1,5 @@
-import { Card, CardHeader, CardContent, CardDescription, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
+import { Card, CardHeader, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface Props {
 	title: string;

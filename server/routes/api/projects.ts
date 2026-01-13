@@ -1,5 +1,5 @@
 import { Router, type Request, type Response } from 'express'
-import { getProjects } from '../../../src/data/projects'
+import { getProjects } from '@/data/projects'
 
 const router = Router()
 
@@ -14,4 +14,3 @@ router.get('/', async (_req: Request, res: Response) => {
 })
 
 export default router
-

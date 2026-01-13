@@ -1,9 +1,9 @@
 import { JSX } from 'react'
-import { CommandMenu } from './command-menu'
-import { BGGrid } from './bg-grid'
-import ProgressIndicator from './progress-indicator'
-import { Navbar } from './navbar'
-import { GoogleAnalytics } from './google-analytics'
+import { CommandMenu } from '@/components/command-menu'
+import { BGGrid } from '@/components/bg-grid'
+import ProgressIndicator from '@/components/progress-indicator'
+import { Navbar } from '@/components/navbar'
+import { GoogleAnalytics } from '@/components/google-analytics'
 import '../styles/globals.css'
 
 export type CommandLink = { url: string; title: string; type: 'internal' | 'blog' | 'projects' | 'social' }

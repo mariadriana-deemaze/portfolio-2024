@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import http from 'node:http';
-import type { Seo } from './server/types';
-import { matchRoute } from './server/routes';
-import apiRouter from './server/routes/api';
-import { ROUTES, STATIC_ROUTES, toBlogSlug, toProjectsSlug } from './src/utils/routes.ts';
+import type { Seo } from '@/server/types';
+import { matchRoute } from '@/server/routes';
+import apiRouter from '@/server/routes/api';
+import { ROUTES, STATIC_ROUTES, toBlogSlug, toProjectsSlug } from '@/utils/routes.ts';
 
 dotenv.config();
 

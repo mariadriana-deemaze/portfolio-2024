@@ -1,11 +1,11 @@
 import type { Request } from 'express'
-import type { RouteModule } from '../types'
-import { getServerSideProps as getHomeServerSideProps, SeoMetadata as homeSeo } from '../../src/routes/index'
-import { getServerSideProps as getProjectServerSideProps, SeoMetadata as projectSeo } from '../../src/routes/projects/index'
-import { getServerSideProps as getProjectItemServerSideProps, SeoMetadata as projectItemSeo } from '../../src/routes/projects/$slug'
-import { getServerSideProps as getBlogServerSideProps, SeoMetadata as blogSeo } from '../../src/routes/blog/index'
-import { getServerSideProps as getBlogItemServerSideProps, SeoMetadata as blogItemSeo } from '../../src/routes/blog/$slug'
-import { data, BASE_URL } from '../../src/data/main'
+import type { RouteModule } from '@/server/types'
+import { getServerSideProps as getHomeServerSideProps, SeoMetadata as homeSeo } from '@/routes/index'
+import { getServerSideProps as getProjectServerSideProps, SeoMetadata as projectSeo } from '@/routes/projects/index'
+import { getServerSideProps as getProjectItemServerSideProps, SeoMetadata as projectItemSeo } from '@/routes/projects/$slug'
+import { getServerSideProps as getBlogServerSideProps, SeoMetadata as blogSeo } from '@/routes/blog/index'
+import { getServerSideProps as getBlogItemServerSideProps, SeoMetadata as blogItemSeo } from '@/routes/blog/$slug'
+import { data, BASE_URL } from '@/data/main'
 import { ROUTE_PATTERNS, ROUTES } from '@/utils/routes'
 
 const notFoundRoute: RouteModule = {

@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import sendRouter from './send'
-import spotifyRouter from './spotify'
-import projectsRouter from './projects'
+import sendRouter from '@/server/routes/api/send'
+import spotifyRouter from '@/server/routes/api/spotify'
+import projectsRouter from '@/server/routes/api/projects'
 
 const api = Router()
 
