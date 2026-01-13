@@ -59,6 +59,7 @@
 		"@types/react": "^19.0.10",
 		"@types/react-dom": "^19.0.4",
 		"@vitejs/plugin-react": "^5.0.0",
+		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^9.21.0",
 		"eslint-plugin-react-hooks": "^7.0.0",
 		"eslint-plugin-react-refresh": "^0.4.19",
@@ -69,5 +70,10 @@
 		"tsx": "^4.19.0",
 		"typescript": "^5.9.3",
 		"vite": "^7.0.0"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
 	}
 }
