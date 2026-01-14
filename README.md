@@ -4,7 +4,7 @@
 
 - Stack: Express server with Vite + React 19 + TanStack Router
 - Styling: Tailwind CSS 4 + Shadcn/ui components
-- Content: MD/MDX-based static content
+- Content: Sanity CMS for blog posts + MD/MDX-based static content
 - Deployment: Hosted on Raspberry PI w/ Coolify
 
 ## Architecture
@@ -19,9 +19,10 @@
 - `src/routes/**` - Route files for TanStack Router (e.g., `index.tsx`, `blog/$slug.tsx`).
 - `src/components/**` - UI components, Shadcn/ui wrappers, and page sections.
 - `src/styles/**` - Tailwind/global CSS and page-specific styles.
-- `src/data/**` - Markdown/MDX content for blog and projects.
+- `src/data/**` - Markdown/MDX content for projects and static pages.
 - `server.ts` - Dev/prod Express server with SSR.
 - `server/routes/**` - Route matching helpers and API handlers.
+- `cms/**` - Sanity Studio configuration and schema for blog posts.
 - `public/**` - Static assets (images, fonts, favicon).
 - `index.html` - Vite HTML template used in SSR assembly.
 
