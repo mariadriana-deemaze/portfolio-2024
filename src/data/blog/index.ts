@@ -1,20 +1,5 @@
 
-import fs from 'node:fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
-
-const BLOG_DIR = './src/data/blog';
-
-export interface BlogPostRaw {
-	id: string;
-	slug: string;
-	link: string;
-	title: string;
-	description: string;
-	date: string;
-	keywords: string[];
-	published: boolean;
-}
+import { getSanityClient } from '@/lib/sanity';
 
 export interface BlogPost {
 	title: string;
@@ -26,39 +11,52 @@ export interface BlogPost {
 	keywords: string[];
 }
 
+type SanityBlogPost = {
+	title: string;
+	description: string;
+	date: string;
+	slug: string;
+	body?: string;
+	link?: string;
+	keywords?: string[];
+	published?: boolean;
+};
+
+const POST_FIELDS = `
+  title,
+  description,
+  date,
+  "slug": slug.current,
+  body,
+  link,
+  keywords,
+  published
+`;
+
+function normalizePost(post: SanityBlogPost): BlogPost {
+	return {
+		title: post.title,
+		description: post.description,
+		date: post.date,
+		slug: post.slug,
+		body: post.body ?? '',
+		external_link: post.link ?? '',
+		keywords: Array.isArray(post?.keywords) ? post.keywords.map((w) => `#${w}`) : [],
+	};
+}
+
 export const getPosts = async () => {
-	const content = await fs.readdir(BLOG_DIR);
-
-	const posts = await Promise.all(
-		content
-			.filter((file) => path.extname(file) === '.md')
-			.map(async (file) => {
-				const filePath = `${BLOG_DIR}/${file}`;
-				const raw = await fs.readFile(filePath, 'utf8');
-
-				const { data, content } = matter(raw) as unknown as { data: BlogPostRaw; content: string };
-
-				if (data.published === false) return null;
-
-				const post: BlogPost = {
-					...data,
-					keywords: Array.isArray(data?.keywords) ? (data.keywords).map((w) => `#${w}`) : [],
-					external_link: data?.link,
-					body: content,
-				};
-				return post;
-			})
+	const posts = await getSanityClient().fetch<SanityBlogPost[]>(
+		`*[_type == "post" && published != false] | order(date desc) { ${POST_FIELDS} }`
 	);
-
-	return posts
-		.filter((post) => post !== null)
-		.sort((a, b) =>
-			a && b ? new Date(b.date).getTime() - new Date(a.date).getTime() : 0
-		) as BlogPost[];
+	return posts.map(normalizePost);
 };
 
 export async function getPost(slug: string) {
-	const posts = await getPosts();
-	return posts.find((post) => post.slug === slug);
+	const post = await getSanityClient().fetch<SanityBlogPost | null>(
+		`*[_type == "post" && slug.current == $slug][0]{ ${POST_FIELDS} }`,
+		{ slug }
+	);
+	return post ? normalizePost(post) : undefined;
 }
 
