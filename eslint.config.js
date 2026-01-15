@@ -1,5 +1,6 @@
 import js from '@eslint/js'
 import tsParser from '@typescript-eslint/parser'
+import importPlugin from 'eslint-plugin-import'
 import perfectionist from 'eslint-plugin-perfectionist'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
@@ -21,10 +22,18 @@ export default [
       },
     },
     plugins: {
+      import: importPlugin,
       perfectionist,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       unicorn,
+    },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          project: './tsconfig.json',
+        },
+      },
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -36,6 +45,10 @@ export default [
           ignoreRestSiblings: true,
           varsIgnorePattern: '^[A-Z_]',
         },
+      ],
+      'import/no-unresolved': [
+        'error',
+        { caseSensitive: true },
       ],
       'perfectionist/sort-imports': ['error', { type: 'natural' }],
       'react-refresh/only-export-components': [
