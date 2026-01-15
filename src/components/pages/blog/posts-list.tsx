@@ -9,7 +9,7 @@ import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
 import { ReactLenis } from 'lenis/react';
-import { useRef, useState } from 'react';
+import { useRef, useState, type MouseEvent } from 'react';
 
 export default function PostsList({ posts }: { posts: BlogPost[] }) {
 	const [hoveringPost, setHoveringPost] = useState<BlogPost | null>(null);
@@ -18,7 +18,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 
 	const { ref: linkWrapperRef, size: linkWrapperSize } = useElementSize<HTMLDivElement>();
 	const anchorLinkRef = useRef<HTMLAnchorElement>(null);
-	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const handleMouseEnter = (post: BlogPost) => {
 		if (timeoutRef.current) {
@@ -28,7 +28,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 		setHoveringPost(post);
 	};
 
-	const handleMouseLeave = (e: React.MouseEvent<HTMLLIElement>) => {
+	const handleMouseLeave = (e: MouseEvent<HTMLLIElement>) => {
 		const relatedTarget = e.relatedTarget as HTMLElement;
 		if (relatedTarget && e.currentTarget.contains(relatedTarget)) {
 			return;

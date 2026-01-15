@@ -7,7 +7,7 @@ import { ROUTES, toProjectsSlug } from '@/utils/routes';
 import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { ReactLenis } from 'lenis/react';
-import { useRef, useState } from 'react';
+import { useRef, useState, type MouseEvent } from 'react';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
 	const [hoveringPost, setHoveringPost] = useState<Project | null>(null);
@@ -16,7 +16,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 
 	const { ref: linkWrapperRef, size: linkWrapperSize } = useElementSize<HTMLDivElement>();
 	const anchorLinkRef = useRef<HTMLAnchorElement>(null);
-	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const handleMouseEnter = (post: Project) => {
 		if (timeoutRef.current) {
@@ -26,7 +26,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 		setHoveringPost(post);
 	};
 
-	const handleMouseLeave = (e: React.MouseEvent<HTMLLIElement>) => {
+	const handleMouseLeave = (e: MouseEvent<HTMLLIElement>) => {
 		const relatedTarget = e.relatedTarget as HTMLElement;
 		if (relatedTarget && e.currentTarget.contains(relatedTarget)) {
 			return;

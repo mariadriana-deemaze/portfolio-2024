@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout'
+import Layout from '@/components/layout'
 import { Button } from '@/components/ui/button'
 import { Outlet, createRootRouteWithContext, useRouter, Link } from '@tanstack/react-router'
 

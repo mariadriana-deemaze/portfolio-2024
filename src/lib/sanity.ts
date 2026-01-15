@@ -26,7 +26,10 @@ const sanityEnvSchema = z.object({
 })
 
 const metaEnv = (typeof import.meta !== 'undefined' && (import.meta as any).env) || {}
-const nodeEnv = typeof process !== 'undefined' ? process.env : {}
+const nodeEnv =
+  typeof globalThis !== 'undefined' && 'process' in globalThis
+    ? (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {}
+    : {}
 const isStudioRuntime = Boolean(
   metaEnv.SANITY_STUDIO_PROJECT_ID ||
     metaEnv.SANITY_STUDIO_DATASET ||

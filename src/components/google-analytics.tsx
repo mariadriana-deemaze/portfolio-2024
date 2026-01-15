@@ -19,7 +19,7 @@ function ensureScript(dataAttr: string, trackingId: string, create: () => HTMLSc
 declare global {
   interface Window {
     dataLayer?: unknown[]
-    gtag?: (...args: unknown[]) => void
+    gtag?: (..._args: unknown[]) => void
   }
 }
 

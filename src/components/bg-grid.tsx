@@ -1,5 +1,7 @@
 
-export function BGGrid({ children }: { children?: React.ReactNode }) {
+import type { ReactNode } from 'react';
+
+export function BGGrid({ children }: { children?: ReactNode }) {
 	return (
 		<>
 			{children}
