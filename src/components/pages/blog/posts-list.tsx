@@ -1,14 +1,14 @@
 
-import { useRef, useState } from 'react';
-import { ReactLenis } from 'lenis/react';
+import { Badge } from '@/components/ui/badge';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
 import { BlogPost } from '@/data/blog';
 import useMousePosition from '@/hooks/use-mouse-position';
+import { ROUTES, toBlogSlug } from '@/utils/routes';
 import { cn } from '@/utils/utils';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
-import { Badge } from '@/components/ui/badge';
-import { ROUTES, toBlogSlug } from '@/utils/routes';
+import { ReactLenis } from 'lenis/react';
+import { useRef, useState } from 'react';
 
 export default function PostsList({ posts }: { posts: BlogPost[] }) {
 	const [hoveringPost, setHoveringPost] = useState<BlogPost | null>(null);

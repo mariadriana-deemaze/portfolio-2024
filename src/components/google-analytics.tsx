@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
 import { useRouterState } from '@tanstack/react-router'
+import { useEffect } from 'react'
 
 const GA_TRACKING_ID = 'G-ZSZBWDZK9T'
 const GA_SCRIPT_SRC = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`

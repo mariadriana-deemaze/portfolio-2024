@@ -1,9 +1,9 @@
 
+import { STACKS } from '@/components/stacks';
+import matter from 'gray-matter';
 import fs from 'node:fs/promises';
 import path from 'path';
-import matter from 'gray-matter';
 import { JSX } from 'react';
-import { STACKS } from '@/components/stacks';
 
 const PROJECTS_DIR = './src/data/projects';
 

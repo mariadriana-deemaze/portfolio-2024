@@ -1,8 +1,8 @@
 
-import { useQuery } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { NowPlayingData } from '@/server/routes/api/types/spotify';
+import { useQuery } from '@tanstack/react-query';
 
 export const NowPlaying = () => {
 	const { data: nowPlaying } = useQuery<{ data: NowPlayingData }>({

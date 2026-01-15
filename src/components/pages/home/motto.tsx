@@ -1,6 +1,6 @@
 
-import { useCallback, useEffect, useState } from 'react';
 import { cn } from '@/utils/utils';
+import { useCallback, useEffect, useState } from 'react';
 
 export const AnimatedMottos = ({ data, className }: { data: string[]; className?: string }) => {
 	const [roleIndex, setRoleIndex] = useState(0);

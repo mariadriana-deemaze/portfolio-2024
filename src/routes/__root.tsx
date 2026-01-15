@@ -1,6 +1,6 @@
-import { Outlet, createRootRouteWithContext, useRouter, Link } from '@tanstack/react-router'
 import Layout from '@/components/Layout'
 import { Button } from '@/components/ui/button'
+import { Outlet, createRootRouteWithContext, useRouter, Link } from '@tanstack/react-router'
 
 type AppContext = {
   initialData?: any

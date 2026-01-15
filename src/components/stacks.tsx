@@ -1,3 +1,4 @@
+import { DiAppcelerator } from 'react-icons/di';
 import {
 	SiAmazon,
 	SiBootstrap,
@@ -34,7 +35,6 @@ import {
 	SiWebpack,
 	SiWordpress
 } from 'react-icons/si';
-import { DiAppcelerator } from 'react-icons/di';
 
 const iconSize = 15;
 

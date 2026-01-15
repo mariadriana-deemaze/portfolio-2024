@@ -1,12 +1,13 @@
-import express, { type Request, type Response, type NextFunction } from 'express';
-import dotenv from 'dotenv';
-import fs from 'fs';
-import path from 'path';
-import http from 'node:http';
 import type { Seo } from '@/server/types';
+
 import { matchRoute } from '@/server/routes';
 import apiRouter from '@/server/routes/api';
 import { ROUTES, STATIC_ROUTES, toBlogSlug, toProjectsSlug } from '@/utils/routes.ts';
+import dotenv from 'dotenv';
+import express, { type Request, type Response, type NextFunction } from 'express';
+import fs from 'fs';
+import http from 'node:http';
+import path from 'path';
 
 dotenv.config();
 

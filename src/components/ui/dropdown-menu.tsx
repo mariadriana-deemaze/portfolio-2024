@@ -1,8 +1,8 @@
 
-import * as React from 'react';
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { LuCheck, LuChevronRight, LuCircle } from 'react-icons/lu';
 import { cn } from '@/utils/utils';
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import * as React from 'react';
+import { LuCheck, LuChevronRight, LuCircle } from 'react-icons/lu';
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 

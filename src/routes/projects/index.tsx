@@ -1,9 +1,10 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router'
-import ProjectsList from '@/components/pages/projects'
 import type { RouteModule } from '@/server/types'
-import { getProjects, type Project } from '@/data/projects'
+
+import ProjectsList from '@/components/pages/projects'
 import { data, BASE_URL } from '@/data/main'
+import { getProjects, type Project } from '@/data/projects'
 import { ROUTES } from '@/utils/routes'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/projects/')({
   component: ProjectRoute,

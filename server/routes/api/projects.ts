@@ -1,5 +1,5 @@
-import { Router, type Request, type Response } from 'express'
 import { getProjects } from '@/data/projects'
+import { Router, type Request, type Response } from 'express'
 
 const router = Router()
 

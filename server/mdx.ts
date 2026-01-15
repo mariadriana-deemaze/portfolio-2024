@@ -1,13 +1,13 @@
 import { compile, run } from '@mdx-js/mdx'
-import * as runtime from 'react/jsx-runtime'
 import React from 'react'
+import * as runtime from 'react/jsx-runtime'
 import { renderToString } from 'react-dom/server'
-import remarkGfm from 'remark-gfm'
-import remarkFrontmatter from 'remark-frontmatter'
-import remarkToc from 'remark-toc'
-import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeSlug from 'rehype-slug'
+import remarkFrontmatter from 'remark-frontmatter'
+import remarkGfm from 'remark-gfm'
+import remarkToc from 'remark-toc'
 
 export async function renderMdxToHtml(source: string): Promise<string> {
   const compiled = await compile(source, {

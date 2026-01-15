@@ -1,9 +1,9 @@
 
-import { useCallback, useEffect, useState } from 'react';
-import { Link, useRouterState } from '@tanstack/react-router';
 import { NowPlaying } from '@/components/now-playing';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { ROUTES } from '@/utils/routes';
+import { Link, useRouterState } from '@tanstack/react-router';
+import { useCallback, useEffect, useState } from 'react';
 
 const navItems = [
 	{ path: ROUTES.home, name: 'home' },

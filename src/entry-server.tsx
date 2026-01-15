@@ -1,6 +1,6 @@
-import { renderToString } from 'react-dom/server';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App, { type AppProps } from '@/App';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { renderToString } from 'react-dom/server';
 
 export interface RenderProps extends AppProps {
   location: string;

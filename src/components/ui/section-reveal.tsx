@@ -1,6 +1,6 @@
-import { ReactNode, useRef } from 'react';
-import { useLenis } from 'lenis/react';
 import { cn } from '@/utils/utils';
+import { useLenis } from 'lenis/react';
+import { ReactNode, useRef } from 'react';
 
 const ScrollFadeReveal = ({
 	onLoadVisibility = false,

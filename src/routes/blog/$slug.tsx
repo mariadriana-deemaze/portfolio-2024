@@ -1,10 +1,11 @@
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
-import { Badge } from '@/components/ui/badge'
 import type { RouteModule } from '@/server/types'
+
+import { Badge } from '@/components/ui/badge'
 import { getPost, type BlogPost } from '@/data/blog'
-import { renderMdxToHtml } from '@/server/mdx'
 import { BASE_URL } from '@/data/main'
+import { renderMdxToHtml } from '@/server/mdx'
 import { ROUTES, ROUTE_PATTERNS } from '@/utils/routes'
+import { createFileRoute, useRouter, Link } from '@tanstack/react-router'
 
 const notFoundRoute: RouteModule = {
   path: /.*/,
