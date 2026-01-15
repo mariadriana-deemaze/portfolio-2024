@@ -2,11 +2,11 @@ import type { RouteModule } from '@/server/types'
 import type { Request } from 'express'
 
 import { data, BASE_URL } from '@/data/main'
-import { getServerSideProps as getBlogItemServerSideProps, SeoMetadata as blogItemSeo } from '@/routes/blog/$slug'
-import { getServerSideProps as getBlogServerSideProps, SeoMetadata as blogSeo } from '@/routes/blog/index'
-import { getServerSideProps as getHomeServerSideProps, SeoMetadata as homeSeo } from '@/routes/index'
-import { getServerSideProps as getProjectItemServerSideProps, SeoMetadata as projectItemSeo } from '@/routes/projects/$slug'
-import { getServerSideProps as getProjectServerSideProps, SeoMetadata as projectSeo } from '@/routes/projects/index'
+import { getServerSideProps as getBlogServerSideProps, SeoMetadata as blogSeo } from '@/data/routes/blog/index'
+import { getServerSideProps as getBlogItemServerSideProps, SeoMetadata as blogItemSeo } from '@/data/routes/blog/slug'
+import { getServerSideProps as getHomeServerSideProps, SeoMetadata as homeSeo } from '@/data/routes/index'
+import { getServerSideProps as getProjectServerSideProps, SeoMetadata as projectSeo } from '@/data/routes/projects/index'
+import { getServerSideProps as getProjectItemServerSideProps, SeoMetadata as projectItemSeo } from '@/data/routes/projects/slug'
 import { ROUTE_PATTERNS, ROUTES } from '@/utils/routes'
 
 const notFoundRoute: RouteModule = {
