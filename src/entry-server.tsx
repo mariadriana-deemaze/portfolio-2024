@@ -1,4 +1,5 @@
-import App, { type AppProps } from '@/app';
+// @ts-ignore: resolves correct path on linux machines
+import App, { type AppProps } from '@/App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderToString } from 'react-dom/server';
 
