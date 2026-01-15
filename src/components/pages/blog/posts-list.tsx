@@ -2,6 +2,7 @@
 import { Badge } from '@/components/ui/badge';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
 import { BlogPost } from '@/data/blog';
+import useElementSize from '@/hooks/use-element-size';
 import useMousePosition from '@/hooks/use-mouse-position';
 import { ROUTES, toBlogSlug } from '@/utils/routes';
 import { cn } from '@/utils/utils';
@@ -15,7 +16,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 
 	const { x, y } = useMousePosition();
 
-	const linkWrapperRef = useRef<HTMLDivElement>(null);
+	const { ref: linkWrapperRef, size: linkWrapperSize } = useElementSize<HTMLDivElement>();
 	const anchorLinkRef = useRef<HTMLAnchorElement>(null);
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -100,8 +101,8 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 			<div
 				ref={linkWrapperRef}
 				style={{
-					left: `${(x || 0) - (linkWrapperRef.current?.clientWidth || 0) / 2}px`,
-					top: `${(y || 0) - (linkWrapperRef.current?.clientHeight || 0) / 2}px`
+					left: `${(x || 0) - linkWrapperSize.width / 2}px`,
+					top: `${(y || 0) - linkWrapperSize.height / 2}px`
 				}}
 				className={cn(
 					'cursor-none pointer-events-none fixed ease-in-out transition-all duration-300 h-24 w-24 bg-linear-to-r from-orange-500 via-orange-500 to-orange-600 rounded-full flex flex-col justify-center',
@@ -137,4 +138,3 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 		</ReactLenis>
 	);
 }
-
