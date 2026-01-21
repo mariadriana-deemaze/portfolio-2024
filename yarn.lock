@@ -6510,9 +6510,9 @@ seroval-plugins@^1.4.0:
   integrity sha512-zir1aWzoiax6pbBVjoYVd0O1QQXgIL3eVGBMsBsNmM8Ukq90yGaWlfx0AB9dTS8GPqrOrbXn79vmItCUP9U3BQ==
 
 seroval@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/seroval/-/seroval-1.4.0.tgz#b62f1d0c332d2a085f1059866b9c7dac57486682"
-  integrity sha512-BdrNXdzlofomLTiRnwJTSEAaGKyHHZkbMXIywOh7zlzp4uZnXErEwl9XZ+N1hJSNpeTtNxWvVwN0wUzAIQ4Hpg==
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/seroval/-/seroval-1.4.2.tgz#0718ce33f0363407eee7c78272c24bc48ec940c8"
+  integrity sha512-N3HEHRCZYn3cQbsC4B5ldj9j+tHdf4JZoYPlcI4rRYu0Xy4qN8MQf1Z08EibzB0WpgRG5BGK08FTrmM66eSzKQ==
 
 serve-static@^2.2.0:
   version "2.2.0"
