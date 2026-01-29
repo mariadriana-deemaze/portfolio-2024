@@ -17,7 +17,7 @@ export const SectionHero = () => {
 							>
 								{data.name}
 							</h1>
-							<div className="absolute top-1 md:top-0 -right-14 text-[30px] w-12 align-middle ml-3 group-hover:animate-hand-wave">
+							<div className="absolute top-1 md:top-0 -right-14 text-[30px] w-12 align-middle ml-3">
 								👋
 							</div>
 						</div>

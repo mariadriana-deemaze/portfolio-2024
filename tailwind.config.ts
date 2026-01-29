@@ -3,8 +3,8 @@ import type { Config } from 'tailwindcss';
 import typography from '@tailwindcss/typography';
 import tailwindcssAnimate from 'tailwindcss-animate';
 
-const config = {
-	darkMode: ['class'],
+const config: Config = {
+	darkMode: 'class',
 	content: [
 		'./index.html',
 		'./src/**/*.{ts,tsx,mdx}',
@@ -77,24 +77,13 @@ const config = {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
-			},
-			animation: {
-				'hand-wave': 'hand-wave 1s ease-in-out infinite',
-			},
-			keyframes: {
-				'hand-wave': {
-					'0%': { transform: 'rotate(-15deg)' },
-					'30%': { transform: 'rotate(10deg)' },
-					'60%': { transform: 'rotate(-15deg)' },
-					'100%': { transform: 'rotate(-15deg)' },
-				},
-			},
+			}
 		},
 	},
 	future: {
 		hoverOnlyWhenSupported: true,
 	},
 	plugins: [tailwindcssAnimate, typography],
-} satisfies Config;
+};
 
 export default config;
