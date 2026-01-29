@@ -58,7 +58,7 @@ export function Navbar() {
 						})}
 					</div>
 				</div>
-				<div className="flex max-w-80 h-full">
+				<div className="flex basis-full justify-start max-w-80 h-full sm:basis-auto sm:justify-end">
 					<NowPlaying />
 				</div>
 			</div>
