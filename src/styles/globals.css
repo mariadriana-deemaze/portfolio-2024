@@ -178,9 +178,25 @@
   background-repeat: no-repeat;
 }
 
+@utility logo-fade {
+  color: #1f2937;
+  mask-image: radial-gradient(ellipse at 85% 100%, transparent 0%, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 1) 100%);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 100% 100%;
+  -webkit-mask-image: radial-gradient(ellipse at 85% 100%, transparent 0%, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 1) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 100% 100%;
+}
+
 @layer utilities {
   .dark .text-fade-grad {
     background-image: radial-gradient(ellipse at 85% 100%, transparent 0%, #f3f4f6 60%, #ffffff 100%);
+  }
+
+  .dark .logo-fade {
+    color: #f3f4f6;
   }
 }
 

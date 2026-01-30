@@ -1,3 +1,4 @@
+import { LogoMA } from '@/components/logo-ma';
 import { AnimatedMottos } from '@/components/pages/home/motto';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -12,19 +13,16 @@ export const SectionHero = () => {
 				<div className="flex-1 space-y-5">
 					<div className="flex-1 group">
 						<div className="relative w-min">
-							<h1
-								className="font-clash relative text-[40px] md:text-[50px] whitespace-nowrap max-w-min font-medium leading-none text-fade-grad"
-							>
-								{data.name}
+							<h1 className="relative w-min leading-none">
+								<LogoMA />
 							</h1>
-							<div className="absolute top-1 md:top-0 -right-14 text-[30px] w-12 align-middle ml-3">
-								👋
+							<div className="-mt-5 pl-[calc(38.8%-4px)]">
+								<AnimatedMottos
+									data={[...data.mottos]}
+									className="text-[#F15A24] from-[#F18B3E] bg-linear-to-r to-[#F15A24] bg-clip-text"
+								/>
 							</div>
 						</div>
-						<AnimatedMottos
-							data={[...data.mottos]}
-							className="text-[#F15A24] from-[#F18B3E] bg-linear-to-r to-[#F15A24] bg-clip-text"
-						/>
 					</div>
 					<p className="max-w-md text-pretty font-mono text-sm text-foreground">
 						{data.about}
@@ -64,12 +62,17 @@ export const SectionHero = () => {
 					</div>
 				</div>
 
-				<Avatar className="h-20 w-20 md:h-28 md:w-28">
-					<AvatarImage alt={data.name} src="images/avatar.jpeg" />
-					<AvatarFallback>
-						{data.name.split(' ').map((part) => part[0].toUpperCase())}
-					</AvatarFallback>
-				</Avatar>
+				<div className="relative">
+					<Avatar className="h-20 w-20 md:h-28 md:w-28">
+						<AvatarImage alt={data.name} src="images/avatar.jpeg" />
+						<AvatarFallback>
+							{data.name.split(' ').map((part) => part[0].toUpperCase())}
+						</AvatarFallback>
+					</Avatar>
+					<div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full p-4 border border-input bg-card text-card-foreground text-[18px]">
+						{'\u{1F44B}'}
+					</div>
+				</div>
 			</div>
 		</Section>
 	);
