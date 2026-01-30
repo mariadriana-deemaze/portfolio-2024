@@ -33,6 +33,7 @@ export const LogoMA = ({
 					fillOpacity="0.2"
 					stroke="url(#paint1_linear_1215_845)"
 					strokeWidth="0.3"
+					strokeOpacity="1"
 				/>
 				<path
 					d="M27.2495 4.93567C27.6094 4.25867 28.5934 4.2511 28.9478 4.92102V4.922L36.7476 19.4747C37.0707 20.1011 36.6148 20.8497 35.8804 20.8497H30.0444C29.326 20.8497 28.8718 20.1 29.1948 19.4913L29.1958 19.4894L29.1968 19.4884C29.1971 19.4877 29.1972 19.4866 29.1978 19.4855C29.1992 19.4828 29.2018 19.4791 29.2046 19.4738C29.2101 19.4631 29.2183 19.4466 29.229 19.4259C29.2504 19.3846 29.2819 19.3241 29.3218 19.2472C29.4019 19.0925 29.5163 18.8709 29.6538 18.6056C29.9287 18.075 30.2956 17.3672 30.6636 16.6583C31.0315 15.9495 31.401 15.2399 31.6802 14.7052C31.8197 14.4379 31.9369 14.2143 32.02 14.0568C32.0615 13.9782 32.0937 13.9158 32.1167 13.8732C32.1275 13.8532 32.1352 13.8369 32.1411 13.8263L32.147 13.8214L32.1577 13.7999L32.4995 13.1241L32.5005 13.1251C32.6486 12.8539 32.6268 12.5217 32.4585 12.2726C32.2961 12.0324 32.0279 11.8674 31.7144 11.8673H25.2231C24.5046 11.8673 24.0512 11.1166 24.3745 10.5079L24.3755 10.507L27.2505 4.93665L27.2495 4.93567Z"
@@ -40,6 +41,7 @@ export const LogoMA = ({
 					fillOpacity="0.2"
 					stroke="url(#paint3_linear_1215_845)"
 					strokeWidth="0.3"
+					strokeOpacity="1"
 				/>
 			</g>
 			<line x1="48.5" y1="7" x2="48.5" y2="18" stroke="#F15A24" />
@@ -63,8 +65,8 @@ export const LogoMA = ({
 					y2="20.8302"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop stopColor="#4B2010" />
-					<stop offset="1" stopColor="#6A6A6A" />
+					<stop stopColor="var(--logo-stroke-start)" />
+					<stop offset="1" stopColor="var(--logo-stroke-end)" />
 				</linearGradient>
 				<linearGradient
 					id="paint2_linear_1215_845"
@@ -85,8 +87,8 @@ export const LogoMA = ({
 					y2="21"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop stopColor="#4B2010" />
-					<stop offset="1" stopColor="#6A6A6A" />
+					<stop stopColor="var(--logo-stroke-start)" />
+					<stop offset="1" stopColor="var(--logo-stroke-end)" />
 				</linearGradient>
 				<clipPath id="clip0_1215_845">
 					<rect width="37" height="18" fill="white" transform="translate(0 3)" />

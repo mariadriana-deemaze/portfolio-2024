@@ -180,6 +180,8 @@
 
 @utility logo-fade {
   color: #1f2937;
+  --logo-stroke-start: #f15a24;
+  --logo-stroke-end: #374151;
   mask-image: radial-gradient(ellipse at 85% 100%, transparent 0%, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 1) 100%);
   mask-repeat: no-repeat;
   mask-position: center;
@@ -197,6 +199,8 @@
 
   .dark .logo-fade {
     color: #f3f4f6;
+    --logo-stroke-start: #f15a24;
+    --logo-stroke-end: #ffffff;
   }
 }
 
