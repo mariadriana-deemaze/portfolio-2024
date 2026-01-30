@@ -25,7 +25,10 @@ function ProjectItemRoute(): JSX.Element {
     )
   }
 
-  const { title, year, description, hero, technologies = [], repo, liveUrl } = project
+  const { title, year, description, hero, technologies = [], repo, liveUrl, colors } = project
+  const heroGradient = colors?.length
+    ? `linear-gradient(150deg, ${colors[0]} 0%, ${colors[1] ?? colors[0]} 35%, ${colors[2] ?? colors[1] ?? colors[0]} 100%)`
+    : undefined
 
   return (
     <div className="mx-auto w-full max-w-2xl space-y-4">
@@ -68,7 +71,20 @@ function ProjectItemRoute(): JSX.Element {
         )}
       </section>
       {hero && (
-        <img className="border border-gray-400/30 dark:border-gray-200/10 self-center rounded-md" alt={"Hero image of the ${title} project."} width={800} height={400} src={hero} />
+        <div
+          className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"
+          style={heroGradient ? { background: heroGradient } : undefined}
+        >
+          <div className="rounded-[0.45rem] overflow-hidden">
+            <img
+              className="block w-full h-auto"
+              alt={"Hero image of the ${title} project."}
+              width={800}
+              height={400}
+              src={hero}
+            />
+          </div>
+        </div>
       )}
       <article className="content mt-4">
         <div className="prose font-mono dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
