@@ -799,11 +799,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nolyfill/is-core-module@1.0.39":
-  version "1.0.39"
-  resolved "https://registry.yarnpkg.com/@nolyfill/is-core-module/-/is-core-module-1.0.39.tgz#3dc35ba0f1e66b403c00b39344f870298ebb1c8e"
-  integrity sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
-
 "@oxc-resolver/binding-android-arm-eabi@11.17.0":
   version "11.17.0"
   resolved "https://registry.yarnpkg.com/@oxc-resolver/binding-android-arm-eabi/-/binding-android-arm-eabi-11.17.0.tgz#96f402e84dd6f26d823c2e1019b962a48b9b2493"
@@ -2820,7 +2815,7 @@ debug@^3.2.7:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.0.0, debug@^4.1.0, debug@^4.3.1, debug@^4.3.2, debug@^4.3.5, debug@^4.4.0, debug@^4.4.3:
+debug@^4.0.0, debug@^4.1.0, debug@^4.3.1, debug@^4.3.2, debug@^4.3.5, debug@^4.4.0, debug@^4.4.1, debug@^4.4.3:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.4.3.tgz#c6ae432d9bd9662582fce08709b038c58e9e3d6a"
   integrity sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==
@@ -3201,6 +3196,14 @@ escape-string-regexp@^5.0.0:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-5.0.0.tgz#4683126b500b61762f2dbebace1806e8be31b1c8"
   integrity sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==
 
+eslint-import-context@^0.1.8:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/eslint-import-context/-/eslint-import-context-0.1.9.tgz#967b0b2f0a90ef4b689125e088f790f0b7756dbe"
+  integrity sha512-K9Hb+yRaGAGUbwjhFNHvSmmkZs9+zbuoe3kFQ4V1wYjrepUFYM2dZAfNtjbbj3qsPfUfsA68Bx/ICWQMi+C8Eg==
+  dependencies:
+    get-tsconfig "^4.10.1"
+    stable-hash-x "^0.2.0"
+
 eslint-import-resolver-node@^0.3.9:
   version "0.3.9"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.9.tgz#d4eaac52b8a2e7c3cd1903eb00f7e053356118ac"
@@ -3210,18 +3213,18 @@ eslint-import-resolver-node@^0.3.9:
     is-core-module "^2.13.0"
     resolve "^1.22.4"
 
-eslint-import-resolver-typescript@^3.7.0:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.10.1.tgz#23dac32efa86a88e2b8232eb244ac499ad636db2"
-  integrity sha512-A1rHYb06zjMGAxdLSkN2fXPBwuSaQ0iO5M/hdyS0Ajj1VBaRp0sPD3dn1FhME3c/JluGFbwSxyCfqdSbtQLAHQ==
+eslint-import-resolver-typescript@^4.0.0:
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-4.4.4.tgz#3e83a9c25f4a053fe20e1b07b47e04e8519a8720"
+  integrity sha512-1iM2zeBvrYmUNTj2vSC/90JTHDth+dfOfiNKkxApWRsTJYNrc8rOdxxIf5vazX+BiAXTeOT0UvWpGI/7qIWQOw==
   dependencies:
-    "@nolyfill/is-core-module" "1.0.39"
-    debug "^4.4.0"
-    get-tsconfig "^4.10.0"
+    debug "^4.4.1"
+    eslint-import-context "^0.1.8"
+    get-tsconfig "^4.10.1"
     is-bun-module "^2.0.0"
-    stable-hash "^0.0.5"
-    tinyglobby "^0.2.13"
-    unrs-resolver "^1.6.2"
+    stable-hash-x "^0.2.0"
+    tinyglobby "^0.2.14"
+    unrs-resolver "^1.7.11"
 
 eslint-module-utils@^2.12.1:
   version "2.12.1"
@@ -3820,14 +3823,7 @@ get-symbol-description@^1.1.0:
     es-errors "^1.3.0"
     get-intrinsic "^1.2.6"
 
-get-tsconfig@^4.10.0:
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/get-tsconfig/-/get-tsconfig-4.13.0.tgz#fcdd991e6d22ab9a600f00e91c318707a5d9a0d7"
-  integrity sha512-1VKTZJCwBrvbd+Wn3AOgQP/2Av+TfTCOlE4AcRJE72W1ksZXbAx8PPBR9RzgTeSPzlPMHrbANMH3LbltH73wxQ==
-  dependencies:
-    resolve-pkg-maps "^1.0.0"
-
-get-tsconfig@^4.7.5:
+get-tsconfig@^4.10.1, get-tsconfig@^4.7.5:
   version "4.13.1"
   resolved "https://registry.yarnpkg.com/get-tsconfig/-/get-tsconfig-4.13.1.tgz#ff96c0d98967df211c1ebad41f375ccf516c43fa"
   integrity sha512-EoY1N2xCn44xU6750Sx7OjOIT59FkmstNc3X6y5xpz7D5cBtZRe/3pSlTkDJgqsOk3WwZPkWfonhhUJfttQo3w==
@@ -6706,10 +6702,10 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
-stable-hash@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/stable-hash/-/stable-hash-0.0.5.tgz#94e8837aaeac5b4d0f631d2972adef2924b40269"
-  integrity sha512-+L3ccpzibovGXFK+Ap/f8LOS0ahMrHTf3xu7mMLSpEGU0EO9ucaysSylKo9eRDFNhWve/y275iPmIZ4z39a9iA==
+stable-hash-x@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/stable-hash-x/-/stable-hash-x-0.2.0.tgz#dfd76bfa5d839a7470125c6a6b3c8b22061793e9"
+  integrity sha512-o3yWv49B/o4QZk5ZcsALc6t0+eCelPc44zZsLtCQnZPDwFpDYSWcDnrv2TtMmMbQ7uKo3J0HTURCqckw23czNQ==
 
 statuses@^2.0.1, statuses@~2.0.2:
   version "2.0.2"
@@ -6922,7 +6918,7 @@ tiny-warning@^1.0.3:
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
-tinyglobby@^0.2.13, tinyglobby@^0.2.15:
+tinyglobby@^0.2.14, tinyglobby@^0.2.15:
   version "0.2.15"
   resolved "https://registry.yarnpkg.com/tinyglobby/-/tinyglobby-0.2.15.tgz#e228dd1e638cea993d2fdb4fcd2d4602a79951c2"
   integrity sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==
@@ -7185,7 +7181,7 @@ unplugin@^2.1.2:
     picomatch "^4.0.3"
     webpack-virtual-modules "^0.6.2"
 
-unrs-resolver@^1.6.2:
+unrs-resolver@^1.7.11:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/unrs-resolver/-/unrs-resolver-1.11.1.tgz#be9cd8686c99ef53ecb96df2a473c64d304048a9"
   integrity sha512-bSjt9pjaEBnNiGgc9rUiHGKv5l4/TGzDmYw3RhnkJGtLhbnnA/5qJj7x3dNDCRx/PJxu774LlH8lCOlB4hEfKg==
