@@ -31,23 +31,23 @@ export const NowPlaying = () => {
 										'width 600ms cubic-bezier(0.22,1,0.36,1), height 600ms cubic-bezier(0.22,1,0.36,1), border-radius 900ms ease-out'
 								}}
 							>
-								<div className="flex h-full min-w-0 flex-col justify-center gap-0 group-hover:justify-start group-hover:gap-2 group-focus-within:justify-start group-focus-within:gap-2">
+								<div className="flex h-full min-w-0 flex-col justify-center gap-0">
 									<div className="flex min-w-0 items-center overflow-hidden max-h-6 opacity-100 transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:max-h-0 group-hover:opacity-0 group-focus-within:max-h-0 group-focus-within:opacity-0">
 										<h1 className="min-w-0 flex-1 text-left text-xs font-semibold leading-snug truncate">
 											{nowPlaying?.data.title} - {nowPlaying?.data.artist}
 										</h1>
 									</div>
 									<div className="overflow-hidden w-0 max-w-0 max-h-0 p-0 opacity-0 transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full group-hover:max-w-none group-hover:max-h-24 group-hover:opacity-100 group-hover:p-1 group-focus-within:w-full group-focus-within:max-w-none group-focus-within:max-h-24 group-focus-within:opacity-100 group-focus-within:p-1">
-										<div className="flex gap-3">
+										<div className="flex items-stretch gap-3">
 											{nowPlaying?.data.albumImageUrl ? (
 												<img
 													src={nowPlaying?.data.albumImageUrl}
 													alt={nowPlaying?.data.album || 'Album cover'}
-													className="h-12 w-12 shrink-0 rounded-md object-cover"
+													className="h-16 w-16 shrink-0 rounded-md object-cover"
 													loading="lazy"
 												/>
 											) : null}
-											<div className="min-w-0">
+											<div className="flex h-16 min-w-0 flex-col justify-center">
 												<p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
 													now playing
 												</p>
