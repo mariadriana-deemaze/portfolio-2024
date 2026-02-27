@@ -8,7 +8,7 @@ import unicorn from 'eslint-plugin-unicorn'
 import globals from 'globals'
 
 export default [
-  { ignores: ['dist', 'dist-ssr'] },
+  { ignores: ['dist', 'dist-ssr', 'cms/**'] },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
