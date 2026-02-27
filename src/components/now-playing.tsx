@@ -31,9 +31,9 @@ export const NowPlaying = () => {
 										'width 600ms cubic-bezier(0.22,1,0.36,1), height 600ms cubic-bezier(0.22,1,0.36,1), border-radius 900ms ease-out'
 								}}
 							>
-								<div className="flex h-full flex-col justify-center gap-0 group-hover:justify-start group-hover:gap-2 group-focus-within:justify-start group-focus-within:gap-2">
-									<div className="flex items-center overflow-hidden max-h-6 opacity-100 transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:max-h-0 group-hover:opacity-0 group-focus-within:max-h-0 group-focus-within:opacity-0">
-										<h1 className="text-left text-xs font-semibold leading-snug truncate">
+								<div className="flex h-full min-w-0 flex-col justify-center gap-0 group-hover:justify-start group-hover:gap-2 group-focus-within:justify-start group-focus-within:gap-2">
+									<div className="flex min-w-0 items-center overflow-hidden max-h-6 opacity-100 transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:max-h-0 group-hover:opacity-0 group-focus-within:max-h-0 group-focus-within:opacity-0">
+										<h1 className="min-w-0 flex-1 text-left text-xs font-semibold leading-snug truncate">
 											{nowPlaying?.data.title} - {nowPlaying?.data.artist}
 										</h1>
 									</div>
