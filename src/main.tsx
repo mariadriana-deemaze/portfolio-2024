@@ -1,8 +1,9 @@
 import '@/styles/globals.css';
-import App, { type AppProps } from '@/app';
-import { initThemeFromStorage } from '@/utils/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRoot, hydrateRoot } from 'react-dom/client';
+
+import App, { type AppProps } from '@/app';
+import { initThemeFromStorage } from '@/utils/theme';
 
 declare global {
   interface Window {

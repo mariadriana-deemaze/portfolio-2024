@@ -1,5 +1,6 @@
-import type { RouteModule } from '@/server/types'
 import type { Request } from 'express'
+
+import type { RouteModule } from '@/server/types'
 
 import { data, BASE_URL } from '@/data/main'
 import { getServerSideProps as getBlogServerSideProps, SeoMetadata as blogSeo } from '@/data/routes/blog/index'

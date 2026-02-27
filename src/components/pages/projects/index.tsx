@@ -1,13 +1,14 @@
 
+import { CalendarIcon } from '@radix-ui/react-icons';
+import { ReactLenis } from 'lenis/react';
+import { useRef, useState, type MouseEvent } from 'react';
+
 import ScrollFadeReveal from '@/components/ui/section-reveal';
 import { Project } from '@/data/projects';
 import useElementSize from '@/hooks/use-element-size';
 import useMousePosition from '@/hooks/use-mouse-position';
 import { ROUTES, toProjectsSlug } from '@/utils/routes';
 import { cn } from '@/utils/utils';
-import { CalendarIcon } from '@radix-ui/react-icons';
-import { ReactLenis } from 'lenis/react';
-import { useRef, useState, type MouseEvent } from 'react';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
 	const [hoveringPost, setHoveringPost] = useState<Project | null>(null);

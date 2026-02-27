@@ -1,13 +1,14 @@
-import type { Seo } from '@/server/types';
-
-import { matchRoute } from '@/server/routes';
-import apiRouter from '@/server/routes/api';
-import { ROUTES, STATIC_ROUTES, toBlogSlug, toProjectsSlug } from '@/utils/routes.ts';
 import dotenv from 'dotenv';
 import express, { type Request, type Response, type NextFunction } from 'express';
 import fs from 'fs';
 import http from 'node:http';
 import path from 'path';
+
+import type { Seo } from '@/server/types';
+
+import { matchRoute } from '@/server/routes';
+import apiRouter from '@/server/routes/api';
+import { ROUTES, STATIC_ROUTES, toBlogSlug, toProjectsSlug } from '@/utils/routes.ts';
 
 dotenv.config();
 
@@ -241,6 +242,7 @@ async function start() {
 
 	// Production server (prebuilt client + SSR bundle)
 	const app = express();
+	// eslint-disable-next-line import/no-unresolved
 	const { render } = await import('./dist-ssr/entry-server.js');
 	app.use(express.json());
 	app.use('/api', apiRouter);

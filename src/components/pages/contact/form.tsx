@@ -1,15 +1,16 @@
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { ContactInfo, ContactResponse } from 'server/routes/api/types/contact';
+import { toast } from 'sonner';
+import { z } from 'zod';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Toaster } from '@/components/ui/sonner';
 import { Textarea } from '@/components/ui/textarea';
 import { REGEX_EMAIL } from '@/utils/regex';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { ContactInfo, ContactResponse } from 'server/routes/api/types/contact';
-import { toast } from 'sonner';
-import { z } from 'zod';
 
 export const ContactForm = () => {
 	const contactSchema = z.object({

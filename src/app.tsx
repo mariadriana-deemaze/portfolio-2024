@@ -1,6 +1,7 @@
-﻿import { routeTree } from '@/routeTree.gen'
-import { createRouter, RouterProvider, createMemoryHistory } from '@tanstack/react-router'
+﻿import { createRouter, RouterProvider, createMemoryHistory } from '@tanstack/react-router'
 import { JSX } from 'react'
+
+import { routeTree } from '@/routeTree.gen'
 
 type CommandLink = { url: string; title: string; type: 'internal' | 'blog' | 'projects' | 'social' }
 type InitialData = { message?: string; commandLinks?: CommandLink[] } | undefined

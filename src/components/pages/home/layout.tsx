@@ -1,4 +1,6 @@
 
+import { ReactLenis } from 'lenis/react';
+
 import { SectionAbout } from '@/components/pages/home/section-about';
 import { SectionEducation } from '@/components/pages/home/section-education';
 import { SectionHero } from '@/components/pages/home/section-hero';
@@ -6,7 +8,6 @@ import { SectionProjects } from '@/components/pages/home/section-projects';
 import { SectionWorkExperience } from '@/components/pages/home/section-work-experience';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
 import { Project } from '@/data/projects';
-import { ReactLenis } from 'lenis/react';
 
 export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 	return (

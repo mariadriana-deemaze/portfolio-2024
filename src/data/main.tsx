@@ -1,5 +1,6 @@
-import { STACKS } from '@/components/stacks';
 import { LuGithub, LuLinkedin, LuInstagram, LuDribbble, LuCodepen } from 'react-icons/lu';
+
+import { STACKS } from '@/components/stacks';
 
 export const BASE_URL = 'https://www.maria-adriana.com';
 

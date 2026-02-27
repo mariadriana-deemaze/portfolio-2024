@@ -1,6 +1,7 @@
+import { createFileRoute, useRouter } from '@tanstack/react-router'
+
 import { Badge } from '@/components/ui/badge'
 import { ROUTES } from '@/utils/routes'
-import { createFileRoute, useRouter } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/blog/$slug')({
   component: BlogShowRoute,

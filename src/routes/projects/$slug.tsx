@@ -1,8 +1,9 @@
+import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { JSX, isValidElement } from 'react'
+
 import { STACKS } from '@/components/stacks'
 import { Badge } from '@/components/ui/badge'
 import { ROUTES } from '@/utils/routes'
-import { createFileRoute, useRouter } from '@tanstack/react-router'
-import { JSX, isValidElement } from 'react'
 
 export const Route = createFileRoute('/projects/$slug')({
   component: ProjectItemRoute,

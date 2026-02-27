@@ -1,7 +1,7 @@
 import { compile, run } from '@mdx-js/mdx'
 import React from 'react'
-import * as runtime from 'react/jsx-runtime'
 import { renderToString } from 'react-dom/server'
+import * as runtime from 'react/jsx-runtime'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'

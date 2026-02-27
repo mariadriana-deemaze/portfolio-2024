@@ -1,9 +1,8 @@
 import 'dotenv/config'
-
-import type { SpotifyArtist, SpotifyCurrentlyPlayingResponse } from '@/server/routes/api/types/spotify'
-
 import { Router, type Request, type Response } from 'express'
 import { Buffer } from 'node:buffer'
+
+import type { SpotifyArtist, SpotifyCurrentlyPlayingResponse } from '@/server/routes/api/types/spotify'
 
 const router = Router()
 

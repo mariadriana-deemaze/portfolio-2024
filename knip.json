@@ -8,6 +8,8 @@
     "-lintignore"
   ],
   "ignoreFiles": [
+    "./.cz-config.cjs",
+    "./cms/**",
     "./src/data/**",
     "./src/entry-server.tsx"
   ]

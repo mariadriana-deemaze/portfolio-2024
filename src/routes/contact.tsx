@@ -1,7 +1,8 @@
-import { ContactForm } from '@/components/pages/contact/form'
-import { Section } from '@/components/ui/section'
 import { createFileRoute } from '@tanstack/react-router'
 import { JSX } from 'react'
+
+import { ContactForm } from '@/components/pages/contact/form'
+import { Section } from '@/components/ui/section'
 
 export const Route = createFileRoute('/contact')({
   component: ContactRoute,

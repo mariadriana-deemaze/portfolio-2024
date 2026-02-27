@@ -1,7 +1,8 @@
-import { normalizeString } from '@/utils/string'
-import 'dotenv/config'
 import { Router, type Request, type Response } from 'express'
+import 'dotenv/config'
 import nodemailer from 'nodemailer'
+
+import { normalizeString } from '@/utils/string'
 const router = Router()
 
 const transporter = nodemailer.createTransport({

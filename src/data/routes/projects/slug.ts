@@ -1,12 +1,13 @@
+import fs from 'fs'
+import matter from 'gray-matter'
+import path from 'path'
+
 import type { RouteModule } from '@/server/types'
 
 import { BASE_URL } from '@/data/main'
 import { getProject, type Project } from '@/data/projects'
 import { renderMdxToHtml } from '@/server/mdx'
 import { ROUTE_PATTERNS } from '@/utils/routes'
-import fs from 'fs'
-import matter from 'gray-matter'
-import path from 'path'
 
 type ProjectItemData = { project?: Project; projectHtml?: string }
 

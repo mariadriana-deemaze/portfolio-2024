@@ -1,4 +1,6 @@
 
+import { useState, useEffect } from 'react';
+
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -8,7 +10,6 @@ import {
 	CommandList,
 	CommandSeparator
 } from '@/components/ui/command';
-import { useState, useEffect } from 'react';
 
 interface Props {
 	links: {

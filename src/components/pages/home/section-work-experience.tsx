@@ -1,8 +1,9 @@
+import { ReactElement } from 'react';
+
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
-import { ReactElement } from 'react';
  
 
 export const SectionWorkExperience = () => {

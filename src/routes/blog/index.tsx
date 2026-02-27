@@ -1,9 +1,10 @@
+import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { useEffect, useMemo, useState } from 'react'
+
 import type { BlogPost } from '@/data/blog'
 
 import PostsList from '@/components/pages/blog/posts-list'
 import { getPostsClient } from '@/data/blog/client'
-import { createFileRoute, useRouter } from '@tanstack/react-router'
-import { useEffect, useMemo, useState } from 'react'
 
 export const Route = createFileRoute('/blog/')({
   component: BlogIndexRoute,

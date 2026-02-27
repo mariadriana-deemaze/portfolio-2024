@@ -1,5 +1,6 @@
-import { HomeLayout } from '@/components/pages/home/layout'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
+
+import { HomeLayout } from '@/components/pages/home/layout'
 
 export const Route = createFileRoute("/")({
   component: HomeRoute,
