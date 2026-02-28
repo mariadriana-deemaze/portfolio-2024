@@ -5,7 +5,10 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   plugins: [tanstackStart(), react(), tsconfigPaths()],
+  server: {
+    allowedHosts: ['maria-adriana.com', 'www.maria-adriana.com'],
+  },
   preview: {
-    allowedHosts: true,
+    allowedHosts: ['maria-adriana.com', 'www.maria-adriana.com'],
   },
 })
