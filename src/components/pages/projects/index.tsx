@@ -1,10 +1,12 @@
 
 import { CalendarIcon } from '@radix-ui/react-icons';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { ReactLenis } from 'lenis/react';
 import { useRef, useState, type MouseEvent } from 'react';
 
+import type { Project } from '@/data/projects';
+
 import ScrollFadeReveal from '@/components/ui/section-reveal';
-import { Project } from '@/data/projects';
 import useElementSize from '@/hooks/use-element-size';
 import useMousePosition from '@/hooks/use-mouse-position';
 import { ROUTES, toProjectsSlug } from '@/utils/routes';
@@ -12,11 +14,11 @@ import { cn } from '@/utils/utils';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
 	const [hoveringPost, setHoveringPost] = useState<Project | null>(null);
+	const navigate = useNavigate();
 
 	const { x, y } = useMousePosition();
 
 	const { ref: linkWrapperRef, size: linkWrapperSize } = useElementSize<HTMLDivElement>();
-	const anchorLinkRef = useRef<HTMLAnchorElement>(null);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const handleMouseEnter = (post: Project) => {
@@ -35,6 +37,10 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 		timeoutRef.current = setTimeout(() => {
 			setHoveringPost(null);
 		}, 500);
+	};
+
+	const handleNavigate = (slug: string) => {
+		void navigate({ to: toProjectsSlug(slug) });
 	};
 
 	return (
@@ -61,7 +67,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 								onMouseDown={() => handleMouseEnter(project)}
 								onMouseEnter={() => handleMouseEnter(project)}
 								onMouseLeave={(e) => handleMouseLeave(e)}
-								onClick={() => anchorLinkRef.current?.click()}
+								onClick={() => handleNavigate(project.slug)}
 							>
 								<article>
 									<ScrollFadeReveal onLoadVisibility>
@@ -111,10 +117,9 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 					}
 				)}
 			>
-				<a
-					ref={anchorLinkRef}
+				<Link
 					className="cursor-none flex flex-row self-center -skew-y-12 leading-4 font-clash font-bold text-white uppercase"
-					href={hoveringPost ? toProjectsSlug(hoveringPost.slug) : ROUTES.projects}
+					to={hoveringPost ? toProjectsSlug(hoveringPost.slug) : ROUTES.projects}
 				>
 					<span className="block w-14 text-wrap">Read more </span>
 					<svg
@@ -132,7 +137,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							strokeWidth="4"
 						></path>
 					</svg>
-				</a>
+				</Link>
 			</div>
 		</ReactLenis>
 	);

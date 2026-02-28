@@ -67,12 +67,26 @@ export default [
     files: [
       'cms/**/*.{js,jsx,ts,tsx}',
       'server/**/*.{js,jsx,ts,tsx}',
-      'server.ts',
       'tailwind.config.ts',
       'vite.config.ts',
     ],
     languageOptions: {
       globals: globals.node,
+    },
+  },
+  {
+    files: ['src/routes/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+  {
+    files: ['src/routes/api/**/*.{ts,tsx}', 'src/routes/sitemap.xml.ts'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
     },
   },
 ]

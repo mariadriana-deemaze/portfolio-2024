@@ -2,9 +2,6 @@
 import matter from 'gray-matter';
 import fs from 'node:fs/promises';
 import path from 'path';
-import { JSX } from 'react';
-
-import { STACKS } from '@/components/stacks';
 
 const PROJECTS_DIR = './src/data/projects';
 
@@ -33,7 +30,6 @@ export interface Project {
 	content: string;
 	technologies: {
 		label: string;
-		icon: JSX.Element;
 	}[];
 	repo: string;
 	liveUrl?: string;
@@ -53,7 +49,7 @@ export const getProjects = async () => {
 
 				const project: Project = {
 					...data,
-					technologies: data.technologies.map((technology) => STACKS[technology]),
+					technologies: data.technologies.map((technology) => ({ label: technology })),
 					content
 				};
 				return project;

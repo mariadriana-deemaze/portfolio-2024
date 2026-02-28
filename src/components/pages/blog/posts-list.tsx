@@ -1,12 +1,14 @@
 
 import { CalendarIcon } from '@radix-ui/react-icons';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { ReactLenis } from 'lenis/react';
 import { useRef, useState, type MouseEvent } from 'react';
 
+import type { BlogPost } from '@/data/blog';
+
 import { Badge } from '@/components/ui/badge';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
-import { BlogPost } from '@/data/blog';
 import useElementSize from '@/hooks/use-element-size';
 import useMousePosition from '@/hooks/use-mouse-position';
 import { ROUTES, toBlogSlug } from '@/utils/routes';
@@ -14,11 +16,11 @@ import { cn } from '@/utils/utils';
 
 export default function PostsList({ posts }: { posts: BlogPost[] }) {
 	const [hoveringPost, setHoveringPost] = useState<BlogPost | null>(null);
+	const navigate = useNavigate();
 
 	const { x, y } = useMousePosition();
 
 	const { ref: linkWrapperRef, size: linkWrapperSize } = useElementSize<HTMLDivElement>();
-	const anchorLinkRef = useRef<HTMLAnchorElement>(null);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const handleMouseEnter = (post: BlogPost) => {
@@ -37,6 +39,10 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 		timeoutRef.current = setTimeout(() => {
 			setHoveringPost(null);
 		}, 500);
+	};
+
+	const handleNavigate = (slug: string) => {
+		void navigate({ to: toBlogSlug(slug) });
 	};
 
 	return (
@@ -64,7 +70,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							onMouseDown={() => handleMouseEnter(post)}
 							onMouseEnter={() => handleMouseEnter(post)}
 							onMouseLeave={(e) => handleMouseLeave(e)}
-							onClick={() => anchorLinkRef.current?.click()}
+							onClick={() => handleNavigate(post.slug)}
 						>
 							<article>
 								<ScrollFadeReveal onLoadVisibility>
@@ -113,10 +119,9 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 					}
 				)}
 			>
-				<a
-					ref={anchorLinkRef}
+				<Link
 					className="cursor-none flex flex-row self-center -skew-y-12 leading-4 font-clash font-bold text-white uppercase"
-					href={hoveringPost ? toBlogSlug(hoveringPost.slug) : ROUTES.blog}
+					to={hoveringPost ? toBlogSlug(hoveringPost.slug) : ROUTES.blog}
 				>
 					<span className="block w-14 text-wrap">Read more </span>
 					<svg
@@ -134,7 +139,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							strokeWidth="4"
 						></path>
 					</svg>
-				</a>
+				</Link>
 			</div>
 		</ReactLenis>
 	);

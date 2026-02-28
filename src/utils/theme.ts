@@ -32,14 +32,25 @@ export function applyTheme(theme: ThemePreference, { persist = true } = {}) {
   }
 }
 
-export function initThemeFromStorage() {
-  if (!isBrowser()) {
-    return
-  }
+export function getThemeInitScript(): string {
+  return `(() => {
+  const storageKey = '${THEME_STORAGE_KEY}';
+  let theme = 'system';
 
-  const storedTheme = (typeof localStorage !== 'undefined'
-    ? (localStorage.getItem(THEME_STORAGE_KEY) as ThemePreference | null)
-    : null) ?? 'system'
+  try {
+    const storedTheme = window.localStorage.getItem(storageKey);
+    if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system') {
+      theme = storedTheme;
+    }
+  } catch {}
 
-  applyTheme(storedTheme, { persist: false })
+  const resolvedTheme =
+    theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : theme === 'system'
+        ? 'light'
+        : theme;
+
+  document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
+})();`
 }

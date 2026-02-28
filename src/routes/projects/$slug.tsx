@@ -1,31 +1,41 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router'
-import { JSX, isValidElement } from 'react'
+import { Link, createFileRoute, notFound } from '@tanstack/react-router'
+import { JSX } from 'react'
 
-import { STACKS } from '@/components/stacks'
+import { getStackByName } from '@/components/stacks'
 import { Badge } from '@/components/ui/badge'
+import { data, BASE_URL } from '@/data/main'
+import { createSeoHead } from '@/lib/head'
+import { getProjectFn } from '@/server-fns/content'
 import { ROUTES } from '@/utils/routes'
 
 export const Route = createFileRoute('/projects/$slug')({
+  loader: async ({ params }) => {
+    const projectData = await getProjectFn({ data: { slug: params.slug } })
+
+    if (!projectData.project) {
+      throw notFound()
+    }
+
+    return {
+      project: projectData.project,
+      projectHtml: projectData.projectHtml ?? '',
+    }
+  },
+  head: ({ loaderData, params }) =>
+    createSeoHead({
+      title: `${loaderData?.project?.title ?? 'Project'} | Project`,
+      description: loaderData?.project?.description ?? 'Project details and information.',
+      image: loaderData?.project?.hero,
+      alternates: {
+        canonical: `${BASE_URL}/projects/${params.slug}`,
+      },
+    }),
   component: ProjectItemRoute,
+  notFoundComponent: ProjectNotFoundRoute,
 })
 
 function ProjectItemRoute(): JSX.Element {
-  const router = useRouter()
-  const project = router.options.context.initialData?.project
-  const html = router.options.context.initialData.projectHtml
-
-  if (!project) {
-    return (
-      <div>
-        <h1>Project not found</h1>
-        <p>The requested project could not be located.</p>
-        <p>
-          <a href={ROUTES.projects}>Back to projects</a>
-        </p>
-      </div>
-    )
-  }
-
+  const { project, projectHtml } = Route.useLoaderData()
   const { title, year, description, hero, technologies = [], repo, liveUrl, colors } = project
   const heroGradient = colors?.length
     ? `linear-gradient(150deg, ${colors[0]} 0%, ${colors[1] ?? colors[0]} 35%, ${colors[2] ?? colors[1] ?? colors[0]} 100%)`
@@ -34,21 +44,26 @@ function ProjectItemRoute(): JSX.Element {
   return (
     <div className="mx-auto w-full max-w-2xl space-y-4">
       <p className="font-mono text-sm text-gray-500">
-        <a href={ROUTES.projects} className="hover:underline">
+        <Link to={ROUTES.projects} className="hover:underline">
           &larr; Back to projects
-        </a>
+        </Link>
       </p>
       <header className="space-y-2">
-        <div className='flex flex-col mt-6'>
+        <div className="flex flex-col mt-6">
           <time className="font-mono text-xs text-gray-500">YEAR {year}</time>
           <h1 className="font-clash font-bold text-5xl text-fade-grad">{title}</h1>
         </div>
         <p className="font-mono text-sm text-foreground">{description}</p>
         <div className="flex flex-wrap gap-1 my-6">
-          {technologies.map(({ label, icon }) => {
-            const resolvedIcon = isValidElement(icon) ? icon : Object.values(STACKS).find((t) => t.label === label)?.icon ?? null;
+          {technologies.map(({ label }) => {
+            const resolvedIcon = getStackByName(label)?.icon ?? null
+
             return (
-              <Badge className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default" variant="outline" key={label}>
+              <Badge
+                className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+                variant="outline"
+                key={label}
+              >
                 {resolvedIcon}
                 <span>{label}</span>
               </Badge>
@@ -58,13 +73,24 @@ function ProjectItemRoute(): JSX.Element {
         <hr className="mt-2" />
       </header>
       <section className="summary flex gap-1 flex-row-reverse mb-8">
-        <Badge className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default" variant="outline">
-          <a className="flex flex-row gap-2" href={repo ? "${data.github}/${repo}" : "#"} target="_blank" rel="noreferrer">
+        <Badge
+          className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+          variant="outline"
+        >
+          <a
+            className="flex flex-row gap-2"
+            href={repo ? `${data.github}/${repo}` : '#'}
+            target="_blank"
+            rel="noreferrer"
+          >
             View repo
           </a>
         </Badge>
         {liveUrl && (
-          <Badge className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default" variant="outline">
+          <Badge
+            className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+            variant="outline"
+          >
             <a className="flex flex-row gap-2" href={liveUrl} target="_blank" rel="noreferrer">
               Live demo
             </a>
@@ -79,7 +105,7 @@ function ProjectItemRoute(): JSX.Element {
           <div className="rounded-[0.45rem] overflow-hidden">
             <img
               className="block w-full h-auto"
-              alt={"Hero image of the ${title} project."}
+              alt={`Hero image of the ${title} project.`}
               width={800}
               height={400}
               src={hero}
@@ -88,8 +114,23 @@ function ProjectItemRoute(): JSX.Element {
         </div>
       )}
       <article className="content mt-4">
-        <div className="prose font-mono dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: html }} />
+        <div
+          className="prose font-mono dark:prose-invert max-w-none"
+          dangerouslySetInnerHTML={{ __html: projectHtml }}
+        />
       </article>
+    </div>
+  )
+}
+
+function ProjectNotFoundRoute() {
+  return (
+    <div>
+      <h1>Project not found</h1>
+      <p>The requested project could not be located.</p>
+      <p>
+        <Link to={ROUTES.projects}>Back to projects</Link>
+      </p>
     </div>
   )
 }

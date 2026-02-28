@@ -38,6 +38,10 @@ import {
 
 const iconSize = 15;
 
+function normalizeStackName(value: string) {
+	return value.replace(/[^a-z0-9]+/gi, '').toLowerCase();
+}
+
 export const STACKS = {
 	PHP: {
 		label: 'PHP',
@@ -143,3 +147,14 @@ export const STACKS = {
 		)
 	}
 } as const;
+
+export function getStackByName(name: string) {
+	const normalizedName = normalizeStackName(name);
+
+	return Object.entries(STACKS).find(([key, stack]) => {
+		return (
+			normalizeStackName(key) === normalizedName ||
+			normalizeStackName(stack.label) === normalizedName
+		);
+	})?.[1] ?? null;
+}

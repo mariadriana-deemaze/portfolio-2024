@@ -1,4 +1,5 @@
 
+import { useNavigate } from '@tanstack/react-router';
 import { useState, useEffect } from 'react';
 
 import {
@@ -21,6 +22,7 @@ interface Props {
 
 export const CommandMenu = ({ links }: Props) => {
 	const [open, setOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const internalLinks = links.filter((link) => link.type === 'internal');
 	const blogLinks = links.filter((link) => link.type === 'blog');
@@ -59,7 +61,7 @@ export const CommandMenu = ({ links }: Props) => {
 								key={url}
 								onSelect={() => {
 									setOpen(false);
-									window.location.href = url;
+									void navigate({ to: url });
 								}}
 							>
 								<span>{title}</span>
@@ -73,7 +75,7 @@ export const CommandMenu = ({ links }: Props) => {
 								key={url}
 								onSelect={() => {
 									setOpen(false);
-									window.location.href = url;
+									void navigate({ to: url });
 								}}
 							>
 								<span>{title}</span>
@@ -87,7 +89,7 @@ export const CommandMenu = ({ links }: Props) => {
 								key={url}
 								onSelect={() => {
 									setOpen(false);
-									window.location.href = url;
+									void navigate({ to: url });
 								}}
 							>
 								<span>{title}</span>

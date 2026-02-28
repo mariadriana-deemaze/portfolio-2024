@@ -6,15 +6,14 @@
 	"type": "module",
 	"scripts": {
 		"commit": "git-cz",
-		"dev": "vite",
-		"dev:ssr": "tsx watch server.ts --hmr",
+		"dev": "vite dev",
 		"build": "vite build",
+		"typecheck": "tsc --noEmit",
+		"start": "node dist/server/server.js",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
-		"validate": "eslint . --quiet && knip",
+		"validate": "tsc --noEmit && eslint . --quiet && knip",
 		"preview": "vite preview",
-		"build:ssr": "vite build --outDir dist-ssr --ssr src/entry-server.tsx",
-		"serve": "tsx server.ts",
 		"cms": "cd cms && yarn dev"
 	},
 	"dependencies": {
@@ -28,13 +27,12 @@
 		"@radix-ui/react-slot": "^1.0.2",
 		"@sanity/client": "^7.0.0",
 		"@tanstack/react-query": "^5.90.6",
-		"@tanstack/react-router": "^1.77.0",
+		"@tanstack/react-router": "^1.163.2",
+		"@tanstack/react-start": "^1.163.2",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.0.0",
 		"cmdk": "^1.0.0",
 		"date-fns": "^4.0.0",
-		"dotenv": "^17.0.0",
-		"express": "^5.1.0",
 		"gray-matter": "^4.0.3",
 		"lenis": "^1.2.3",
 		"nodemailer": "^7.0.0",
@@ -58,8 +56,6 @@
 		"@eslint/js": "^9.21.0",
 		"@tailwindcss/postcss": "^4.1.16",
 		"@tailwindcss/typography": "^0.5.19",
-		"@tanstack/router-vite-plugin": "^1.77.0",
-		"@types/express": "^5.0.5",
 		"@types/node": "^24.10.1",
 		"@types/react": "^19.0.10",
 		"@types/react-dom": "^19.0.4",
@@ -78,9 +74,9 @@
 		"knip": "^5.70.0",
 		"postcss": "^8.5.6",
 		"tailwindcss": "^4.0.17",
-		"tsx": "^4.19.0",
 		"typescript": "^5.9.3",
-		"vite": "^7.0.0"
+		"vite": "^7.0.0",
+		"vite-tsconfig-paths": "^6.1.1"
 	},
 	"config": {
 		"commitizen": {

@@ -1,7 +1,8 @@
+import type { Project } from '@/data/projects';
+
 import { ProjectCard } from '@/components/project-card';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
-import { Project } from '@/data/projects';
 
 export const SectionProjects = ({ projects }: { projects: Project[] }) => {
 	return (

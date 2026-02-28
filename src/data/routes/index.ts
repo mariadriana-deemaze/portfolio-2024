@@ -1,26 +1,15 @@
-import type { RouteModule } from '@/server/types'
+import type { Seo } from '@/server/types'
 
 import { data, BASE_URL } from '@/data/main'
-import { getProjects, type Project } from '@/data/projects'
 import { ROUTES } from '@/utils/routes'
 
-type HomeData = { projects: Project[] }
-
-export const getServerSideProps: RouteModule<HomeData>['getInitialData'] = async () => {
-  try {
-    const projects = await getProjects()
-    return { projects }
-  } catch (e) {
-    console.error('Failed to load home projects', e)
-    return { projects: [] }
-  }
-}
-
-export const SeoMetadata: RouteModule<HomeData>['getSeo'] = () => ({
+export function SeoMetadata(): Seo {
+  return {
   title: `${data.name} | ${data.role}`,
   description:
     'Maria Adriana is a full stack developer based in Portugal, specializing in modern web technologies including Node.js, NestJS, Next.js, TypeScript, and React. Passionate about building scalable, maintainable, and high-performance applications.',
   alternates: {
     canonical: `${BASE_URL}${ROUTES.home}`,
   },
-})
+  }
+}

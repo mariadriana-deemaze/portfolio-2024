@@ -5,13 +5,6 @@ export const ROUTES = {
   contact: '/contact',
 } as const
 
-export const ROUTE_PATTERNS = {
-  projectsItem: /^\/projects\/([^/]+)$/,
-  blogItem: /^\/blog\/([^/]+)$/,
-  projectsIndex: /^\/projects\/?$/,
-  blogIndex: /^\/blog\/?$/,
-} as const
-
 export const STATIC_ROUTES = [
   ROUTES.home,
   ROUTES.projects,

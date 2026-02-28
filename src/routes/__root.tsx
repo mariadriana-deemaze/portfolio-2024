@@ -1,24 +1,45 @@
-import { Outlet, createRootRouteWithContext, useRouter, Link } from '@tanstack/react-router'
+import { HeadContent, Link, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 
 import Layout from '@/components/layout'
 import { Button } from '@/components/ui/button'
+import { getCommandLinksFn } from '@/server-fns/content'
+import { getThemeInitScript } from '@/utils/theme'
 
-type AppContext = {
-  initialData?: any
-}
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { charSet: 'utf-8' as const },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+    ],
+    links: [{ rel: 'icon', type: 'image/x-icon', href: '/images/favicon.ico' }],
+  }),
+  loader: async () => {
+    const commandLinks = await getCommandLinksFn()
 
-export const Route = createRootRouteWithContext<AppContext>()({
+    return {
+      commandLinks,
+    }
+  },
   component: RootComponent,
   notFoundComponent: NotFoundRoute,
 })
 
 function RootComponent() {
-  const router = useRouter()
-  const commandLinks = router.options.context.initialData.commandLinks
+  const { commandLinks } = Route.useLoaderData()
+
   return (
-    <Layout commandLinks={commandLinks}>
-      <Outlet />
-    </Layout>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getThemeInitScript() }} />
+        <HeadContent />
+      </head>
+      <body>
+        <Layout commandLinks={commandLinks}>
+          <Outlet />
+        </Layout>
+        <Scripts />
+      </body>
+    </html>
   )
 }
 
@@ -31,7 +52,7 @@ function NotFoundRoute() {
         <i>Have you tried looking under the bed?</i>
       </p>
       <Button variant="outline" size="lg" className="mt-10" asChild>
-        <a href="/">Feeling lucky ✨</a>
+        <Link to="/">Feeling lucky</Link>
       </Button>
     </div>
   )

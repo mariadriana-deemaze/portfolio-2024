@@ -1,27 +1,24 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router'
-import { useEffect, useMemo, useState } from 'react'
-
-import type { BlogPost } from '@/data/blog'
+import { createFileRoute } from '@tanstack/react-router'
 
 import PostsList from '@/components/pages/blog/posts-list'
-import { getPostsClient } from '@/data/blog/client'
+import { SeoMetadata } from '@/data/routes/blog/index'
+import { createSeoHead } from '@/lib/head'
+import { getPostsFn } from '@/server-fns/content'
 
 export const Route = createFileRoute('/blog/')({
+  loader: async () => {
+    const posts = await getPostsFn()
+
+    return {
+      posts,
+    }
+  },
+  head: () => createSeoHead(SeoMetadata()),
   component: BlogIndexRoute,
 })
 
 function BlogIndexRoute() {
-  const router = useRouter()
-  const ssrPostsRaw = router.options.context.initialData?.posts
-  const ssrPosts = useMemo(() => ssrPostsRaw ?? [], [ssrPostsRaw])
-  const [posts, setPosts] = useState<BlogPost[]>(ssrPosts)
+  const { posts } = Route.useLoaderData()
 
-  useEffect(() => {
-    if (!ssrPosts || ssrPosts.length === 0) {
-      getPostsClient()
-        .then((data) => setPosts(data))
-        .catch(() => setPosts([]))
-    }
-  }, [ssrPosts])
   return <PostsList posts={posts} />
 }

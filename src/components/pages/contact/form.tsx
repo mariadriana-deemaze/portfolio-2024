@@ -1,9 +1,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ContactInfo, ContactResponse } from 'server/routes/api/types/contact';
 import { toast } from 'sonner';
 import { z } from 'zod';
+
+import type { ContactInfo, ContactResponse } from '@/server/routes/api/types/contact';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

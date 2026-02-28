@@ -1,19 +1,8 @@
-import { tanstackRouter } from '@tanstack/router-vite-plugin'
+import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import react from '@vitejs/plugin-react'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
-export default defineConfig(() => {
-  const rootDir = path.dirname(fileURLToPath(import.meta.url))
-
-  return {
-    plugins: [tanstackRouter(), react()],
-    resolve: {
-      alias: [
-        { find: '@/server', replacement: path.resolve(rootDir, 'server') },
-        { find: '@', replacement: path.resolve(rootDir, 'src') },
-      ],
-    },
-  }
+export default defineConfig({
+  plugins: [tanstackStart(), react(), tsconfigPaths()],
 })

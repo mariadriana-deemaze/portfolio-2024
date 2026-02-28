@@ -3,8 +3,20 @@ import { JSX } from 'react'
 
 import { ContactForm } from '@/components/pages/contact/form'
 import { Section } from '@/components/ui/section'
+import { data, BASE_URL } from '@/data/main'
+import { createSeoHead } from '@/lib/head'
+import { ROUTES } from '@/utils/routes'
 
 export const Route = createFileRoute('/contact')({
+  head: () =>
+    createSeoHead({
+      title: `${data.name} | ${data.role} :: Contact`,
+      description:
+        'Get in touch with Maria Adriana to discuss full stack development projects, consulting work, or collaboration opportunities.',
+      alternates: {
+        canonical: `${BASE_URL}${ROUTES.contact}`,
+      },
+    }),
   component: ContactRoute,
 })
 
@@ -15,7 +27,7 @@ function ContactRoute(): JSX.Element {
         <h1 className="font-clash font-bold text-5xl text-fade-grad">Contact</h1>
         <h4 className="font-clash font-medium text-md text-gray-500">Reach out</h4>
         <p className="pb-10 text-pretty font-mono text-sm text-foreground leading-5">
-          I'm always interested in new projects and opportunities. Feel free to get in
+          I&apos;m always interested in new projects and opportunities. Feel free to get in
           touch with me if you have a project in mind, want to discuss a potential
           collaboration, or simply want to say hello. You can reach me through the contact
           form below.

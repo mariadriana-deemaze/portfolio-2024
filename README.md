@@ -1,49 +1,43 @@
 ![Preview](preview.png)
 
-# 🚀 maria-adriana.com
+# maria-adriana.com
 
-- Stack: Express server with Vite + React 19 + TanStack Router
+- Stack: TanStack Start + Vite + React 19 + TanStack Router
 - Styling: Tailwind CSS 4 + Shadcn/ui components
 - Content: Sanity CMS for blog posts + MD/MDX-based static content
 - Deployment: Hosted on Raspberry PI w/ Coolify
 
 ## Architecture
 
-- Vite drives both client build and SSR dev HMR.
-- Express server handles SSR HTML, static assets, sitemap, and JSON APIs.
-- Routes are defined with TanStack Router (`src/routes/**`), rendered on the server with `src/entry-server.tsx`.
-- API endpoints live under `server/routes/api/**` (e.g., contact form, Spotify).
+- TanStack Start drives both the client and SSR builds through Vite.
+- The document shell is defined in the root route (`src/routes/__root.tsx`).
+- Routes are defined with TanStack Router file routes (`src/routes/**`).
+- Server endpoints live in file routes with `server.handlers` (for example `src/routes/api/**` and `src/routes/sitemap.xml.ts`).
 
 ## Project Structure
 
-- `src/routes/**` - Route files for TanStack Router (e.g., `index.tsx`, `blog/$slug.tsx`).
+- `src/routes/**` - TanStack Router page routes and server routes (for example `index.tsx`, `api/send.ts`).
 - `src/components/**` - UI components, Shadcn/ui wrappers, and page sections.
 - `src/styles/**` - Tailwind/global CSS and page-specific styles.
 - `src/data/**` - Markdown/MDX content for projects and static pages.
-- `server.ts` - Dev/prod Express server with SSR.
-- `server/routes/**` - Route matching helpers and API handlers.
+- `src/server-fns/**` - TanStack Start server functions used by route loaders.
+- `server/**` - Server-only helpers (mail, Spotify, sitemap, MDX rendering).
 - `cms/**` - Sanity Studio configuration and schema for blog posts.
 - `public/**` - Static assets (images, fonts, favicon).
-- `index.html` - Vite HTML template used in SSR assembly.
+- `index.html` - Vite placeholder file; the runtime HTML shell comes from the root route.
 
 ## Scripts
 
-- `dev` - Vite dev server (client-only; default Vite port).
-- `dev:ssr` - Express + Vite middleware with SSR and HMR at `http://localhost:3000`.
-- `build` - Client production build to `dist/`.
-- `build:ssr` - SSR build of `src/entry-server.tsx` to `dist-ssr/`.
-- `serve` - Start the Express server (expects prior `build` + `build:ssr`).
+- `dev` - TanStack Start dev server with SSR and HMR.
+- `build` - Production client + server build to `dist/client` and `dist/server`.
+- `preview` - Preview the production build locally through Vite.
 
 ## Run Locally
 
-1) Copy `.env.sample` to `.env` and fill values.
-
-2) Run `npm run dev:ssr` then open `http://localhost:3000`.
-
-3) Production preview:
-- `npm run build && npm run build:ssr`
-- `npm run serve` then open `http://localhost:3000`
+1. Copy `.env.sample` to `.env` and fill values.
+2. Run `yarn dev` and open the local URL Vite prints.
+3. For a production preview, run `yarn build` and then `yarn preview`.
 
 ## License
 
-MIT © [Maria Adriana](https://github.com/mariadriana-deemaze/portfolio-2024/blob/main/LICENSE)
+MIT [Maria Adriana](https://github.com/mariadriana-deemaze/portfolio-2024/blob/main/LICENSE)
