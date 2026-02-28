@@ -37,14 +37,14 @@ function BlogShowRoute() {
   const { title, description, keywords = [] } = post
 
   return (
-    <div className="mx-auto w-full max-w-2xl space-y-4">
+    <div className="mx-auto w-full max-w-2xl space-y-4 animate-fade-in-left delay-500">
       <p className="font-mono text-sm text-gray-500">
         <Link to={ROUTES.blog} className="hover:underline">
           &larr; Back to blog
         </Link>
       </p>
       <header className="space-y-2">
-        <h1 className="font-clash text-3xl">{title}</h1>
+        <h1 className="font-clash font-bold text-5xl text-fade-grad">{title}</h1>
         <p className="font-mono text-sm text-foreground">{description}</p>
         {keywords.length ? (
           <div className="mt-2 flex flex-wrap gap-1">
@@ -72,7 +72,7 @@ function BlogShowRoute() {
 
 function BlogPostNotFoundRoute() {
   return (
-    <div>
+    <div className="animate-fade-in-left delay-500">
       <h1>Post not found</h1>
       <p>The requested blog post could not be located.</p>
       <p>

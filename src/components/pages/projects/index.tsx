@@ -63,7 +63,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 						return (
 							<li
 								key={`blogpost-${project.slug}`}
-								className="w-full border-b"
+								className="w-full"
 								onMouseDown={() => handleMouseEnter(project)}
 								onMouseEnter={() => handleMouseEnter(project)}
 								onMouseLeave={(e) => handleMouseLeave(e)}
@@ -71,30 +71,32 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							>
 								<article>
 									<ScrollFadeReveal onLoadVisibility>
-										<div
-											className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"
-											style={gradient ? { background: gradient } : undefined}
-										>
-											<div className="rounded-[0.45rem] overflow-hidden">
-												<img
-													className="block w-full h-auto"
-													alt={`Hero image of the ${project.title} project.`}
-													width={800}
-													height={400}
-													src={project.hero}
-												/>
+										<div className="border-b pb-4">
+											<div
+												className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"
+												style={gradient ? { background: gradient } : undefined}
+											>
+												<div className="rounded-[0.45rem] overflow-hidden">
+													<img
+														className="block w-full h-auto"
+														alt={`Hero image of the ${project.title} project.`}
+														width={800}
+														height={400}
+														src={project.hero}
+													/>
+												</div>
 											</div>
+											<h1 className="font-clash font-medium text-3xl text-fade-grad mt-5">
+												{project.title}
+											</h1>
+											<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
+												<CalendarIcon />
+												{project.year}
+											</time>
+											<p className="py-4 font-mono text-sm text-foreground line-clamp-3">
+												{project.description}
+											</p>
 										</div>
-										<h1 className="font-clash font-medium text-3xl text-fade-grad mt-5">
-											{project.title}
-										</h1>
-										<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
-											<CalendarIcon />
-											{project.year}
-										</time>
-										<p className="py-4 font-mono text-sm text-foreground line-clamp-3">
-											{project.description}
-										</p>
 									</ScrollFadeReveal>
 								</article>
 							</li>

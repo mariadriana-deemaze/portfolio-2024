@@ -42,7 +42,7 @@ function ProjectItemRoute(): JSX.Element {
     : undefined
 
   return (
-    <div className="mx-auto w-full max-w-2xl space-y-4">
+    <div className="mx-auto w-full max-w-2xl space-y-4 animate-fade-in-left delay-500">
       <p className="font-mono text-sm text-gray-500">
         <Link to={ROUTES.projects} className="hover:underline">
           &larr; Back to projects
@@ -125,7 +125,7 @@ function ProjectItemRoute(): JSX.Element {
 
 function ProjectNotFoundRoute() {
   return (
-    <div>
+    <div className="animate-fade-in-left delay-500">
       <h1>Project not found</h1>
       <p>The requested project could not be located.</p>
       <p>
