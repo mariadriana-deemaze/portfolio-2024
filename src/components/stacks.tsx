@@ -71,6 +71,18 @@ export const STACKS = {
 		label: 'BootstrapCSS',
 		icon: <SiBootstrap size={iconSize} className="text-purple-500" />
 	},
+	TanStack: {
+		label: 'TanStack',
+		icon: (
+			<img
+				src="https://tanstack.com/images/logos/logo-color-100.png"
+				alt=""
+				width={iconSize}
+				height={iconSize}
+				className="rounded-[2px] object-contain"
+			/>
+		)
+	},
 	Laravel: { label: 'Laravel', icon: <SiLaravel size={iconSize} className="text-red-500" /> },
 	MaterialUI: { label: 'MUI', icon: <SiMui size={iconSize} className="text-sky-400" /> },
 	Chakra: { label: 'Chakra', icon: <SiChakraui size={iconSize} className="text-emerald-300" /> },
