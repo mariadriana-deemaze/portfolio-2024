@@ -1,4 +1,6 @@
-import { HeadContent, Link, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
+
+import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-router'
 
 import Layout from '@/components/layout'
 import { Button } from '@/components/ui/button'
@@ -20,11 +22,11 @@ export const Route = createRootRoute({
       commandLinks,
     }
   },
-  component: RootComponent,
+  shellComponent: RootDocument,
   notFoundComponent: NotFoundRoute,
 })
 
-function RootComponent() {
+function RootDocument({ children }: { children: ReactNode }) {
   const { commandLinks } = Route.useLoaderData()
 
   return (
@@ -35,7 +37,7 @@ function RootComponent() {
       </head>
       <body>
         <Layout commandLinks={commandLinks}>
-          <Outlet />
+          {children}
         </Layout>
         <Scripts />
       </body>

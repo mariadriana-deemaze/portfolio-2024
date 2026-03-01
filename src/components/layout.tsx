@@ -1,4 +1,4 @@
-﻿import { JSX } from 'react'
+import type { ReactNode } from 'react'
 
 import { BGGrid } from '@/components/bg-grid'
 import { CommandMenu } from '@/components/command-menu'
@@ -11,11 +11,11 @@ import '../styles/globals.css'
 export type CommandLink = { url: string; title: string; type: 'internal' | 'blog' | 'projects' | 'social' }
 
 export interface LayoutProps {
-  children: JSX.Element | JSX.Element[] | null
+  children: ReactNode
   commandLinks?: CommandLink[]
 }
 
-export default function Layout({ children, commandLinks = [] }: LayoutProps): JSX.Element {
+export default function Layout({ children, commandLinks = [] }: LayoutProps): ReactNode {
   return (
     <div className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar antialiased mb-10 lg:mx-auto">
       <GoogleAnalytics />

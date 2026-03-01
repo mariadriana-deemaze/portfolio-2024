@@ -1,6 +1,3 @@
-/// <reference types="vite/client" />
-
-import { createClient, type SanityClient } from '@sanity/client'
 import { z } from 'zod'
 
 type SanityEnv = {
@@ -25,6 +22,10 @@ const sanityEnvSchema = z.object({
   }, z.boolean().default(true)),
 })
 
+const sanityQueryResponseSchema = z.object({
+  result: z.unknown(),
+})
+
 const metaEnv = (typeof import.meta !== 'undefined' && (import.meta as any).env) || {}
 const nodeEnv =
   typeof globalThis !== 'undefined' && 'process' in globalThis
@@ -42,22 +43,41 @@ function readEnv(): SanityEnv {
   const dataset = nodeEnv.VITE_SANITY_DATASET ?? metaEnv.VITE_SANITY_DATASET
   const apiVersion = nodeEnv.VITE_SANITY_API_VERSION ?? metaEnv.VITE_SANITY_API_VERSION
   const useCdnRaw = nodeEnv.VITE_SANITY_USE_CDN ?? metaEnv.VITE_SANITY_USE_CDN
-
   return { projectId, dataset, apiVersion, useCdn: useCdnRaw }
 }
 
-let cachedClient: SanityClient | null = null
+function getSanityConfig() {
+  if (isStudioRuntime) throw new Error('Sanity client should only be initialized for the website runtime.')
+  return sanityEnvSchema.parse(readEnv())
+}
 
-export function getSanityClient() {
-  if (cachedClient) {
-    return cachedClient
+export async function fetchSanityQuery<T>(
+  query: string,
+  params: Record<string, unknown> = {},
+): Promise<T> {
+  const config = getSanityConfig()
+  const host = config.useCdn ? 'apicdn.sanity.io' : 'api.sanity.io'
+  const url = new URL(
+    `https://${config.projectId}.${host}/v${config.apiVersion}/data/query/${config.dataset}`,
+  )
+
+  url.searchParams.set('query', query)
+
+  for (const [key, value] of Object.entries(params)) {
+    url.searchParams.set(`$${key}`, JSON.stringify(value))
   }
 
-  if (isStudioRuntime) {
-    throw new Error('Sanity client should only be initialized for the website runtime.')
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Sanity request failed with status ${response.status}`)
   }
 
-  const env = sanityEnvSchema.parse(readEnv())
-  cachedClient = createClient(env)
-  return cachedClient
+  const payload = sanityQueryResponseSchema.parse(await response.json())
+
+  return payload.result as T
 }
