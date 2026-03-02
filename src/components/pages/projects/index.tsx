@@ -1,24 +1,18 @@
 
 import { CalendarIcon } from '@radix-ui/react-icons';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { ReactLenis } from 'lenis/react';
 import { useRef, useState, type MouseEvent } from 'react';
 
 import type { Project } from '@/data/projects';
 
+import ReadMoreCursor from '@/components/ui/read-more-cursor';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
-import useElementSize from '@/hooks/use-element-size';
-import useMousePosition from '@/hooks/use-mouse-position';
-import { ROUTES, toProjectsSlug } from '@/utils/routes';
-import { cn } from '@/utils/utils';
+import { toProjectsSlug } from '@/utils/routes';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
 	const [hoveringPost, setHoveringPost] = useState<Project | null>(null);
 	const navigate = useNavigate();
-
-	const { x, y } = useMousePosition();
-
-	const { ref: linkWrapperRef, size: linkWrapperSize } = useElementSize<HTMLDivElement>();
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const handleMouseEnter = (post: Project) => {
@@ -63,7 +57,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 						return (
 							<li
 								key={`blogpost-${project.slug}`}
-								className="w-full"
+								className="w-full cursor-none"
 								onMouseDown={() => handleMouseEnter(project)}
 								onMouseEnter={() => handleMouseEnter(project)}
 								onMouseLeave={(e) => handleMouseLeave(e)}
@@ -105,42 +99,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 				</ul>
 			</section>
 
-			<div
-				ref={linkWrapperRef}
-				style={{
-					left: `${(x || 0) - linkWrapperSize.width / 2}px`,
-					top: `${(y || 0) - linkWrapperSize.height / 2}px`
-				}}
-				className={cn(
-					'cursor-none pointer-events-none fixed ease-in-out transition-all duration-300 h-24 w-24 bg-linear-to-r from-orange-500 via-orange-500 to-orange-600 rounded-full flex flex-col justify-center',
-					{
-						'opacity-100 scale-100 -rotate-0': hoveringPost,
-						'opacity-0 scale-50 -rotate-45': hoveringPost === null
-					}
-				)}
-			>
-				<Link
-					className="cursor-none flex flex-row self-center -skew-y-12 leading-4 font-clash font-bold text-white uppercase"
-					to={hoveringPost ? toProjectsSlug(hoveringPost.slug) : ROUTES.projects}
-				>
-					<span className="block w-14 text-wrap">Read more </span>
-					<svg
-						width="14"
-						height="14"
-						viewBox="0 0 17 17"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-						className="self-center cursor-none"
-					>
-						<path d="M2 1H16V15" stroke="currentColor" strokeWidth="4"></path>
-						<path
-							d="M1 16.1953L16.1953 1.00001"
-							stroke="currentColor"
-							strokeWidth="4"
-						></path>
-					</svg>
-				</Link>
-			</div>
+			<ReadMoreCursor isVisible={hoveringPost !== null} />
 		</ReactLenis>
 	);
 }
