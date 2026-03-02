@@ -9,7 +9,6 @@ import type { ContactInfo, ContactResponse } from '@/server/routes/api/types/con
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Toaster } from '@/components/ui/sonner';
 import { Textarea } from '@/components/ui/textarea';
 import { REGEX_EMAIL } from '@/utils/regex';
 
@@ -111,8 +110,6 @@ export const ContactForm = () => {
 			<Button type="submit" disabled={!isValid || isSubmitting}>
 				Submit
 			</Button>
-			<Toaster />
 		</form>
 	);
 };
-

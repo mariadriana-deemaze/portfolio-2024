@@ -4,6 +4,7 @@ import { HeadContent, Link, Scripts, createRootRoute } from '@tanstack/react-rou
 
 import Layout from '@/components/layout'
 import { Button } from '@/components/ui/button'
+import { Toaster } from '@/components/ui/sonner'
 import { getCommandLinksFn } from '@/server-fns/content'
 import { getThemeInitScript } from '@/utils/theme'
 
@@ -39,6 +40,7 @@ function RootDocument({ children }: { children: ReactNode }) {
         <Layout commandLinks={commandLinks}>
           {children}
         </Layout>
+        <Toaster />
         <Scripts />
       </body>
     </html>
