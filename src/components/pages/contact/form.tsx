@@ -58,7 +58,7 @@ export const ContactForm = () => {
 
 	return (
 		<form className="flex flex-col w-full gap-4" onSubmit={handleSubmit(onSubmit)}>
-			<div className="flex flex-col gap-2 w-full">
+			<div className="flex flex-col gap-2 w-full animate-fade-in-left delay-[150ms]">
 				<Label htmlFor="name-input">Name</Label>
 				<Input
 					id="name-input"
@@ -69,7 +69,7 @@ export const ContactForm = () => {
 				{errors.name && <span>{errors.name.message}</span>}
 			</div>
 
-			<div className="flex flex-col gap-2 w-full">
+			<div className="flex flex-col gap-2 w-full animate-fade-in-left delay-[250ms]">
 				<Label htmlFor="email-input">E-mail</Label>
 				<Input
 					id="email-input"
@@ -86,7 +86,7 @@ export const ContactForm = () => {
 				{errors.email && <span>{errors.email.message}</span>}
 			</div>
 
-			<div className="flex flex-col gap-2 w-full">
+			<div className="flex flex-col gap-2 w-full animate-fade-in-left delay-[350ms]">
 				<Label htmlFor="subject-input">Subject</Label>
 				<Input
 					id="subject-input"
@@ -97,7 +97,7 @@ export const ContactForm = () => {
 				{errors.subject && <span>{errors.subject.message}</span>}
 			</div>
 
-			<div className="flex flex-col gap-2 w-full">
+			<div className="flex flex-col gap-2 w-full animate-fade-in-left delay-[450ms]">
 				<Label htmlFor="message-input">Message</Label>
 				<Textarea
 					id="message-input"
@@ -107,7 +107,11 @@ export const ContactForm = () => {
 				{errors.message && <span>{errors.message.message}</span>}
 			</div>
 
-			<Button type="submit" disabled={!isValid || isSubmitting}>
+			<Button
+				className="animate-fade-in-left delay-[550ms]"
+				type="submit"
+				disabled={!isValid || isSubmitting}
+			>
 				Submit
 			</Button>
 		</form>
