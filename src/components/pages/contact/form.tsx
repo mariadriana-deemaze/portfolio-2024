@@ -23,6 +23,7 @@ export const ContactForm = () => {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors, isValid, isSubmitting }
 	} = useForm<ContactInfo>({ resolver: zodResolver(contactSchema), mode: 'onChange' });
 
@@ -53,7 +54,8 @@ export const ContactForm = () => {
 			return;
 		}
 
-		toast.success('Submitted with sucess. Will get in touch soon.');
+		reset();
+		toast.success('Submitted with success. Will get in touch soon.');
 	};
 
 	return (
