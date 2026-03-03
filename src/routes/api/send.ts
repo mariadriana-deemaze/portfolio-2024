@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer'
 
 import type { ContactInfo, ContactResponse } from '@/server/routes/api/types/contact'
 
+import { getEnv } from '@/lib/env'
 import { normalizeString } from '@/utils/string'
 
 const RATE_LIMIT_WINDOW_MS = 3 * 60 * 1000
@@ -21,13 +22,15 @@ async function readJsonBody<T>(request: Request): Promise<T | undefined> {
 }
 
 function createTransporter() {
+  const env = getEnv()
+
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
+    host: env.SMTP_HOST,
+    port: env.SMTP_PORT,
     secure: true,
     auth: {
-      user: process.env.SMTP_FROM,
-      pass: process.env.SMTP_PASSWORD,
+      user: env.SMTP_FROM,
+      pass: env.SMTP_PASSWORD,
     },
   })
 }
@@ -58,9 +61,10 @@ export const Route = createFileRoute('/api/send')({
         recentByEmail.set(normalizedEmail, now)
 
         try {
+          const env = getEnv()
           const info = await createTransporter().sendMail({
-            from: process.env.SMTP_FROM,
-            to: process.env.SMTP_TO,
+            from: env.SMTP_FROM,
+            to: env.SMTP_TO,
             subject: `Contact request: ${subject}`,
             html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
           <html lang="en">

@@ -7,17 +7,19 @@ import type {
   SpotifyCurrentlyPlayingResponse,
 } from '@/server/routes/api/types/spotify'
 
+import { getEnv } from '@/lib/env'
+
 function createJsonResponse(status: number, data: unknown): Response {
   return Response.json(data, { status })
 }
 
 async function getAccessToken(): Promise<string> {
-  const clientId = process.env.SPOTIFY_CLIENT_ID || ''
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET || ''
-  const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN || ''
-  const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
-
   try {
+    const env = getEnv()
+    const basic = Buffer.from(`${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`).toString(
+      'base64',
+    )
+
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
@@ -26,7 +28,7 @@ async function getAccessToken(): Promise<string> {
       },
       body: new URLSearchParams({
         grant_type: 'refresh_token',
-        refresh_token: refreshToken,
+        refresh_token: env.SPOTIFY_REFRESH_TOKEN,
       }),
     })
     const data = (await response.json()) as { access_token?: string }

@@ -1,9 +1,13 @@
-import {defineCliConfig} from 'sanity/cli'
+import { defineCliConfig } from 'sanity/cli'
+
+import { publicEnvSchema } from '../src/lib/env'
+
+const env = publicEnvSchema.parse(process.env)
 
 export default defineCliConfig({
   api: {
-    projectId: process.env.VITE_SANITY_PROJECT_ID ?? '',
-    dataset: process.env.VITE_SANITY_DATASET ?? ''
+    projectId: env.VITE_SANITY_PROJECT_ID,
+    dataset: env.VITE_SANITY_DATASET
   },
   deployment: {
     /**
