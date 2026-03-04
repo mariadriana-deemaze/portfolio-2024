@@ -4,7 +4,7 @@
 
 - Stack: TanStack Start + Vite + React 19 + TanStack Router
 - Styling: Tailwind CSS 4 + Shadcn/ui components
-- Content: Sanity CMS for blog posts + MD/MDX-based static content
+- Content: Sanity CMS for blog/projects + MD/MDX-based static content
 - Deployment: Hosted on Raspberry PI w/ Coolify
 
 ## Architecture
@@ -19,10 +19,10 @@
 - `src/routes/**` - TanStack Router page routes and server routes (for example `index.tsx`, `api/send.ts`).
 - `src/components/**` - UI components, Shadcn/ui wrappers, and page sections.
 - `src/styles/**` - Tailwind/global CSS and page-specific styles.
-- `src/data/**` - Markdown/MDX content for projects and static pages.
+- `src/data/**` - Content data access and Markdown/MDX static pages.
 - `src/server-fns/**` - TanStack Start server functions used by route loaders.
 - `server/**` - Server-only helpers (mail, Spotify, sitemap, MDX rendering).
-- `cms/**` - Sanity Studio configuration and schema for blog posts.
+- `cms/**` - Sanity Studio configuration and schema for blog and projects.
 - `public/**` - Static assets (images, fonts, favicon).
 - `index.html` - Vite placeholder file; the runtime HTML shell comes from the root route.
 
