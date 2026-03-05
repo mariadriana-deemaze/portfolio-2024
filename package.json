@@ -85,5 +85,9 @@
 		"cz-customizable": {
 			"config": ".cz-config.cjs"
 		}
+	},
+	"resolutions": {
+		"**/commitizen/lodash": "^4.17.23",
+		"**/tmp": "^0.2.4"
 	}
 }
