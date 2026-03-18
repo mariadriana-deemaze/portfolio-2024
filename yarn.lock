@@ -3756,12 +3756,12 @@ gray-matter@^4.0.3:
     srvx "^0.11.2"
 
 h3@^2.0.1-rc.14:
-  version "2.0.1-rc.14"
-  resolved "https://registry.yarnpkg.com/h3/-/h3-2.0.1-rc.14.tgz#5482317983213300c3dd0d45b767b273e00de26e"
-  integrity sha512-163qbGmTr/9rqQRNuqMqtgXnOUAkE4KTdauiC9y0E5iG1I65kte9NyfWvZw5RTDMt6eY+DtyoNzrQ9wA2BfvGQ==
+  version "2.0.1-rc.16"
+  resolved "https://registry.yarnpkg.com/h3/-/h3-2.0.1-rc.16.tgz#067ed36d2b74a3f63c131f36d3080bc7077f26a8"
+  integrity sha512-h+pjvyujdo9way8qj6FUbhaQcHlR8FEq65EhTX9ViT5pK8aLj68uFl4hBkF+hsTJAH+H1END2Yv6hTIsabGfag==
   dependencies:
-    rou3 "^0.7.12"
-    srvx "^0.11.2"
+    rou3 "^0.8.0"
+    srvx "^0.11.9"
 
 has-bigints@^1.0.2:
   version "1.1.0"
@@ -6158,6 +6158,11 @@ rou3@^0.7.12:
   resolved "https://registry.yarnpkg.com/rou3/-/rou3-0.7.12.tgz#cac17425c04abddba854a42385cabfe0b971a179"
   integrity sha512-iFE4hLDuloSWcD7mjdCDhx2bKcIsYbtOTpfH5MHHLSKMOUyjqQXTeZVa289uuwEGEKFoE/BAPbhaU4B774nceg==
 
+rou3@^0.8.0:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/rou3/-/rou3-0.8.1.tgz#d18c9dae42bdd9cd4fffa77bc6731d5cfe92129a"
+  integrity sha512-ePa+XGk00/3HuCqrEnK3LxJW7I0SdNg6EFzKUJG73hMAdDcOUC/i/aSz7LSDwLrGr33kal/rqOGydzwl6U7zBA==
+
 run-async@^2.2.0, run-async@^2.4.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/run-async/-/run-async-2.4.1.tgz#8440eccf99ea3e70bd409d49aab88e10c189a455"
@@ -6401,6 +6406,11 @@ srvx@^0.11.2, srvx@^0.11.7:
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/srvx/-/srvx-0.11.8.tgz#43d23b57f5385697ed2152ee42a3859d056b005a"
   integrity sha512-2n9t0YnAXPJjinytvxccNgs7rOA5gmE7Wowt/8Dy2dx2fDC6sBhfBpbrCvjYKALlVukPS/Uq3QwkolKNa7P/2Q==
+
+srvx@^0.11.9:
+  version "0.11.12"
+  resolved "https://registry.yarnpkg.com/srvx/-/srvx-0.11.12.tgz#ed59866cd0cec580b119e161ead3fecd2a546fee"
+  integrity sha512-AQfrGqntqVPXgP03pvBDN1KyevHC+KmYVqb8vVf4N+aomQqdhaZxjvoVp+AOm4u6x+GgNQY3MVzAUIn+TqwkOA==
 
 stable-hash-x@^0.2.0:
   version "0.2.0"
