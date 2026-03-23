@@ -18,6 +18,10 @@ const contactInfoSchema = z.object({
   subject: z.string().trim().min(1),
 })
 
+const honeypotSchema = z.object({
+  website: z.string().trim().max(0).optional(),
+})
+
 function createTransporter() {
   const env = getEnv()
 
@@ -32,6 +36,10 @@ function createTransporter() {
   })
 }
 
+function hasValidHoneypot(body: unknown): boolean {
+  return honeypotSchema.safeParse(body).success
+}
+
 function getValidatedContactInfo(body: unknown): ContactInfo | undefined {
   const result = contactInfoSchema.safeParse(body)
 
@@ -39,9 +47,18 @@ function getValidatedContactInfo(body: unknown): ContactInfo | undefined {
 }
 
 export async function handleSendPost(request: Request): Promise<Response> {
-  const response = await request.json()
-  
-  const contactInfo = getValidatedContactInfo(response)
+  const body = await request.json()
+
+  if (!hasValidHoneypot(body)) {
+    return Response.json(
+      {
+        message: 'Missing required fields.',
+      } satisfies ContactResponse,
+      { status: 400 },
+    )
+  }
+
+  const contactInfo = getValidatedContactInfo(body)
 
   if (!contactInfo) {
     return Response.json(

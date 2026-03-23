@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import type { ContactInfo, ContactResponse } from '@/server/routes/api/types/contact';
+import type { ContactResponse } from '@/server/routes/api/types/contact';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,17 +17,25 @@ export const ContactForm = () => {
 		name: z.string().min(1, 'Required field.'),
 		email: z.email('Invalid e-mail.'),
 		subject: z.string().min(1, 'Required field.'),
-		message: z.string().min(1, 'Required field.')
+		message: z.string().min(1, 'Required field.'),
+		website: z.string().trim().max(0, 'Invalid submission.')
 	});
+	type ContactFormValues = z.infer<typeof contactSchema>;
 
 	const {
 		register,
 		handleSubmit,
 		reset,
 		formState: { errors, isValid, isSubmitting }
-	} = useForm<ContactInfo>({ resolver: zodResolver(contactSchema), mode: 'onChange' });
+	} = useForm<ContactFormValues>({
+		resolver: zodResolver(contactSchema),
+		mode: 'onChange',
+		defaultValues: {
+			website: ''
+		}
+	});
 
-	const onSubmit: SubmitHandler<ContactInfo> = async (data) => {
+	const onSubmit: SubmitHandler<ContactFormValues> = async (data) => {
 		if (!isValid) {
 			toast.error('Cannot submit. Form has errors.');
 			return;
@@ -60,6 +68,20 @@ export const ContactForm = () => {
 
 	return (
 		<form className="flex flex-col w-full gap-4" onSubmit={handleSubmit(onSubmit)}>
+			<div
+				className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden opacity-0"
+				aria-hidden="true"
+			>
+				<Label htmlFor="website-input">Website</Label>
+				<Input
+					id="website-input"
+					type="text"
+					tabIndex={-1}
+					autoComplete="off"
+					{...register('website')}
+				/>
+			</div>
+
 			<div className="flex flex-col gap-2 w-full animate-fade-in-left delay-[150ms]">
 				<Label htmlFor="name-input">Name</Label>
 				<Input
