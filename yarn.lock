@@ -2251,9 +2251,9 @@ boolbase@^1.0.0:
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
 
 brace-expansion@^1.1.7:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.12.tgz#ab9b454466e5a8cc3a187beaad580412a9c5b843"
-  integrity sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg==
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.13.tgz#d37875c01dc9eff988dd49d112a57cb67b54efe6"
+  integrity sha512-9ZLprWS6EENmhEOpjCYW2c8VkmOvckIJZfkr7rBW6dObmfgJ/L1GpSYW5Hpo9lDz4D1+n0Ckz8rU7FwHDQiG/w==
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
@@ -2666,16 +2666,16 @@ cz-conventional-changelog@3.3.0:
     "@commitlint/load" ">6.1.1"
 
 cz-customizable@^7.5.1:
-  version "7.5.1"
-  resolved "https://registry.yarnpkg.com/cz-customizable/-/cz-customizable-7.5.1.tgz#177824994b047ed6608ab14083b67bbc67dbaf28"
-  integrity sha512-eGUfpyD6/YdnPomAMMbbwmofeHAR9D4OsXS5Kmr9+uEOxdop32tdmHy6sx4Bhpms6V8HohQ17p/fYvlIllrdmQ==
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/cz-customizable/-/cz-customizable-7.5.4.tgz#9eb7c689c81f2a2a5a507e6a85b50a8aa6d809a3"
+  integrity sha512-vkNc7kLrWYBkr8VQKSZdDfy8athDZ2huIAWJwVxCrymBXRhB7q8hamkKd6JwAoLPwReS8fKi/kAjRpmy7VvL2w==
   dependencies:
     editor "1.0.0"
     find-config "^1.0.0"
     inquirer "^6.3.1"
-    lodash "^4.17.19"
-    temp "^0.9.0"
-    word-wrap "^1.2.3"
+    lodash "^4.17.23"
+    temp "^0.9.4"
+    word-wrap "^1.2.5"
 
 data-view-buffer@^1.0.2:
   version "1.0.2"
@@ -4613,7 +4613,7 @@ lodash.mergewith@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.2.tgz#617121f89ac55f59047c7aec1ccd6654c6590f55"
   integrity sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==
 
-lodash@4.17.21, lodash@^4.17.12, lodash@^4.17.19, lodash@^4.17.21, lodash@^4.17.23:
+lodash@4.17.21, lodash@^4.17.12, lodash@^4.17.21, lodash@^4.17.23:
   version "4.17.23"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.23.tgz#f113b0378386103be4f6893388c73d0bde7f2c5a"
   integrity sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==
@@ -6593,7 +6593,7 @@ tapable@^2.2.0:
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.3.0.tgz#7e3ea6d5ca31ba8e078b560f0d83ce9a14aa8be6"
   integrity sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==
 
-temp@^0.9.0:
+temp@^0.9.4:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/temp/-/temp-0.9.4.tgz#cd20a8580cb63635d0e4e9d4bd989d44286e7620"
   integrity sha512-yYrrsWnrXMcdsnu/7YMYAofM1ktpL5By7vZhf15CrXijWWrEYZks5AXBudalfSWJLlnen/QUJUB5aoB0kqZUGA==
@@ -7085,7 +7085,7 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-word-wrap@^1.0.3, word-wrap@^1.2.3, word-wrap@^1.2.5:
+word-wrap@^1.0.3, word-wrap@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.5.tgz#d2c45c6dd4fbce621a66f136cbe328afd0410b34"
   integrity sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==
