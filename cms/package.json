@@ -31,12 +31,12 @@
   "resolutions": {
     "**/ajv": "^6.14.0",
     "**/flatted": "3.4.2",
-    "**/eslint/**/minimatch": "9.0.7",
-    "**/eslint-plugin-jsx-a11y/minimatch": "9.0.7",
-    "**/eslint-plugin-react/minimatch": "9.0.7",
-    "**/filelist/minimatch": "9.0.7",
+    "**/eslint/**/minimatch": "9.0.9",
+    "**/eslint-plugin-jsx-a11y/minimatch": "9.0.9",
+    "**/eslint-plugin-react/minimatch": "9.0.9",
+    "**/filelist/minimatch": "9.0.9",
     "**/jsdom/undici": "7.24.4",
-    "**/readdir-glob/minimatch": "9.0.7",
+    "**/readdir-glob/minimatch": "9.0.9",
     "**/@actions/github/undici": "6.24.0",
     "**/@actions/http-client/undici": "6.24.0",
     "**/@vercel/frameworks/js-yaml": "3.14.2"
