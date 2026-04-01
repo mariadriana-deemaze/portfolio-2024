@@ -37,8 +37,8 @@
     "**/filelist/minimatch": "9.0.9",
     "**/jsdom/undici": "7.24.4",
     "**/readdir-glob/minimatch": "9.0.9",
-    "**/@actions/github/undici": "6.24.0",
-    "**/@actions/http-client/undici": "6.24.0",
+    "**/@actions/github/undici": "6.24.1",
+    "**/@actions/http-client/undici": "6.24.1",
     "**/@vercel/frameworks/js-yaml": "3.14.2"
   },
   "prettier": {
