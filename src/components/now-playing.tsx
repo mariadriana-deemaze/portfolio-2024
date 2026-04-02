@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-
-import type { NowPlayingData } from '@/server/routes/api/types/spotify';
-
 import { Badge } from '@/components/ui/badge';
+import type { NowPlayingData } from '@/server/routes/api/types/spotify';
 
 export const NowPlaying = () => {
 	const { data: nowPlaying } = useQuery<{ data: NowPlayingData }>({
@@ -14,12 +12,7 @@ export const NowPlaying = () => {
 	return (
 		<div>
 			{nowPlaying?.data.isPlaying ? (
-				<a
-					href={nowPlaying?.data.songUrl}
-					target="_blank"
-					rel="noreferrer"
-					className="group block"
-				>
+				<a href={nowPlaying?.data.songUrl} target="_blank" rel="noreferrer" className="group block">
 					<div className="flex items-start">
 						<div className="relative h-6 inline-block max-w-[220px] align-top">
 							<span className="invisible block h-6 px-2 py-0 text-xs font-semibold leading-snug truncate">

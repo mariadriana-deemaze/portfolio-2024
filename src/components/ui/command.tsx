@@ -1,4 +1,3 @@
-
 import { type DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
 import * as React from 'react';
@@ -134,12 +133,11 @@ CommandShortcut.displayName = 'CommandShortcut';
 export {
 	// Command,
 	CommandDialog,
-	CommandInput,
-	CommandList,
 	CommandEmpty,
 	CommandGroup,
+	CommandInput,
 	CommandItem,
+	CommandList,
 	// CommandShortcut,
 	CommandSeparator
 };
-

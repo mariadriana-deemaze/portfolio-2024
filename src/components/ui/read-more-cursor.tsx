@@ -52,11 +52,7 @@ export default function ReadMoreCursor({ isVisible }: ReadMoreCursorProps) {
 					className="self-center cursor-none"
 				>
 					<path d="M2 1H16V15" stroke="currentColor" strokeWidth="4"></path>
-					<path
-						d="M1 16.1953L16.1953 1.00001"
-						stroke="currentColor"
-						strokeWidth="4"
-					></path>
+					<path d="M1 16.1953L16.1953 1.00001" stroke="currentColor" strokeWidth="4"></path>
 				</svg>
 			</div>
 		</div>

@@ -9,6 +9,10 @@
     "dev": "sanity dev",
     "start": "sanity start",
     "build": "sanity build",
+    "lint": "biome lint .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format --check .",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy"
   },
@@ -23,10 +27,8 @@
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
-    "@sanity/eslint-config-studio": "^6.0.0",
+    "@biomejs/biome": "2.4.10",
     "@types/react": "^19.1",
-    "eslint": "^9.28",
-    "prettier": "^3.5",
     "typescript": "^5.8"
   },
   "pnpm": {
@@ -38,9 +40,6 @@
       "flatted": "3.4.2",
       "minimatch@10>brace-expansion": "5.0.5",
       "tinyglobby>picomatch": "4.0.4",
-      "eslint>minimatch": "9.0.9",
-      "eslint-plugin-jsx-a11y>minimatch": "9.0.9",
-      "eslint-plugin-react>minimatch": "9.0.9",
       "filelist>minimatch": "9.0.9",
       "jsdom>undici": "7.24.4",
       "readdir-glob>minimatch": "9.0.9",
@@ -48,11 +47,5 @@
       "@actions/http-client>undici": "6.24.1",
       "@vercel/frameworks>js-yaml": "3.14.2"
     }
-  },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "bracketSpacing": false,
-    "singleQuote": true
   }
 }

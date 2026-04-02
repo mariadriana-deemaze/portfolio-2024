@@ -48,10 +48,7 @@ const ScrollFadeReveal = ({
 	});
 
 	return (
-		<div
-			ref={ref}
-			className={cn('scroll-fade-reveal', onLoadVisibility ? 'scroll-fade-in' : null)}
-		>
+		<div ref={ref} className={cn('scroll-fade-reveal', onLoadVisibility ? 'scroll-fade-in' : null)}>
 			{children}
 		</div>
 	);

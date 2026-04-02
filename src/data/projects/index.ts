@@ -1,5 +1,5 @@
-import matter from 'gray-matter';
 import fs from 'node:fs/promises';
+import matter from 'gray-matter';
 import path from 'path';
 
 import { fetchSanityQuery } from '@/lib/sanity';
@@ -98,7 +98,10 @@ async function getProjectsFromMdx(): Promise<Project[]> {
 				const filePath = `${PROJECTS_DIR}/${file}`;
 				const projectContent = await fs.readFile(filePath, 'utf8');
 
-				const { data, content } = matter(projectContent) as unknown as { data: ProjectRaw, content: string };
+				const { data, content } = matter(projectContent) as unknown as {
+					data: ProjectRaw;
+					content: string;
+				};
 
 				const project: Project = {
 					...data,
@@ -161,4 +164,3 @@ export async function getProject(slug: string) {
 
 	return getProjectFromMdx(slug);
 }
-

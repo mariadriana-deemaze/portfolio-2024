@@ -25,9 +25,7 @@ export const SectionEducation = () => {
 
 								<div className="flex flex-col gap-2 grow">
 									<h3 className="font-semibold leading-none">{school}</h3>
-									<h4 className="font-mono text-sm leading-none opacity-50">
-										{degree}
-									</h4>
+									<h4 className="font-mono text-sm leading-none opacity-50">{degree}</h4>
 								</div>
 								<div className="font-mono text-sm text-gray-500 flex shrink-0">
 									{start} - {end}

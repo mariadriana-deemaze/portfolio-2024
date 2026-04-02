@@ -1,36 +1,36 @@
-@import 'tailwindcss';
-@import './projects/index.css';
-@import './blog/index.css';
+@import "tailwindcss";
+@import "./projects/index.css";
+@import "./blog/index.css";
 
 /* Local font faces for ClashDisplay from /public/fonts */
 @layer base {
-  /* Variable font covers 200–700 weights */
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('/fonts/ClashDisplay-Variable.ttf') format('truetype');
-    font-weight: 200 700;
-    font-style: normal;
-    font-display: swap;
-  }
-  /* Static regular as fallback if variable not supported */
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('/fonts/ClashDisplay-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  /* Static bold as fallback */
-  @font-face {
-    font-family: 'ClashDisplay';
-    src: url('/fonts/ClashDisplay-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
+	/* Variable font covers 200–700 weights */
+	@font-face {
+		font-family: "ClashDisplay";
+		src: url("/fonts/ClashDisplay-Variable.ttf") format("truetype");
+		font-weight: 200 700;
+		font-style: normal;
+		font-display: swap;
+	}
+	/* Static regular as fallback if variable not supported */
+	@font-face {
+		font-family: "ClashDisplay";
+		src: url("/fonts/ClashDisplay-Regular.ttf") format("truetype");
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+	/* Static bold as fallback */
+	@font-face {
+		font-family: "ClashDisplay";
+		src: url("/fonts/ClashDisplay-Bold.ttf") format("truetype");
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
 }
 
-@config '../../tailwind.config.ts';
+@config "../../tailwind.config.ts";
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -41,167 +41,182 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-gray-200, currentColor);
+	}
 }
 
 @utility no-scrollbar {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
 
 @utility roles-slider {
-  @apply inline-flex align-top;
+	@apply inline-flex align-top;
 
-  & .role-slide {
-    @apply absolute flex flex-wrap lg:flex-nowrap;
-  }
+	& .role-slide {
+		@apply absolute flex flex-wrap lg:flex-nowrap;
+	}
 
-  & .role-slide .letter {
-    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
-  }
+	& .role-slide .letter {
+		@apply origin-[center_center_5px] opacity-0 whitespace-pre;
+	}
 
-  & .role-slide .letter.out {
-    @apply opacity-50;
-    transform: rotateX(90deg) translateY(-10px);
-    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
-  }
+	& .role-slide .letter.out {
+		@apply opacity-50;
+		transform: rotateX(90deg) translateY(-10px);
+		transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+	}
 
-  & .role-slide .letter.in {
-    transition: 0.38s ease;
-    @apply opacity-100 ease-linear;
-  }
+	& .role-slide .letter.in {
+		transition: 0.38s ease;
+		@apply opacity-100 ease-linear;
+	}
 
-  & .role-slide .letter.behind {
-    transform: rotateX(-90deg);
-  }
+	& .role-slide .letter.behind {
+		transform: rotateX(-90deg);
+	}
 }
 
 @utility role-slide {
-  .roles-slider & {
-    @apply absolute flex flex-wrap lg:flex-nowrap;
-  }
+	.roles-slider & {
+		@apply absolute flex flex-wrap lg:flex-nowrap;
+	}
 
-  .roles-slider & .letter {
-    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
-  }
+	.roles-slider & .letter {
+		@apply origin-[center_center_5px] opacity-0 whitespace-pre;
+	}
 
-  .roles-slider & .letter.out {
-    @apply opacity-50;
-    transform: rotateX(90deg) translateY(-10px);
-    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
-  }
+	.roles-slider & .letter.out {
+		@apply opacity-50;
+		transform: rotateX(90deg) translateY(-10px);
+		transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+	}
 
-  .roles-slider & .letter.in {
-    transition: 0.38s ease;
-    @apply opacity-100 ease-linear;
-  }
+	.roles-slider & .letter.in {
+		transition: 0.38s ease;
+		@apply opacity-100 ease-linear;
+	}
 
-  .roles-slider & .letter.behind {
-    transform: rotateX(-90deg);
-  }
+	.roles-slider & .letter.behind {
+		transform: rotateX(-90deg);
+	}
 }
 
 @utility letter {
-  .roles-slider .role-slide & {
-    @apply origin-[center_center_5px] opacity-0 whitespace-pre;
-  }
+	.roles-slider .role-slide & {
+		@apply origin-[center_center_5px] opacity-0 whitespace-pre;
+	}
 
-  .roles-slider .role-slide &.out {
-    @apply opacity-50;
-    transform: rotateX(90deg) translateY(-10px);
-    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
-  }
+	.roles-slider .role-slide &.out {
+		@apply opacity-50;
+		transform: rotateX(90deg) translateY(-10px);
+		transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+	}
 
-  .roles-slider .role-slide &.in {
-    transition: 0.38s ease;
-    @apply opacity-100 ease-linear;
-  }
+	.roles-slider .role-slide &.in {
+		transition: 0.38s ease;
+		@apply opacity-100 ease-linear;
+	}
 
-  .roles-slider .role-slide &.behind {
-    transform: rotateX(-90deg);
-  }
+	.roles-slider .role-slide &.behind {
+		transform: rotateX(-90deg);
+	}
 }
 
 @utility out {
-  .roles-slider .role-slide &.letter {
-    @apply opacity-50;
-    transform: rotateX(90deg) translateY(-10px);
-    transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
-  }
+	.roles-slider .role-slide &.letter {
+		@apply opacity-50;
+		transform: rotateX(90deg) translateY(-10px);
+		transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
+	}
 }
 
 @utility in {
-  .roles-slider .role-slide &.letter {
-    transition: 0.38s ease;
-    @apply opacity-100 ease-linear;
-  }
+	.roles-slider .role-slide &.letter {
+		transition: 0.38s ease;
+		@apply opacity-100 ease-linear;
+	}
 }
 
 @utility behind {
-  .roles-slider .role-slide &.letter {
-    transform: rotateX(-90deg);
-  }
+	.roles-slider .role-slide &.letter {
+		transform: rotateX(-90deg);
+	}
 }
 
 @utility scroll-fade-reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.5s ease-in-out,
-    transform 0.5s ease-in-out;
+	opacity: 0;
+	transform: translateY(20px);
+	transition:
+		opacity 0.5s ease-in-out,
+		transform 0.5s ease-in-out;
 
-  &.scroll-fade-in {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	&.scroll-fade-in {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 @utility scroll-fade-in {
-  &.scroll-fade-reveal {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	&.scroll-fade-reveal {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 @utility text-fade-grad {
-  @apply bg-clip-text text-transparent inline-block;
-  background-image: radial-gradient(ellipse at 85% 100%, transparent 0%, #1f2937 60%, #1f2937 100%);
-  background-repeat: no-repeat;
+	@apply bg-clip-text text-transparent inline-block;
+	background-image: radial-gradient(ellipse at 85% 100%, transparent 0%, #1f2937 60%, #1f2937 100%);
+	background-repeat: no-repeat;
 }
 
 @utility logo-fade {
-  color: #1f2937;
-  --logo-stroke-start: #f15a24;
-  --logo-stroke-end: #374151;
-  mask-image: radial-gradient(ellipse at 85% 100%, transparent 0%, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 1) 100%);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: 100% 100%;
-  -webkit-mask-image: radial-gradient(ellipse at 85% 100%, transparent 0%, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 1) 100%);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: 100% 100%;
+	color: #1f2937;
+	--logo-stroke-start: #f15a24;
+	--logo-stroke-end: #374151;
+	mask-image: radial-gradient(
+		ellipse at 85% 100%,
+		transparent 0%,
+		rgba(0, 0, 0, 1) 60%,
+		rgba(0, 0, 0, 1) 100%
+	);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: 100% 100%;
+	-webkit-mask-image: radial-gradient(
+		ellipse at 85% 100%,
+		transparent 0%,
+		rgba(0, 0, 0, 1) 60%,
+		rgba(0, 0, 0, 1) 100%
+	);
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	-webkit-mask-size: 100% 100%;
 }
 
 @layer utilities {
-  .dark .text-fade-grad {
-    background-image: radial-gradient(ellipse at 85% 100%, transparent 0%, #f3f4f6 60%, #ffffff 100%);
-  }
+	.dark .text-fade-grad {
+		background-image: radial-gradient(
+			ellipse at 85% 100%,
+			transparent 0%,
+			#f3f4f6 60%,
+			#ffffff 100%
+		);
+	}
 
-  .dark .logo-fade {
-    color: #f3f4f6;
-    --logo-stroke-start: #f15a24;
-    --logo-stroke-end: #ffffff;
-  }
+	.dark .logo-fade {
+		color: #f3f4f6;
+		--logo-stroke-start: #f15a24;
+		--logo-stroke-end: #ffffff;
+	}
 }
 
 @layer base {
@@ -266,26 +281,26 @@
 		height: 0;
 	}
 
-		body {
-			@apply bg-background text-foreground overflow-y-auto overflow-x-hidden;
-			-ms-overflow-style: none;
-		}
+	body {
+		@apply bg-background text-foreground overflow-y-auto overflow-x-hidden;
+		-ms-overflow-style: none;
+	}
 }
 
 @layer components {
-  .progress {
-    height: 0.18rem;
-  }
+	.progress {
+		height: 0.18rem;
+	}
 
-  .progress .progress-bar {
-    height: 0.2rem;
-    transform-origin: left;
-    will-change: transform;
-    transform: scaleX(0);
-    @apply w-full bg-orange-600;
-  }
+	.progress .progress-bar {
+		height: 0.2rem;
+		transform-origin: left;
+		will-change: transform;
+		transform: scaleX(0);
+		@apply w-full bg-orange-600;
+	}
 
-  .animate-fade-in-left {
-    @apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
-  }
+	.animate-fade-in-left {
+		@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
+	}
 }

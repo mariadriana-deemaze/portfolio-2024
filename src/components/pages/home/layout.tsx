@@ -1,14 +1,11 @@
-
 import { ReactLenis } from 'lenis/react';
-
-import type { Project } from '@/data/projects';
-
 import { SectionAbout } from '@/components/pages/home/section-about';
 import { SectionEducation } from '@/components/pages/home/section-education';
 import { SectionHero } from '@/components/pages/home/section-hero';
 import { SectionProjects } from '@/components/pages/home/section-projects';
 import { SectionWorkExperience } from '@/components/pages/home/section-work-experience';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
+import type { Project } from '@/data/projects';
 
 export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 	return (
@@ -33,4 +30,3 @@ export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 		</ReactLenis>
 	);
 };
-

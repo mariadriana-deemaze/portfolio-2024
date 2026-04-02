@@ -25,9 +25,7 @@ export const SectionHero = () => {
 							</div>
 						</div>
 					</div>
-					<p className="max-w-md text-pretty font-mono text-sm text-foreground">
-						{data.about}
-					</p>
+					<p className="max-w-md text-pretty font-mono text-sm text-foreground">{data.about}</p>
 					<p className="max-w-md items-center text-pretty font-mono text-xs text-gray-500">
 						<a
 							className="inline-flex gap-x-1.5 align-baseline leading-none hover:underline"

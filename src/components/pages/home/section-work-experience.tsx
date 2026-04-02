@@ -4,7 +4,6 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
- 
 
 export const SectionWorkExperience = () => {
 	return (
@@ -32,9 +31,7 @@ export const SectionWorkExperience = () => {
 											{company}
 										</a>
 									</h3>
-									<h4 className="font-mono text-sm leading-none opacity-50">
-										{title}
-									</h4>
+									<h4 className="font-mono text-sm leading-none opacity-50">{title}</h4>
 								</div>
 
 								<div className="font-mono text-sm text-gray-500 flex shrink-0">

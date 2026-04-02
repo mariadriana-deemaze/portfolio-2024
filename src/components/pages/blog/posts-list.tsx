@@ -1,15 +1,12 @@
-
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { ReactLenis } from 'lenis/react';
-import { useRef, useState, type MouseEvent } from 'react';
-
-import type { BlogPost } from '@/data/blog';
-
+import { type MouseEvent, useRef, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import ReadMoreCursor from '@/components/ui/read-more-cursor';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
+import type { BlogPost } from '@/data/blog';
 import { toBlogSlug } from '@/utils/routes';
 
 export default function PostsList({ posts }: { posts: BlogPost[] }) {
@@ -40,8 +37,8 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 				<h1 className="font-clash font-bold text-5xl text-fade-grad">Blog</h1>
 				<h4 className="font-clash font-medium text-md text-gray-500">Articles list</h4>
 				<p className="pb-10 text-pretty font-mono text-sm text-foreground leading-5">
-					My own personal and biased musings in thinkering around in engineering and
-					design lands - take this as a fair warning.
+					My own personal and biased musings in thinkering around in engineering and design lands -
+					take this as a fair warning.
 				</p>
 				<hr />
 			</header>
@@ -60,15 +57,10 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							onMouseEnter={() => handleMouseEnter(post)}
 							onMouseLeave={(e) => handleMouseLeave(e)}
 						>
-							<Link
-								to={toBlogSlug(post.slug)}
-								className="block"
-							>
+							<Link to={toBlogSlug(post.slug)} className="block">
 								<article>
 									<ScrollFadeReveal onLoadVisibility>
-										<h1 className="font-clash font-medium text-3xl text-fade-grad">
-											{post.title}
-										</h1>
+										<h1 className="font-clash font-medium text-3xl text-fade-grad">{post.title}</h1>
 										<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
 											<CalendarIcon />
 											{format(new Date(post.date), 'do MMMM yyyy')}

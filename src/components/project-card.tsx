@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import { Card, CardHeader, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface Props {
 	title: string;
@@ -69,11 +69,7 @@ export function ProjectCard({ title, description, tags, link, medium, preview, c
 				<CardContent className="mt-auto flex">
 					<div className="mt-2 flex flex-wrap gap-1">
 						{tags.map((tag) => (
-							<Badge
-								className="px-2 py-1 text-[10px]"
-								variant="outline"
-								key={`${title}_${tag}`}
-							>
+							<Badge className="px-2 py-1 text-[10px]" variant="outline" key={`${title}_${tag}`}>
 								{tag}
 							</Badge>
 						))}

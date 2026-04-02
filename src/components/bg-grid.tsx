@@ -1,4 +1,3 @@
-
 import type { ReactNode } from 'react';
 
 export function BGGrid({ children }: { children?: ReactNode }) {
@@ -41,4 +40,3 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 		</>
 	);
 }
-

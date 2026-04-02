@@ -1,136 +1,136 @@
-import { Link, createFileRoute, notFound } from '@tanstack/react-router'
-import { JSX } from 'react'
+import { createFileRoute, Link, notFound } from '@tanstack/react-router';
+import { JSX } from 'react';
 
-import { getStackByName } from '@/components/stacks'
-import { Badge } from '@/components/ui/badge'
-import { data, BASE_URL } from '@/data/main'
-import { createSeoHead } from '@/lib/head'
-import { getProjectFn } from '@/server-fns/content'
-import { ROUTES } from '@/utils/routes'
+import { getStackByName } from '@/components/stacks';
+import { Badge } from '@/components/ui/badge';
+import { BASE_URL, data } from '@/data/main';
+import { createSeoHead } from '@/lib/head';
+import { getProjectFn } from '@/server-fns/content';
+import { ROUTES } from '@/utils/routes';
 
 export const Route = createFileRoute('/projects/$slug')({
-  loader: async ({ params }) => {
-    const projectData = await getProjectFn({ data: { slug: params.slug } })
+	loader: async ({ params }) => {
+		const projectData = await getProjectFn({ data: { slug: params.slug } });
 
-    if (!projectData.project) {
-      throw notFound()
-    }
+		if (!projectData.project) {
+			throw notFound();
+		}
 
-    return {
-      project: projectData.project,
-      projectHtml: projectData.projectHtml ?? '',
-    }
-  },
-  head: ({ loaderData, params }) =>
-    createSeoHead({
-      title: `${loaderData?.project?.title ?? 'Project'} | Project`,
-      description: loaderData?.project?.description ?? 'Project details and information.',
-      image: loaderData?.project?.hero,
-      alternates: {
-        canonical: `${BASE_URL}/projects/${params.slug}`,
-      },
-    }),
-  component: ProjectItemRoute,
-  notFoundComponent: ProjectNotFoundRoute,
-})
+		return {
+			project: projectData.project,
+			projectHtml: projectData.projectHtml ?? ''
+		};
+	},
+	head: ({ loaderData, params }) =>
+		createSeoHead({
+			title: `${loaderData?.project?.title ?? 'Project'} | Project`,
+			description: loaderData?.project?.description ?? 'Project details and information.',
+			image: loaderData?.project?.hero,
+			alternates: {
+				canonical: `${BASE_URL}/projects/${params.slug}`
+			}
+		}),
+	component: ProjectItemRoute,
+	notFoundComponent: ProjectNotFoundRoute
+});
 
 function ProjectItemRoute(): JSX.Element {
-  const { project, projectHtml } = Route.useLoaderData()
-  const { title, year, description, hero, technologies = [], repo, liveUrl, colors } = project
-  const heroGradient = colors?.length
-    ? `linear-gradient(150deg, ${colors[0]} 0%, ${colors[1] ?? colors[0]} 35%, ${colors[2] ?? colors[1] ?? colors[0]} 100%)`
-    : undefined
+	const { project, projectHtml } = Route.useLoaderData();
+	const { title, year, description, hero, technologies = [], repo, liveUrl, colors } = project;
+	const heroGradient = colors?.length
+		? `linear-gradient(150deg, ${colors[0]} 0%, ${colors[1] ?? colors[0]} 35%, ${colors[2] ?? colors[1] ?? colors[0]} 100%)`
+		: undefined;
 
-  return (
-    <div className="mx-auto w-full max-w-2xl space-y-4 animate-fade-in-left delay-500">
-      <p className="font-mono text-sm text-gray-500">
-        <Link to={ROUTES.projects} className="hover:underline">
-          &larr; Back to projects
-        </Link>
-      </p>
-      <header className="space-y-2">
-        <div className="flex flex-col mt-6">
-          <time className="font-mono text-xs text-gray-500">YEAR {year}</time>
-          <h1 className="font-clash font-bold text-5xl text-fade-grad">{title}</h1>
-        </div>
-        <p className="font-mono text-sm text-foreground">{description}</p>
-        <div className="flex flex-wrap gap-1 my-6">
-          {technologies.map(({ label }) => {
-            const resolvedIcon = getStackByName(label)?.icon ?? null
+	return (
+		<div className="mx-auto w-full max-w-2xl space-y-4 animate-fade-in-left delay-500">
+			<p className="font-mono text-sm text-gray-500">
+				<Link to={ROUTES.projects} className="hover:underline">
+					&larr; Back to projects
+				</Link>
+			</p>
+			<header className="space-y-2">
+				<div className="flex flex-col mt-6">
+					<time className="font-mono text-xs text-gray-500">YEAR {year}</time>
+					<h1 className="font-clash font-bold text-5xl text-fade-grad">{title}</h1>
+				</div>
+				<p className="font-mono text-sm text-foreground">{description}</p>
+				<div className="flex flex-wrap gap-1 my-6">
+					{technologies.map(({ label }) => {
+						const resolvedIcon = getStackByName(label)?.icon ?? null;
 
-            return (
-              <Badge
-                className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-                variant="outline"
-                key={label}
-              >
-                {resolvedIcon}
-                <span>{label}</span>
-              </Badge>
-            )
-          })}
-        </div>
-        <hr className="mt-2" />
-      </header>
-      <section className="summary flex gap-1 flex-row-reverse mb-8">
-        <Badge
-          className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-          variant="outline"
-        >
-          <a
-            className="flex flex-row gap-2"
-            href={repo ? `${data.github}/${repo}` : '#'}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View repo
-          </a>
-        </Badge>
-        {liveUrl && (
-          <Badge
-            className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-            variant="outline"
-          >
-            <a className="flex flex-row gap-2" href={liveUrl} target="_blank" rel="noreferrer">
-              Live demo
-            </a>
-          </Badge>
-        )}
-      </section>
-      {hero && (
-        <div
-          className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"
-          style={heroGradient ? { background: heroGradient } : undefined}
-        >
-          <div className="rounded-[0.45rem] overflow-hidden">
-            <img
-              className="block w-full h-auto"
-              alt={`Hero image of the ${title} project.`}
-              width={800}
-              height={400}
-              src={hero}
-            />
-          </div>
-        </div>
-      )}
-      <article className="content mt-4">
-        <div
-          className="prose font-mono dark:prose-invert max-w-none"
-          dangerouslySetInnerHTML={{ __html: projectHtml }}
-        />
-      </article>
-    </div>
-  )
+						return (
+							<Badge
+								className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+								variant="outline"
+								key={label}
+							>
+								{resolvedIcon}
+								<span>{label}</span>
+							</Badge>
+						);
+					})}
+				</div>
+				<hr className="mt-2" />
+			</header>
+			<section className="summary flex gap-1 flex-row-reverse mb-8">
+				<Badge
+					className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+					variant="outline"
+				>
+					<a
+						className="flex flex-row gap-2"
+						href={repo ? `${data.github}/${repo}` : '#'}
+						target="_blank"
+						rel="noreferrer"
+					>
+						View repo
+					</a>
+				</Badge>
+				{liveUrl && (
+					<Badge
+						className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
+						variant="outline"
+					>
+						<a className="flex flex-row gap-2" href={liveUrl} target="_blank" rel="noreferrer">
+							Live demo
+						</a>
+					</Badge>
+				)}
+			</section>
+			{hero && (
+				<div
+					className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"
+					style={heroGradient ? { background: heroGradient } : undefined}
+				>
+					<div className="rounded-[0.45rem] overflow-hidden">
+						<img
+							className="block w-full h-auto"
+							alt={`Hero image of the ${title} project.`}
+							width={800}
+							height={400}
+							src={hero}
+						/>
+					</div>
+				</div>
+			)}
+			<article className="content mt-4">
+				<div
+					className="prose font-mono dark:prose-invert max-w-none"
+					dangerouslySetInnerHTML={{ __html: projectHtml }}
+				/>
+			</article>
+		</div>
+	);
 }
 
 function ProjectNotFoundRoute() {
-  return (
-    <div className="animate-fade-in-left delay-500">
-      <h1>Project not found</h1>
-      <p>The requested project could not be located.</p>
-      <p>
-        <Link to={ROUTES.projects}>Back to projects</Link>
-      </p>
-    </div>
-  )
+	return (
+		<div className="animate-fade-in-left delay-500">
+			<h1>Project not found</h1>
+			<p>The requested project could not be located.</p>
+			<p>
+				<Link to={ROUTES.projects}>Back to projects</Link>
+			</p>
+		</div>
+	);
 }

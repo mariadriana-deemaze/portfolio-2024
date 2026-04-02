@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from 'react';
 
 import { cn } from '@/utils/utils';
@@ -6,7 +5,7 @@ import { cn } from '@/utils/utils';
 export const AnimatedMottos = ({ data, className }: { data: string[]; className?: string }) => {
 	const [roleIndex, setRoleIndex] = useState(0);
 
-	const splitWords = () => {
+	const splitWords = useCallback(() => {
 		const words = document.querySelectorAll('.role-slide');
 
 		words.forEach((word) => {
@@ -19,7 +18,7 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 				word.append(span);
 			});
 		});
-	};
+	}, []);
 
 	const animateText = useCallback(() => {
 		const words = document.querySelectorAll('.role-slide');
@@ -52,31 +51,27 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 		});
 	}, [roleIndex, data.length]);
 
-	const switchRole = () => {
-		if (roleIndex === data.length - 1) {
-			setRoleIndex(0);
-		} else {
-			setRoleIndex(roleIndex + 1);
-		}
-	};
+	const switchRole = useCallback(() => {
+		setRoleIndex((currentRoleIndex) =>
+			currentRoleIndex === data.length - 1 ? 0 : currentRoleIndex + 1
+		);
+	}, [data.length]);
 
 	useEffect(() => {
 		splitWords();
-	}, []);
+	}, [splitWords]);
 
 	useEffect(() => {
 		animateText();
-	}, [animateText, roleIndex]);
+	}, [animateText]);
 
 	useEffect(() => {
 		const interval = setInterval(switchRole, 5000);
 		return () => clearInterval(interval);
-	});
+	}, [switchRole]);
 
 	return (
-		<h6
-			className="h-5 w-full relative roles-slider font-clash text-lg font-normal"
-		>
+		<h6 className="h-5 w-full relative roles-slider font-clash text-lg font-normal">
 			{data.map((item, index) => (
 				<span className={cn('role-slide', className)} key={`motto_item_${index}`}>
 					{item}
@@ -85,4 +80,3 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 		</h6>
 	);
 };
-

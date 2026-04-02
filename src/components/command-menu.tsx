@@ -1,6 +1,5 @@
-
 import { useNavigate } from '@tanstack/react-router';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
 	CommandDialog,
@@ -115,4 +114,3 @@ export const CommandMenu = ({ links }: Props) => {
 		</>
 	);
 };
-

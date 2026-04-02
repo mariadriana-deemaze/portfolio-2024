@@ -1,4 +1,4 @@
-import { LuGithub, LuLinkedin, LuInstagram, LuDribbble, LuCodepen } from 'react-icons/lu';
+import { LuCodepen, LuDribbble, LuGithub, LuInstagram, LuLinkedin } from 'react-icons/lu';
 
 import { STACKS } from '@/components/stacks';
 
@@ -8,14 +8,11 @@ export const data = {
 	name: 'Maria Adriana',
 	role: 'Full Stack Developer',
 	github: 'https://github.com/mariadriana-deemaze',
-	mottos: [
-		'Full Stack Developer',
-		'Front-end Developer',
-		'Back-end Developer'
-	],
+	mottos: ['Full Stack Developer', 'Front-end Developer', 'Back-end Developer'],
 	location: 'Portugal, Coimbra',
 	locationLink: 'https://www.google.com/maps/place/Coimbra',
-	about: 'The dangerous combo of a curious yet anxious overthinker - I think coffee is also somewhere in the equation.',
+	about:
+		'The dangerous combo of a curious yet anxious overthinker - I think coffee is also somewhere in the equation.',
 	summary: `A communication designer turned software developer, driven by a deep passion for problem-solving and the precision of the exact sciences. \n
 My journey began in the world of web design, crafting intuitive and visually striking digital experiences. As my curiosity grew, I embraced the challenge of bringing those designs to life through code—blurring the lines between creativity and technical execution. This natural progression led me to fully immerse myself in software development, where I now thrive. \n
 I’m excited to continue building innovative solutions that merge design sensibility with technical expertise, leveraging my unique background to create meaningful and impactful digital experiences.`,

@@ -1,4 +1,3 @@
-
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as React from 'react';
 import { LuX } from 'react-icons/lu';
@@ -7,11 +6,7 @@ import { cn } from '@/utils/utils';
 
 const Dialog = DialogPrimitive.Root;
 
-const DialogTrigger = DialogPrimitive.Trigger;
-
 const DialogPortal = DialogPrimitive.Portal;
-
-const DialogClose = DialogPrimitive.Close;
 
 const DialogOverlay = React.forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -53,10 +48,7 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-	<div
-		className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)}
-		{...props}
-	/>
+	<div className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)} {...props} />
 );
 DialogHeader.displayName = 'DialogHeader';
 
@@ -94,7 +86,7 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
 	Dialog,
-	DialogContent,
+	DialogContent
 	/* 	
 	DialogPortal,
 	DialogOverlay,
@@ -106,4 +98,3 @@ export {
 	DialogDescription 
 		*/
 };
-

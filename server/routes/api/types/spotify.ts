@@ -5,22 +5,22 @@ export type SpotifyExternalUrls = { spotify?: string };
 export type SpotifyArtist = { name?: string };
 
 export type SpotifyAlbum = {
-  name?: string
-  external_urls?: SpotifyExternalUrls
-  images?: SpotifyImage[]
-}
+	name?: string;
+	external_urls?: SpotifyExternalUrls;
+	images?: SpotifyImage[];
+};
 
 export type SpotifyTrack = {
-  name?: string
-  artists?: SpotifyArtist[]
-  album?: SpotifyAlbum
-  external_urls?: SpotifyExternalUrls
-}
+	name?: string;
+	artists?: SpotifyArtist[];
+	album?: SpotifyAlbum;
+	external_urls?: SpotifyExternalUrls;
+};
 
 export type SpotifyCurrentlyPlayingResponse = {
-  is_playing?: boolean
-  item?: SpotifyTrack
-}
+	is_playing?: boolean;
+	item?: SpotifyTrack;
+};
 
 export type NowPlayingData = {
 	album: string | null;
@@ -30,4 +30,4 @@ export type NowPlayingData = {
 	isPlaying: boolean;
 	songUrl: string;
 	title: string | null;
-}
+};

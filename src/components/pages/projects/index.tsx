@@ -1,13 +1,10 @@
-
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { Link } from '@tanstack/react-router';
 import { ReactLenis } from 'lenis/react';
-import { useRef, useState, type MouseEvent } from 'react';
-
-import type { Project } from '@/data/projects';
-
+import { type MouseEvent, useRef, useState } from 'react';
 import ReadMoreCursor from '@/components/ui/read-more-cursor';
 import ScrollFadeReveal from '@/components/ui/section-reveal';
+import type { Project } from '@/data/projects';
 import { toProjectsSlug } from '@/utils/routes';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
@@ -47,7 +44,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 					{projects.map((project) => {
 						const gradient = project.colors?.length
 							? `linear-gradient(150deg, ${project.colors[0]} 0%, ${project.colors[1] ?? project.colors[0]} 35%, ${project.colors[2] ?? project.colors[1] ?? project.colors[0]} 100%)`
-							: undefined
+							: undefined;
 
 						return (
 							<li
@@ -57,10 +54,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 								onMouseEnter={() => handleMouseEnter(project)}
 								onMouseLeave={(e) => handleMouseLeave(e)}
 							>
-								<Link
-									to={toProjectsSlug(project.slug)}
-									className="block"
-								>
+								<Link to={toProjectsSlug(project.slug)} className="block">
 									<article>
 										<ScrollFadeReveal onLoadVisibility>
 											<div className="border-b pb-4">
@@ -93,7 +87,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 									</article>
 								</Link>
 							</li>
-						)
+						);
 					})}
 				</ul>
 			</section>

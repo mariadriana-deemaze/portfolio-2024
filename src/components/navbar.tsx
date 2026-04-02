@@ -1,4 +1,3 @@
-
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -10,7 +9,7 @@ const navItems = [
 	{ path: ROUTES.home, name: 'home' },
 	{ path: ROUTES.projects, name: 'projects' },
 	{ path: ROUTES.blog, name: 'blog' },
-	{ path: ROUTES.contact, name: 'contact' },
+	{ path: ROUTES.contact, name: 'contact' }
 ];
 
 export function Navbar() {

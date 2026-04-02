@@ -1,4 +1,3 @@
-
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import * as React from 'react';
 
@@ -43,5 +42,4 @@ const AvatarFallback = React.forwardRef<
 ));
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
-export { Avatar, AvatarImage, AvatarFallback };
-
+export { Avatar, AvatarFallback, AvatarImage };

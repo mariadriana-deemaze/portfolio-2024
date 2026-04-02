@@ -163,10 +163,12 @@ export const STACKS = {
 export function getStackByName(name: string) {
 	const normalizedName = normalizeStackName(name);
 
-	return Object.entries(STACKS).find(([key, stack]) => {
-		return (
-			normalizeStackName(key) === normalizedName ||
-			normalizeStackName(stack.label) === normalizedName
-		);
-	})?.[1] ?? null;
+	return (
+		Object.entries(STACKS).find(([key, stack]) => {
+			return (
+				normalizeStackName(key) === normalizedName ||
+				normalizeStackName(stack.label) === normalizedName
+			);
+		})?.[1] ?? null
+	);
 }
