@@ -4,6 +4,7 @@
 	"version": "0.0.0",
 	"license": "UNLICENSED",
 	"type": "module",
+	"packageManager": "pnpm@10.33.0",
 	"scripts": {
 		"commit": "git-cz",
 		"dev": "vite dev",
@@ -14,7 +15,7 @@
 		"lint:fix": "eslint . --fix",
 		"validate": "tsc --noEmit && eslint . --quiet && knip",
 		"preview": "vite preview",
-		"cms": "cd cms && yarn dev"
+		"cms": "pnpm --dir cms dev"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",
@@ -86,8 +87,14 @@
 			"config": ".cz-config.cjs"
 		}
 	},
-	"resolutions": {
-		"**/commitizen/lodash": "^4.17.23",
-		"**/tmp": "^0.2.4"
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild",
+			"unrs-resolver"
+		],
+		"overrides": {
+			"commitizen>lodash": "^4.17.23",
+			"tmp": "^0.2.4"
+		}
 	}
 }

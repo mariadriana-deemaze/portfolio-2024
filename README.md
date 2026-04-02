@@ -35,8 +35,8 @@
 ## Run Locally
 
 1. Copy `.env.sample` to `.env` and fill values.
-2. Run `yarn dev` and open the local URL Vite prints.
-3. For a production preview, run `yarn build` and then `yarn preview`.
+2. Run `pnpm dev` and open the local URL Vite prints.
+3. For a production preview, run `pnpm build` and then `pnpm preview`.
 
 ## License
 
