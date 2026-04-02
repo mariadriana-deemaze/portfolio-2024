@@ -9,6 +9,10 @@ function createAppRouter() {
   return createRouter({
     routeTree,
     defaultPreload: 'intent',
+    defaultPreloadDelay: 0,
+    defaultPendingComponent: () =><></>,
+    defaultPendingMs: 150,
+    defaultPendingMinMs: 250,
     notFoundMode: 'root',
     scrollRestoration: true,
     Wrap: ({ children }) => (

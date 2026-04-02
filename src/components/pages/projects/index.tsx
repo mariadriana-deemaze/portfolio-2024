@@ -1,6 +1,6 @@
 
 import { CalendarIcon } from '@radix-ui/react-icons';
-import { useNavigate } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { ReactLenis } from 'lenis/react';
 import { useRef, useState, type MouseEvent } from 'react';
 
@@ -12,7 +12,6 @@ import { toProjectsSlug } from '@/utils/routes';
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
 	const [hoveringPost, setHoveringPost] = useState<Project | null>(null);
-	const navigate = useNavigate();
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const handleMouseEnter = (post: Project) => {
@@ -31,10 +30,6 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 		timeoutRef.current = setTimeout(() => {
 			setHoveringPost(null);
 		}, 500);
-	};
-
-	const handleNavigate = (slug: string) => {
-		void navigate({ to: toProjectsSlug(slug) });
 	};
 
 	return (
@@ -61,38 +56,42 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 								onMouseDown={() => handleMouseEnter(project)}
 								onMouseEnter={() => handleMouseEnter(project)}
 								onMouseLeave={(e) => handleMouseLeave(e)}
-								onClick={() => handleNavigate(project.slug)}
 							>
-								<article>
-									<ScrollFadeReveal onLoadVisibility>
-										<div className="border-b pb-4">
-											<div
-												className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"
-												style={gradient ? { background: gradient } : undefined}
-											>
-												<div className="rounded-[0.45rem] overflow-hidden">
-													<img
-														className="block w-full h-auto"
-														alt={`Hero image of the ${project.title} project.`}
-														width={800}
-														height={400}
-														src={project.hero}
-													/>
+								<Link
+									to={toProjectsSlug(project.slug)}
+									className="block"
+								>
+									<article>
+										<ScrollFadeReveal onLoadVisibility>
+											<div className="border-b pb-4">
+												<div
+													className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"
+													style={gradient ? { background: gradient } : undefined}
+												>
+													<div className="rounded-[0.45rem] overflow-hidden">
+														<img
+															className="block w-full h-auto"
+															alt={`Hero image of the ${project.title} project.`}
+															width={800}
+															height={400}
+															src={project.hero}
+														/>
+													</div>
 												</div>
+												<h1 className="font-clash font-medium text-3xl text-fade-grad mt-5">
+													{project.title}
+												</h1>
+												<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
+													<CalendarIcon />
+													{project.year}
+												</time>
+												<p className="py-4 font-mono text-sm text-foreground line-clamp-3">
+													{project.description}
+												</p>
 											</div>
-											<h1 className="font-clash font-medium text-3xl text-fade-grad mt-5">
-												{project.title}
-											</h1>
-											<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
-												<CalendarIcon />
-												{project.year}
-											</time>
-											<p className="py-4 font-mono text-sm text-foreground line-clamp-3">
-												{project.description}
-											</p>
-										</div>
-									</ScrollFadeReveal>
-								</article>
+										</ScrollFadeReveal>
+									</article>
+								</Link>
 							</li>
 						)
 					})}

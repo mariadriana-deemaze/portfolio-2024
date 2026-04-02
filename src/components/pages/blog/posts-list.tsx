@@ -1,6 +1,6 @@
 
 import { CalendarIcon } from '@radix-ui/react-icons';
-import { useNavigate } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { ReactLenis } from 'lenis/react';
 import { useRef, useState, type MouseEvent } from 'react';
@@ -14,7 +14,6 @@ import { toBlogSlug } from '@/utils/routes';
 
 export default function PostsList({ posts }: { posts: BlogPost[] }) {
 	const [hoveringPost, setHoveringPost] = useState<BlogPost | null>(null);
-	const navigate = useNavigate();
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const handleMouseEnter = (post: BlogPost) => {
@@ -33,10 +32,6 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 		timeoutRef.current = setTimeout(() => {
 			setHoveringPost(null);
 		}, 500);
-	};
-
-	const handleNavigate = (slug: string) => {
-		void navigate({ to: toBlogSlug(slug) });
 	};
 
 	return (
@@ -64,36 +59,40 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							onMouseDown={() => handleMouseEnter(post)}
 							onMouseEnter={() => handleMouseEnter(post)}
 							onMouseLeave={(e) => handleMouseLeave(e)}
-							onClick={() => handleNavigate(post.slug)}
 						>
-							<article>
-								<ScrollFadeReveal onLoadVisibility>
-									<h1 className="font-clash font-medium text-3xl text-fade-grad">
-										{post.title}
-									</h1>
-									<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
-										<CalendarIcon />
-										{format(new Date(post.date), 'do MMMM yyyy')}
-									</time>
-									<p className="my-4 font-mono text-sm text-foreground line-clamp-3">
-										{post.description}
-									</p>
+							<Link
+								to={toBlogSlug(post.slug)}
+								className="block"
+							>
+								<article>
+									<ScrollFadeReveal onLoadVisibility>
+										<h1 className="font-clash font-medium text-3xl text-fade-grad">
+											{post.title}
+										</h1>
+										<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
+											<CalendarIcon />
+											{format(new Date(post.date), 'do MMMM yyyy')}
+										</time>
+										<p className="my-4 font-mono text-sm text-foreground line-clamp-3">
+											{post.description}
+										</p>
 
-									<div className="mt-6 flex flex-wrap gap-1">
-										{post.keywords.map((keyword) => {
-											return (
-												<Badge
-													className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity"
-													variant="outline"
-													key={post.slug + keyword}
-												>
-													<span>{keyword}</span>
-												</Badge>
-											);
-										})}
-									</div>
-								</ScrollFadeReveal>
-							</article>
+										<div className="mt-6 flex flex-wrap gap-1">
+											{post.keywords.map((keyword) => {
+												return (
+													<Badge
+														className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity"
+														variant="outline"
+														key={post.slug + keyword}
+													>
+														<span>{keyword}</span>
+													</Badge>
+												);
+											})}
+										</div>
+									</ScrollFadeReveal>
+								</article>
+							</Link>
 						</li>
 					))}
 				</ul>
