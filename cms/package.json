@@ -45,6 +45,9 @@
       "readdir-glob>minimatch": "9.0.9",
       "@actions/github>undici": "6.24.1",
       "@actions/http-client>undici": "6.24.1",
+      "vite": "7.3.2",
+      "follow-redirects": "1.16.0",
+      "dompurify": "3.4.0",
       "@vercel/frameworks>js-yaml": "3.14.2"
     }
   }
