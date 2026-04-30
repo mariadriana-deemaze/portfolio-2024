@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+	"skills": [
+		{
+			"name": "portfolio-navigation",
+			"type": "skill-md",
+			"description": "Navigate the Maria Adriana portfolio, fetch markdown versions of public pages, and locate primary sections for projects, blog posts, and contact details.",
+			"url": "/.well-known/agent-skills/portfolio-navigation/SKILL.md",
+			"digest": "sha256:7f0e6165a4ee4c3be046b1b805848e1ea65e7455c8a84ec7dfd9c669cc0e239d"
+		},
+		{
+			"name": "contact-api",
+			"type": "skill-md",
+			"description": "Submit validated portfolio contact requests to Maria Adriana through the public contact API.",
+			"url": "/.well-known/agent-skills/contact-api/SKILL.md",
+			"digest": "sha256:38de4c6cd25ddcf3a3ff5d3173f34264b804ef8b06900f0d7ec3a1e055765ade"
+		},
+		{
+			"name": "project-catalog",
+			"type": "skill-md",
+			"description": "Discover Maria Adriana portfolio projects and retrieve public writeups in markdown form.",
+			"url": "/.well-known/agent-skills/project-catalog/SKILL.md",
+			"digest": "sha256:cf5ab45aa7611996404d2660de149696f4ea76f4e4f472d41fc18352e8eeed2b"
+		}
+	]
+}

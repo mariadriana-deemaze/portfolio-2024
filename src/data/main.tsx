@@ -2,7 +2,7 @@ import { LuCodepen, LuDribbble, LuGithub, LuInstagram, LuLinkedin } from 'react-
 
 import { STACKS } from '@/components/stacks';
 
-export const BASE_URL = 'https://www.maria-adriana.com';
+export const BASE_URL = 'https://maria-adriana.com';
 
 export const data = {
 	name: 'Maria Adriana',

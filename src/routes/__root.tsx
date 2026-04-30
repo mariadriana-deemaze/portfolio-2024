@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import Layout from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
+import { WebMcpRegistration } from '@/components/webmcp';
 import { getCommandLinksFn } from '@/server-fns/content';
 import { getThemeInitScript } from '@/utils/theme';
 
@@ -37,6 +38,7 @@ function RootDocument({ children }: { children: ReactNode }) {
 			</head>
 			<body>
 				<Layout commandLinks={commandLinks}>{children}</Layout>
+				<WebMcpRegistration />
 				<Toaster />
 				<Scripts />
 			</body>
