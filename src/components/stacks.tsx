@@ -1,6 +1,6 @@
 import { DiAppcelerator } from 'react-icons/di';
+import { FaAmazon } from 'react-icons/fa';
 import {
-	SiAmazon,
 	SiBootstrap,
 	SiChakraui,
 	SiExpo,
@@ -115,7 +115,7 @@ export const STACKS = {
 	Express: { label: 'Express', icon: <SiExpress size={iconSize} /> },
 	NestJS: { label: 'NestJS', icon: <SiNestjs size={iconSize} className="text-red-600" /> },
 	Jquery: { label: 'JQuery', icon: <SiJquery size={iconSize} className="text-blue-600" /> },
-	AWS: { label: 'AWS', icon: <SiAmazon size={iconSize} className="text-orange-600" /> },
+	AWS: { label: 'AWS', icon: <FaAmazon size={iconSize} className="text-orange-600" /> },
 	PostgreSQL: {
 		label: 'PostgreSQL',
 		icon: <SiPostgresql size={iconSize} className="text-blue-600" />
