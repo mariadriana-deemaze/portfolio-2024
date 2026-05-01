@@ -87,7 +87,7 @@
 		],
 		"overrides": {
 			"@tanstack/start-plugin-core>srvx": "0.11.15",
-			"@tanstack/start-server-core>h3-v2": "npm:h3@2.0.1-rc.20",
+			"@tanstack/start-server-core>h3-v2": "npm:h3@2.0.1-rc.21",
 			"anymatch>picomatch": "2.3.2",
 			"commitizen>lodash": "4.18.0",
 			"cz-customizable>lodash": "4.18.0",
