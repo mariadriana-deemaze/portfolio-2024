@@ -8,8 +8,8 @@ overrides:
   '@tanstack/start-plugin-core>srvx': 0.11.15
   '@tanstack/start-server-core>h3-v2': npm:h3@2.0.1-rc.21
   anymatch>picomatch: 2.3.2
-  commitizen>lodash: 4.18.0
-  cz-customizable>lodash: 4.18.0
+  commitizen>lodash: 4.18.1
+  cz-customizable>lodash: 4.18.1
   knip>smol-toml: 1.6.1
   micromatch>picomatch: 2.3.2
   readdirp>picomatch: 2.3.2
@@ -2526,9 +2526,8 @@ packages:
   lodash.mergewith@4.6.2:
     resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
 
-  lodash@4.18.0:
-    resolution: {integrity: sha512-l1mfj2atMqndAHI3ls7XqPxEjV2J9ZkcNyHpoZA3r2T1LLwDB69jgkMWh71YKwhBbK0G2f4WSn05ahmQXVxupA==}
-    deprecated: Bad release. Please use lodash@4.17.21 instead.
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -5130,7 +5129,7 @@ snapshots:
       glob: 7.2.3
       inquirer: 8.2.5
       is-utf8: 0.2.1
-      lodash: 4.18.0
+      lodash: 4.18.1
       minimist: 1.2.7
       strip-bom: 4.0.0
       strip-json-comments: 3.1.1
@@ -5208,7 +5207,7 @@ snapshots:
       editor: 1.0.0
       find-config: 1.0.0
       inquirer: 6.5.2
-      lodash: 4.18.0
+      lodash: 4.18.1
       temp: 0.9.4
       word-wrap: 1.2.5
 
@@ -5706,7 +5705,7 @@ snapshots:
       cli-width: 2.2.1
       external-editor: 3.1.0
       figures: 2.0.0
-      lodash: 4.18.0
+      lodash: 4.18.1
       mute-stream: 0.0.7
       run-async: 2.4.1
       rxjs: 6.6.7
@@ -5722,7 +5721,7 @@ snapshots:
       cli-width: 3.0.0
       external-editor: 3.1.0
       figures: 3.2.0
-      lodash: 4.18.0
+      lodash: 4.18.1
       mute-stream: 0.0.8
       ora: 5.4.1
       run-async: 2.4.1
@@ -5887,7 +5886,7 @@ snapshots:
   lodash.mergewith@4.6.2:
     optional: true
 
-  lodash@4.18.0: {}
+  lodash@4.18.1: {}
 
   log-symbols@4.1.0:
     dependencies:
