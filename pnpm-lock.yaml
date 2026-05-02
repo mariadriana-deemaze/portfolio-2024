@@ -69,7 +69,7 @@ importers:
         version: 4.0.3
       lenis:
         specifier: ^1.2.3
-        version: 1.3.21(react@19.2.5)
+        version: 1.3.23(react@19.2.5)
       nodemailer:
         specifier: ^8.0.5
         version: 8.0.7
@@ -2535,8 +2535,8 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  lenis@1.3.21:
-    resolution: {integrity: sha512-RXWTYm7KQE4Kv8ezxL6wvK0Oiv7aRr6FDo+eNaaniTeu7pLdHokqMIJ5CXO4x5ezvd+9ONdpSFkprLpXsVWmEw==}
+  lenis@1.3.23:
+    resolution: {integrity: sha512-YxYq3TJqj9sJNv0V9SkyQHejt14xwyIwgDaaMK89Uf9SxQfIszu+gTQSSphh6BWlLTNVKvvXAGkg+Zf+oFIevg==}
     peerDependencies:
       '@nuxt/kit': '>=3.0.0'
       react: '>=17.0.0'
@@ -5969,7 +5969,7 @@ snapshots:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  lenis@1.3.21(react@19.2.5):
+  lenis@1.3.23(react@19.2.5):
     optionalDependencies:
       react: 19.2.5
 
