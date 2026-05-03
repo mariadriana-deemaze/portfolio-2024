@@ -7,7 +7,7 @@ settings:
 overrides:
   '@tanstack/start-plugin-core>srvx': 0.11.15
   '@tanstack/start-server-core>h3-v2': npm:h3@2.0.1-rc.21
-  anymatch>picomatch: 2.3.2
+  anymatch>picomatch: 4.0.4
   commitizen>lodash: 4.18.1
   cz-customizable>lodash: 4.18.1
   knip>smol-toml: 1.6.1
@@ -4989,7 +4989,7 @@ snapshots:
   anymatch@3.1.3:
     dependencies:
       normalize-path: 3.0.0
-      picomatch: 2.3.2
+      picomatch: 4.0.4
 
   argparse@1.0.10:
     dependencies:
