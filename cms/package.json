@@ -27,7 +27,7 @@
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.14",
+    "@biomejs/biome": "2.4.16",
     "@types/react": "^19.1",
     "typescript": "^6.0.0"
   },
