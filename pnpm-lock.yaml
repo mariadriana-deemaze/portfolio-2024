@@ -46,7 +46,7 @@ importers:
         version: 1.2.4(@types/react@19.2.16)(react@19.2.7)
       '@tanstack/react-query':
         specifier: ^5.90.6
-        version: 5.100.14(react@19.2.7)
+        version: 5.101.0(react@19.2.7)
       '@tanstack/react-router':
         specifier: ^1.163.2
         version: 1.170.10(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -152,7 +152,7 @@ importers:
         version: 6.15.0
       nitro:
         specifier: npm:nitro-nightly@latest
-        version: nitro-nightly@3.0.1-20260601-173724-a2597363(chokidar@5.0.0)(jiti@2.7.0)(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0)(yaml@2.9.0))
+        version: nitro-nightly@3.0.260603-beta(chokidar@5.0.0)(jiti@2.7.0)(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0)(yaml@2.9.0))
       postcss:
         specifier: ^8.5.6
         version: 8.5.15
@@ -1226,11 +1226,11 @@ packages:
     resolution: {integrity: sha512-79pf/RkhteYZTRgcR4F9kbk84P2N8rugQJswxfIqovlbRiT3yI7eBE+5QorIrZaOKktsgzRlXh1l/du/xpl4iA==}
     engines: {node: '>=20.19'}
 
-  '@tanstack/query-core@5.100.14':
-    resolution: {integrity: sha512-5X41dGpxgeaHISCRW2oYwcSycZeULZzAunaudXT9ov1KOTj9xwt0CH6hbwqP1/z74ZWF7rYFnDpyYH07XFcZew==}
+  '@tanstack/query-core@5.101.0':
+    resolution: {integrity: sha512-cQetA74EB+seWySv1TTKr828TnP0u39m6LykwDXIo84SNortpDkp30TMEjkqtYCNP9c40uT/iwl6MLiufEt0Ow==}
 
-  '@tanstack/react-query@5.100.14':
-    resolution: {integrity: sha512-oOr6aRdSFEwWhzxEkD/9ZcItM3+LjBSkeVmadWKwUssAHTsqd/7bOjWrX4AbvEkoEhgAxzN0Xk6H/aYzXiYBAw==}
+  '@tanstack/react-query@5.101.0':
+    resolution: {integrity: sha512-rLlJXSpkqfizLWgkR5+eLeIk0MvTx/meEIR7LRjxic+qxiQP8zVjq7BqQkiCMNLQBlLfuOLqqr6KO5GtrDlmSg==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -2510,16 +2510,16 @@ packages:
   nf3@0.3.17:
     resolution: {integrity: sha512-N9zEWySuJFw+gR0lhS5863YsvNeudOdqRyFvNb+jMXbeTJOdrjDqkCpDginIZfUm0LzT1t1nCRiDeqQm/8kirQ==}
 
-  nitro-nightly@3.0.1-20260601-173724-a2597363:
-    resolution: {integrity: sha512-Pe/XW1ZQ9mmGfbUImetmrrN7EqbRohyni5CDFd5SeARWHT5/P4JlYHOGXYTN8J/am3iFQJ7SjhvwHwC41NOXEg==}
+  nitro-nightly@3.0.260603-beta:
+    resolution: {integrity: sha512-uOSGn2KfRONccyMFNexnyLZLUruQ8Myg8m/tP6DCnI2VxNP27C9Sl6gveEGqbSnuKRxN8Ze1YMz/DmMaA62Qgw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
       '@vercel/queue': ^0.2.0
       dotenv: '*'
       giget: '*'
-      jiti: ^2.6.1
-      rollup: ^4.60.3
+      jiti: ^2.7.0
+      rollup: ^4.60.4
       vite: ^7 || ^8
       xml2js: ^0.6.2
       zephyr-agent: ^0.2.0
@@ -4170,11 +4170,11 @@ snapshots:
 
   '@tanstack/history@1.162.0': {}
 
-  '@tanstack/query-core@5.100.14': {}
+  '@tanstack/query-core@5.101.0': {}
 
-  '@tanstack/react-query@5.100.14(react@19.2.7)':
+  '@tanstack/react-query@5.101.0(react@19.2.7)':
     dependencies:
-      '@tanstack/query-core': 5.100.14
+      '@tanstack/query-core': 5.101.0
       react: 19.2.7
 
   '@tanstack/react-router@1.170.10(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
@@ -5793,7 +5793,7 @@ snapshots:
 
   nf3@0.3.17: {}
 
-  nitro-nightly@3.0.1-20260601-173724-a2597363(chokidar@5.0.0)(jiti@2.7.0)(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0)(yaml@2.9.0)):
+  nitro-nightly@3.0.260603-beta(chokidar@5.0.0)(jiti@2.7.0)(vite@8.0.16(@types/node@24.12.4)(jiti@2.7.0)(yaml@2.9.0)):
     dependencies:
       consola: 3.4.2
       crossws: 0.4.5(srvx@0.11.16)
