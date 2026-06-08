@@ -17,7 +17,10 @@
 		"format:check": "biome format --check .",
 		"validate": "tsc --noEmit && biome check . && knip",
 		"preview": "vite preview",
-		"cms": "pnpm --dir cms dev"
+		"cms": "pnpm --dir cms dev",
+		"dev:cms": "pnpm --dir cms dev",
+		"validate:all": "pnpm validate && pnpm --dir cms validate",
+		"build:all": "pnpm build && pnpm --dir cms build"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",
@@ -87,14 +90,27 @@
 		"overrides": {
 			"@tanstack/start-plugin-core>srvx": "0.11.16",
 			"@tanstack/start-server-core>h3-v2": "npm:h3@2.0.1-rc.22",
+			"@babel/plugin-transform-modules-systemjs": "7.29.7",
+			"ajv": "^8.0.0",
 			"ajv>fast-uri": "3.1.2",
 			"anymatch>picomatch": "4.0.4",
 			"commitizen>lodash": "4.18.1",
 			"cz-customizable>lodash": "4.18.1",
+			"dompurify": "3.4.7",
+			"filelist>minimatch": "10.2.5",
+			"flatted": "3.4.2",
+			"follow-redirects": "1.16.0",
 			"knip>smol-toml": "1.6.1",
 			"micromatch>picomatch": "4.0.4",
+			"minimatch@10>brace-expansion": "5.0.6",
 			"readdirp>picomatch": "4.0.4",
-			"tmp": "^0.2.4"
+			"readdir-glob>minimatch": "10.2.5",
+			"tinyglobby>picomatch": "4.0.4",
+			"tmp": "^0.2.4",
+			"@actions/github>undici": "8.2.0",
+			"@actions/http-client>undici": "8.2.0",
+			"@vercel/frameworks>js-yaml": "4.1.1",
+			"vite": "8.0.16"
 		}
 	}
 }
