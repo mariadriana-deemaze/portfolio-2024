@@ -152,6 +152,45 @@
 	}
 }
 
+@keyframes pulse-dot {
+	0% {
+		box-shadow: 0 0 0 0 rgba(31, 138, 91, 0.45);
+	}
+	70% {
+		box-shadow: 0 0 0 9px transparent;
+	}
+	100% {
+		box-shadow: 0 0 0 0 transparent;
+	}
+}
+
+@utility entry-card {
+	background: color-mix(in srgb, hsl(var(--card)) 42%, transparent);
+	backdrop-filter: blur(2px);
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset-block: 0;
+		left: 0;
+		width: 2px;
+		background: linear-gradient(180deg, var(--color-orange-light), var(--color-orange-primary));
+		transform: scaleY(0);
+		transform-origin: top;
+		transition: transform 0.55s var(--ease-out);
+	}
+
+	&:hover {
+		transform: translateY(-4px);
+		border-color: color-mix(in srgb, var(--color-orange-primary) 40%, hsl(var(--border)));
+		box-shadow: 0 30px 50px -22px rgba(0, 0, 0, 0.28);
+	}
+
+	&:hover::before {
+		transform: scaleY(1);
+	}
+}
+
 @utility bg-grad-base {
 	background: linear-gradient(180deg, hsl(var(--muted)), hsl(var(--background)) 70%);
 }
