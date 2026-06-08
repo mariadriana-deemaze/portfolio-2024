@@ -2,7 +2,7 @@ import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
-import {publicEnvSchema} from '../src/lib/env'
+import {publicEnvSchema} from './lib/env'
 import {schemaTypes} from './schemaTypes'
 
 const env = publicEnvSchema.parse({
