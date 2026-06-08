@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 import { BGGrid } from '@/components/bg-grid';
 import { CommandMenu } from '@/components/command-menu';
+import { Footer } from '@/components/footer';
 import { GoogleAnalytics } from '@/components/google-analytics';
 import { Navbar } from '@/components/navbar';
 import ProgressIndicator from '@/components/progress-indicator';
@@ -21,7 +22,7 @@ export interface LayoutProps {
 
 export default function Layout({ children, commandLinks = [] }: LayoutProps): ReactNode {
 	return (
-		<div className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar antialiased mb-10 lg:mx-auto">
+		<div className="max-w-full overflow-y-scroll overflow-x-hidden no-scrollbar antialiased lg:mx-auto">
 			<GoogleAnalytics />
 			<Navbar />
 			<ProgressIndicator />
@@ -29,6 +30,7 @@ export default function Layout({ children, commandLinks = [] }: LayoutProps): Re
 				<BGGrid>{children}</BGGrid>
 				<CommandMenu links={commandLinks} />
 			</main>
+			<Footer />
 		</div>
 	);
 }

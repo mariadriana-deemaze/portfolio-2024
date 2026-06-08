@@ -152,6 +152,41 @@
 	}
 }
 
+@utility bg-grad-base {
+	background: linear-gradient(180deg, hsl(var(--muted)), hsl(var(--background)) 70%);
+}
+
+@utility bg-grid-lines {
+	background-size: 54px 54px;
+	background-image:
+		linear-gradient(
+			to right,
+			color-mix(in srgb, hsl(var(--border)) 55%, transparent) 1px,
+			transparent 1px
+		),
+		linear-gradient(
+			to bottom,
+			color-mix(in srgb, hsl(var(--border)) 55%, transparent) 1px,
+			transparent 1px
+		);
+	mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, #000 55%, transparent 100%);
+	-webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, #000 55%, transparent 100%);
+	will-change: transform;
+	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility bg-dots-layer {
+	background-size: 54px 54px;
+	background-image: radial-gradient(
+		circle,
+		color-mix(in srgb, var(--color-orange-primary) 32%, transparent) 1.1px,
+		transparent 1.4px
+	);
+	background-position: 27px 27px;
+	will-change: transform;
+	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @utility scroll-fade-reveal {
 	opacity: 0;
 	transform: translateY(20px);
