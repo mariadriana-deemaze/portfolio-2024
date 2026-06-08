@@ -180,7 +180,7 @@
 
 @utility logo-fade {
 	color: #1f2937;
-	--logo-stroke-start: #f15a24;
+	--logo-stroke-start: var(--color-orange-primary);
 	--logo-stroke-end: #374151;
 	mask-image: radial-gradient(
 		ellipse at 85% 100%,
@@ -214,8 +214,8 @@
 
 	.dark .logo-fade {
 		color: #f3f4f6;
-		--logo-stroke-start: #f15a24;
-		--logo-stroke-end: #ffffff;
+		--logo-stroke-start: var(--color-orange-primary);
+		--logo-stroke-end: var(--logo-stroke-end, #ffffff);
 	}
 }
 
@@ -241,6 +241,56 @@
 		--input: 50 14% 83%;
 		--ring: 55 10% 79%;
 		--radius: 0.5rem;
+		/* Raw palette aliases — used directly in component CSS */
+		--color-bg-base: hsl(48 100% 97%);
+		--color-bg-muted: hsl(51 33% 92%);
+		--color-bg-accent: hsl(51 21% 88%);
+		--color-bg-secondary: hsl(50 14% 83%);
+		--color-fg-base: hsl(0 3% 6%);
+		--color-fg-muted: hsl(49 7% 70%);
+		--color-fg-secondary: hsl(50 3% 42%);
+		/* Brand — HSL channels for Tailwind hsl(var(--brand)) pattern */
+		--brand: 15 87% 54%;
+		--brand-foreground: 48 100% 97%;
+		/* Orange palette */
+		--color-orange-primary: #f15a24;
+		--color-orange-light: #f18b3e;
+		--color-orange-muted: #f3c6a7;
+		--color-orange-dark-border: #4d2512;
+		/* Navigation */
+		--nav-border: #f3c6a7;
+		/* Font stacks */
+		--font-display: "ClashDisplay", "DM Sans", sans-serif;
+		--font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+		/* Type scale */
+		--text-xs: 0.625rem;
+		--text-sm: 0.75rem;
+		--text-base: 0.875rem;
+		--text-lg: 1.125rem;
+		--text-xl: 1.25rem;
+		--text-2xl: 2rem;
+		--text-hero: 3.125rem;
+		/* Line heights */
+		--leading-tight: 1;
+		--leading-snug: 1.25;
+		--leading-relaxed: 1.6;
+		--leading-loose: 2;
+		/* Font weights */
+		--weight-light: 300;
+		--weight-normal: 400;
+		--weight-medium: 500;
+		--weight-semibold: 600;
+		--weight-bold: 700;
+		/* Shadows */
+		--shadow-card: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+		--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+		/* Easing */
+		--ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+		--ease-in-out: ease-in-out;
+		--ease-role-out: cubic-bezier(0.6, 0, 0.7, 0.2);
+		--duration-fast: 0.32s;
+		--duration-base: 0.5s;
+		--duration-slow: 1s;
 	}
 
 	.dark {
@@ -263,6 +313,20 @@
 		--border: 40 3% 20%;
 		--input: 40 3% 20%;
 		--ring: 30 3% 24%;
+		/* Raw palette aliases */
+		--color-bg-base: hsl(0 3% 6%);
+		--color-bg-muted: hsl(30 4% 11%);
+		--color-bg-accent: hsl(30 3% 15%);
+		--color-bg-secondary: hsl(40 3% 20%);
+		--color-fg-base: hsl(55 10% 79%);
+		--color-fg-muted: hsl(45 2% 33%);
+		--color-fg-secondary: hsl(43 3% 52%);
+		/* Brand */
+		--brand-foreground: 0 3% 6%;
+		/* Navigation */
+		--nav-border: #4d2512;
+		/* Logo */
+		--logo-stroke-end: #ffffff;
 	}
 
 	* {
@@ -297,7 +361,8 @@
 		transform-origin: left;
 		will-change: transform;
 		transform: scaleX(0);
-		@apply w-full bg-orange-600;
+		@apply w-full;
+		background: var(--color-orange-primary);
 	}
 
 	.animate-fade-in-left {
