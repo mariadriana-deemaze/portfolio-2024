@@ -1,57 +1,47 @@
 import { useLenis } from 'lenis/react';
-import { ReactNode, useRef } from 'react';
+import type { ReactNode } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { cn } from '@/utils/utils';
 
-const ScrollFadeReveal = ({
-	onLoadVisibility = false,
-	children
-}: {
-	onLoadVisibility?: boolean;
+const REVEAL_OFFSET_PX = 28;
+
+interface ScrollFadeRevealProps {
 	children: ReactNode;
-}) => {
+	className?: string;
+	onLoadVisibility?: boolean;
+}
+
+export function ScrollFadeReveal({
+	children,
+	className,
+	onLoadVisibility = false
+}: ScrollFadeRevealProps) {
 	const ref = useRef<HTMLDivElement>(null);
 
-	// @ts-ignore
-	useLenis(({ isScrolling, velocity }) => {
-		if (ref.current) {
-			const elementTop = ref.current.offsetTop;
-			const elementBottom = elementTop + ref.current.offsetHeight;
-			const windowTop = window.scrollY;
-			const windowBottom = windowTop + window.innerHeight;
+	const applyReveal = useCallback(() => {
+		const el = ref.current;
+		if (!el || onLoadVisibility) return;
+		const rect = el.getBoundingClientRect();
+		const vh = window.innerHeight;
+		const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh * 0.45)));
+		el.style.opacity = String(progress);
+		el.style.translate = `0 ${(1 - progress) * REVEAL_OFFSET_PX}px`;
+	}, [onLoadVisibility]);
 
-			const handleScroll = () => {
-				if (ref.current) {
-					if (windowBottom > elementTop && windowTop < elementBottom) {
-						ref.current.classList.add('scroll-fade-in');
-						if (isScrolling) {
-							const skewY = Math.max(-5, Math.min(5, velocity * 2));
-							ref.current.style.transform = `translateY(0) skewX(0deg) skewY(${skewY}deg)`;
-						} else {
-							ref.current.style.transform = 'translateY(0) skewX(0deg) skewY(0deg)';
-						}
-					} else {
-						ref.current.classList.remove('scroll-fade-in');
-						ref.current.style.transform = 'translateY(0) skewX(0deg) skewY(0deg)';
-					}
-				}
-			};
+	useLenis(applyReveal);
 
-			window.addEventListener('scroll', handleScroll);
-			window.addEventListener('touchmove', handleScroll);
-
-			return () => {
-				window.removeEventListener('scroll', handleScroll);
-				window.removeEventListener('touchmove', handleScroll);
-			};
-		}
-	});
+	useEffect(() => {
+		if (onLoadVisibility) return;
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		applyReveal();
+		window.addEventListener('scroll', applyReveal, { passive: true });
+		return () => window.removeEventListener('scroll', applyReveal);
+	}, [applyReveal, onLoadVisibility]);
 
 	return (
-		<div ref={ref} className={cn('scroll-fade-reveal', onLoadVisibility ? 'scroll-fade-in' : null)}>
+		<div ref={ref} className={cn(!onLoadVisibility && 'scroll-fade-reveal', className)}>
 			{children}
 		</div>
 	);
-};
-
-export default ScrollFadeReveal;
+}

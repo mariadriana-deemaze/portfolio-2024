@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { ReactLenis } from 'lenis/react';
 import { type MouseEvent, useRef, useState } from 'react';
 import ReadMoreCursor from '@/components/ui/read-more-cursor';
-import ScrollFadeReveal from '@/components/ui/section-reveal';
+import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import type { Project } from '@/data/projects';
 import { toProjectsSlug } from '@/utils/routes';
 
@@ -56,7 +56,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							>
 								<Link to={toProjectsSlug(project.slug)} className="block">
 									<article>
-										<ScrollFadeReveal onLoadVisibility>
+										<ScrollFadeReveal>
 											<div className="border-b pb-4">
 												<div
 													className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"

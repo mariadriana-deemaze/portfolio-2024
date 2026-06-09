@@ -278,21 +278,11 @@
 
 @utility scroll-fade-reveal {
 	opacity: 0;
-	transform: translateY(20px);
-	transition:
-		opacity 0.5s ease-in-out,
-		transform 0.5s ease-in-out;
+	translate: 0 28px;
 
-	&.scroll-fade-in {
+	@media (prefers-reduced-motion: reduce) {
 		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-@utility scroll-fade-in {
-	&.scroll-fade-reveal {
-		opacity: 1;
-		transform: translateY(0);
+		translate: none;
 	}
 }
 
@@ -491,5 +481,12 @@
 
 	.animate-fade-in-left {
 		@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
+
+		@media (prefers-reduced-motion: reduce) {
+			animation: none;
+			transition: none;
+			opacity: 1;
+			transform: none;
+		}
 	}
 }
