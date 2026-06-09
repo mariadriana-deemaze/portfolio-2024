@@ -1,6 +1,7 @@
 import { createRootRoute, HeadContent, Link, Scripts } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
 
+import { AppLoaderDismiss, AppLoaderShell } from '@/components/app-loader';
 import Layout from '@/components/layout';
 import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
@@ -45,9 +46,11 @@ function RootDocument({ children }: { children: ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
+				<AppLoaderShell />
 				<Layout commandLinks={commandLinks}>{children}</Layout>
 				<WebMcpRegistration />
 				<Toaster />
+				<AppLoaderDismiss />
 				<Scripts />
 			</body>
 		</html>
