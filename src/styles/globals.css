@@ -466,6 +466,44 @@
 }
 
 @layer components {
+	#app-loader {
+		position: fixed;
+		inset: 0;
+		z-index: 9999;
+		background: hsl(48, 100%, 97%);
+		transition: opacity 0.5s ease;
+	}
+
+	html.dark #app-loader {
+		background: hsl(0, 3%, 6%);
+	}
+
+	#app-loader-bar {
+		position: absolute;
+		top: 0;
+		left: -40%;
+		width: 40%;
+		height: 2px;
+		background: linear-gradient(90deg, transparent, #f15a24, #f18b3e, transparent);
+		animation: al-scan 1.2s ease-in-out infinite;
+	}
+
+	@keyframes al-scan {
+		to {
+			left: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#app-loader-bar {
+			animation: none;
+			left: 0;
+			width: 100%;
+			background: #f15a24;
+			opacity: 0.3;
+		}
+	}
+
 	.progress {
 		height: 0.18rem;
 	}
