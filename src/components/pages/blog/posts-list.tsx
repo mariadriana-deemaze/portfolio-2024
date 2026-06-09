@@ -5,7 +5,7 @@ import { ReactLenis } from 'lenis/react';
 import { type MouseEvent, useRef, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import ReadMoreCursor from '@/components/ui/read-more-cursor';
-import ScrollFadeReveal from '@/components/ui/section-reveal';
+import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import type { BlogPost } from '@/data/blog';
 import { toBlogSlug } from '@/utils/routes';
 
@@ -59,7 +59,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 						>
 							<Link to={toBlogSlug(post.slug)} className="block">
 								<article>
-									<ScrollFadeReveal onLoadVisibility>
+									<ScrollFadeReveal>
 										<h1 className="font-clash font-medium text-3xl text-fade-grad">{post.title}</h1>
 										<time className="flex flex-row gap-2 items-center text-pretty font-mono text-xs text-foreground text-gray-500">
 											<CalendarIcon />
