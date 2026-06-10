@@ -1,10 +1,49 @@
+import { useRef } from 'react';
+
 import { NowPlaying } from '@/components/now-playing';
 import { AnimatedMottos } from '@/components/pages/home/motto';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
 
+const TILT_MAX = 16;
+
 export const SectionHero = () => {
 	const currentWork = data.work.find((w) => w.end === 'Present');
+	const avatarRef = useRef<HTMLDivElement>(null);
+	const borderRef = useRef<HTMLDivElement>(null);
+	const shineRef = useRef<HTMLDivElement>(null);
+	const highlightRef = useRef<HTMLDivElement>(null);
+
+	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const el = avatarRef.current;
+		const border = borderRef.current;
+		const shine = shineRef.current;
+		const highlight = highlightRef.current;
+		if (!el || !border || !shine || !highlight) return;
+		const rect = el.getBoundingClientRect();
+		const x = (e.clientX - rect.left) / rect.width - 0.5;
+		const y = (e.clientY - rect.top) / rect.height - 0.5;
+		el.style.transform = `perspective(500px) rotateY(${x * TILT_MAX}deg) rotateX(${-y * TILT_MAX}deg) scale3d(1.04,1.04,1.04)`;
+		shine.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+		shine.style.opacity = '0.18';
+		const px = (x + 0.5) * rect.width;
+		const py = (y + 0.5) * rect.height;
+		highlight.style.transform = `translate(${px - 40}px, ${py - 40}px)`;
+		highlight.style.opacity = '0.45';
+		const angle = Math.atan2(y, x) * (180 / Math.PI) - 90;
+		border.style.background = `conic-gradient(from ${angle - 25}deg at 50% 50%, hsl(var(--border)) 0deg, rgba(241,90,36,0.9) 25deg, rgba(251,146,60,0.6) 40deg, hsl(var(--border)) 55deg, hsl(var(--border)) 360deg)`;
+	};
+
+	const handleMouseLeave = () => {
+		if (avatarRef.current) avatarRef.current.style.transform = '';
+		if (shineRef.current) {
+			shineRef.current.style.opacity = '0';
+			shineRef.current.style.transform = 'translate(0,0)';
+		}
+		if (highlightRef.current) highlightRef.current.style.opacity = '0';
+		if (borderRef.current) borderRef.current.style.background = '';
+	};
 
 	return (
 		<Section className="mt-20 animate-fade-in delay-100">
@@ -76,13 +115,44 @@ export const SectionHero = () => {
 							)}
 						</div>
 
-						<div className="relative flex-shrink-0">
-							<div className="w-[92px] h-[92px] rounded-[7px] overflow-hidden border border-border shadow-card">
-								<img
-									className="w-full h-full object-cover block"
-									alt={data.name}
-									src="images/avatar.jpeg"
-								/>
+						<div
+							ref={avatarRef}
+							className="relative flex-shrink-0 will-change-transform"
+							style={{ transition: 'transform 0.6s var(--ease-out)' }}
+							onMouseMove={handleMouseMove}
+							onMouseLeave={handleMouseLeave}
+						>
+							<div
+								ref={borderRef}
+								className="rounded-[8px] p-px shadow-card"
+								style={{ background: 'hsl(var(--border))', transition: 'background 0.2s ease' }}
+							>
+								<div className="relative w-[92px] h-[92px] rounded-[7px] overflow-hidden bg-background">
+									<img
+										className="w-full h-full object-cover block"
+										alt={data.name}
+										src="images/avatar.jpeg"
+									/>
+									<div
+										ref={shineRef}
+										className="absolute pointer-events-none mix-blend-overlay opacity-0 will-change-transform"
+										style={{
+											inset: '-50%',
+											backgroundImage:
+												'linear-gradient(105deg, hsla(0,50%,72%,0.9) 0%, hsla(60,50%,72%,0.9) 17%, hsla(120,50%,72%,0.9) 33%, hsla(180,50%,72%,0.9) 50%, hsla(240,50%,72%,0.9) 67%, hsla(300,50%,72%,0.9) 83%, hsla(360,50%,72%,0.9) 100%)',
+											transition: 'opacity 0.4s ease, transform 0.12s ease'
+										}}
+									/>
+									<div
+										ref={highlightRef}
+										className="absolute top-0 left-0 w-[80px] h-[80px] rounded-full pointer-events-none mix-blend-screen opacity-0 will-change-transform"
+										style={{
+											background:
+												'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 65%)',
+											transition: 'opacity 0.25s ease, transform 0.08s ease'
+										}}
+									/>
+								</div>
 							</div>
 							<div
 								className="absolute bottom-[-6px] right-[-6px] w-[30px] h-[30px] rounded-full bg-background border border-border grid place-items-center text-[15px] animate-[hero-wave_3.4s_ease-in-out_infinite] origin-[70%_80%] motion-reduce:animate-none"
