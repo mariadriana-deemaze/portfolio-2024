@@ -5,13 +5,10 @@ const BLOB_TRANSITION = 'transform 0.9s cubic-bezier(0.22,1,0.36,1)';
 
 export function BGGrid({ children }: { children?: ReactNode }) {
 	const gridRef = useRef<HTMLDivElement>(null);
-	const dotsRef = useRef<HTMLDivElement>(null);
 	const blob1Ref = useRef<HTMLImageElement>(null);
 	const blob2Ref = useRef<HTMLImageElement>(null);
 
 	useEffect(() => {
-		if (blob2Ref.current) blob2Ref.current.style.transform = 'rotate(180deg)';
-
 		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduce) return;
 
@@ -24,8 +21,6 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 			raf = null;
 			if (gridRef.current)
 				gridRef.current.style.transform = `translate(${mx * 14}px, ${my * 14 - sy * 0.04}px)`;
-			if (dotsRef.current)
-				dotsRef.current.style.transform = `translate(${mx * 22}px, ${my * 22 - sy * 0.06}px)`;
 			if (blob1Ref.current)
 				blob1Ref.current.style.transform = `translate(${mx * 50}px, ${my * 40 + sy * 0.05}px)`;
 			if (blob2Ref.current)
@@ -69,9 +64,6 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 				{/* Graph-paper grid — 1px lines, radial mask fades edges */}
 				<div ref={gridRef} className="absolute inset-[-120px] bg-grid-lines" />
 
-				{/* Orange dot intersections */}
-				<div ref={dotsRef} className="absolute inset-[-120px] bg-dots-layer opacity-[0.35]" />
-
 				{/* Colour blobs */}
 				<img
 					ref={blob1Ref}
@@ -84,7 +76,7 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 				<img
 					ref={blob2Ref}
 					className="absolute -right-10 -top-32 w-[200px] h-[400px] opacity-[0.15]"
-					style={{ transition: BLOB_TRANSITION }}
+					style={{ transition: BLOB_TRANSITION, transform: 'rotate(180deg)' }}
 					src="/images/color_grad.webp"
 					alt=""
 					aria-hidden="true"

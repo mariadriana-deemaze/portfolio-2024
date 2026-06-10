@@ -113,6 +113,10 @@
 @utility letter {
 	.roles-slider .role-slide & {
 		@apply origin-[center_center_5px] opacity-0 whitespace-pre;
+		background: inherit;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 
 	.roles-slider .role-slide &.out {
@@ -161,6 +165,49 @@
 	}
 	100% {
 		box-shadow: 0 0 0 0 transparent;
+	}
+}
+
+@keyframes hero-wave {
+	0%,
+	88%,
+	100% {
+		rotate: 0deg;
+	}
+	91% {
+		rotate: 16deg;
+	}
+	94% {
+		rotate: -8deg;
+	}
+	97% {
+		rotate: 12deg;
+	}
+}
+
+@keyframes scrollcue {
+	0% {
+		top: -50%;
+	}
+	100% {
+		top: 100%;
+	}
+}
+
+.hero-scrollcue-bar::after {
+	content: "";
+	position: absolute;
+	top: -50%;
+	left: 0;
+	width: 100%;
+	height: 50%;
+	background: var(--color-orange-primary);
+	animation: scrollcue 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-scrollcue-bar::after {
+		animation: none;
 	}
 }
 

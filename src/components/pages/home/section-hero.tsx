@@ -1,77 +1,178 @@
-import { HiOutlineGlobe } from 'react-icons/hi';
+import { useRef } from 'react';
 
-import { LogoMA } from '@/components/logo-ma';
+import { NowPlaying } from '@/components/now-playing';
 import { AnimatedMottos } from '@/components/pages/home/motto';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
 
+const TILT_MAX = 16;
+
 export const SectionHero = () => {
+	const currentWork = data.work.find((w) => w.end === 'Present');
+	const avatarRef = useRef<HTMLDivElement>(null);
+	const borderRef = useRef<HTMLDivElement>(null);
+	const shineRef = useRef<HTMLDivElement>(null);
+	const highlightRef = useRef<HTMLDivElement>(null);
+
+	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const el = avatarRef.current;
+		const border = borderRef.current;
+		const shine = shineRef.current;
+		const highlight = highlightRef.current;
+		if (!el || !border || !shine || !highlight) return;
+		const rect = el.getBoundingClientRect();
+		const x = (e.clientX - rect.left) / rect.width - 0.5;
+		const y = (e.clientY - rect.top) / rect.height - 0.5;
+		el.style.transform = `perspective(500px) rotateY(${x * TILT_MAX}deg) rotateX(${-y * TILT_MAX}deg) scale3d(1.04,1.04,1.04)`;
+		shine.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+		shine.style.opacity = '0.18';
+		const px = (x + 0.5) * rect.width;
+		const py = (y + 0.5) * rect.height;
+		highlight.style.transform = `translate(${px - 40}px, ${py - 40}px)`;
+		highlight.style.opacity = '0.45';
+		const angle = Math.atan2(y, x) * (180 / Math.PI) - 90;
+		border.style.background = `conic-gradient(from ${angle - 25}deg at 50% 50%, hsl(var(--border)) 0deg, rgba(241,90,36,0.9) 25deg, rgba(251,146,60,0.6) 40deg, hsl(var(--border)) 55deg, hsl(var(--border)) 360deg)`;
+	};
+
+	const handleMouseLeave = () => {
+		if (avatarRef.current) avatarRef.current.style.transform = '';
+		if (shineRef.current) {
+			shineRef.current.style.opacity = '0';
+			shineRef.current.style.transform = 'translate(0,0)';
+		}
+		if (highlightRef.current) highlightRef.current.style.opacity = '0';
+		if (borderRef.current) borderRef.current.style.background = '';
+	};
+
 	return (
 		<Section className="mt-20 animate-fade-in delay-100">
-			<div className="flex items-center justify-between flex-wrap-reverse sm:flex-nowrap gap-5">
-				<div className="flex-1 space-y-5">
-					<div className="flex-1 group">
-						<div className="relative w-min">
-							<h1 className="relative w-min leading-none">
-								<LogoMA />
-							</h1>
-							<div className="-mt-5 pl-[calc(38.8%-4px)]">
-								<AnimatedMottos
-									data={[...data.mottos]}
-									className="text-[#F15A24] from-[#F18B3E] bg-linear-to-r to-[#F15A24] bg-clip-text"
-								/>
-							</div>
-						</div>
+			<h1 className="font-clash font-medium text-[clamp(64px,20vw,116px)] leading-[0.92] tracking-[-0.035em] m-0">
+				<span className="block w-fit pb-[0.04em] bg-[linear-gradient(to_right,var(--color-fg-base)_50%,transparent)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent]">
+					maria
+				</span>
+				<span className="block w-fit pb-[0.04em] bg-[linear-gradient(to_right,var(--color-orange-primary)_50%,transparent)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent]">
+					adriana
+				</span>
+			</h1>
+
+			<div className="flex items-start justify-between gap-7 max-sm:gap-[22px] mt-[34px] flex-wrap">
+				<div style={{ flex: '1 1 300px' }}>
+					<div className="font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
+						<AnimatedMottos
+							data={[...data.mottos]}
+							className="bg-[linear-gradient(to_bottom,var(--color-orange-light),var(--color-orange-primary))] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent] text-transparent"
+						/>
 					</div>
-					<p className="max-w-md text-pretty font-mono text-sm text-foreground">{data.about}</p>
-					<p className="max-w-md items-center text-pretty font-mono text-xs text-gray-500">
-						<a
-							className="inline-flex gap-x-1.5 align-baseline leading-none hover:underline"
-							href={data.locationLink}
-							target="_blank"
-							rel="noreferrer"
-						>
-							<HiOutlineGlobe className="h-3 w-3" />
-							{data.location}
-						</a>
+
+					<p className="font-mono text-sm leading-[1.7] max-w-[380px] mt-[14px] text-foreground m-0">
+						{data.about}
 					</p>
-					<div className="flex gap-x-1 pt-1 font-mono text-sm text-foreground print:hidden">
+
+					<div className="flex gap-[14px] mt-[26px] print:hidden">
 						{data.contact.social.map((social) => (
-							<Button
+							<a
 								key={social.name}
-								className="h-8 w-8 bg-card text-card-foreground"
-								variant="outline"
-								size="icon"
-								asChild
+								href={social.url}
+								target="_blank"
+								rel="noreferrer"
+								aria-label={social.name}
+								className="w-[22px] h-[22px] text-muted-foreground grid place-items-center no-underline transition-[translate,color] duration-300 hover:-translate-y-[3px] hover:text-[var(--color-orange-primary)]"
 							>
-								<a href={social.url} target="_blank" rel="noreferrer">
-									<social.icon className="h-4 w-4" />
-								</a>
-							</Button>
-						))}
-					</div>
-					<div className="hidden flex-col gap-x-1 font-mono text-sm text-muted-foreground print:flex">
-						{data.contact.email ? (
-							<a href={`mailto:${data.contact.email}`}>
-								<span className="underline">{data.contact.email}</span>
+								<social.icon className="w-[18px] h-[18px]" aria-hidden="true" />
 							</a>
-						) : null}
+						))}
 					</div>
 				</div>
 
-				<div className="relative">
-					<Avatar className="h-20 w-20 md:h-28 md:w-28">
-						<AvatarImage alt={data.name} src="images/avatar.jpeg" />
-						<AvatarFallback>
-							{data.name.split(' ').map((part) => part[0].toUpperCase())}
-						</AvatarFallback>
-					</Avatar>
-					<div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full p-4 border border-input bg-card text-card-foreground text-[18px]">
-						{'\u{1F44B}'}
+				<div className="flex flex-col gap-5 w-[340px] max-w-full">
+					<div className="flex gap-6 items-start justify-between">
+						<div className="flex flex-col gap-[14px] min-w-[168px] max-sm:min-w-0">
+							<div>
+								<div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground">
+									Focus
+								</div>
+								<div className="font-mono text-[13px] text-foreground mt-[3px] whitespace-nowrap">
+									{data.focus.join(' · ')}
+								</div>
+							</div>
+							{currentWork && (
+								<div>
+									<div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground">
+										Currently
+									</div>
+									<div className="font-mono text-[13px] text-foreground mt-[3px] whitespace-nowrap">
+										<a
+											href={currentWork.link}
+											target="_blank"
+											rel="noreferrer"
+											className="hover:text-[var(--color-orange-primary)] transition-colors"
+										>
+											{currentWork.company}
+										</a>
+									</div>
+								</div>
+							)}
+						</div>
+
+						<div
+							ref={avatarRef}
+							className="relative flex-shrink-0 will-change-transform"
+							style={{ transition: 'transform 0.6s var(--ease-out)' }}
+							onMouseMove={handleMouseMove}
+							onMouseLeave={handleMouseLeave}
+						>
+							<div
+								ref={borderRef}
+								className="rounded-[8px] p-px shadow-card"
+								style={{ background: 'hsl(var(--border))', transition: 'background 0.2s ease' }}
+							>
+								<div className="relative w-[92px] h-[92px] rounded-[7px] overflow-hidden bg-background">
+									<img
+										className="w-full h-full object-cover block"
+										alt={data.name}
+										src="images/avatar.jpeg"
+									/>
+									<div
+										ref={shineRef}
+										className="absolute pointer-events-none mix-blend-overlay opacity-0 will-change-transform"
+										style={{
+											inset: '-50%',
+											backgroundImage:
+												'linear-gradient(105deg, hsla(0,50%,72%,0.9) 0%, hsla(60,50%,72%,0.9) 17%, hsla(120,50%,72%,0.9) 33%, hsla(180,50%,72%,0.9) 50%, hsla(240,50%,72%,0.9) 67%, hsla(300,50%,72%,0.9) 83%, hsla(360,50%,72%,0.9) 100%)',
+											transition: 'opacity 0.4s ease, transform 0.12s ease'
+										}}
+									/>
+									<div
+										ref={highlightRef}
+										className="absolute top-0 left-0 w-[80px] h-[80px] rounded-full pointer-events-none mix-blend-screen opacity-0 will-change-transform"
+										style={{
+											background:
+												'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 65%)',
+											transition: 'opacity 0.25s ease, transform 0.08s ease'
+										}}
+									/>
+								</div>
+							</div>
+							<div
+								className="absolute bottom-[-6px] right-[-6px] w-[30px] h-[30px] rounded-full bg-background border border-border grid place-items-center text-[15px] animate-[hero-wave_3.4s_ease-in-out_infinite] origin-[70%_80%] motion-reduce:animate-none"
+								aria-hidden="true"
+							>
+								👋
+							</div>
+						</div>
 					</div>
+
+					<NowPlaying />
 				</div>
+			</div>
+
+			<div
+				className="flex items-center gap-[10px] mt-[56px] font-mono text-[11px] tracking-[0.1em] uppercase text-muted-foreground print:hidden"
+				aria-hidden="true"
+			>
+				<span className="relative w-px h-[38px] bg-border overflow-hidden shrink-0 hero-scrollcue-bar" />
+				scroll to explore
 			</div>
 		</Section>
 	);
