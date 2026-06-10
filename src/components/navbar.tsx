@@ -105,9 +105,6 @@ export function Navbar() {
 					</div>
 
 					<div className="flex items-center gap-[7px] shrink-0">
-						<div className="hidden sm:block">
-							<NowPlaying />
-						</div>
 						<ThemeToggle />
 
 						<button

@@ -7,8 +7,15 @@ export const BASE_URL = 'https://maria-adriana.com';
 export const data = {
 	name: 'Maria Adriana',
 	role: 'Full Stack Developer',
+	available: true,
+	focus: ['Web', 'Mobile', 'Full Stack'],
 	github: 'https://github.com/mariadriana-deemaze',
-	mottos: ['Full Stack Developer', 'Front-end Developer', 'Back-end Developer'],
+	mottos: [
+		'Full Stack Developer',
+		'Communication Designer',
+		'Curious Overthinker',
+		'Coffee Enthusiast'
+	],
 	location: 'Portugal, Coimbra',
 	locationLink: 'https://www.google.com/maps/place/Coimbra',
 	about:

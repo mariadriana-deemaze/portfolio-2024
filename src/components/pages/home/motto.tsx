@@ -11,7 +11,7 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 		words.forEach((word) => {
 			const letters = word.textContent?.split('');
 			word.textContent = '';
-			letters.forEach((letter) => {
+			letters?.forEach((letter) => {
 				const span = document.createElement('span');
 				span.textContent = letter;
 				span.className = 'letter';
@@ -23,13 +23,7 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 	const animateText = useCallback(() => {
 		const words = document.querySelectorAll('.role-slide');
 
-		let lastWordIndex = 0;
-
-		if (roleIndex === 0) {
-			lastWordIndex = data.length - 1;
-		} else {
-			lastWordIndex = roleIndex - 1;
-		}
+		const lastWordIndex = roleIndex === 0 ? data.length - 1 : roleIndex - 1;
 
 		const currentWord = words[roleIndex];
 		const previousWord = words[lastWordIndex];

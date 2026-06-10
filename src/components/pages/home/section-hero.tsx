@@ -1,77 +1,108 @@
-import { HiOutlineGlobe } from 'react-icons/hi';
-
-import { LogoMA } from '@/components/logo-ma';
+import { NowPlaying } from '@/components/now-playing';
 import { AnimatedMottos } from '@/components/pages/home/motto';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
 
 export const SectionHero = () => {
+	const currentWork = data.work.find((w) => w.end === 'Present');
+
 	return (
 		<Section className="mt-20 animate-fade-in delay-100">
-			<div className="flex items-center justify-between flex-wrap-reverse sm:flex-nowrap gap-5">
-				<div className="flex-1 space-y-5">
-					<div className="flex-1 group">
-						<div className="relative w-min">
-							<h1 className="relative w-min leading-none">
-								<LogoMA />
-							</h1>
-							<div className="-mt-5 pl-[calc(38.8%-4px)]">
-								<AnimatedMottos
-									data={[...data.mottos]}
-									className="text-[#F15A24] from-[#F18B3E] bg-linear-to-r to-[#F15A24] bg-clip-text"
-								/>
-							</div>
-						</div>
+			<h1 className="font-clash font-medium text-[clamp(64px,20vw,116px)] leading-[0.92] tracking-[-0.035em] m-0">
+				<span className="block w-fit pb-[0.04em] bg-[linear-gradient(to_right,var(--color-fg-base)_50%,transparent)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent]">
+					maria
+				</span>
+				<span className="block w-fit pb-[0.04em] bg-[linear-gradient(to_right,var(--color-orange-primary)_50%,transparent)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent]">
+					adriana
+				</span>
+			</h1>
+
+			<div className="flex items-start justify-between gap-7 max-sm:gap-[22px] mt-[34px] flex-wrap">
+				<div style={{ flex: '1 1 300px' }}>
+					<div className="font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
+						<AnimatedMottos
+							data={[...data.mottos]}
+							className="bg-[linear-gradient(to_bottom,var(--color-orange-light),var(--color-orange-primary))] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent] text-transparent"
+						/>
 					</div>
-					<p className="max-w-md text-pretty font-mono text-sm text-foreground">{data.about}</p>
-					<p className="max-w-md items-center text-pretty font-mono text-xs text-gray-500">
-						<a
-							className="inline-flex gap-x-1.5 align-baseline leading-none hover:underline"
-							href={data.locationLink}
-							target="_blank"
-							rel="noreferrer"
-						>
-							<HiOutlineGlobe className="h-3 w-3" />
-							{data.location}
-						</a>
+
+					<p className="font-mono text-sm leading-[1.7] max-w-[380px] mt-[14px] text-foreground m-0">
+						{data.about}
 					</p>
-					<div className="flex gap-x-1 pt-1 font-mono text-sm text-foreground print:hidden">
+
+					<div className="flex gap-[14px] mt-[26px] print:hidden">
 						{data.contact.social.map((social) => (
-							<Button
+							<a
 								key={social.name}
-								className="h-8 w-8 bg-card text-card-foreground"
-								variant="outline"
-								size="icon"
-								asChild
+								href={social.url}
+								target="_blank"
+								rel="noreferrer"
+								aria-label={social.name}
+								className="w-[22px] h-[22px] text-muted-foreground grid place-items-center no-underline transition-[translate,color] duration-300 hover:-translate-y-[3px] hover:text-[var(--color-orange-primary)]"
 							>
-								<a href={social.url} target="_blank" rel="noreferrer">
-									<social.icon className="h-4 w-4" />
-								</a>
-							</Button>
-						))}
-					</div>
-					<div className="hidden flex-col gap-x-1 font-mono text-sm text-muted-foreground print:flex">
-						{data.contact.email ? (
-							<a href={`mailto:${data.contact.email}`}>
-								<span className="underline">{data.contact.email}</span>
+								<social.icon className="w-[18px] h-[18px]" aria-hidden="true" />
 							</a>
-						) : null}
+						))}
 					</div>
 				</div>
 
-				<div className="relative">
-					<Avatar className="h-20 w-20 md:h-28 md:w-28">
-						<AvatarImage alt={data.name} src="images/avatar.jpeg" />
-						<AvatarFallback>
-							{data.name.split(' ').map((part) => part[0].toUpperCase())}
-						</AvatarFallback>
-					</Avatar>
-					<div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full p-4 border border-input bg-card text-card-foreground text-[18px]">
-						{'\u{1F44B}'}
+				<div className="flex flex-col gap-5 w-[340px] max-w-full">
+					<div className="flex gap-6 items-start justify-between">
+						<div className="flex flex-col gap-[14px] min-w-[168px] max-sm:min-w-0">
+							<div>
+								<div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground">
+									Focus
+								</div>
+								<div className="font-mono text-[13px] text-foreground mt-[3px] whitespace-nowrap">
+									{data.focus.join(' · ')}
+								</div>
+							</div>
+							{currentWork && (
+								<div>
+									<div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground">
+										Currently
+									</div>
+									<div className="font-mono text-[13px] text-foreground mt-[3px] whitespace-nowrap">
+										<a
+											href={currentWork.link}
+											target="_blank"
+											rel="noreferrer"
+											className="hover:text-[var(--color-orange-primary)] transition-colors"
+										>
+											{currentWork.company}
+										</a>
+									</div>
+								</div>
+							)}
+						</div>
+
+						<div className="relative flex-shrink-0">
+							<div className="w-[92px] h-[92px] rounded-[7px] overflow-hidden border border-border shadow-card">
+								<img
+									className="w-full h-full object-cover block"
+									alt={data.name}
+									src="images/avatar.jpeg"
+								/>
+							</div>
+							<div
+								className="absolute bottom-[-6px] right-[-6px] w-[30px] h-[30px] rounded-full bg-background border border-border grid place-items-center text-[15px] animate-[hero-wave_3.4s_ease-in-out_infinite] origin-[70%_80%] motion-reduce:animate-none"
+								aria-hidden="true"
+							>
+								👋
+							</div>
+						</div>
 					</div>
+
+					<NowPlaying />
 				</div>
+			</div>
+
+			<div
+				className="flex items-center gap-[10px] mt-[56px] font-mono text-[11px] tracking-[0.1em] uppercase text-muted-foreground print:hidden"
+				aria-hidden="true"
+			>
+				<span className="relative w-px h-[38px] bg-border overflow-hidden shrink-0 hero-scrollcue-bar" />
+				scroll to explore
 			</div>
 		</Section>
 	);

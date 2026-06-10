@@ -1,93 +1,84 @@
 import { useQuery } from '@tanstack/react-query';
-import { Badge } from '@/components/ui/badge';
+import { useEffect, useState } from 'react';
+
 import type { NowPlayingData } from '@/server/routes/api/types/spotify';
 
+const EQ_FRAMES = [
+	[5, 13, 8, 12, 6],
+	[12, 6, 13, 7, 11],
+	[8, 12, 5, 13, 9],
+	[13, 7, 10, 6, 12]
+] as const;
+
+function SpotifyIcon() {
+	return (
+		<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+			<path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.52 17.34c-.24.36-.66.48-1.02.24-2.82-1.74-6.36-2.1-10.56-1.14-.42.12-.78-.18-.9-.54-.12-.42.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.48.66.3 1.02zm1.44-3.3c-.3.42-.84.6-1.26.3-3.24-1.98-8.16-2.58-11.94-1.38-.48.12-1.02-.12-1.14-.6-.12-.48.12-1.02.6-1.14 4.38-1.32 9.78-.66 13.5 1.62.36.18.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.1 9.3c-.6.18-1.2-.18-1.38-.72-.18-.6.18-1.2.72-1.38 4.32-1.32 11.4-1.02 15.84 1.62.54.3.72 1.02.42 1.56-.3.48-1.02.66-1.56.36z" />
+		</svg>
+	);
+}
+
 export const NowPlaying = () => {
+	const [tick, setTick] = useState(0);
+
 	const { data: nowPlaying } = useQuery<{ data: NowPlayingData }>({
 		queryKey: ['nowPlaying'],
 		queryFn: async () => fetch('/api/spotify/currently-playing').then((r) => r.json()),
 		refetchInterval: 5000
 	});
 
+	const isPlaying = nowPlaying?.data.isPlaying;
+
+	useEffect(() => {
+		if (!isPlaying) return;
+		const id = setInterval(() => setTick((t) => t + 1), 480);
+		return () => clearInterval(id);
+	}, [isPlaying]);
+
+	const heights = EQ_FRAMES[tick % 4] ?? EQ_FRAMES[0];
+	const href = isPlaying ? nowPlaying?.data.songUrl : 'https://open.spotify.com';
+
 	return (
-		<div>
-			{nowPlaying?.data.isPlaying ? (
-				<a href={nowPlaying?.data.songUrl} target="_blank" rel="noreferrer" className="group block">
-					<div className="flex items-start">
-						<div className="relative h-6 inline-block max-w-[220px] align-top">
-							<span className="invisible block h-6 px-2 py-0 text-xs font-semibold leading-snug truncate">
-								{nowPlaying?.data.title} - {nowPlaying?.data.artist}
-							</span>
-							<Badge
-								variant="outline"
-								className="absolute left-0 top-0 bg-card text-card-foreground h-6 w-max max-w-[220px] overflow-hidden rounded-[24px] px-2 py-0 sm:left-auto sm:right-0 group-hover:h-24 group-hover:w-[320px] group-hover:max-w-none group-hover:rounded-[10px] group-focus-within:h-24 group-focus-within:w-[320px] group-focus-within:max-w-none group-focus-within:rounded-[10px]"
-								style={{
-									transition:
-										'width 600ms cubic-bezier(0.22,1,0.36,1), height 600ms cubic-bezier(0.22,1,0.36,1), border-radius 900ms ease-out'
-								}}
-							>
-								<div className="flex h-full min-w-0 flex-col justify-center gap-0">
-									<div className="flex min-w-0 items-center overflow-hidden max-h-6 opacity-100 transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:max-h-0 group-hover:opacity-0 group-focus-within:max-h-0 group-focus-within:opacity-0">
-										<h1 className="min-w-0 flex-1 text-left text-xs font-semibold leading-snug truncate">
-											{nowPlaying?.data.title} - {nowPlaying?.data.artist}
-										</h1>
-									</div>
-									<div className="overflow-hidden w-0 max-w-0 max-h-0 p-0 opacity-0 transition-[max-height,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full group-hover:max-w-none group-hover:max-h-24 group-hover:opacity-100 group-hover:p-1 group-focus-within:w-full group-focus-within:max-w-none group-focus-within:max-h-24 group-focus-within:opacity-100 group-focus-within:p-1">
-										<div className="flex items-stretch gap-3">
-											{nowPlaying?.data.albumImageUrl ? (
-												<img
-													src={nowPlaying?.data.albumImageUrl}
-													alt={nowPlaying?.data.album || 'Album cover'}
-													className="h-16 w-16 shrink-0 rounded-md object-cover"
-													loading="lazy"
-												/>
-											) : null}
-											<div className="flex h-16 min-w-0 flex-col justify-center">
-												<p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
-													now playing
-												</p>
-												<p className="text-sm font-semibold text-foreground line-clamp-1">
-													{nowPlaying?.data.title}
-												</p>
-												<p className="text-xs text-foreground/80 line-clamp-1">
-													{nowPlaying?.data.artist}
-												</p>
-												{nowPlaying?.data.album ? (
-													<p className="text-[11px] text-muted-foreground line-clamp-1">
-														{nowPlaying?.data.album}
-													</p>
-												) : null}
-											</div>
-										</div>
-									</div>
-								</div>
-							</Badge>
-						</div>
-						<span className="order-first mr-1 ml-0 sm:order-none sm:ml-1 sm:mr-0">
-							<svg className="h-4 w-4 mt-1" viewBox="0 0 168 168">
-								<path
-									fill="#1ED760"
-									d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741 0-46.246-37.49-83.738-83.745-83.738l.001-.004zm38.404 120.78a5.217 5.217 0 01-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 01-6.249-3.93 5.213 5.213 0 013.926-6.25c31.9-7.291 59.263-4.15 81.337 9.34 2.46 1.51 3.24 4.72 1.73 7.18zm10.25-22.805c-1.89 3.075-5.91 4.045-8.98 2.155-22.51-13.839-56.823-17.846-83.448-9.764-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 014.354-8.143c30.413-9.228 68.222-4.758 94.072 11.127 3.07 1.89 4.04 5.91 2.15 8.976v-.001zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684-4.138 1.255-8.514-1.081-9.768-5.219a7.835 7.835 0 015.221-9.771c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 012.74 10.733c-2.2 3.722-7.02 4.949-10.73 2.739z"
-								/>
-							</svg>
-						</span>
-					</div>
-				</a>
-			) : (
-				<div className="flex items-center">
-					<Badge variant="outline" className="bg-card text-card-foreground">
-						not playing
-					</Badge>
-					<span className="ml-1">
-						<svg className="h-4 w-4" viewBox="0 0 168 168">
-							<path
-								fill="#1ED760"
-								d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741 0-46.246-37.49-83.738-83.745-83.738l.001-.004zm38.404 120.78a5.217 5.217 0 01-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 01-6.249-3.93 5.213 5.213 0 013.926-6.25c31.9-7.291 59.263-4.15 81.337 9.34 2.46 1.51 3.24 4.72 1.73 7.18zm10.25-22.805c-1.89 3.075-5.91 4.045-8.98 2.155-22.51-13.839-56.823-17.846-83.448-9.764-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 014.354-8.143c30.413-9.228 68.222-4.758 94.072 11.127 3.07 1.89 4.04 5.91 2.15 8.976v-.001zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684-4.138 1.255-8.514-1.081-9.768-5.219a7.835 7.835 0 015.221-9.771c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 012.74 10.733c-2.2 3.722-7.02 4.949-10.73 2.739z"
+		<a
+			className="group flex items-center gap-3 no-underline text-inherit w-full transition-opacity duration-300 hover:opacity-[0.78]"
+			href={href}
+			target="_blank"
+			rel="noreferrer"
+			title={
+				isPlaying
+					? `${nowPlaying?.data.title} — ${nowPlaying?.data.artist}`
+					: "What I'm listening to on Spotify"
+			}
+		>
+			<span className="relative w-[42px] h-[42px] rounded-[9px] shrink-0 grid place-items-center text-white bg-[linear-gradient(140deg,#1ed760,#169c46_55%,#0c6b30)] overflow-hidden transition-[scale] duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.05] [&_img]:w-full [&_img]:h-full [&_img]:object-cover [&_img]:block [&_svg]:w-[22px] [&_svg]:h-[22px]">
+				{isPlaying && nowPlaying?.data.albumImageUrl ? (
+					<img src={nowPlaying.data.albumImageUrl} alt={nowPlaying.data.album || 'Album cover'} />
+				) : (
+					<SpotifyIcon />
+				)}
+			</span>
+			<span className="flex flex-col min-w-0 flex-1">
+				<span className="flex items-center gap-2 mb-[3px]">
+					<span className="flex gap-[2px] items-end h-[13px]">
+						{heights.map((ht, i) => (
+							<i
+								key={i}
+								className="w-[2.5px] bg-[#1db954] rounded-[1px] transition-[height] duration-300 inline-block"
+								style={{ height: ht }}
 							/>
-						</svg>
+						))}
 					</span>
-				</div>
-			)}
-		</div>
+					<span className="font-mono text-[9px] tracking-[0.13em] uppercase text-muted-foreground whitespace-nowrap">
+						{isPlaying ? 'Now playing' : 'Spotify'}
+					</span>
+				</span>
+				<span className="font-clash font-medium text-[15px] leading-[1.1] text-foreground whitespace-nowrap overflow-hidden text-ellipsis">
+					{isPlaying ? nowPlaying?.data.title : 'Not playing'}
+				</span>
+				<span className="font-mono text-[11px] text-muted-foreground mt-[1px]">
+					{isPlaying ? nowPlaying?.data.artist : 'Open Spotify'}
+				</span>
+			</span>
+		</a>
 	);
 };
