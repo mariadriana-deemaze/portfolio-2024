@@ -14,7 +14,7 @@ export const data = {
 		'Full Stack Developer',
 		'Communication Designer',
 		'Curious Overthinker',
-		'Coffee Enthusiast'
+		'Coffee Overconsumer'
 	],
 	location: 'Portugal, Coimbra',
 	locationLink: 'https://www.google.com/maps/place/Coimbra',
