@@ -56,8 +56,8 @@ export const SectionHero = () => {
 				</span>
 			</h1>
 
-			<div className="flex items-start justify-between gap-7 max-sm:gap-[22px] mt-[34px] flex-wrap">
-				<div style={{ flex: '1 1 300px' }}>
+			<div className="flex items-start justify-start gap-7 max-sm:gap-[22px] mt-[34px] flex-wrap">
+				<div style={{ flex: '0 1 420px' }}>
 					<div className="font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
 						<AnimatedMottos
 							data={[...data.mottos]}
