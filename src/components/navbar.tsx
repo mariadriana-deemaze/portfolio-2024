@@ -2,7 +2,6 @@ import { Link, useRouterState } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 
 import { LogoMark } from '@/components/logo-ma';
-import { NowPlaying } from '@/components/now-playing';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { StaggerText } from '@/components/ui/stagger-text';
 import { data } from '@/data/main';
