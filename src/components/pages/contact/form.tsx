@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import type { ContactResponse } from '@/server/routes/api/types/contact';
+import { CONTACT_FIELD_MAX, type ContactResponse } from '@/server/routes/api/types/contact';
 
 const contactSchema = z.object({
-	name: z.string().min(1, 'Required.'),
-	email: z.email('Invalid email.'),
-	subject: z.string().min(1, 'Required.'),
-	message: z.string().min(1, 'Required.'),
+	name: z.string().min(1, 'Required.').max(CONTACT_FIELD_MAX.name, 'Too long.'),
+	email: z.email('Invalid email.').max(CONTACT_FIELD_MAX.email, 'Too long.'),
+	subject: z.string().min(1, 'Required.').max(CONTACT_FIELD_MAX.subject, 'Too long.'),
+	message: z.string().min(1, 'Required.').max(CONTACT_FIELD_MAX.message, 'Too long.'),
 	website: z.string().trim().max(0, 'Invalid submission.')
 });
 type ContactFormValues = z.infer<typeof contactSchema>;
