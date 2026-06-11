@@ -52,6 +52,7 @@
 				"noUnsafeOptionalChaining": "error",
 				"noUnusedLabels": "error",
 				"noUnusedPrivateClassMembers": "error",
+				"noUnusedImports": "error",
 				"noUnusedVariables": "error",
 				"useExhaustiveDependencies": "warn",
 				"useHookAtTopLevel": "error",
