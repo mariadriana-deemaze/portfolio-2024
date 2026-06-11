@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import type { ContactResponse } from '@/server/routes/api/types/contact';
+import { cn } from '@/utils/utils';
 
 const contactSchema = z.object({
 	name: z.string().min(1, 'Required.'),
@@ -17,6 +18,11 @@ const contactSchema = z.object({
 	website: z.string().trim().max(0, 'Invalid submission.')
 });
 type ContactFormValues = z.infer<typeof contactSchema>;
+
+const LABEL_CLS =
+	'font-mono text-[11px] tracking-[0.08em] uppercase text-muted-foreground mb-[9px] transition-colors duration-[250ms] group-focus-within:text-[var(--color-orange-primary)]';
+const FIELD_CLS =
+	'h-auto rounded-[12px] bg-background border-border px-[15px] py-[13px] font-mono text-[14px] leading-[1.5] placeholder:text-muted-foreground/80 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-[var(--color-orange-primary)] focus-visible:shadow-[0_0_0_4px_color-mix(in_srgb,var(--color-orange-primary)_14%,transparent)] transition-[border-color,box-shadow] duration-[250ms]';
 
 export const ContactForm = () => {
 	const {
@@ -66,47 +72,75 @@ export const ContactForm = () => {
 
 			<div className="grid grid-cols-1 min-[520px]:grid-cols-2 gap-[22px]">
 				<div className="group flex flex-col">
-					<Label htmlFor="name-input">Your name</Label>
+					<Label htmlFor="name-input" className={LABEL_CLS}>
+						Your name
+					</Label>
 					<Input
 						id="name-input"
 						type="text"
 						placeholder="Jane Doe"
-						error={errors.name?.message}
+						className={FIELD_CLS}
 						{...register('name')}
 					/>
+					{errors.name && (
+						<span className="mt-[6px] font-mono text-[11px] text-destructive">
+							{errors.name.message}
+						</span>
+					)}
 				</div>
 
 				<div className="group flex flex-col">
-					<Label htmlFor="email-input">Email</Label>
+					<Label htmlFor="email-input" className={LABEL_CLS}>
+						Email
+					</Label>
 					<Input
 						id="email-input"
 						type="email"
 						placeholder="jane@email.com"
-						error={errors.email?.message}
+						className={FIELD_CLS}
 						{...register('email')}
 					/>
+					{errors.email && (
+						<span className="mt-[6px] font-mono text-[11px] text-destructive">
+							{errors.email.message}
+						</span>
+					)}
 				</div>
 			</div>
 
 			<div className="group flex flex-col">
-				<Label htmlFor="subject-input">Subject</Label>
+				<Label htmlFor="subject-input" className={LABEL_CLS}>
+					Subject
+				</Label>
 				<Input
 					id="subject-input"
 					type="text"
 					placeholder="What's this about?"
-					error={errors.subject?.message}
+					className={FIELD_CLS}
 					{...register('subject')}
 				/>
+				{errors.subject && (
+					<span className="mt-[6px] font-mono text-[11px] text-destructive">
+						{errors.subject.message}
+					</span>
+				)}
 			</div>
 
 			<div className="group flex flex-col">
-				<Label htmlFor="message-input">Message</Label>
+				<Label htmlFor="message-input" className={LABEL_CLS}>
+					Message
+				</Label>
 				<Textarea
 					id="message-input"
 					placeholder="Tell me a little about it…"
-					error={errors.message?.message}
+					className={cn(FIELD_CLS, 'min-h-[132px] resize-vertical leading-[1.6]')}
 					{...register('message')}
 				/>
+				{errors.message && (
+					<span className="mt-[6px] font-mono text-[11px] text-destructive">
+						{errors.message.message}
+					</span>
+				)}
 			</div>
 
 			<div className="flex flex-col gap-[10px]">
