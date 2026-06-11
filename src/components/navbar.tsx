@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { LogoMark } from '@/components/logo-ma';
 import { NowPlaying } from '@/components/now-playing';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { StaggerText } from '@/components/ui/stagger-text';
 import { data } from '@/data/main';
 import { ROUTES } from '@/utils/routes';
 import { cn } from '@/utils/utils';
@@ -161,20 +162,25 @@ export function Navbar() {
 								'flex items-baseline gap-4 border-b border-border no-underline',
 								'font-clash font-medium tracking-[-0.03em]',
 								'text-[clamp(40px,13vw,68px)] leading-[1.04] py-[10px]',
-								'[transition:opacity_300ms_ease-out,translate_300ms_ease-out]',
+								'transition-opacity duration-300 ease-out',
 								isActive(path) ? 'text-[var(--color-orange-primary)]' : 'text-foreground'
 							)}
 							style={{
 								opacity: menuOpen ? 1 : 0,
-								translate: menuOpen ? 'none' : '0 26px',
-								transitionDelay: menuOpen ? `${0.12 + i * 0.06}s` : '0s'
+								transitionDelay: menuOpen ? `${0.1 + i * 0.05}s` : '0s'
 							}}
 							onClick={() => setMenuOpen(false)}
 						>
 							<span className="font-mono text-[13px] font-semibold text-[var(--color-orange-primary)] translate-y-[-0.4em]">
 								{String(i + 1).padStart(2, '0')}
 							</span>
-							<span className="flex-1">{name}</span>
+							<StaggerText
+								text={name}
+								revealed={menuOpen}
+								baseDelay={0.15 + i * 0.05}
+								letterDelay={0.025}
+								className="flex-1"
+							/>
 							<span
 								className={cn(
 									'font-mono text-[22px]',

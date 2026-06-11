@@ -19,4 +19,5 @@ export { Section } from './section';
 export * from './section-heading';
 export * from './section-reveal';
 export * from './sonner';
+export * from './stagger-text';
 export * from './textarea';

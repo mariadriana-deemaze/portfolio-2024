@@ -211,31 +211,48 @@
 	}
 }
 
-@utility entry-card {
-	background: color-mix(in srgb, hsl(var(--card)) 42%, transparent);
-	backdrop-filter: blur(2px);
+@utility spotlight-border {
+	position: relative;
 
 	&::before {
 		content: "";
 		position: absolute;
-		inset-block: 0;
-		left: 0;
-		width: 2px;
-		background: linear-gradient(180deg, var(--color-orange-light), var(--color-orange-primary));
-		transform: scaleY(0);
-		transform-origin: top;
-		transition: transform 0.55s var(--ease-out);
-	}
-
-	&:hover {
-		transform: translateY(-4px);
-		border-color: color-mix(in srgb, var(--color-orange-primary) 40%, hsl(var(--border)));
-		box-shadow: 0 30px 50px -22px rgba(0, 0, 0, 0.28);
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: radial-gradient(
+			200px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+			color-mix(in srgb, var(--color-orange-primary) 70%, transparent),
+			transparent
+		);
+		-webkit-mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		mask-composite: exclude;
+		pointer-events: none;
+		z-index: 1;
+		opacity: 0;
+		transition: opacity 0.35s ease;
 	}
 
 	&:hover::before {
-		transform: scaleY(1);
+		opacity: 1;
 	}
+
+	@media (prefers-reduced-motion: reduce) {
+		&::before {
+			display: none;
+		}
+	}
+}
+
+@utility entry-card {
+	background: color-mix(in srgb, hsl(var(--card)) 42%, transparent);
+	backdrop-filter: blur(2px);
 }
 
 @utility bg-card-ghost {
