@@ -72,7 +72,7 @@ export function Navbar() {
 					hidden ? '-translate-y-[130%] opacity-0' : 'translate-y-0 opacity-100'
 				)}
 			>
-				<div className="max-w-[760px] mx-auto px-6 pb-[9px] flex items-center justify-between gap-[10px]">
+				<div className="max-w-[1100px] mx-auto px-6 pb-[9px] flex items-center justify-between gap-[10px]">
 					<div className="flex items-center gap-1 min-w-0">
 						<Link
 							to={ROUTES.home}
