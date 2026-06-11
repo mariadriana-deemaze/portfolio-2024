@@ -1,7 +1,11 @@
 import nodemailer from 'nodemailer';
 import { z } from 'zod';
 import { getEnv } from '@/lib/env';
-import type { ContactInfo, ContactResponse } from '@/server/routes/api/types/contact';
+import {
+	CONTACT_FIELD_MAX,
+	type ContactInfo,
+	type ContactResponse
+} from '@/server/routes/api/types/contact';
 import { normalizeString } from '@/utils/string';
 
 import { buildContactEmailHtml } from './template';
@@ -10,10 +14,10 @@ const RATE_LIMIT_WINDOW_MS = 3 * 60 * 1000;
 const recentByEmail = new Map<string, number>();
 
 const contactInfoSchema = z.object({
-	email: z.string().trim().min(1),
-	message: z.string().trim().min(1),
-	name: z.string().trim().min(1),
-	subject: z.string().trim().min(1)
+	email: z.email().max(CONTACT_FIELD_MAX.email),
+	message: z.string().trim().min(1).max(CONTACT_FIELD_MAX.message),
+	name: z.string().trim().min(1).max(CONTACT_FIELD_MAX.name),
+	subject: z.string().trim().min(1).max(CONTACT_FIELD_MAX.subject)
 });
 
 const honeypotSchema = z.object({
@@ -81,13 +85,17 @@ export async function handleSendPost(request: Request): Promise<Response> {
 	}
 
 	recentByEmail.set(normalizedEmail, now);
+	setTimeout(() => {
+		if (recentByEmail.get(normalizedEmail) === now) recentByEmail.delete(normalizedEmail);
+	}, RATE_LIMIT_WINDOW_MS);
 
 	try {
 		const env = getEnv();
-		const info = await createTransporter().sendMail({
+		const safeSubject = contactInfo.subject.replace(/[\r\n]/g, ' ');
+		await createTransporter().sendMail({
 			from: env.SMTP_FROM,
 			to: env.SMTP_TO,
-			subject: `Contact request: ${contactInfo.subject}`,
+			subject: `Contact request: ${safeSubject}`,
 			html: buildContactEmailHtml({
 				name: contactInfo.name,
 				email: normalizedEmail,
@@ -95,7 +103,9 @@ export async function handleSendPost(request: Request): Promise<Response> {
 			})
 		});
 
-		return Response.json({ message: info.response } satisfies ContactResponse, { status: 200 });
+		return Response.json({ message: 'Message sent successfully.' } satisfies ContactResponse, {
+			status: 200
+		});
 	} catch (error) {
 		recentByEmail.delete(normalizedEmail);
 		console.error('Error sending email:', error);
