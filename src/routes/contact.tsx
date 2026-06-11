@@ -34,7 +34,7 @@ function ContactRoute(): JSX.Element {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<div className="mx-auto w-full max-w-2xl animate-fade-in-left delay-500">
+			<div className="mx-auto w-full max-w-[1100px] animate-fade-in-left delay-500">
 				<header className="pt-8 pb-[clamp(56px,9vw,104px)]">
 					<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,112px)] leading-[0.92] tracking-[-0.038em]">
 						<StaggerText
@@ -52,7 +52,7 @@ function ContactRoute(): JSX.Element {
 								letterDelay={0.028}
 							/>
 						</em>
-						{'\u00A0'}
+						<br />
 						<StaggerText
 							text="together"
 							revealed={revealed}
@@ -67,7 +67,7 @@ function ContactRoute(): JSX.Element {
 					</p>
 				</header>
 
-				<div className="grid grid-cols-1 sm:grid-cols-[0.82fr_1.18fr] gap-[clamp(32px,6vw,88px)] items-start">
+				<div className="grid grid-cols-1 min-[880px]:grid-cols-[0.82fr_1.18fr] gap-[clamp(32px,6vw,88px)] items-start">
 					<div className="flex flex-col gap-8">
 						<div>
 							<p className="m-0 mb-3 font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground">
@@ -150,7 +150,7 @@ function ContactRoute(): JSX.Element {
 							</span>
 						</div>
 						<SectionHeading title="A few quick answers" />
-						<div className="grid grid-cols-1 sm:grid-cols-3 gap-[18px]">
+						<div className="grid grid-cols-1 sm:grid-cols-3 gap-[18px] mb-10 lg:mb-20">
 							{data.contact.faq.map((item) => (
 								<div key={item.q} className="entry-card border border-border rounded-[14px] p-6">
 									<h4 className="m-0 mb-[10px] font-clash font-medium text-[18px] tracking-[-0.01em]">
