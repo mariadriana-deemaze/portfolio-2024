@@ -1,5 +1,6 @@
 import { ReactLenis } from 'lenis/react';
 import { SectionAbout } from '@/components/pages/home/section-about';
+import { SectionContact } from '@/components/pages/home/section-contact';
 import { SectionEducation } from '@/components/pages/home/section-education';
 import { SectionHero } from '@/components/pages/home/section-hero';
 import { SectionProjects } from '@/components/pages/home/section-projects';
@@ -26,6 +27,7 @@ export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 				<ScrollFadeReveal>
 					<SectionProjects projects={projects} />
 				</ScrollFadeReveal>
+				<SectionContact />
 			</section>
 		</ReactLenis>
 	);
