@@ -1,8 +1,11 @@
 name: Validate
 
 on:
-  push:
   pull_request:
+  push:
+    branches:
+      - main
+      - v2-develop
   workflow_dispatch:
 
 permissions:
