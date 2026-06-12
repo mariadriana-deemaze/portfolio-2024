@@ -5,6 +5,7 @@ const PROJECT_FIELDS = `
   title,
   description,
   year,
+  displayOrder,
   "slug": slug.current,
   repo,
   liveUrl,
@@ -21,6 +22,7 @@ type SanityProject = {
 	title: string;
 	description: string;
 	year: number | string;
+	displayOrder?: number;
 	slug: string;
 	repo: string;
 	liveUrl?: string;
@@ -70,7 +72,7 @@ function normalizeProject(project: SanityProject): Project {
 
 export const getProjects = async (): Promise<Project[]> => {
 	const projects = await fetchSanityQuery<SanityProject[]>(
-		`*[_type == "project" && published != false] | order(year desc) { ${PROJECT_FIELDS} }`
+		`*[_type == "project" && published != false] | order(displayOrder asc, year desc) { ${PROJECT_FIELDS} }`
 	);
 	return projects.map(normalizeProject);
 };
