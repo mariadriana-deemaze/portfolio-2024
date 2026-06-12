@@ -45,9 +45,9 @@ export const SectionProjects = ({ projects }: { projects: Project[] }) => {
 			},
 			{ threshold: 0.15 }
 		);
-		rowRefs.current.forEach((el) => {
+		for (const el of rowRefs.current) {
 			if (el) observer.observe(el);
-		});
+		}
 		return () => observer.disconnect();
 	}, []);
 
@@ -115,46 +115,52 @@ export const SectionProjects = ({ projects }: { projects: Project[] }) => {
 				}
 			/>
 
-			<div className="flex flex-col" onMouseLeave={hidePreview}>
-				{projects.map((project, i) => (
-					<a
-						key={project.slug}
-						ref={(el) => {
-							rowRefs.current[i] = el;
-						}}
-						data-idx={i}
-						href={`/projects/${project.slug}`}
-						className="group relative grid grid-cols-[56px_1fr_auto_auto] items-center gap-[26px] px-[14px] py-[30px] border-b border-border last:border-b-0 text-inherit no-underline"
-						onMouseEnter={(e) => showPreview(i, e)}
-					>
-						<span className="font-mono text-[12px] text-muted-foreground group-hover:text-[var(--color-orange-primary)] transition-colors duration-300">
-							{String(i + 1).padStart(2, '0')}
-						</span>
+			{projects.length === 0 ? (
+				<p className="font-mono text-[13px] text-muted-foreground py-10 text-center">
+					No projects yet — check back soon.
+				</p>
+			) : (
+				<div className="flex flex-col" onMouseLeave={hidePreview}>
+					{projects.map((project, i) => (
+						<a
+							key={project.slug}
+							ref={(el) => {
+								rowRefs.current[i] = el;
+							}}
+							data-idx={i}
+							href={`/projects/${project.slug}`}
+							className="group relative grid grid-cols-[56px_1fr_auto_auto] items-center gap-[26px] px-[14px] py-[30px] border-b border-border last:border-b-0 text-inherit no-underline"
+							onMouseEnter={(e) => showPreview(i, e)}
+						>
+							<span className="font-mono text-[12px] text-muted-foreground group-hover:text-[var(--color-orange-primary)] transition-colors duration-300">
+								{String(i + 1).padStart(2, '0')}
+							</span>
 
-						<div className="min-w-0">
-							<h3 className="m-0 font-clash font-medium text-[clamp(32px,6vw,70px)] leading-[0.98] tracking-[-0.032em] text-foreground group-hover:translate-x-5 group-hover:text-[var(--color-orange-primary)] transition-[translate,color] duration-[550ms] [transition-timing-function:var(--ease-out)]">
-								<StaggerText text={project.title} revealed={rowsRevealed[i]} />
-							</h3>
-							<p className="m-0 mt-[5px] font-mono text-[13px] text-muted-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] delay-[30ms] [transition-timing-function:var(--ease-out)] max-sm:hidden">
-								{project.description}
-							</p>
-						</div>
+							<div className="min-w-0">
+								<h3 className="m-0 font-clash font-medium text-[clamp(32px,6vw,70px)] leading-[0.98] tracking-[-0.032em] text-foreground group-hover:translate-x-5 group-hover:text-[var(--color-orange-primary)] transition-[translate,color] duration-[550ms] [transition-timing-function:var(--ease-out)]">
+									<StaggerText text={project.title} revealed={rowsRevealed[i] ?? false} />
+								</h3>
+								<p className="m-0 mt-[5px] font-mono text-[13px] text-muted-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] delay-[30ms] [transition-timing-function:var(--ease-out)] max-sm:hidden">
+									{project.description}
+								</p>
+							</div>
 
-						<div className="flex flex-col items-end gap-[5px] max-sm:hidden">
-							<Chip>{project.medium}</Chip>
-							<span className="font-mono text-[11px] text-muted-foreground">{project.year}</span>
-						</div>
+							<div className="flex flex-col items-end gap-[5px] max-sm:hidden">
+								<Chip>{project.medium}</Chip>
+								<span className="font-mono text-[11px] text-muted-foreground">{project.year}</span>
+							</div>
 
-						<LuArrowUpRight className="w-[18px] h-[18px] text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 group-hover:-translate-y-1 transition-[translate,color] duration-300 shrink-0" />
-					</a>
-				))}
-			</div>
+							<LuArrowUpRight className="w-[18px] h-[18px] text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 group-hover:-translate-y-1 transition-[translate,color] duration-300 shrink-0" />
+						</a>
+					))}
+				</div>
+			)}
 
 			{portalTarget &&
 				createPortal(
 					<div
 						ref={cursorRef}
-						className="fixed top-0 left-0 w-[220px] h-[148px] rounded-[12px] overflow-hidden pointer-events-none z-50 opacity-0 shadow-xl border border-border transition-opacity duration-300 [transition-timing-function:var(--ease-out)]"
+						className="fixed top-0 left-0 w-[220px] h-[148px] rounded-[12px] overflow-hidden pointer-events-none z-50 opacity-0 shadow-xl border border-border transition-opacity duration-300 [transition-timing-function:var(--ease-out)] motion-reduce:hidden"
 						aria-hidden="true"
 					>
 						{projects.map((project, i) => (
@@ -174,7 +180,7 @@ export const SectionProjects = ({ projects }: { projects: Project[] }) => {
 								{project.hero && (
 									<img
 										src={project.hero}
-										alt={project.title}
+										alt=""
 										className="absolute inset-0 w-full h-full object-cover"
 									/>
 								)}
