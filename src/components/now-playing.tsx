@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { NowPlayingData } from '@/server/routes/api/types/spotify';
 
@@ -30,7 +30,6 @@ function HeadphonesIcon() {
 
 export const NowPlaying = () => {
 	const [tick, setTick] = useState(0);
-	const artRef = useRef<HTMLSpanElement>(null);
 
 	const { data: nowPlaying } = useQuery<{ data: NowPlayingData }>({
 		queryKey: ['nowPlaying'],
@@ -47,28 +46,6 @@ export const NowPlaying = () => {
 		return () => clearInterval(id);
 	}, [isPlaying]);
 
-	useEffect(() => {
-		const el = artRef.current;
-		if (!el) return;
-		if (!isPlaying || !albumImageUrl) {
-			el.style.boxShadow = '';
-			return;
-		}
-		const img = new Image();
-		img.crossOrigin = 'anonymous';
-		img.src = albumImageUrl;
-		img.onload = () => {
-			const canvas = document.createElement('canvas');
-			canvas.width = 1;
-			canvas.height = 1;
-			const ctx = canvas.getContext('2d');
-			if (!ctx || !artRef.current) return;
-			ctx.drawImage(img, 0, 0, 1, 1);
-			const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-			artRef.current.style.boxShadow = `0 4px 10px -2px rgba(${r},${g},${b},0.5)`;
-		};
-	}, [isPlaying, albumImageUrl]);
-
 	const heights = EQ_FRAMES[tick % 4] ?? EQ_FRAMES[0];
 	const href = isPlaying ? nowPlaying?.data.songUrl : 'https://open.spotify.com';
 
@@ -84,16 +61,25 @@ export const NowPlaying = () => {
 					: 'Not playing — right now'
 			}
 		>
-			<span
-				ref={artRef}
-				className={`relative w-[42px] h-[42px] rounded-[9px] shrink-0 grid place-items-center overflow-hidden transition-[scale,box-shadow] duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.05] [&_img]:w-full [&_img]:h-full [&_img]:object-cover [&_img]:block [&_svg]:w-[22px] [&_svg]:h-[22px] ${isPlaying ? 'text-white bg-[linear-gradient(140deg,#1ed760,#169c46_55%,#0c6b30)]' : 'text-muted-foreground bg-muted'}`}
-			>
-				{isPlaying && nowPlaying?.data.albumImageUrl ? (
-					<img src={nowPlaying.data.albumImageUrl} alt={nowPlaying.data.album || 'Album cover'} />
-				) : (
-					<HeadphonesIcon />
+			<div className="relative shrink-0">
+				{isPlaying && albumImageUrl && (
+					<img
+						src={albumImageUrl}
+						className="absolute inset-0 w-full h-full object-cover blur-[8px] scale-[1.2] opacity-40 rounded-[9px] motion-reduce:hidden pointer-events-none"
+						aria-hidden="true"
+					/>
 				)}
-			</span>
+				<span
+					className={`relative w-[42px] h-[42px] rounded-[9px] grid place-items-center overflow-hidden transition-scale duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.05] [&_img]:w-full [&_img]:h-full [&_img]:object-cover [&_img]:block [&_svg]:w-[22px] [&_svg]:h-[22px] ${isPlaying ? 'text-white bg-[linear-gradient(140deg,#1ed760,#169c46_55%,#0c6b30)]' : 'text-muted-foreground bg-muted'}`}
+				>
+					{isPlaying && albumImageUrl ? (
+						<img src={albumImageUrl} alt={nowPlaying.data.album || 'Album cover'} />
+					) : (
+						<HeadphonesIcon />
+					)}
+				</span>
+			</div>
+
 			<span className="flex flex-col min-w-0 flex-1">
 				<span className="flex items-center gap-2 mb-[3px]">
 					<span className="flex gap-[2px] items-end h-[13px]">
