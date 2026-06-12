@@ -357,9 +357,6 @@
 }
 
 @utility logo-fade {
-	color: #1f2937;
-	--logo-stroke-start: var(--color-orange-primary);
-	--logo-stroke-end: #374151;
 	mask-image: radial-gradient(
 		ellipse at 85% 100%,
 		transparent 0%,
@@ -392,8 +389,6 @@
 
 	.dark .logo-fade {
 		color: #f3f4f6;
-		--logo-stroke-start: var(--color-orange-primary);
-		--logo-stroke-end: var(--logo-stroke-end, #ffffff);
 	}
 }
 
@@ -503,8 +498,6 @@
 		--brand-foreground: 0 3% 6%;
 		/* Navigation */
 		--nav-border: #4d2512;
-		/* Logo */
-		--logo-stroke-end: #ffffff;
 	}
 
 	* {
