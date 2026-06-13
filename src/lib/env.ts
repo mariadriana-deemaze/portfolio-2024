@@ -15,7 +15,8 @@ const serverEnvSchema = z.object({
 	SMTP_PORT: z.coerce.number().int().positive(),
 	SMTP_TO: z.string().trim().min(1),
 	SMTP_FROM: z.string().trim().min(1),
-	SMTP_PASSWORD: z.string().trim().min(1)
+	SMTP_PASSWORD: z.string().trim().min(1),
+	SANITY_API_WRITE_TOKEN: z.string().trim().min(1)
 });
 
 const envSchema = publicEnvSchema.extend(serverEnvSchema.shape);

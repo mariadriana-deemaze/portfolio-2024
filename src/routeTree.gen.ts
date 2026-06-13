@@ -22,6 +22,7 @@ import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as ApiOpenapiDotjsonIndexRouteImport } from './routes/api/openapi[.]json/index'
 import { Route as ApiSpotifyCurrentlyPlayingRouteImport } from './routes/api/spotify/currently-playing'
+import { Route as ApiBlogSlugViewsRouteImport } from './routes/api/blog/$slug/views'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -89,6 +90,11 @@ const ApiSpotifyCurrentlyPlayingRoute =
     path: '/api/spotify/currently-playing',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiBlogSlugViewsRoute = ApiBlogSlugViewsRouteImport.update({
+  id: '/api/blog/$slug/views',
+  path: '/api/blog/$slug/views',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/projects/': typeof ProjectsIndexRoute
   '/api/spotify/currently-playing': typeof ApiSpotifyCurrentlyPlayingRoute
   '/api/openapi.json/': typeof ApiOpenapiDotjsonIndexRoute
+  '/api/blog/$slug/views': typeof ApiBlogSlugViewsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsIndexRoute
   '/api/spotify/currently-playing': typeof ApiSpotifyCurrentlyPlayingRoute
   '/api/openapi.json': typeof ApiOpenapiDotjsonIndexRoute
+  '/api/blog/$slug/views': typeof ApiBlogSlugViewsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/projects/': typeof ProjectsIndexRoute
   '/api/spotify/currently-playing': typeof ApiSpotifyCurrentlyPlayingRoute
   '/api/openapi.json/': typeof ApiOpenapiDotjsonIndexRoute
+  '/api/blog/$slug/views': typeof ApiBlogSlugViewsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/api/spotify/currently-playing'
     | '/api/openapi.json/'
+    | '/api/blog/$slug/views'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/api/spotify/currently-playing'
     | '/api/openapi.json'
+    | '/api/blog/$slug/views'
   id:
     | '__root__'
     | '/'
@@ -182,6 +193,7 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/api/spotify/currently-playing'
     | '/api/openapi.json/'
+    | '/api/blog/$slug/views'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -198,6 +210,7 @@ export interface RootRouteChildren {
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiSpotifyCurrentlyPlayingRoute: typeof ApiSpotifyCurrentlyPlayingRoute
   ApiOpenapiDotjsonIndexRoute: typeof ApiOpenapiDotjsonIndexRoute
+  ApiBlogSlugViewsRoute: typeof ApiBlogSlugViewsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -293,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSpotifyCurrentlyPlayingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/blog/$slug/views': {
+      id: '/api/blog/$slug/views'
+      path: '/api/blog/$slug/views'
+      fullPath: '/api/blog/$slug/views'
+      preLoaderRoute: typeof ApiBlogSlugViewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -310,6 +330,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiSpotifyCurrentlyPlayingRoute: ApiSpotifyCurrentlyPlayingRoute,
   ApiOpenapiDotjsonIndexRoute: ApiOpenapiDotjsonIndexRoute,
+  ApiBlogSlugViewsRoute: ApiBlogSlugViewsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

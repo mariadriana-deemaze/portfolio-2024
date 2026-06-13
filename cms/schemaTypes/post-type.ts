@@ -59,6 +59,14 @@ export const postType = defineType({
       type: 'text',
       rows: 20,
       validation: (rule) => rule.required()
+    }),
+    defineField({
+      name: 'views',
+      title: 'Views',
+      type: 'number',
+      initialValue: 0,
+      readOnly: true,
+      hidden: true
     })
   ]
 })
