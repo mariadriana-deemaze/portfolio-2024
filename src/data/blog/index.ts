@@ -1,5 +1,12 @@
 import { fetchSanityQuery } from '@/lib/sanity';
 
+const WORDS_PER_MINUTE = 200;
+
+function calculateReadingTime(text: string): number {
+	const words = text.trim().split(/\s+/).length;
+	return Math.max(1, Math.ceil(words / WORDS_PER_MINUTE));
+}
+
 export interface BlogPost {
 	title: string;
 	description: string;
@@ -8,6 +15,10 @@ export interface BlogPost {
 	body: string;
 	external_link: string;
 	keywords: string[];
+	cover?: string;
+	category?: string;
+	featured?: boolean;
+	readingTime?: number;
 }
 
 type SanityBlogPost = {
@@ -19,6 +30,9 @@ type SanityBlogPost = {
 	link?: string;
 	keywords?: string[];
 	published?: boolean;
+	cover?: string;
+	category?: string;
+	featured?: boolean;
 };
 
 const POST_FIELDS = `
@@ -29,18 +43,26 @@ const POST_FIELDS = `
   body,
   link,
   keywords,
-  published
+  published,
+  "cover": cover.asset->url,
+  category,
+  featured
 `;
 
 function normalizePost(post: SanityBlogPost): BlogPost {
+	const body = post.body ?? '';
 	return {
 		title: post.title,
 		description: post.description,
 		date: post.date,
 		slug: post.slug,
-		body: post.body ?? '',
+		body,
 		external_link: post.link ?? '',
-		keywords: Array.isArray(post.keywords) ? post.keywords.map((w) => `#${w}`) : []
+		keywords: Array.isArray(post.keywords) ? post.keywords.map((w) => `#${w}`) : [],
+		cover: post.cover,
+		category: post.category,
+		featured: post.featured ?? false,
+		readingTime: body ? calculateReadingTime(body) : undefined
 	};
 }
 
