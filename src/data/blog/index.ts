@@ -19,6 +19,7 @@ export interface BlogPost {
 	category?: string;
 	featured?: boolean;
 	readingTime?: number;
+	views?: number;
 }
 
 type SanityBlogPost = {
@@ -33,6 +34,7 @@ type SanityBlogPost = {
 	cover?: string;
 	category?: string;
 	featured?: boolean;
+	views?: number;
 };
 
 const POST_FIELDS = `
@@ -46,7 +48,8 @@ const POST_FIELDS = `
   published,
   "cover": cover.asset->url,
   category,
-  featured
+  featured,
+  views
 `;
 
 function normalizePost(post: SanityBlogPost): BlogPost {
@@ -62,7 +65,8 @@ function normalizePost(post: SanityBlogPost): BlogPost {
 		cover: post.cover,
 		category: post.category,
 		featured: post.featured ?? false,
-		readingTime: body ? calculateReadingTime(body) : undefined
+		readingTime: body ? calculateReadingTime(body) : undefined,
+		views: post.views
 	};
 }
 
