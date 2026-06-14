@@ -1,93 +1,76 @@
-import { getPost } from '@/data/blog';
+import { getPostViews } from '@/data/blog';
 import { mutateInSanity } from '@/server/sanity';
 
-const VIEWS_COOKIE_NAME = 'blog_views_tracking';
-const VIEWS_COOKIE_MAX_AGE = 86400;
+const COOKIE_NAME = 'blog_viewed';
+const COOKIE_MAX_AGE = 86400;
+const MAX_TRACKED_SLUGS = 50;
 
-function setViewsCookie(response: Response, slug: string): void {
-	const cookieValue = `${slug}=${Date.now()}`;
-	response.headers.append(
-		'Set-Cookie',
-		`${VIEWS_COOKIE_NAME}=${cookieValue}; Max-Age=${VIEWS_COOKIE_MAX_AGE}; Path=/api/blog/${slug}/views; HttpOnly; SameSite=Lax`
-	);
+function getViewedSlugs(request: Request): Set<string> {
+	const cookies = request.headers.get('cookie') || '';
+	const match = cookies.match(new RegExp(`${COOKIE_NAME}=([^;]*)`));
+	if (!match) return new Set();
+	return new Set(decodeURIComponent(match[1]).split(',').filter(Boolean));
 }
 
-function hasViewedPost(request: Request, slug: string): boolean {
-	const cookies = request.headers.get('cookie') || '';
-	return cookies.includes(`${slug}=`);
+function setViewedCookie(response: Response, slugs: Set<string>): void {
+	const trimmed = [...slugs].slice(-MAX_TRACKED_SLUGS);
+	const value = encodeURIComponent(trimmed.join(','));
+	response.headers.append(
+		'Set-Cookie',
+		`${COOKIE_NAME}=${value}; Max-Age=${COOKIE_MAX_AGE}; Path=/; HttpOnly; SameSite=Lax`
+	);
 }
 
 export async function handleViewsPost(request: Request): Promise<Response> {
 	try {
 		const url = new URL(request.url);
-		const slug = url.pathname.split('/').filter(Boolean).pop();
+		const segments = url.pathname.split('/').filter(Boolean);
+		const slugIndex = segments.indexOf('blog') + 1;
+		const slug = segments[slugIndex];
 
-		if (!slug) {
-			return new Response(JSON.stringify({ error: 'Invalid slug' }), {
-				status: 400,
-				headers: { 'Content-Type': 'application/json' }
-			});
+		if (!slug || !/^[\w-]+$/.test(slug)) {
+			return Response.json({ error: 'Invalid slug' }, { status: 400 });
 		}
 
-		const post = await getPost(slug);
+		const post = await getPostViews(slug);
 		if (!post) {
-			return new Response(JSON.stringify({ error: 'Post not found' }), {
-				status: 404,
-				headers: { 'Content-Type': 'application/json' }
-			});
+			return Response.json({ error: 'Post not found' }, { status: 404 });
 		}
 
-		const alreadyCounted = hasViewedPost(request, slug);
+		const viewed = getViewedSlugs(request);
+		const alreadyCounted = viewed.has(slug);
+		let currentViews = post.views ?? 0;
 
 		if (!alreadyCounted) {
-			const mutation = {
-				patch: {
-					query: `*[_type == "post" && slug.current == "${slug}"][0]`,
-					inc: { views: 1 }
-				}
-			};
-
 			try {
-				await mutateInSanity([mutation]);
-			} catch (error) {
-				console.error(`Failed to increment views for post ${slug}:`, error);
-				const response = new Response(
-					JSON.stringify({
-						error: 'Failed to record view',
-						views: 0,
-						counted: false
-					}),
+				await mutateInSanity([
 					{
-						status: 500,
-						headers: { 'Content-Type': 'application/json' }
+						patch: {
+							query: `*[_type == "post" && slug.current == $slug][0]`,
+							params: { slug },
+							setIfMissing: { views: 0 },
+							inc: { views: 1 }
+						}
 					}
-				);
-				setViewsCookie(response, slug);
-				return response;
+				]);
+				currentViews += 1;
+				viewed.add(slug);
+			} catch (error) {
+				console.error(`Failed to increment views for "${slug}":`, error);
+				return Response.json({ views: currentViews, counted: false }, { status: 200 });
 			}
 		}
 
-		const response = new Response(
-			JSON.stringify({
-				views: post.views ?? 0,
-				counted: !alreadyCounted
-			}),
-			{
-				status: 200,
-				headers: { 'Content-Type': 'application/json' }
-			}
+		const response = Response.json(
+			{ views: currentViews, counted: !alreadyCounted },
+			{ status: 200 }
 		);
-
 		if (!alreadyCounted) {
-			setViewsCookie(response, slug);
+			setViewedCookie(response, viewed);
 		}
-
 		return response;
 	} catch (error) {
 		console.error('Views endpoint error:', error);
-		return new Response(JSON.stringify({ error: 'Internal server error' }), {
-			status: 500,
-			headers: { 'Content-Type': 'application/json' }
-		});
+		return Response.json({ error: 'Unprocessable entity' }, { status: 422 });
 	}
 }

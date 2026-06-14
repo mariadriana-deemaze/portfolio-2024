@@ -1,14 +1,14 @@
 import { z } from 'zod';
 import { getEnv, publicEnvSchema } from '@/lib/env';
 
-// Validate that this module is only used on the server
 if (typeof window !== 'undefined') {
 	throw new Error('server/sanity module cannot be imported in client code');
 }
 
 const sanityMutationResponseSchema = z.object({
-	documentId: z.string(),
-	results: z.array(z.object({ id: z.string() }))
+	transactionId: z.string().optional(),
+	documentId: z.string().optional(),
+	results: z.array(z.looseObject({}))
 });
 
 const publicEnv = publicEnvSchema.parse(import.meta.env);

@@ -25,14 +25,17 @@ export const getPostFn = createServerFn({ method: 'GET' })
 	.inputValidator(slugSchema)
 	.handler(async ({ data }) => {
 		try {
-			const [{ getPost }, { renderMdxToHtml }] = await Promise.all([
+			const [{ getPost, getNextPost }, { renderMdxToHtml }] = await Promise.all([
 				import('@/data/blog'),
 				import('@/server/mdx')
 			]);
 			const post = await getPost(data.slug);
-			const postHtml = post?.body ? await renderMdxToHtml(post.body) : undefined;
+			const [postHtml, nextPost] = await Promise.all([
+				post?.body ? renderMdxToHtml(post.body) : undefined,
+				post?.date ? getNextPost(post.date, data.slug) : undefined
+			]);
 
-			return { post, postHtml };
+			return { post, postHtml, nextPost };
 		} catch (error) {
 			console.error('Failed to load blog post', error);
 			return {};

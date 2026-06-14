@@ -86,3 +86,27 @@ export async function getPost(slug: string) {
 
 	return post ? normalizePost(post) : undefined;
 }
+
+export async function getPostViews(slug: string) {
+	const result = await fetchSanityQuery<{ _id: string; views: number } | null>(
+		`*[_type == "post" && slug.current == $slug][0]{ _id, views }`,
+		{ slug }
+	);
+	return result;
+}
+
+export async function getNextPost(date: string, slug: string) {
+	const next = await fetchSanityQuery<SanityBlogPost | null>(
+		`*[_type == "post" && published != false && date < $date && slug.current != $slug] | order(date desc)[0]{ title, "slug": slug.current }`,
+		{ date, slug }
+	);
+
+	if (next) return { title: next.title, slug: next.slug };
+
+	const newest = await fetchSanityQuery<SanityBlogPost | null>(
+		`*[_type == "post" && published != false && slug.current != $slug] | order(date desc)[0]{ title, "slug": slug.current }`,
+		{ slug }
+	);
+
+	return newest ? { title: newest.title, slug: newest.slug } : undefined;
+}
