@@ -1,5 +1,6 @@
+import { useMutation } from '@tanstack/react-query';
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
 import { Cover } from '@/components/pages/blog/cover';
@@ -87,6 +88,26 @@ function useCodeBarExtraction(ref: React.RefObject<HTMLDivElement | null>) {
 	}, [ref]);
 }
 
+function useTrackView(slug: string, initialViews: number) {
+	const [views, setViews] = useState(initialViews);
+	const tracked = useRef(false);
+
+	const { mutate } = useMutation({
+		mutationFn: () => fetch(`/api/blog/${slug}/views`, { method: 'POST' }).then((r) => r.json()),
+		onSuccess: (data: { views?: number }) => {
+			if (data.views != null) setViews(data.views);
+		}
+	});
+
+	useEffect(() => {
+		if (tracked.current) return;
+		tracked.current = true;
+		mutate();
+	}, [mutate]);
+
+	return views;
+}
+
 function BlogShowRoute() {
 	const { post, postHtml, nextPost } = Route.useLoaderData();
 	const {
@@ -100,6 +121,7 @@ function BlogShowRoute() {
 		views = 0,
 		keywords = []
 	} = post;
+	const liveViews = useTrackView(slug, views);
 	const proseRef = useRef<HTMLDivElement>(null);
 	useCodeBarExtraction(proseRef);
 
@@ -140,7 +162,7 @@ function BlogShowRoute() {
 					{description}
 				</p>
 
-				<MetaBar slug={slug} title={title} readingTime={readingTime} views={views} />
+				<MetaBar slug={slug} title={title} readingTime={readingTime} views={liveViews} />
 			</header>
 
 			{cover && <Cover src={cover} alt={title} />}
