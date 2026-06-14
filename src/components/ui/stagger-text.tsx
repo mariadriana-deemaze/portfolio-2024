@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react';
+
 import { cn } from '@/utils/utils';
 
 interface StaggerTextProps {
 	text: string;
-	revealed: boolean;
+	revealed?: boolean;
+	autoReveal?: boolean;
 	baseDelay?: number;
 	letterDelay?: number;
 	className?: string;
@@ -10,11 +13,20 @@ interface StaggerTextProps {
 
 export function StaggerText({
 	text,
-	revealed,
+	revealed: externalRevealed,
+	autoReveal = false,
 	baseDelay = 0.04,
 	letterDelay = 0.028,
 	className
 }: StaggerTextProps) {
+	const [internalRevealed, setInternalRevealed] = useState(false);
+
+	useEffect(() => {
+		if (autoReveal) setInternalRevealed(true);
+	}, [autoReveal]);
+
+	const revealed = externalRevealed ?? internalRevealed;
+
 	return (
 		<span
 			className={cn(

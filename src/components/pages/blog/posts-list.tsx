@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
+import { StaggerText } from '@/components/ui/stagger-text';
 import type { BlogPost } from '@/data/blog';
 import { toBlogSlug } from '@/utils/routes';
 import { cn } from '@/utils/utils';
@@ -95,7 +96,12 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							Journal · {new Date().getFullYear()}
 						</div>
 						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground">
-							Thoughts &amp; Essays
+							<StaggerText
+								text="Thoughts & Essays"
+								autoReveal
+								baseDelay={0.08}
+								letterDelay={0.028}
+							/>
 						</h1>
 						<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
 							<p className="m-0 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[520px] text-foreground text-pretty">

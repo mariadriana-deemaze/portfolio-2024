@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
+import { StaggerText } from '@/components/ui/stagger-text';
 import type { Project } from '@/data/projects';
 import { cn } from '@/utils/utils';
 
@@ -183,10 +184,10 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							Selected work · 2022—{new Date().getFullYear()}
 						</div>
 						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground">
-							Things I've
+							<StaggerText text="Things I've" autoReveal baseDelay={0.08} letterDelay={0.028} />
 							<br />
 							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
-								built
+								<StaggerText text="built" autoReveal baseDelay={0.39} letterDelay={0.028} />
 							</em>
 						</h1>
 						<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
