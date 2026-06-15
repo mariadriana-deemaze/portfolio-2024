@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { cn } from '@/utils/utils';
-
 interface StaggerTextProps {
 	text: string;
 	revealed?: boolean;
@@ -27,24 +25,32 @@ export function StaggerText({
 
 	const revealed = externalRevealed ?? internalRevealed;
 
+	const words = text.split(' ');
+	let charIndex = -1;
+
 	return (
-		<span
-			className={cn(
-				'inline-block overflow-hidden align-top [padding:0.12em_0.04em_0.18em] [margin:-0.12em_-0.04em_-0.18em]',
-				className
-			)}
-		>
-			{[...text].map((ch, i) => (
-				<span
-					key={i}
-					className="inline-block will-change-[translate]"
-					style={{
-						translate: revealed ? 'none' : '0 118%',
-						transition: revealed ? `translate 720ms var(--ease-out)` : 'none',
-						transitionDelay: revealed ? `${baseDelay + i * letterDelay}s` : '0s'
-					}}
-				>
-					{ch === ' ' ? '\u00A0' : ch}
+		<span className={className}>
+			{words.map((word, wi) => (
+				<span key={wi}>
+					<span className="inline-block overflow-hidden align-top [padding:0.12em_0.04em_0.18em] [margin:-0.12em_-0.04em_-0.18em]">
+						{[...word].map((ch) => {
+							charIndex++;
+							return (
+								<span
+									key={charIndex}
+									className="inline-block will-change-[translate]"
+									style={{
+										translate: revealed ? 'none' : '0 118%',
+										transition: revealed ? 'translate 720ms var(--ease-out)' : 'none',
+										transitionDelay: revealed ? `${baseDelay + charIndex * letterDelay}s` : '0s'
+									}}
+								>
+									{ch}
+								</span>
+							);
+						})}
+					</span>
+					{wi < words.length - 1 ? ' ' : null}
 				</span>
 			))}
 		</span>

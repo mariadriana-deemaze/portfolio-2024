@@ -1,12 +1,14 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
-import { JSX } from 'react';
+import { useEffect, useRef } from 'react';
+import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 import { getStackByName } from '@/components/stacks';
-import { Badge } from '@/components/ui/badge';
+import { StaggerText } from '@/components/ui/stagger-text';
 import { BASE_URL, data } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
 import { getProjectFn } from '@/server-fns/content';
 import { ROUTES } from '@/utils/routes';
+import { cn } from '@/utils/utils';
 
 export const Route = createFileRoute('/projects/$slug')({
 	loader: async ({ params }) => {
@@ -18,7 +20,8 @@ export const Route = createFileRoute('/projects/$slug')({
 
 		return {
 			project: projectData.project,
-			projectHtml: projectData.projectHtml ?? ''
+			projectHtml: projectData.projectHtml ?? '',
+			nextProject: projectData.nextProject
 		};
 	},
 	head: ({ loaderData, params }) =>
@@ -34,103 +37,271 @@ export const Route = createFileRoute('/projects/$slug')({
 	notFoundComponent: ProjectNotFoundRoute
 });
 
-function ProjectItemRoute(): JSX.Element {
-	const { project, projectHtml } = Route.useLoaderData();
-	const { title, year, description, hero, technologies = [], repo, liveUrl, colors } = project;
+function useCoverParallax(ref: React.RefObject<HTMLDivElement | null>) {
+	useEffect(() => {
+		const el = ref.current;
+		const parent = el?.parentElement;
+		if (!el || !parent) return;
+
+		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (prefersReduced) return;
+
+		let raf: number;
+
+		const onScroll = () => {
+			if (raf) return;
+			raf = requestAnimationFrame(() => {
+				const r = parent.getBoundingClientRect();
+				const vh = window.innerHeight || 1;
+				const prog = (vh - r.top) / (vh + r.height);
+				el.style.transform = `translateY(${(prog - 0.5) * 12}%)`;
+				raf = 0;
+			});
+		};
+
+		window.addEventListener('scroll', onScroll, { passive: true });
+		onScroll();
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+			if (raf) cancelAnimationFrame(raf);
+		};
+	}, [ref]);
+}
+
+const META_KEY = 'font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground';
+const META_VAL = 'font-mono text-[13px] text-foreground mt-[7px] leading-[1.55]';
+
+const BTN_BASE =
+	'inline-flex items-center gap-[9px] font-mono text-[13px] no-underline px-[18px] py-[11px] rounded-full';
+const BTN_PRIMARY = `${BTN_BASE} bg-[var(--color-orange-primary)] border border-[var(--color-orange-primary)] text-white transition-[translate,box-shadow] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:shadow-[0_16px_30px_-12px_color-mix(in_srgb,var(--color-orange-primary)_60%,transparent)] motion-reduce:transition-none`;
+const BTN_GHOST = `${BTN_BASE} border border-border text-foreground transition-[translate,border-color,color] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:border-[var(--color-orange-primary)] hover:text-[var(--color-orange-primary)] motion-reduce:transition-none`;
+
+function ProjectItemRoute() {
+	const { project, projectHtml, nextProject } = Route.useLoaderData();
+	const {
+		title,
+		year,
+		description,
+		hero,
+		technologies = [],
+		repo,
+		liveUrl,
+		colors,
+		medium,
+		displayOrder,
+		role,
+		timeline,
+		context
+	} = project;
+
+	const coverRef = useRef<HTMLDivElement>(null);
+	useCoverParallax(coverRef);
+
 	const heroGradient = colors?.length
 		? `linear-gradient(150deg, ${colors[0]} 0%, ${colors[1] ?? colors[0]} 35%, ${colors[2] ?? colors[1] ?? colors[0]} 100%)`
 		: undefined;
 
-	return (
-		<div className="mx-auto w-full max-w-2xl space-y-4 animate-fade-in-left delay-500">
-			<p className="font-mono text-sm text-gray-500">
-				<Link to={ROUTES.projects} className="hover:underline">
-					&larr; Back to projects
-				</Link>
-			</p>
-			<header className="space-y-2">
-				<div className="flex flex-col mt-6">
-					<time className="font-mono text-xs text-gray-500">YEAR {year}</time>
-					<h1 className="font-clash font-bold text-5xl text-fade-grad">{title}</h1>
-				</div>
-				<p className="font-mono text-sm text-foreground">{description}</p>
-				<div className="flex flex-wrap gap-1 my-6">
-					{technologies.map(({ label }) => {
-						const resolvedIcon = getStackByName(label)?.icon ?? null;
+	const projectNum = displayOrder != null ? String(displayOrder).padStart(2, '0') : undefined;
+	const repoUrl = repo ? `${data.github}/${repo}` : undefined;
+	const hasActions = liveUrl || repoUrl;
+	const hasMetaRow = role || timeline || context;
+	const hasMetaSection = hasMetaRow || technologies.length > 0;
 
-						return (
-							<Badge
-								className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-								variant="outline"
-								key={label}
-							>
-								{resolvedIcon}
-								<span>{label}</span>
-							</Badge>
-						);
-					})}
+	return (
+		<article className="w-full">
+			<header className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] pt-[132px]">
+				<div className="mx-auto max-w-[760px]">
+					<Link
+						to={ROUTES.projects}
+						className="mb-[30px] inline-flex items-center gap-2 font-mono text-xs text-muted-foreground no-underline whitespace-nowrap transition-colors duration-300 hover:gap-[11px] hover:text-[var(--color-orange-primary)] sm:text-sm"
+					>
+						<span>←</span>
+						<span>back to work</span>
+					</Link>
+
+					<div className="mb-[22px] flex flex-wrap items-center gap-3 font-mono text-xs tracking-[0.05em] text-muted-foreground">
+						{projectNum && (
+							<span className="font-semibold text-[var(--color-orange-primary)]">{projectNum}</span>
+						)}
+						<span className="uppercase">{medium}</span>
+						<span className="size-1 rounded-full bg-muted-foreground opacity-60" />
+						<span>{year}</span>
+					</div>
+
+					<h1 className="animate-fade-in-left delay-200 m-0 font-clash text-foreground font-medium leading-[0.92] tracking-[-0.035em] text-[clamp(54px,10vw,132px)] break-keep">
+						<StaggerText text={title} autoReveal baseDelay={0.05} letterDelay={0.03} />
+					</h1>
+
+					<p className="animate-fade-in-left delay-300 mt-[28px] font-clash text-foreground text-pretty font-normal leading-[1.35] tracking-[-0.01em] text-[clamp(20px,2.6vw,30px)] max-w-[620px]">
+						{description}
+					</p>
+
+					{hasMetaSection && (
+						<div className="animate-fade-in-left delay-400 mt-[52px] border-t border-b border-border py-[26px]">
+							{hasMetaRow && (
+								<div className="grid grid-cols-3 max-sm:grid-cols-2 gap-6">
+									{role && (
+										<div>
+											<div className={META_KEY}>Role</div>
+											<div className={META_VAL}>{role}</div>
+										</div>
+									)}
+									{timeline && (
+										<div>
+											<div className={META_KEY}>Timeline</div>
+											<div className={META_VAL}>{timeline}</div>
+										</div>
+									)}
+									{context && (
+										<div>
+											<div className={META_KEY}>Context</div>
+											<div className={META_VAL}>{context}</div>
+										</div>
+									)}
+								</div>
+							)}
+							{technologies.length > 0 && (
+								<div className={hasMetaRow ? 'mt-[22px]' : ''}>
+									<div className={META_KEY}>Stack</div>
+									<div className={cn(META_VAL, 'flex flex-wrap gap-1')}>
+										{technologies.map(({ label }) => {
+											const icon = getStackByName(label)?.icon ?? null;
+											return (
+												<span
+													key={label}
+													className="inline-flex items-center gap-1.5 border border-border rounded-full px-2 py-[2px] text-[11px]"
+												>
+													{icon}
+													{label}
+												</span>
+											);
+										})}
+									</div>
+								</div>
+							)}
+						</div>
+					)}
+
+					{hasActions && (
+						<div className="animate-fade-in-left delay-500 flex gap-[10px] mt-[30px] flex-wrap">
+							{liveUrl && (
+								<a href={liveUrl} target="_blank" rel="noreferrer" className={BTN_PRIMARY}>
+									Visit live
+									<LuArrowUpRight className="w-[15px] h-[15px]" />
+								</a>
+							)}
+							{repoUrl && (
+								<a href={repoUrl} target="_blank" rel="noreferrer" className={BTN_GHOST}>
+									<LuGithub className="w-[15px] h-[15px]" />
+									Source
+								</a>
+							)}
+						</div>
+					)}
 				</div>
-				<hr className="mt-2" />
 			</header>
-			<section className="summary flex gap-1 flex-row-reverse mb-8">
-				<Badge
-					className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-					variant="outline"
-				>
-					<a
-						className="flex flex-row gap-2"
-						href={repo ? `${data.github}/${repo}` : '#'}
-						target="_blank"
-						rel="noreferrer"
-					>
-						View repo
-					</a>
-				</Badge>
-				{liveUrl && (
-					<Badge
-						className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-						variant="outline"
-					>
-						<a className="flex flex-row gap-2" href={liveUrl} target="_blank" rel="noreferrer">
-							Live demo
-						</a>
-					</Badge>
-				)}
-			</section>
+
 			{hero && (
-				<div
-					className="rounded-md border border-gray-400/30 dark:border-gray-200/10 p-[1px]"
-					style={heroGradient ? { background: heroGradient } : undefined}
-				>
-					<div className="rounded-[0.45rem] overflow-hidden">
+				<div className="animate-fade-in-left delay-300 relative left-1/2 mt-16 w-screen -translate-x-1/2 overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]">
+					{heroGradient && (
+						<div className="absolute inset-0" style={{ background: heroGradient, opacity: 0.3 }} />
+					)}
+					<div className="absolute inset-y-[-12%] inset-x-0 will-change-transform" ref={coverRef}>
 						<img
-							className="block w-full h-auto"
-							alt={`Hero image of the ${title} project.`}
-							width={800}
-							height={400}
 							src={hero}
+							alt={`${title} project cover`}
+							className="block size-full object-cover"
 						/>
 					</div>
+					<div
+						className="absolute inset-0"
+						style={{
+							background:
+								'linear-gradient(180deg, transparent 60%, color-mix(in srgb, var(--background) 70%, transparent))'
+						}}
+					/>
+					<span className="absolute left-[max(24px,5vw)] bottom-[22px] z-[2] font-mono text-[11px] text-white bg-black/45 border border-white/25 rounded-full px-3 py-[5px] backdrop-blur-[6px]">
+						{title} — {year}
+					</span>
 				</div>
 			)}
-			<article className="content mt-4">
-				<div
-					className="prose font-mono dark:prose-invert max-w-none"
-					dangerouslySetInnerHTML={{ __html: projectHtml }}
-				/>
-			</article>
-		</div>
+
+			{projectHtml && (
+				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(80px,12vw,150px)]">
+					<div className="mx-auto max-w-[760px]">
+						<div className="mb-[26px] flex items-center gap-3 font-mono text-xs tracking-[0.06em] uppercase text-[var(--color-orange-primary)]">
+							<span className="block h-px w-10 bg-[var(--color-orange-primary)] opacity-50" />
+							Overview
+						</div>
+						<div
+							className="prose dark:prose-invert max-w-none font-mono text-[14.5px] leading-[1.85] text-pretty"
+							dangerouslySetInnerHTML={{ __html: projectHtml }}
+						/>
+					</div>
+				</section>
+			)}
+
+			{nextProject && (
+				<section className="relative left-1/2 mt-[clamp(90px,14vw,170px)] w-screen -translate-x-1/2 border-t border-border">
+					<Link
+						to="/projects/$slug"
+						params={{ slug: nextProject.slug }}
+						className="group relative block overflow-hidden text-foreground no-underline"
+					>
+						{nextProject.hero && (
+							<div className="absolute inset-0 z-0 pointer-events-none [clip-path:polygon(0%_100%,100%_100%,100%_100%,0%_100%)] transition-[clip-path] duration-700 [transition-timing-function:var(--ease-out)] group-hover:[clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)]">
+								<img
+									src={nextProject.hero}
+									alt=""
+									className="absolute inset-0 size-full object-cover scale-[1.12] transition-transform duration-[1.1s] [transition-timing-function:var(--ease-out)] group-hover:scale-100"
+								/>
+								<div
+									className="absolute inset-0"
+									style={{
+										background:
+											'linear-gradient(115deg, color-mix(in srgb, var(--color-orange-primary) 88%, transparent) 0%, color-mix(in srgb, var(--color-orange-primary) 52%, transparent) 55%, rgba(20,8,3,0.5) 100%)'
+									}}
+								/>
+							</div>
+						)}
+						<div className="relative z-[1] mx-auto max-w-[1100px] p-[clamp(48px,9vw,110px)_max(24px,4vw)]">
+							<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
+								Next project
+							</div>
+							<div className="mt-[18px] flex items-center justify-between gap-6">
+								<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[transform,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white">
+									{nextProject.title}
+								</div>
+								<div className="grid size-[clamp(54px,8vw,88px)] flex-shrink-0 place-items-center rounded-full border-[1.5px] border-border text-[var(--color-orange-primary)] transition-[transform,background,color,border-color] duration-[550ms] ease-[var(--ease-out)] group-hover:-rotate-45 group-hover:scale-[1.04] group-hover:bg-white group-hover:border-white group-hover:text-[var(--color-orange-primary)] [&>svg]:h-[42%] [&>svg]:w-[42%]">
+									<LuArrowUpRight />
+								</div>
+							</div>
+						</div>
+					</Link>
+				</section>
+			)}
+		</article>
 	);
 }
 
 function ProjectNotFoundRoute() {
 	return (
-		<div className="animate-fade-in-left delay-500">
-			<h1>Project not found</h1>
-			<p>The requested project could not be located.</p>
-			<p>
-				<Link to={ROUTES.projects}>Back to projects</Link>
-			</p>
+		<div className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] pt-[132px] pb-[100px]">
+			<div className="mx-auto max-w-[760px]">
+				<h1 className="m-0 font-clash font-medium text-[clamp(40px,6vw,72px)] leading-[0.95] tracking-[-0.03em] text-foreground">
+					Project not found
+				</h1>
+				<p className="mt-6 font-mono text-sm text-muted-foreground">
+					The requested project could not be located.
+				</p>
+				<Link
+					to={ROUTES.projects}
+					className="mt-8 inline-flex items-center gap-2 font-mono text-sm text-[var(--color-orange-primary)] no-underline hover:gap-3 transition-[gap] duration-300"
+				>
+					<span>←</span>
+					<span>Back to projects</span>
+				</Link>
+			</div>
 		</div>
 	);
 }
