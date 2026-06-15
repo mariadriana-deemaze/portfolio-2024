@@ -32,6 +32,31 @@ export const projectType = defineType({
       validation: (rule) => rule.required().integer().min(2000).max(2100)
     }),
     defineField({
+      name: 'displayOrder',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Lower numbers appear first on the projects index.',
+      validation: (rule) => rule.integer().min(0)
+    }),
+    defineField({
+      name: 'role',
+      title: 'Role',
+      type: 'string',
+      description: 'Your role on this project, e.g. "Design & Full-Stack".'
+    }),
+    defineField({
+      name: 'timeline',
+      title: 'Timeline',
+      type: 'string',
+      description: 'Project duration, e.g. "8 weeks · 2024".'
+    }),
+    defineField({
+      name: 'context',
+      title: 'Context',
+      type: 'string',
+      description: 'Client or context, e.g. "Internal / Open-source".'
+    }),
+    defineField({
       name: 'hero',
       title: 'Hero Image Path',
       type: 'string',

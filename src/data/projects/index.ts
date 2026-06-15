@@ -6,6 +6,9 @@ const PROJECT_FIELDS = `
   description,
   year,
   displayOrder,
+  role,
+  timeline,
+  context,
   "slug": slug.current,
   repo,
   liveUrl,
@@ -23,6 +26,9 @@ type SanityProject = {
 	description: string;
 	year: number | string;
 	displayOrder?: number;
+	role?: string;
+	timeline?: string;
+	context?: string;
 	slug: string;
 	repo: string;
 	liveUrl?: string;
@@ -49,6 +55,10 @@ export interface Project {
 	}[];
 	repo: string;
 	liveUrl?: string;
+	displayOrder?: number;
+	role?: string;
+	timeline?: string;
+	context?: string;
 }
 
 function normalizeProject(project: SanityProject): Project {
@@ -66,7 +76,11 @@ function normalizeProject(project: SanityProject): Project {
 			? project.technologies.map((technology) => ({ label: technology }))
 			: [],
 		repo: project.repo,
-		liveUrl: project.liveUrl
+		liveUrl: project.liveUrl,
+		displayOrder: project.displayOrder,
+		role: project.role,
+		timeline: project.timeline,
+		context: project.context
 	};
 }
 
@@ -83,4 +97,26 @@ export async function getProject(slug: string): Promise<Project | undefined> {
 		{ slug }
 	);
 	return project ? normalizeProject(project) : undefined;
+}
+
+const NEXT_PROJECT_FIELDS = `title, "slug": slug.current, hero, colors`;
+
+export async function getNextProject(displayOrder: number | undefined, slug: string) {
+	const order = displayOrder ?? -1;
+	const result = await fetchSanityQuery<SanityProject | null>(
+		`*[_type == "project" && published != false && slug.current != $slug && displayOrder > $order] | order(displayOrder asc, year desc)[0]{ ${NEXT_PROJECT_FIELDS} }`,
+		{ slug, order }
+	);
+
+	if (result)
+		return { title: result.title, slug: result.slug, hero: result.hero, colors: result.colors };
+
+	const wrap = await fetchSanityQuery<SanityProject | null>(
+		`*[_type == "project" && published != false && slug.current != $slug] | order(displayOrder asc, year desc)[0]{ ${NEXT_PROJECT_FIELDS} }`,
+		{ slug }
+	);
+
+	return wrap
+		? { title: wrap.title, slug: wrap.slug, hero: wrap.hero, colors: wrap.colors }
+		: undefined;
 }
