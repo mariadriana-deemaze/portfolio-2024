@@ -4,6 +4,7 @@ import {linkType} from './objects/link-type'
 import {metricType} from './objects/metric-type'
 import {richImageType} from './objects/rich-image-type'
 import {seoType} from './objects/seo-type'
+import {postMetricType} from './post-metric-type'
 import {postType} from './post-type'
 import {projectType} from './project-type'
 
@@ -15,5 +16,6 @@ export const schemaTypes = [
   linkType,
   bodyType,
   postType,
+  postMetricType,
   projectType
 ]

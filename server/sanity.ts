@@ -24,7 +24,11 @@ function getSanityWriteConfig() {
 }
 
 export async function mutateInSanity(
-	mutations: Array<{ patch?: Record<string, unknown>; set?: Record<string, unknown> }>
+	mutations: Array<{
+		patch?: Record<string, unknown>;
+		set?: Record<string, unknown>;
+		create?: Record<string, unknown>;
+	}>
 ) {
 	const config = getSanityWriteConfig();
 

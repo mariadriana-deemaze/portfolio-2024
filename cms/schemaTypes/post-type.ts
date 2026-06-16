@@ -167,11 +167,12 @@ export const postType = defineType({
     }),
     defineField({
       name: 'views',
-      title: 'Views',
+      title: 'Views (legacy)',
       type: 'number',
       initialValue: 0,
       readOnly: true,
-      hidden: true
+      hidden: true,
+      deprecated: {reason: 'Use the postMetric document instead.'}
     }),
 
     // ── SEO ────────────────────────────────────────────────────────
