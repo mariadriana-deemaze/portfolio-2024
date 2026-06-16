@@ -19,7 +19,6 @@ export interface BlogPost {
 	category?: string;
 	featured?: boolean;
 	readingTime?: number;
-	views?: number;
 }
 
 type SanityBlogPost = {
@@ -34,7 +33,6 @@ type SanityBlogPost = {
 	cover?: string;
 	category?: string;
 	featured?: boolean;
-	views?: number;
 };
 
 const POST_FIELDS = `
@@ -48,8 +46,7 @@ const POST_FIELDS = `
   published,
   "cover": cover.asset->url,
   category,
-  featured,
-  views
+  featured
 `;
 
 function normalizePost(post: SanityBlogPost): BlogPost {
@@ -65,8 +62,7 @@ function normalizePost(post: SanityBlogPost): BlogPost {
 		cover: post.cover,
 		category: post.category,
 		featured: post.featured ?? false,
-		readingTime: body ? calculateReadingTime(body) : undefined,
-		views: post.views
+		readingTime: body ? calculateReadingTime(body) : undefined
 	};
 }
 
@@ -88,8 +84,16 @@ export async function getPost(slug: string) {
 }
 
 export async function getPostViews(slug: string) {
-	const result = await fetchSanityQuery<{ _id: string; views: number } | null>(
-		`*[_type == "post" && slug.current == $slug][0]{ _id, views }`,
+	const result = await fetchSanityQuery<{
+		postId: string;
+		metricId: string | null;
+		views: number;
+	} | null>(
+		`*[_type == "post" && slug.current == $slug][0]{
+			"postId": _id,
+			"metricId": *[_type == "postMetric" && references(^._id)][0]._id,
+			"views": coalesce(*[_type == "postMetric" && references(^._id)][0].views, 0)
+		}`,
 		{ slug }
 	);
 	return result;

@@ -39,20 +39,30 @@ export async function handleViewsPost(request: Request): Promise<Response> {
 
 		const viewed = getViewedSlugs(request);
 		const alreadyCounted = viewed.has(slug);
-		let currentViews = post.views ?? 0;
+		let currentViews = post.views;
 
 		if (!alreadyCounted) {
 			try {
-				await mutateInSanity([
-					{
-						patch: {
-							query: `*[_type == "post" && slug.current == $slug][0]`,
-							params: { slug },
-							setIfMissing: { views: 0 },
-							inc: { views: 1 }
+				if (post.metricId) {
+					await mutateInSanity([
+						{
+							patch: {
+								id: post.metricId,
+								inc: { views: 1 }
+							}
 						}
-					}
-				]);
+					]);
+				} else {
+					await mutateInSanity([
+						{
+							create: {
+								_type: 'postMetric',
+								post: { _type: 'reference', _ref: post.postId },
+								views: 1
+							}
+						}
+					]);
+				}
 				currentViews += 1;
 				viewed.add(slug);
 			} catch (error) {

@@ -110,18 +110,8 @@ function useTrackView(slug: string, initialViews: number) {
 
 function BlogShowRoute() {
 	const { post, postHtml, nextPost } = Route.useLoaderData();
-	const {
-		title,
-		description,
-		slug,
-		cover,
-		category,
-		date,
-		readingTime = 0,
-		views = 0,
-		keywords = []
-	} = post;
-	const liveViews = useTrackView(slug, views);
+	const { title, description, slug, cover, category, date, readingTime = 0, keywords = [] } = post;
+	const liveViews = useTrackView(slug, 0);
 	const proseRef = useRef<HTMLDivElement>(null);
 	useCodeBarExtraction(proseRef);
 
