@@ -25,17 +25,22 @@ export const getPostFn = createServerFn({ method: 'GET' })
 	.inputValidator(slugSchema)
 	.handler(async ({ data }) => {
 		try {
-			const [{ getPost, getNextPost }, { renderMdxToHtml }] = await Promise.all([
-				import('@/data/blog'),
-				import('@/server/mdx')
-			]);
+			const [{ getPost, getNextPost }, { renderMdxToHtml }, { highlightCodeBlocks }] =
+				await Promise.all([
+					import('@/data/blog'),
+					import('@/server/mdx'),
+					import('@/server/highlight')
+				]);
 			const post = await getPost(data.slug);
-			const [postHtml, nextPost] = await Promise.all([
+			const [postHtml, nextPost, highlightedBody] = await Promise.all([
 				post?.body ? renderMdxToHtml(post.body) : undefined,
-				post?.date ? getNextPost(post.date, data.slug) : undefined
+				post?.date ? getNextPost(post.date, data.slug) : undefined,
+				post?.structuredBody ? highlightCodeBlocks(post.structuredBody) : undefined
 			]);
+			const processedPost =
+				post && highlightedBody ? { ...post, structuredBody: highlightedBody } : post;
 
-			return { post, postHtml, nextPost };
+			return { post: processedPost, postHtml, nextPost };
 		} catch (error) {
 			console.error('Failed to load blog post', error);
 			return {};
@@ -56,17 +61,22 @@ export const getProjectFn = createServerFn({ method: 'GET' })
 	.inputValidator(slugSchema)
 	.handler(async ({ data }) => {
 		try {
-			const [{ getProject, getNextProject }, { renderMdxToHtml }] = await Promise.all([
-				import('@/data/projects'),
-				import('@/server/mdx')
-			]);
+			const [{ getProject, getNextProject }, { renderMdxToHtml }, { highlightCodeBlocks }] =
+				await Promise.all([
+					import('@/data/projects'),
+					import('@/server/mdx'),
+					import('@/server/highlight')
+				]);
 			const project = await getProject(data.slug);
-			const [projectHtml, nextProject] = await Promise.all([
+			const [projectHtml, nextProject, highlightedBody] = await Promise.all([
 				project?.content ? renderMdxToHtml(project.content) : undefined,
-				project ? getNextProject(project.displayOrder, data.slug) : undefined
+				project ? getNextProject(project.displayOrder, data.slug) : undefined,
+				project?.structuredBody ? highlightCodeBlocks(project.structuredBody) : undefined
 			]);
+			const processedProject =
+				project && highlightedBody ? { ...project, structuredBody: highlightedBody } : project;
 
-			return { project, projectHtml, nextProject };
+			return { project: processedProject, projectHtml, nextProject };
 		} catch (error) {
 			console.error('Failed to load project', error);
 			return {};

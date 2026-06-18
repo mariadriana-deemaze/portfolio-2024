@@ -2,7 +2,11 @@
 	"$schema": "https://unpkg.com/knip@6/schema.json",
 	"workspaces": {
 		".": {
-			"entry": ["src/server.ts", "src/components/ui/index.ts"]
+			"entry": [
+				"src/server.ts",
+				"src/components/ui/index.ts",
+				"src/components/portable-text/index.tsx"
+			]
 		}
 	},
 	"ignoreExportsUsedInFile": {

@@ -225,7 +225,7 @@ blockquote cite {
 	margin-left: 10px;
 }
 
-.a-body code {
+.a-body pre code {
 	display: block;
 	font-family: var(--font-mono);
 	font-size: 13px;
@@ -235,4 +235,10 @@ blockquote cite {
 	word-break: break-word;
 	padding: 18px 20px;
 	margin: 0;
+}
+
+.a-body .a-inline-code {
+	@apply font-mono text-[13px] rounded-md px-1.5 py-0.5;
+	background: var(--muted);
+	color: var(--color-orange-primary);
 }
