@@ -260,7 +260,9 @@ function ProjectItemRoute() {
 
 			{structuredBody && (
 				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(60px,9vw,110px)]">
-					<PortableTextRenderer body={structuredBody} className="a-body" />
+					<div className="mx-auto max-w-[760px]">
+						<PortableTextRenderer body={structuredBody} className="a-body" />
+					</div>
 				</section>
 			)}
 
