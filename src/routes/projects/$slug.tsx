@@ -322,10 +322,10 @@ function ProjectItemRoute() {
 								Next project
 							</div>
 							<div className="mt-[18px] flex items-center justify-between gap-6">
-								<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[transform,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white">
+								<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[translate,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white motion-reduce:transition-none">
 									{nextProject.title}
 								</div>
-								<div className="grid size-[clamp(54px,8vw,88px)] flex-shrink-0 place-items-center rounded-full border-[1.5px] border-border text-[var(--color-orange-primary)] transition-[transform,background,color,border-color] duration-[550ms] ease-[var(--ease-out)] group-hover:-rotate-45 group-hover:scale-[1.04] group-hover:bg-white group-hover:border-white group-hover:text-[var(--color-orange-primary)] [&>svg]:h-[42%] [&>svg]:w-[42%]">
+								<div className="grid size-[clamp(54px,8vw,88px)] flex-shrink-0 place-items-center rounded-full border-[1.5px] border-border text-[var(--color-orange-primary)] transition-[rotate,scale,background,color,border-color] duration-[550ms] ease-[var(--ease-out)] group-hover:-rotate-45 group-hover:scale-[1.04] group-hover:bg-white group-hover:border-white group-hover:text-[var(--color-orange-primary)] motion-reduce:transition-none [&>svg]:h-[42%] [&>svg]:w-[42%]">
 									<LuArrowUpRight />
 								</div>
 							</div>
