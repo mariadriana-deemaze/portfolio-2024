@@ -5,7 +5,7 @@ import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 import { PortableTextRenderer } from '@/components/portable-text';
 import { getStackByName } from '@/components/stacks';
 import { StaggerText } from '@/components/ui/stagger-text';
-import { BASE_URL, data } from '@/data/main';
+import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
 import type { ResolvedGalleryItem, ResolvedMetric } from '@/lib/sanity-types';
 import { getProjectFn } from '@/server-fns/content';
@@ -86,8 +86,7 @@ function ProjectItemRoute() {
 		description,
 		hero,
 		technologies = [],
-		repo,
-		liveUrl,
+		links = [],
 		colors,
 		medium,
 		displayOrder,
@@ -110,8 +109,6 @@ function ProjectItemRoute() {
 		: undefined;
 
 	const projectNum = displayOrder != null ? String(displayOrder).padStart(2, '0') : undefined;
-	const repoUrl = repo ? `${data.github}/${repo}` : undefined;
-	const hasActions = liveUrl || repoUrl;
 	const hasMetaRow = role || timeline || context;
 	const hasMetaSection = hasMetaRow || technologies.length > 0;
 
@@ -190,20 +187,24 @@ function ProjectItemRoute() {
 						</div>
 					)}
 
-					{hasActions && (
+					{links.length > 0 && (
 						<div className="animate-fade-in-left delay-500 flex gap-[10px] mt-[30px] flex-wrap">
-							{liveUrl && (
-								<a href={liveUrl} target="_blank" rel="noreferrer" className={BTN_PRIMARY}>
-									Visit live
-									<LuArrowUpRight className="w-[15px] h-[15px]" />
-								</a>
-							)}
-							{repoUrl && (
-								<a href={repoUrl} target="_blank" rel="noreferrer" className={BTN_GHOST}>
-									<LuGithub className="w-[15px] h-[15px]" />
-									Source
-								</a>
-							)}
+							{links.map((link, i) => {
+								const isGithub = link.url.includes('github.com');
+								return (
+									<a
+										key={link.url}
+										href={link.url}
+										target="_blank"
+										rel="noreferrer"
+										className={i === 0 && !isGithub ? BTN_PRIMARY : BTN_GHOST}
+									>
+										{isGithub && <LuGithub className="w-[15px] h-[15px]" />}
+										{link.title}
+										{!isGithub && <LuArrowUpRight className="w-[15px] h-[15px]" />}
+									</a>
+								);
+							})}
 						</div>
 					)}
 				</div>
