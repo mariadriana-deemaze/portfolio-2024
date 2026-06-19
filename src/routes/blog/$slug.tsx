@@ -5,6 +5,7 @@ import { LuArrowUpRight } from 'react-icons/lu';
 
 import { Cover } from '@/components/pages/blog/cover';
 import { MetaBar } from '@/components/pages/blog/meta-bar';
+import { PortableTextRenderer } from '@/components/portable-text';
 import { Badge } from '@/components/ui/badge';
 import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
@@ -29,6 +30,7 @@ export const Route = createFileRoute('/blog/$slug')({
 		createSeoHead({
 			title: `${loaderData?.post?.title ?? 'Not found'} | Blog`,
 			description: loaderData?.post?.description ?? 'The requested blog post could not be located.',
+			image: loaderData?.post?.coverImage?.url,
 			alternates: {
 				canonical: `${BASE_URL}/blog/${params.slug}`
 			}
@@ -110,7 +112,20 @@ function useTrackView(slug: string, initialViews: number) {
 
 function BlogShowRoute() {
 	const { post, postHtml, nextPost } = Route.useLoaderData();
-	const { title, description, slug, cover, category, date, readingTime = 0, keywords = [] } = post;
+	const {
+		title,
+		description,
+		slug,
+		cover,
+		coverImage,
+		category,
+		date,
+		readingTime = 0,
+		keywords = [],
+		tags = [],
+		structuredBody,
+		author
+	} = post;
 	const liveViews = useTrackView(slug, 0);
 	const proseRef = useRef<HTMLDivElement>(null);
 	useCodeBarExtraction(proseRef);
@@ -155,29 +170,27 @@ function BlogShowRoute() {
 				<MetaBar slug={slug} title={title} readingTime={readingTime} views={liveViews} />
 			</header>
 
-			{cover && <Cover src={cover} alt={title} />}
+			{(coverImage?.url || cover) && (
+				<Cover src={coverImage?.url ?? cover ?? ''} alt={coverImage?.alt ?? title} />
+			)}
 
-			<div className="mx-auto w-full max-w-4xl px-4 a-body sm:px-6">
-				<div
-					ref={proseRef}
-					className="prose dark:prose-invert"
-					dangerouslySetInnerHTML={{ __html: postHtml }}
-				/>
-
-				{keywords.length > 0 && (
-					<div className="mx-auto mt-2 flex max-w-[680px] flex-wrap gap-2">
-						{keywords.map((tag: string) => (
-							<Badge
-								key={`${slug}-${tag}`}
-								variant="outline"
-								className="cursor-default px-3 py-1 text-[10px]"
-							>
-								{tag}
-							</Badge>
-						))}
+			{structuredBody ? (
+				<div className="mx-auto w-full max-w-4xl px-4 a-body sm:px-6">
+					<PortableTextRenderer body={structuredBody} />
+				</div>
+			) : (
+				postHtml && (
+					<div className="mx-auto w-full max-w-4xl px-4 a-body sm:px-6">
+						<div
+							ref={proseRef}
+							className="prose dark:prose-invert"
+							dangerouslySetInnerHTML={{ __html: postHtml }}
+						/>
 					</div>
-				)}
-			</div>
+				)
+			)}
+
+			<ArticleFooter slug={slug} tags={tags.length > 0 ? tags : keywords} author={author} />
 
 			{nextPost && (
 				<section className="relative left-1/2 mt-[clamp(80px,12vw,140px)] w-screen -translate-x-1/2 border-t border-border">
@@ -201,6 +214,73 @@ function BlogShowRoute() {
 				</section>
 			)}
 		</article>
+	);
+}
+
+function ArticleFooter({
+	slug,
+	tags,
+	author
+}: {
+	slug: string;
+	tags: string[];
+	author?: { name: string; avatar?: string; url?: string };
+}) {
+	const hasTags = tags.length > 0;
+	const hasAuthor = !!author;
+
+	if (!hasTags && !hasAuthor) return null;
+
+	return (
+		<footer className="mx-auto w-full max-w-4xl px-4 mt-[clamp(48px,7vw,80px)] sm:px-6">
+			{hasTags && (
+				<div className="flex flex-wrap gap-2">
+					{tags.map((tag) => (
+						<Badge
+							key={`${slug}-${tag}`}
+							variant="outline"
+							className="cursor-default px-3 py-1 text-[10px]"
+						>
+							{tag}
+						</Badge>
+					))}
+				</div>
+			)}
+
+			{hasAuthor && (
+				<div
+					className={`flex items-center gap-4 ${hasTags ? 'mt-[36px] border-t border-border pt-[36px]' : ''}`}
+				>
+					{author.avatar && (
+						<img
+							src={author.avatar}
+							alt={author.name}
+							className="size-[52px] rounded-full object-cover"
+							loading="lazy"
+						/>
+					)}
+					<div>
+						<div className="font-mono text-[10px] tracking-[0.08em] uppercase text-muted-foreground">
+							Written by
+						</div>
+						{author.url ? (
+							<a
+								href={author.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="mt-[4px] block font-clash text-[17px] font-medium text-foreground no-underline hover:text-[var(--color-orange-primary)] transition-colors duration-300"
+							>
+								{author.name}
+							</a>
+						) : (
+							<div className="mt-[4px] font-clash text-[17px] font-medium text-foreground">
+								{author.name}
+							</div>
+						)}
+					</div>
+				</div>
+			)}
+		</footer>
 	);
 }
 
