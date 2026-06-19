@@ -30,7 +30,7 @@ export const Route = createFileRoute('/projects/$slug')({
 		createSeoHead({
 			title: `${loaderData?.project?.title ?? 'Project'} | Project`,
 			description: loaderData?.project?.description ?? 'Project details and information.',
-			image: loaderData?.project?.hero,
+			image: loaderData?.project?.coverImage?.url,
 			alternates: {
 				canonical: `${BASE_URL}/projects/${params.slug}`
 			}
@@ -84,7 +84,7 @@ function ProjectItemRoute() {
 		title,
 		year,
 		description,
-		hero,
+		coverImage,
 		technologies = [],
 		links = [],
 		colors,
@@ -210,16 +210,26 @@ function ProjectItemRoute() {
 				</div>
 			</header>
 
-			{hero && (
+			{coverImage && (
 				<div className="animate-fade-in-left delay-300 relative left-1/2 mt-16 w-screen -translate-x-1/2 overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]">
 					{heroGradient && (
 						<div className="absolute inset-0" style={{ background: heroGradient, opacity: 0.3 }} />
 					)}
 					<div className="absolute inset-y-[-12%] inset-x-0 will-change-transform" ref={coverRef}>
 						<img
-							src={hero}
-							alt={`${title} project cover`}
+							src={coverImage.url}
+							alt={coverImage.alt ?? `${title} project cover`}
+							width={coverImage.width}
+							height={coverImage.height}
 							className="block size-full object-cover"
+							{...(coverImage.lqip
+								? {
+										style: {
+											backgroundImage: `url(${coverImage.lqip})`,
+											backgroundSize: 'cover'
+										}
+									}
+								: {})}
 						/>
 					</div>
 					<div
@@ -291,10 +301,10 @@ function ProjectItemRoute() {
 						params={{ slug: nextProject.slug }}
 						className="group relative block overflow-hidden text-foreground no-underline"
 					>
-						{nextProject.hero && (
+						{nextProject.coverImage && (
 							<div className="absolute inset-0 z-0 pointer-events-none [clip-path:polygon(0%_100%,100%_100%,100%_100%,0%_100%)] transition-[clip-path] duration-700 [transition-timing-function:var(--ease-out)] group-hover:[clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)]">
 								<img
-									src={nextProject.hero}
+									src={nextProject.coverImage.url}
 									alt=""
 									className="absolute inset-0 size-full object-cover scale-[1.12] transition-transform duration-[1.1s] [transition-timing-function:var(--ease-out)] group-hover:scale-100"
 								/>
