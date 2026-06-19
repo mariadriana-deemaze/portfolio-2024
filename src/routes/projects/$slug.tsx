@@ -2,10 +2,12 @@ import { createFileRoute, Link, notFound } from '@tanstack/react-router';
 import { useEffect, useRef } from 'react';
 import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
+import { PortableTextRenderer } from '@/components/portable-text';
 import { getStackByName } from '@/components/stacks';
 import { StaggerText } from '@/components/ui/stagger-text';
 import { BASE_URL, data } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
+import type { ResolvedGalleryItem, ResolvedMetric } from '@/lib/sanity-types';
 import { getProjectFn } from '@/server-fns/content';
 import { ROUTES } from '@/utils/routes';
 import { cn } from '@/utils/utils';
@@ -91,7 +93,13 @@ function ProjectItemRoute() {
 		displayOrder,
 		role,
 		timeline,
-		context
+		context,
+		overview,
+		problem,
+		approach,
+		statistics = [],
+		gallery = [],
+		structuredBody
 	} = project;
 
 	const coverRef = useRef<HTMLDivElement>(null);
@@ -226,7 +234,37 @@ function ProjectItemRoute() {
 				</div>
 			)}
 
-			{projectHtml && (
+			{(overview || problem || approach) && (
+				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(80px,12vw,150px)]">
+					<div className="mx-auto max-w-[760px]">
+						{overview && <CaseStudyBlock label="Overview" text={overview} />}
+						{problem && (
+							<CaseStudyBlock
+								label="Problem"
+								text={problem}
+								className={overview ? 'mt-[48px]' : ''}
+							/>
+						)}
+						{approach && (
+							<CaseStudyBlock
+								label="Approach"
+								text={approach}
+								className={overview || problem ? 'mt-[48px]' : ''}
+							/>
+						)}
+					</div>
+				</section>
+			)}
+
+			{statistics.length > 0 && <StatisticsGrid statistics={statistics} />}
+
+			{structuredBody && (
+				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(60px,9vw,110px)]">
+					<PortableTextRenderer body={structuredBody} className="a-body" />
+				</section>
+			)}
+
+			{!structuredBody && projectHtml && (
 				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(80px,12vw,150px)]">
 					<div className="mx-auto max-w-[760px]">
 						<div className="mb-[26px] flex items-center gap-3 font-mono text-xs tracking-[0.06em] uppercase text-[var(--color-orange-primary)]">
@@ -240,6 +278,8 @@ function ProjectItemRoute() {
 					</div>
 				</section>
 			)}
+
+			{gallery.length > 0 && <ProjectGallery gallery={gallery} />}
 
 			{nextProject && (
 				<section className="relative left-1/2 mt-[clamp(90px,14vw,170px)] w-screen -translate-x-1/2 border-t border-border">
@@ -281,6 +321,111 @@ function ProjectItemRoute() {
 				</section>
 			)}
 		</article>
+	);
+}
+
+const SECTION_LABEL =
+	'mb-[26px] flex items-center gap-3 font-mono text-xs tracking-[0.06em] uppercase text-[var(--color-orange-primary)]';
+const SECTION_LINE = 'block h-px w-10 bg-[var(--color-orange-primary)] opacity-50';
+
+function CaseStudyBlock({
+	label,
+	text,
+	className
+}: {
+	label: string;
+	text: string;
+	className?: string;
+}) {
+	return (
+		<div className={className}>
+			<div className={SECTION_LABEL}>
+				<span className={SECTION_LINE} />
+				{label}
+			</div>
+			<p className="m-0 font-mono text-[14.5px] leading-[1.85] text-foreground text-pretty">
+				{text}
+			</p>
+		</div>
+	);
+}
+
+function StatisticsGrid({ statistics }: { statistics: ResolvedMetric[] }) {
+	return (
+		<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(60px,9vw,110px)]">
+			<div className="mx-auto max-w-[760px]">
+				<div className={SECTION_LABEL}>
+					<span className={SECTION_LINE} />
+					Key metrics
+				</div>
+				<div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
+					{statistics.map((stat) => (
+						<div
+							key={stat.label}
+							className="rounded-2xl border border-border bg-[color-mix(in_srgb,var(--card)_42%,transparent)] p-[clamp(18px,2.4vw,28px)]"
+						>
+							<div className="font-clash text-[clamp(28px,4vw,44px)] font-medium leading-none tracking-[-0.02em] text-[var(--color-orange-primary)]">
+								{stat.value}
+							</div>
+							<div className="mt-[10px] font-mono text-[11px] tracking-[0.06em] uppercase text-muted-foreground">
+								{stat.label}
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+	);
+}
+
+const GALLERY_LAYOUT_CLASSES: Record<ResolvedGalleryItem['layout'], string> = {
+	wide: 'col-span-full',
+	half: 'col-span-1',
+	third: 'col-span-1'
+};
+
+function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
+	return (
+		<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(60px,9vw,110px)]">
+			<div className={cn(SECTION_LABEL, 'mx-auto max-w-[760px]')}>
+				<span className={SECTION_LINE} />
+				Gallery
+			</div>
+			<div className="grid grid-cols-2 gap-[clamp(12px,1.6vw,20px)] max-sm:grid-cols-1">
+				{gallery.map((item) => {
+					const { image } = item;
+					if (!image?.url) return null;
+					return (
+						<figure key={image.url} className={cn('m-0', GALLERY_LAYOUT_CLASSES[item.layout])}>
+							<div className="overflow-hidden rounded-2xl border border-border bg-muted shadow-[var(--shadow-card)]">
+								<img
+									src={image.url}
+									alt={image.alt ?? ''}
+									width={image.width}
+									height={image.height}
+									loading="lazy"
+									decoding="async"
+									className="block w-full"
+									{...(image.lqip
+										? {
+												style: {
+													backgroundImage: `url(${image.lqip})`,
+													backgroundSize: 'cover'
+												}
+											}
+										: {})}
+								/>
+							</div>
+							{image.caption && (
+								<figcaption className="mt-[10px] text-center font-mono text-[11.5px] text-muted-foreground">
+									{image.caption}
+								</figcaption>
+							)}
+						</figure>
+					);
+				})}
+			</div>
+		</section>
 	);
 }
 
