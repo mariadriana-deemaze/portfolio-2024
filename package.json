@@ -24,6 +24,7 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",
+		"@portabletext/markdown": "^1.4.1",
 		"@portabletext/react": "^6.2.0",
 		"@radix-ui/react-avatar": "^1.0.4",
 		"@radix-ui/react-dialog": "^1.0.5",

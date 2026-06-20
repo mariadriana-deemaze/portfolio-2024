@@ -1,3 +1,4 @@
+import { portableTextToMarkdown } from '@/components/portable-text/to-markdown';
 import { getPost, getPosts } from '@/data/blog';
 import { BASE_URL, data } from '@/data/main';
 import { getProject, getProjects } from '@/data/projects';
@@ -273,15 +274,24 @@ export async function getMarkdownDocument(pathname: string): Promise<string | un
 		const post = await getPost(slug);
 		if (!post) return undefined;
 
+		const bodyText = post.structuredBody
+			? portableTextToMarkdown(post.structuredBody)
+			: post.body
+				? post.body
+				: undefined;
+
 		return [
 			markdownFrontmatter(post.title, normalizedPath, post.description),
 			`# ${post.title}`,
 			'',
 			`- Published: ${post.date}`,
-			post.external_link ? `- Canonical source: ${post.external_link}` : undefined,
-			post.keywords.length > 0 ? `- Keywords: ${post.keywords.join(', ')}` : undefined,
+			post.category ? `- Category: ${post.category}` : undefined,
+			post.readingTime ? `- Reading time: ${post.readingTime} min` : undefined,
+			post.canonicalUrl ? `- Canonical source: ${post.canonicalUrl}` : undefined,
+			post.tags.length > 0 ? `- Tags: ${post.tags.join(', ')}` : undefined,
+			post.author ? `- Author: ${post.author.name}` : undefined,
 			'',
-			post.body
+			bodyText
 		]
 			.filter((part): part is string => Boolean(part))
 			.join('\n');
@@ -295,20 +305,35 @@ export async function getMarkdownDocument(pathname: string): Promise<string | un
 			return undefined;
 		}
 
+		const linkLines = project.links.map((link) => `- [${link.title}](${link.url})`);
+		const caseSections = (
+			[
+				['Overview', project.overview],
+				['Problem', project.problem],
+				['Approach', project.approach]
+			] as const
+		)
+			.filter(([, text]) => Boolean(text))
+			.map(([heading, text]) => `## ${heading}\n\n${text}`)
+			.join('\n\n');
+		const bodyText = project.structuredBody
+			? portableTextToMarkdown(project.structuredBody)
+			: caseSections || undefined;
+
 		return [
 			markdownFrontmatter(project.title, normalizedPath, project.description),
 			`# ${project.title}`,
 			'',
+			`- Medium: ${project.medium}`,
 			`- Year: ${project.year}`,
-			project.liveUrl ? `- Live URL: ${project.liveUrl}` : undefined,
-			project.repo
-				? `- Repository: https://github.com/mariadriana-deemaze/${project.repo}`
-				: undefined,
+			project.role ? `- Role: ${project.role}` : undefined,
+			project.timeline ? `- Timeline: ${project.timeline}` : undefined,
 			project.technologies.length > 0
-				? `- Technologies: ${project.technologies.map((technology) => technology.label).join(', ')}`
+				? `- Technologies: ${project.technologies.map((t) => t.label).join(', ')}`
 				: undefined,
+			linkLines.length > 0 ? ['', '## Links', '', ...linkLines].join('\n') : undefined,
 			'',
-			project.content
+			bodyText
 		]
 			.filter((part): part is string => Boolean(part))
 			.join('\n');
