@@ -5,7 +5,12 @@ import type {
 	ResolvedImage,
 	ResolvedSeo
 } from '@/lib/sanity-types';
-import { AUTHOR_PROJECTION, RICH_IMAGE_PROJECTION, SEO_PROJECTION } from '@/lib/sanity-types';
+import {
+	AUTHOR_PROJECTION,
+	RICH_IMAGE_PROJECTION,
+	SEO_PROJECTION,
+	STRUCTURED_BODY_PROJECTION
+} from '@/lib/sanity-types';
 
 // ── Helpers ───────────────────────────────────────────────────────────
 
@@ -30,7 +35,7 @@ const POST_FIELDS = `
   "coverImage": coverImage ${RICH_IMAGE_PROJECTION},
   "author": author ${AUTHOR_PROJECTION},
   canonicalUrl,
-  structuredBody,
+  "structuredBody": structuredBody ${STRUCTURED_BODY_PROJECTION},
   "seo": seo ${SEO_PROJECTION},
   // Legacy fields — still projected until migration completes
   body,

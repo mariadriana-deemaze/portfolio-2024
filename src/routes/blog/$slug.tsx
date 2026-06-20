@@ -6,7 +6,6 @@ import { LuArrowUpRight } from 'react-icons/lu';
 import { Cover } from '@/components/pages/blog/cover';
 import { MetaBar } from '@/components/pages/blog/meta-bar';
 import { PortableTextRenderer } from '@/components/portable-text';
-import { Badge } from '@/components/ui/badge';
 import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
 import { getPostFn } from '@/server-fns/content';
@@ -22,7 +21,6 @@ export const Route = createFileRoute('/blog/$slug')({
 
 		return {
 			post: postData.post,
-			postHtml: postData.postHtml ?? '',
 			nextPost: postData.nextPost
 		};
 	},
@@ -38,57 +36,6 @@ export const Route = createFileRoute('/blog/$slug')({
 	component: BlogShowRoute,
 	notFoundComponent: BlogPostNotFoundRoute
 });
-
-const DOT_COLORS = ['#ff5f57', '#febc2e', '#28c840'];
-
-function useCodeBarExtraction(ref: React.RefObject<HTMLDivElement | null>) {
-	useEffect(() => {
-		const container = ref.current;
-		if (!container) return;
-
-		for (const pre of container.querySelectorAll('pre')) {
-			if (pre.classList.contains('has-bar')) continue;
-
-			const code = pre.querySelector('code');
-			if (!code) continue;
-
-			const firstLine = code.firstElementChild ?? code.firstChild;
-			if (!firstLine) continue;
-
-			const text = (firstLine.textContent ?? '').trim();
-			if (!text.startsWith('//')) continue;
-
-			const filename = text.replace(/^\/\/\s*/, '');
-			if (!filename) continue;
-
-			if (firstLine.nodeType === Node.TEXT_NODE) {
-				firstLine.textContent = (firstLine.textContent ?? '').replace(/^\/\/.*\n?/, '');
-			} else {
-				const next = firstLine.nextSibling;
-				firstLine.remove();
-				if (next?.nodeType === Node.TEXT_NODE && next.textContent?.startsWith('\n')) {
-					next.textContent = next.textContent.slice(1);
-				}
-			}
-
-			const bar = document.createElement('div');
-			bar.className = 'a-code-bar';
-			for (const c of DOT_COLORS) {
-				const dot = document.createElement('span');
-				dot.className = 'a-code-bar-dot';
-				dot.style.background = c;
-				bar.appendChild(dot);
-			}
-			const name = document.createElement('span');
-			name.className = 'a-code-bar-name';
-			name.textContent = filename;
-			bar.appendChild(name);
-
-			pre.classList.add('has-bar');
-			pre.insertBefore(bar, pre.firstChild);
-		}
-	}, [ref]);
-}
 
 function useTrackView(slug: string, initialViews: number) {
 	const [views, setViews] = useState(initialViews);
@@ -111,24 +58,19 @@ function useTrackView(slug: string, initialViews: number) {
 }
 
 function BlogShowRoute() {
-	const { post, postHtml, nextPost } = Route.useLoaderData();
+	const { post, nextPost } = Route.useLoaderData();
 	const {
 		title,
 		description,
 		slug,
-		cover,
 		coverImage,
 		category,
 		date,
 		readingTime = 0,
-		keywords = [],
-		tags = [],
 		structuredBody,
 		author
 	} = post;
 	const liveViews = useTrackView(slug, 0);
-	const proseRef = useRef<HTMLDivElement>(null);
-	useCodeBarExtraction(proseRef);
 
 	const formattedDate = new Date(date).toLocaleDateString('en-US', {
 		year: 'numeric',
@@ -163,34 +105,22 @@ function BlogShowRoute() {
 					{title}
 				</h1>
 
-				<p className="animate-fade-in-left delay-300 mt-[26px] font-clash text-muted-foreground text-pretty font-normal leading-[1.4] tracking-[-0.01em] text-[clamp(19px,2.4vw,27px)]">
+				<p className="animate-fade-in-left delay-300 mt-[26px] font-clash text-foreground text-pretty font-normal leading-[1.4] tracking-[-0.01em] text-[clamp(19px,2.4vw,27px)]">
 					{description}
 				</p>
 
 				<MetaBar slug={slug} title={title} readingTime={readingTime} views={liveViews} />
 			</header>
 
-			{(coverImage?.url || cover) && (
-				<Cover src={coverImage?.url ?? cover ?? ''} alt={coverImage?.alt ?? title} />
-			)}
+			{coverImage?.url && <Cover src={coverImage.url} alt={coverImage.alt ?? title} />}
 
-			{structuredBody ? (
+			{structuredBody && (
 				<div className="mx-auto w-full max-w-4xl px-4 a-body sm:px-6">
 					<PortableTextRenderer body={structuredBody} />
 				</div>
-			) : (
-				postHtml && (
-					<div className="mx-auto w-full max-w-4xl px-4 a-body sm:px-6">
-						<div
-							ref={proseRef}
-							className="prose dark:prose-invert"
-							dangerouslySetInnerHTML={{ __html: postHtml }}
-						/>
-					</div>
-				)
 			)}
 
-			<ArticleFooter slug={slug} tags={tags.length > 0 ? tags : keywords} author={author} />
+			<ArticleFooter author={author} />
 
 			{nextPost && (
 				<section className="relative left-1/2 mt-[clamp(80px,12vw,140px)] w-screen -translate-x-1/2 border-t border-border">
@@ -217,69 +147,40 @@ function BlogShowRoute() {
 	);
 }
 
-function ArticleFooter({
-	slug,
-	tags,
-	author
-}: {
-	slug: string;
-	tags: string[];
-	author?: { name: string; avatar?: string; url?: string };
-}) {
-	const hasTags = tags.length > 0;
-	const hasAuthor = !!author;
-
-	if (!hasTags && !hasAuthor) return null;
+function ArticleFooter({ author }: { author?: { name: string; avatar?: string; url?: string } }) {
+	if (!author) return null;
 
 	return (
 		<footer className="mx-auto w-full max-w-4xl px-4 mt-[clamp(48px,7vw,80px)] sm:px-6">
-			{hasTags && (
-				<div className="flex flex-wrap gap-2">
-					{tags.map((tag) => (
-						<Badge
-							key={`${slug}-${tag}`}
-							variant="outline"
-							className="cursor-default px-3 py-1 text-[10px]"
-						>
-							{tag}
-						</Badge>
-					))}
-				</div>
-			)}
-
-			{hasAuthor && (
-				<div
-					className={`flex items-center gap-4 ${hasTags ? 'mt-[36px] border-t border-border pt-[36px]' : ''}`}
-				>
-					{author.avatar && (
-						<img
-							src={author.avatar}
-							alt={author.name}
-							className="size-[52px] rounded-full object-cover"
-							loading="lazy"
-						/>
-					)}
-					<div>
-						<div className="font-mono text-[10px] tracking-[0.08em] uppercase text-muted-foreground">
-							Written by
-						</div>
-						{author.url ? (
-							<a
-								href={author.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="mt-[4px] block font-clash text-[17px] font-medium text-foreground no-underline hover:text-[var(--color-orange-primary)] transition-colors duration-300"
-							>
-								{author.name}
-							</a>
-						) : (
-							<div className="mt-[4px] font-clash text-[17px] font-medium text-foreground">
-								{author.name}
-							</div>
-						)}
+			<div className="flex items-center gap-4">
+				{author.avatar && (
+					<img
+						src={author.avatar}
+						alt={author.name}
+						className="size-[52px] rounded-full object-cover"
+						loading="lazy"
+					/>
+				)}
+				<div>
+					<div className="font-mono text-[10px] tracking-[0.08em] uppercase text-muted-foreground">
+						Written by
 					</div>
+					{author.url ? (
+						<a
+							href={author.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="mt-[4px] block font-clash text-[17px] font-medium text-foreground no-underline hover:text-[var(--color-orange-primary)] transition-colors duration-300"
+						>
+							{author.name}
+						</a>
+					) : (
+						<div className="mt-[4px] font-clash text-[17px] font-medium text-foreground">
+							{author.name}
+						</div>
+					)}
 				</div>
-			)}
+			</div>
 		</footer>
 	);
 }

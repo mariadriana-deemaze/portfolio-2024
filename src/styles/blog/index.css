@@ -4,12 +4,6 @@
 	margin-top: clamp(48px, 7vw, 76px);
 }
 
-.a-body > * {
-	max-width: 680px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 .a-body > .prose {
 	max-width: 680px;
 	margin-left: auto;
@@ -33,7 +27,7 @@
 }
 
 .a-body h2 {
-	@apply font-clash text-foreground max-w-[680px] mx-auto;
+	@apply font-clash text-foreground;
 	font-weight: 600;
 	font-size: clamp(26px, 3.4vw, 38px);
 	letter-spacing: -0.02em;
@@ -42,18 +36,23 @@
 }
 
 .a-body h3 {
-	@apply font-clash text-foreground max-w-[680px] mx-auto;
+	@apply font-clash text-foreground;
 	font-weight: 500;
 	font-size: clamp(20px, 2.6vw, 26px);
 	letter-spacing: -0.015em;
 	margin: 40px auto 14px;
 }
 
+.a-body h4 {
+	@apply font-clash text-foreground;
+	font-weight: 500;
+	font-size: clamp(17px, 2.2vw, 21px);
+	letter-spacing: -0.01em;
+	margin: 32px auto 12px;
+}
+
 .a-body ul,
 .a-body ol {
-	max-width: 680px;
-	margin-left: auto;
-	margin-right: auto;
 	@apply font-mono text-foreground mb-6;
 	font-size: 15px;
 	line-height: 1.8;
@@ -91,7 +90,6 @@
 
 .a-body .a-pullquote,
 blockquote {
-	max-width: 680px;
 	margin: 48px auto;
 	padding: 6px 0 6px 26px;
 	border-left: 3px solid var(--color-orange-primary);
@@ -116,13 +114,14 @@ blockquote cite {
 
 .a-body figure,
 .a-figure {
-	max-width: 880px;
-	margin: 44px auto;
+	max-width: none;
+	margin: 44px -20px;
 }
 
 .a-body figure .frame,
 .a-figure-frame {
-	@apply rounded-4xl border border-border overflow-hidden;
+	@apply border border-border overflow-hidden;
+	border-radius: 14px;
 	box-shadow: var(--shadow-card);
 	background: var(--muted);
 }
@@ -142,7 +141,6 @@ blockquote cite {
 
 .a-body hr,
 .a-rule {
-	max-width: 680px;
 	height: 1px;
 	background: var(--border);
 	border: none;
@@ -237,8 +235,12 @@ blockquote cite {
 	margin: 0;
 }
 
-.a-body .a-inline-code {
-	@apply font-mono text-[13px] rounded-md px-1.5 py-0.5;
-	background: var(--muted);
+.a-body .a-inline-code,
+.a-body :not(pre) > code {
+	@apply font-mono rounded-md;
+	font-size: 0.85em;
+	padding: 2px 7px;
+	background: hsl(var(--muted));
 	color: var(--color-orange-primary);
+	border: 1px solid hsl(var(--border));
 }
