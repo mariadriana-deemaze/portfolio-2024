@@ -48,17 +48,18 @@ export async function generateCommandLinks(): Promise<CommandLink[]> {
 	return [...internal, ...postLinks, ...projectLinks];
 }
 
+function sitemapEntry(loc: string, lastmod?: string): string {
+	return `  <url>\n    <loc>${loc}</loc>${lastmod ? `\n    <lastmod>${lastmod.split('T')[0]}</lastmod>` : ''}\n  </url>`;
+}
+
 export async function generateSitemapXml(): Promise<string> {
 	const [posts, projects] = await Promise.all([getSafePosts(), getSafeProjects()]);
-	const urls = [
-		...STATIC_ROUTES,
-		...posts.map((post) => toBlogSlug(post.slug)),
-		...projects.map((project) => toProjectsSlug(project.slug))
-	];
 
-	const xmlNodes = urls
-		.map((url) => `  <url>\n    <loc>${BASE_URL}${url}</loc>\n  </url>`)
-		.join('\n');
+	const xmlNodes = [
+		...STATIC_ROUTES.map((route) => sitemapEntry(`${BASE_URL}${route}`)),
+		...posts.map((post) => sitemapEntry(`${BASE_URL}${toBlogSlug(post.slug)}`, post.date)),
+		...projects.map((project) => sitemapEntry(`${BASE_URL}${toProjectsSlug(project.slug)}`))
+	].join('\n');
 
 	return (
 		`<?xml version="1.0" encoding="UTF-8"?>\n` +
