@@ -346,7 +346,8 @@ export function createApiCatalogDocument(): ApiCatalogDocument {
 	return {
 		linkset: [
 			createApiCatalogEntry('/api/send'),
-			createApiCatalogEntry('/api/spotify/currently-playing')
+			createApiCatalogEntry('/api/spotify/currently-playing'),
+			createApiCatalogEntry('/api/blog/{slug}/views')
 		]
 	};
 }
@@ -358,7 +359,7 @@ export function createOpenApiDocument(): OpenApiDocument {
 			title: `${data.name} API`,
 			version: '1.0.0',
 			description:
-				'Public machine-readable API documentation for the portfolio contact form and Spotify now-playing endpoints.'
+				'Public machine-readable API documentation for the portfolio contact form, Spotify now-playing, and blog post views endpoints.'
 		},
 		servers: [{ url: BASE_URL }],
 		paths: {
@@ -420,6 +421,45 @@ export function createOpenApiDocument(): OpenApiDocument {
 						}
 					}
 				}
+			},
+			'/api/blog/{slug}/views': {
+				post: {
+					summary: 'Increment and return the view count for a blog post',
+					parameters: [
+						{
+							name: 'slug',
+							in: 'path',
+							required: true,
+							schema: { type: 'string', pattern: '^[\\w-]+$' }
+						}
+					],
+					responses: {
+						'200': {
+							description:
+								'View count payload. Sets an HttpOnly, SameSite=Lax cookie (`blog_viewed`) that expires after 24 hours to deduplicate repeat views.',
+							content: {
+								'application/json': {
+									schema: {
+										type: 'object',
+										properties: {
+											views: { type: 'integer' },
+											counted: { type: 'boolean' }
+										}
+									}
+								}
+							}
+						},
+						'400': {
+							description: 'Invalid slug.'
+						},
+						'404': {
+							description: 'Post not found.'
+						},
+						'422': {
+							description: 'Server processing error.'
+						}
+					}
+				}
 			}
 		}
 	};
@@ -459,6 +499,21 @@ export function createApiDocsMarkdown(): string {
 		'',
 		'### `GET /api/spotify/currently-playing`',
 		'Returns the latest Spotify now-playing snapshot when available.',
+		'',
+		'### `POST /api/blog/{slug}/views`',
+		'Increments and returns the view count for a published blog post.',
+		'',
+		'Response body:',
+		'',
+		'```json',
+		'{',
+		'  "views": 42,',
+		'  "counted": true',
+		'}',
+		'```',
+		'',
+		'- `counted` is `false` when the view was deduplicated or the increment failed.',
+		'- Sets an `HttpOnly`, `SameSite=Lax` cookie (`blog_viewed`) with a 24-hour TTL to deduplicate repeat views.',
 		'',
 		'## Discovery',
 		'',
