@@ -42,7 +42,7 @@
       "minimatch@10>brace-expansion": "5.0.6",
       "tinyglobby>picomatch": "4.0.4",
       "filelist>minimatch": "10.2.5",
-      "jsdom>undici": "8.3.0",
+      "jsdom>undici": "8.5.0",
       "readdir-glob>minimatch": "10.2.5",
       "@actions/github>undici": "8.2.0",
       "@actions/http-client>undici": "8.2.0",
