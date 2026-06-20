@@ -5,8 +5,13 @@ export function createSeoHead(seo: Seo) {
 		{ title: seo.title },
 		{ name: 'description', content: seo.description },
 		{ property: 'og:title', content: seo.title },
-		{ property: 'og:description', content: seo.description }
+		{ property: 'og:description', content: seo.description },
+		{ property: 'og:type', content: seo.type ?? 'website' }
 	];
+
+	if (seo.url) {
+		meta.push({ property: 'og:url', content: seo.url });
+	}
 
 	if (seo.image) {
 		meta.push(

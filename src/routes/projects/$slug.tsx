@@ -4,12 +4,13 @@ import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 import { PortableTextRenderer } from '@/components/portable-text';
 import { getStackByName } from '@/components/stacks';
+import { NotFoundPage } from '@/components/ui/not-found-page';
 import { StaggerText } from '@/components/ui/stagger-text';
 import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
 import type { ResolvedGalleryItem, ResolvedMetric } from '@/lib/sanity-types';
 import { getProjectFn } from '@/server-fns/content';
-import { ROUTES } from '@/utils/routes';
+import { ROUTES, toProjectsSlug } from '@/utils/routes';
 import { cn } from '@/utils/utils';
 
 export const Route = createFileRoute('/projects/$slug')({
@@ -28,13 +29,14 @@ export const Route = createFileRoute('/projects/$slug')({
 	head: ({ loaderData, params }) => {
 		const project = loaderData?.project;
 		const seo = project?.seo;
+		const url = `${BASE_URL}${toProjectsSlug(params.slug)}`;
 		return createSeoHead({
 			title: seo?.title ?? `${project?.title ?? 'Project'} | Project`,
 			description: seo?.description ?? project?.description ?? 'Project details and information.',
 			image: seo?.ogImage ?? project?.coverImage?.url,
-			alternates: {
-				canonical: `${BASE_URL}/projects/${params.slug}`
-			}
+			url,
+			type: 'article',
+			alternates: { canonical: url }
 		});
 	},
 	component: ProjectItemRoute,
@@ -525,22 +527,11 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 
 function ProjectNotFoundRoute() {
 	return (
-		<div className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] pt-[132px] pb-[100px]">
-			<div className="mx-auto max-w-[760px]">
-				<h1 className="m-0 font-clash font-medium text-[clamp(40px,6vw,72px)] leading-[0.95] tracking-[-0.03em] text-foreground">
-					Project not found
-				</h1>
-				<p className="mt-6 font-mono text-sm text-muted-foreground">
-					The requested project could not be located.
-				</p>
-				<Link
-					to={ROUTES.projects}
-					className="mt-8 inline-flex items-center gap-2 font-mono text-sm text-[var(--color-orange-primary)] no-underline hover:gap-3 transition-[gap] duration-300"
-				>
-					<span>←</span>
-					<span>Back to projects</span>
-				</Link>
-			</div>
-		</div>
+		<NotFoundPage
+			title="Project not found"
+			description="The requested project could not be located."
+			backTo={ROUTES.projects}
+			backLabel="Back to projects"
+		/>
 	);
 }

@@ -10,15 +10,16 @@ import { createSeoHead } from '@/lib/head';
 import { ROUTES } from '@/utils/routes';
 
 export const Route = createFileRoute('/contact')({
-	head: () =>
-		createSeoHead({
+	head: () => {
+		const url = `${BASE_URL}${ROUTES.contact}`;
+		return createSeoHead({
 			title: `${data.name} | ${data.role} :: Contact`,
 			description:
 				'Get in touch with Maria Adriana to discuss full stack development projects, consulting work, or collaboration opportunities.',
-			alternates: {
-				canonical: `${BASE_URL}${ROUTES.contact}`
-			}
-		}),
+			url,
+			alternates: { canonical: url }
+		});
+	},
 	component: ContactRoute
 });
 
