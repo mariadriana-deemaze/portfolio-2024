@@ -1,12 +1,13 @@
-import { createRootRoute, HeadContent, Link, Scripts } from '@tanstack/react-router';
+import { createRootRoute, HeadContent, Scripts } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
 
 import { AppLoaderDismiss, AppLoaderShell } from '@/components/app-loader';
 import Layout from '@/components/layout';
-import { Button } from '@/components/ui/button';
+import { NotFoundPage } from '@/components/ui/not-found-page';
 import { Toaster } from '@/components/ui/sonner';
 import { WebMcpRegistration } from '@/components/webmcp';
 import { getCommandLinksFn } from '@/server-fns/content';
+import { ROUTES } from '@/utils/routes';
 import { getThemeInitScript } from '@/utils/theme';
 
 export const Route = createRootRoute({
@@ -59,15 +60,11 @@ function RootDocument({ children }: { children: ReactNode }) {
 
 function NotFoundRoute() {
 	return (
-		<div className="mx-auto text-center max-w-[450px] mt-10 flex flex-col items-center justify-center">
-			<h2 className="text-fade-grad font-clash text-4xl font-semibold">Not found</h2>
-			<p className="mt-4 text-pretty font-mono text-sm text-foreground">
-				Whatever you were looking for, is simply not here. <br />
-				<i>Have you tried looking under the bed?</i>
-			</p>
-			<Button variant="outline" size="lg" className="mt-10" asChild>
-				<Link to="/">Feeling lucky</Link>
-			</Button>
-		</div>
+		<NotFoundPage
+			title="Page not found"
+			description="Whatever you were looking for, is simply not here."
+			backTo={ROUTES.home}
+			backLabel="Back to home"
+		/>
 	);
 }

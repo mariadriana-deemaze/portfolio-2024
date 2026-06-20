@@ -22,11 +22,11 @@ export interface LayoutProps {
 
 export default function Layout({ children, commandLinks = [] }: LayoutProps): ReactNode {
 	return (
-		<div className="max-w-full overflow-y-scroll overflow-x-clip no-scrollbar antialiased lg:mx-auto">
+		<div className="flex min-h-svh flex-col max-w-full overflow-y-scroll overflow-x-clip no-scrollbar antialiased lg:mx-auto">
 			<GoogleAnalytics />
 			<Navbar />
 			<ProgressIndicator />
-			<main className="container relative mx-auto mt-28 print:p-12 no-scrollbar">
+			<main className="container relative mx-auto mt-28 flex flex-1 flex-col print:p-12 no-scrollbar">
 				<BGGrid>{children}</BGGrid>
 				<CommandMenu links={commandLinks} />
 			</main>

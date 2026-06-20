@@ -6,10 +6,11 @@ import { LuArrowUpRight } from 'react-icons/lu';
 import { Cover } from '@/components/pages/blog/cover';
 import { MetaBar } from '@/components/pages/blog/meta-bar';
 import { PortableTextRenderer } from '@/components/portable-text';
+import { NotFoundPage } from '@/components/ui/not-found-page';
 import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
 import { getPostFn } from '@/server-fns/content';
-import { ROUTES } from '@/utils/routes';
+import { ROUTES, toBlogSlug } from '@/utils/routes';
 
 export const Route = createFileRoute('/blog/$slug')({
 	loader: async ({ params }) => {
@@ -27,14 +28,15 @@ export const Route = createFileRoute('/blog/$slug')({
 	head: ({ loaderData, params }) => {
 		const post = loaderData?.post;
 		const seo = post?.seo;
+		const canonical = post?.canonicalUrl ?? `${BASE_URL}${toBlogSlug(params.slug)}`;
 		return createSeoHead({
 			title: seo?.title ?? `${post?.title ?? 'Not found'} | Blog`,
 			description:
 				seo?.description ?? post?.description ?? 'The requested blog post could not be located.',
 			image: seo?.ogImage ?? post?.coverImage?.url,
-			alternates: {
-				canonical: `${BASE_URL}/blog/${params.slug}`
-			}
+			url: canonical,
+			type: 'article',
+			alternates: { canonical }
 		});
 	},
 	component: BlogShowRoute,
@@ -191,12 +193,11 @@ function ArticleFooter({ author }: { author?: { name: string; avatar?: string; u
 
 function BlogPostNotFoundRoute() {
 	return (
-		<div className="animate-fade-in-left delay-500">
-			<h1>Post not found</h1>
-			<p>The requested blog post could not be located.</p>
-			<p>
-				<Link to={ROUTES.blog}>Back to blog</Link>
-			</p>
-		</div>
+		<NotFoundPage
+			title="Post not found"
+			description="The requested blog post could not be located."
+			backTo={ROUTES.blog}
+			backLabel="Back to the journal"
+		/>
 	);
 }
