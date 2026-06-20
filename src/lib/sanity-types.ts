@@ -35,6 +35,12 @@ export const AUTHOR_PROJECTION = `{
   url
 }`;
 
+/** Resolves a structuredBody array with embedded richImage assets */
+export const STRUCTURED_BODY_PROJECTION = `[]{
+  ...,
+  _type == "richImage" => ${RICH_IMAGE_PROJECTION}
+}`;
+
 // ── Resolved application types ─────────────────────────────────────────
 
 export interface ResolvedImage {

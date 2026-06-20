@@ -11,7 +11,8 @@ import {
 	GALLERY_ITEM_PROJECTION,
 	LINK_PROJECTION,
 	RICH_IMAGE_PROJECTION,
-	SEO_PROJECTION
+	SEO_PROJECTION,
+	STRUCTURED_BODY_PROJECTION
 } from '@/lib/sanity-types';
 
 // ── GROQ projections ──────────────────────────────────────────────────
@@ -38,7 +39,7 @@ const PROJECT_FIELDS = `
   approach,
   "statistics": statistics[] { value, label },
   "gallery": gallery[] ${GALLERY_ITEM_PROJECTION},
-  structuredBody,
+  "structuredBody": structuredBody ${STRUCTURED_BODY_PROJECTION},
   "seo": seo ${SEO_PROJECTION},
   // Legacy fields — still projected until migration completes
   hero,
