@@ -22,19 +22,21 @@ export const Route = createFileRoute('/projects/$slug')({
 
 		return {
 			project: projectData.project,
-			projectHtml: projectData.projectHtml ?? '',
 			nextProject: projectData.nextProject
 		};
 	},
-	head: ({ loaderData, params }) =>
-		createSeoHead({
-			title: `${loaderData?.project?.title ?? 'Project'} | Project`,
-			description: loaderData?.project?.description ?? 'Project details and information.',
-			image: loaderData?.project?.coverImage?.url,
+	head: ({ loaderData, params }) => {
+		const project = loaderData?.project;
+		const seo = project?.seo;
+		return createSeoHead({
+			title: seo?.title ?? `${project?.title ?? 'Project'} | Project`,
+			description: seo?.description ?? project?.description ?? 'Project details and information.',
+			image: seo?.ogImage ?? project?.coverImage?.url,
 			alternates: {
 				canonical: `${BASE_URL}/projects/${params.slug}`
 			}
-		}),
+		});
+	},
 	component: ProjectItemRoute,
 	notFoundComponent: ProjectNotFoundRoute
 });
@@ -155,7 +157,7 @@ const BTN_PRIMARY = `${BTN_BASE} bg-[var(--color-orange-primary)] border border-
 const BTN_GHOST = `${BTN_BASE} border border-border text-foreground transition-[translate,border-color,color] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:border-[var(--color-orange-primary)] hover:text-[var(--color-orange-primary)] motion-reduce:transition-none`;
 
 function ProjectItemRoute() {
-	const { project, projectHtml, nextProject } = Route.useLoaderData();
+	const { project, nextProject } = Route.useLoaderData();
 	const {
 		title,
 		year,
@@ -352,21 +354,6 @@ function ProjectItemRoute() {
 				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(60px,9vw,110px)]">
 					<div className="mx-auto max-w-[760px]">
 						<PortableTextRenderer body={structuredBody} className="a-body" />
-					</div>
-				</section>
-			)}
-
-			{!structuredBody && projectHtml && (
-				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(80px,12vw,150px)]">
-					<div className="mx-auto max-w-[760px]">
-						<div className="mb-[26px] flex items-center gap-3 font-mono text-xs tracking-[0.06em] uppercase text-[var(--color-orange-primary)]">
-							<span className="block h-px w-10 bg-[var(--color-orange-primary)] opacity-50" />
-							Overview
-						</div>
-						<div
-							className="prose dark:prose-invert max-w-none font-mono text-[14.5px] leading-[1.85] text-pretty"
-							dangerouslySetInnerHTML={{ __html: projectHtml }}
-						/>
 					</div>
 				</section>
 			)}

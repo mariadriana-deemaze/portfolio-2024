@@ -24,15 +24,19 @@ export const Route = createFileRoute('/blog/$slug')({
 			nextPost: postData.nextPost
 		};
 	},
-	head: ({ loaderData, params }) =>
-		createSeoHead({
-			title: `${loaderData?.post?.title ?? 'Not found'} | Blog`,
-			description: loaderData?.post?.description ?? 'The requested blog post could not be located.',
-			image: loaderData?.post?.coverImage?.url,
+	head: ({ loaderData, params }) => {
+		const post = loaderData?.post;
+		const seo = post?.seo;
+		return createSeoHead({
+			title: seo?.title ?? `${post?.title ?? 'Not found'} | Blog`,
+			description:
+				seo?.description ?? post?.description ?? 'The requested blog post could not be located.',
+			image: seo?.ogImage ?? post?.coverImage?.url,
 			alternates: {
 				canonical: `${BASE_URL}/blog/${params.slug}`
 			}
-		}),
+		});
+	},
 	component: BlogShowRoute,
 	notFoundComponent: BlogPostNotFoundRoute
 });
