@@ -58,22 +58,19 @@ export const getProjectFn = createServerFn({ method: 'GET' })
 	.inputValidator(slugSchema)
 	.handler(async ({ data }) => {
 		try {
-			const [{ getProject, getNextProject }, { renderMdxToHtml }, { highlightCodeBlocks }] =
-				await Promise.all([
-					import('@/data/projects'),
-					import('@/server/mdx'),
-					import('@/server/highlight')
-				]);
+			const [{ getProject, getNextProject }, { highlightCodeBlocks }] = await Promise.all([
+				import('@/data/projects'),
+				import('@/server/highlight')
+			]);
 			const project = await getProject(data.slug);
-			const [projectHtml, nextProject, highlightedBody] = await Promise.all([
-				project?.content ? renderMdxToHtml(project.content) : undefined,
+			const [nextProject, highlightedBody] = await Promise.all([
 				project ? getNextProject(project.displayOrder, data.slug) : undefined,
 				project?.structuredBody ? highlightCodeBlocks(project.structuredBody) : undefined
 			]);
 			const processedProject =
 				project && highlightedBody ? { ...project, structuredBody: highlightedBody } : project;
 
-			return { project: processedProject, projectHtml, nextProject };
+			return { project: processedProject, nextProject };
 		} catch (error) {
 			console.error('Failed to load project', error);
 			return {};
