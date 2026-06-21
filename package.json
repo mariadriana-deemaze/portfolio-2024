@@ -37,7 +37,7 @@
 		"date-fns": "^4.0.0",
 		"gray-matter": "^4.0.3",
 		"lenis": "^1.2.3",
-		"nodemailer": "^8.0.5",
+		"nodemailer": "^9.0.0",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",
 		"react-hook-form": "^7.52.2",
