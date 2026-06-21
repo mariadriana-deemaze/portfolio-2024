@@ -158,16 +158,22 @@ export function Navbar() {
 							key={path}
 							to={path}
 							className={cn(
-								'flex items-baseline gap-4 border-b border-border no-underline',
+								'flex items-baseline gap-4 no-underline relative',
 								'font-clash font-medium tracking-[-0.03em]',
 								'text-[clamp(40px,13vw,68px)] leading-[1.04] py-[10px]',
 								'transition-opacity duration-300 ease-out',
+								'after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-border',
+								'after:origin-left after:transition-[scale] after:duration-500 after:[transition-timing-function:cubic-bezier(0.25,1,0.5,1)] after:[transition-delay:var(--divider-delay)]',
+								menuOpen ? 'after:scale-x-100' : 'after:scale-x-0',
 								isActive(path) ? 'text-[var(--color-orange-primary)]' : 'text-foreground'
 							)}
-							style={{
-								opacity: menuOpen ? 1 : 0,
-								transitionDelay: menuOpen ? `${0.1 + i * 0.05}s` : '0s'
-							}}
+							style={
+								{
+									opacity: menuOpen ? 1 : 0,
+									transitionDelay: menuOpen ? `${0.1 + i * 0.05}s` : '0s',
+									'--divider-delay': menuOpen ? `${0.18 + i * 0.07}s` : '0s'
+								} as React.CSSProperties
+							}
 							onClick={() => setMenuOpen(false)}
 						>
 							<span className="font-mono text-[13px] font-semibold text-[var(--color-orange-primary)] translate-y-[-0.4em]">

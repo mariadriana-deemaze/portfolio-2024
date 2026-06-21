@@ -65,6 +65,8 @@ export const NowPlaying = () => {
 				{isPlaying && albumImageUrl && (
 					<img
 						src={albumImageUrl}
+						width={42}
+						height={42}
 						className="absolute inset-0 w-full h-full object-cover blur-[8px] scale-[1.2] opacity-40 rounded-[9px] motion-reduce:hidden pointer-events-none"
 						aria-hidden="true"
 					/>
@@ -73,7 +75,12 @@ export const NowPlaying = () => {
 					className={`relative w-[42px] h-[42px] rounded-[9px] grid place-items-center overflow-hidden transition-scale duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.05] [&_img]:w-full [&_img]:h-full [&_img]:object-cover [&_img]:block [&_svg]:w-[22px] [&_svg]:h-[22px] ${isPlaying ? 'text-white bg-[linear-gradient(140deg,#1ed760,#169c46_55%,#0c6b30)]' : 'text-muted-foreground bg-muted'}`}
 				>
 					{isPlaying && albumImageUrl ? (
-						<img src={albumImageUrl} alt={nowPlaying.data.album || 'Album cover'} />
+						<img
+							src={albumImageUrl}
+							alt={nowPlaying.data.album || 'Album cover'}
+							width={42}
+							height={42}
+						/>
 					) : (
 						<HeadphonesIcon />
 					)}

@@ -27,6 +27,8 @@ export const SectionEducation = () => {
 									className="w-[26px] h-[26px] object-contain block"
 									src={preview}
 									alt={school}
+									width={26}
+									height={26}
 								/>
 							) : (
 								<span className="font-clash font-semibold text-[17px] text-[var(--color-orange-primary)]">

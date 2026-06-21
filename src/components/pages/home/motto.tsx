@@ -60,17 +60,18 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 	}, [animateText]);
 
 	useEffect(() => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		const interval = setInterval(switchRole, 5000);
 		return () => clearInterval(interval);
 	}, [switchRole]);
 
 	return (
-		<h6 className="h-5 w-full relative roles-slider font-clash text-lg font-normal">
+		<p className="h-5 w-full relative roles-slider font-clash text-lg font-normal">
 			{data.map((item, index) => (
 				<span className={cn('role-slide', className)} key={`motto_item_${index}`}>
 					{item}
 				</span>
 			))}
-		</h6>
+		</p>
 	);
 };

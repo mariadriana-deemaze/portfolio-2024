@@ -9,6 +9,8 @@ export function Cover({ src, alt }: CoverProps) {
 	const innerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
 		let raf: number;
 
 		const onScroll = () => {
@@ -30,7 +32,13 @@ export function Cover({ src, alt }: CoverProps) {
 	return (
 		<div className="animate-fade-in-left delay-300 relative left-1/2 mt-12 w-screen -translate-x-1/2 overflow-hidden bg-muted h-[clamp(300px,52vh,600px)]">
 			<div className="absolute inset-y-[-10%] inset-x-0 will-change-transform" ref={innerRef}>
-				<img src={src} alt={alt} className="block size-full object-cover" />
+				<img
+					src={src}
+					alt={alt}
+					loading="eager"
+					fetchPriority="high"
+					className="block size-full object-cover"
+				/>
 			</div>
 			<div
 				className="absolute inset-0"

@@ -18,6 +18,7 @@ export function ScrollFadeReveal({
 	onLoadVisibility = false
 }: ScrollFadeRevealProps) {
 	const ref = useRef<HTMLDivElement>(null);
+	const lenisActive = useRef(false);
 
 	const applyReveal = useCallback(() => {
 		const el = ref.current;
@@ -29,12 +30,16 @@ export function ScrollFadeReveal({
 		el.style.translate = `0 ${(1 - progress) * REVEAL_OFFSET_PX}px`;
 	}, [onLoadVisibility]);
 
-	useLenis(applyReveal);
+	useLenis(() => {
+		lenisActive.current = true;
+		applyReveal();
+	});
 
 	useEffect(() => {
 		if (onLoadVisibility) return;
 		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		applyReveal();
+		if (lenisActive.current) return;
 		window.addEventListener('scroll', applyReveal, { passive: true });
 		return () => window.removeEventListener('scroll', applyReveal);
 	}, [applyReveal, onLoadVisibility]);

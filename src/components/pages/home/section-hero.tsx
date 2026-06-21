@@ -14,25 +14,31 @@ export const SectionHero = () => {
 	const shineRef = useRef<HTMLDivElement>(null);
 	const highlightRef = useRef<HTMLDivElement>(null);
 
+	const tiltRaf = useRef(0);
+
 	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		const el = avatarRef.current;
 		const border = borderRef.current;
 		const shine = shineRef.current;
 		const highlight = highlightRef.current;
 		if (!el || !border || !shine || !highlight) return;
-		const rect = el.getBoundingClientRect();
-		const x = (e.clientX - rect.left) / rect.width - 0.5;
-		const y = (e.clientY - rect.top) / rect.height - 0.5;
-		el.style.transform = `perspective(500px) rotateY(${x * TILT_MAX}deg) rotateX(${-y * TILT_MAX}deg) scale3d(1.04,1.04,1.04)`;
-		shine.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
-		shine.style.opacity = '0.18';
-		const px = (x + 0.5) * rect.width;
-		const py = (y + 0.5) * rect.height;
-		highlight.style.transform = `translate(${px - 40}px, ${py - 40}px)`;
-		highlight.style.opacity = '0.45';
-		const angle = Math.atan2(y, x) * (180 / Math.PI) - 90;
-		border.style.background = `conic-gradient(from ${angle - 25}deg at 50% 50%, hsl(var(--border)) 0deg, rgba(241,90,36,0.9) 25deg, rgba(251,146,60,0.6) 40deg, hsl(var(--border)) 55deg, hsl(var(--border)) 360deg)`;
+		const { clientX, clientY } = e;
+		if (tiltRaf.current) return;
+		tiltRaf.current = requestAnimationFrame(() => {
+			tiltRaf.current = 0;
+			const rect = el.getBoundingClientRect();
+			const x = (clientX - rect.left) / rect.width - 0.5;
+			const y = (clientY - rect.top) / rect.height - 0.5;
+			el.style.transform = `perspective(500px) rotateY(${x * TILT_MAX}deg) rotateX(${-y * TILT_MAX}deg) scale3d(1.04,1.04,1.04)`;
+			shine.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+			shine.style.opacity = '0.18';
+			const px = (x + 0.5) * rect.width;
+			const py = (y + 0.5) * rect.height;
+			highlight.style.transform = `translate(${px - 40}px, ${py - 40}px)`;
+			highlight.style.opacity = '0.45';
+			const angle = Math.atan2(y, x) * (180 / Math.PI) - 90;
+			border.style.background = `conic-gradient(from ${angle - 25}deg at 50% 50%, hsl(var(--border)) 0deg, rgba(241,90,36,0.9) 25deg, rgba(251,146,60,0.6) 40deg, hsl(var(--border)) 55deg, hsl(var(--border)) 360deg)`;
+		});
 	};
 
 	const handleMouseLeave = () => {
@@ -132,6 +138,9 @@ export const SectionHero = () => {
 										className="w-full h-full object-cover block"
 										alt={data.name}
 										src="images/avatar.jpeg"
+										width={92}
+										height={92}
+										loading="eager"
 									/>
 									<div
 										ref={shineRef}
