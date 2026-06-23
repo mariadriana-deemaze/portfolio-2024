@@ -97,7 +97,6 @@ export async function getSpotifyAccessToken(): Promise<string> {
 	}
 }
 
-/** @lintignore */
 export function setSpotifyTokens(
 	accessToken: string,
 	refreshToken: string,

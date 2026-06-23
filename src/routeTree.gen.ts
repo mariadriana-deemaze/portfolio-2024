@@ -22,6 +22,8 @@ import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as ApiOpenapiDotjsonIndexRouteImport } from './routes/api/openapi[.]json/index'
 import { Route as ApiSpotifyCurrentlyPlayingRouteImport } from './routes/api/spotify/currently-playing'
+import { Route as ApiSpotifyAuthorizeRouteImport } from './routes/api/spotify/authorize'
+import { Route as ApiSpotifyAuthorizeCallbackRouteImport } from './routes/api/spotify/authorize/callback'
 import { Route as ApiBlogSlugViewsRouteImport } from './routes/api/blog/$slug/views'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -90,6 +92,17 @@ const ApiSpotifyCurrentlyPlayingRoute =
     path: '/api/spotify/currently-playing',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiSpotifyAuthorizeRoute = ApiSpotifyAuthorizeRouteImport.update({
+  id: '/api/spotify/authorize',
+  path: '/api/spotify/authorize',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSpotifyAuthorizeCallbackRoute =
+  ApiSpotifyAuthorizeCallbackRouteImport.update({
+    id: '/api/spotify/authorize/callback',
+    path: '/api/spotify/authorize/callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiBlogSlugViewsRoute = ApiBlogSlugViewsRouteImport.update({
   id: '/api/blog/$slug/views',
   path: '/api/blog/$slug/views',
@@ -109,6 +122,8 @@ export interface FileRoutesByFullPath {
   '/blog/': typeof BlogIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/spotify/currently-playing': typeof ApiSpotifyCurrentlyPlayingRoute
+  '/api/spotify/authorize': typeof ApiSpotifyAuthorizeRoute
+  '/api/spotify/authorize/callback': typeof ApiSpotifyAuthorizeCallbackRoute
   '/api/openapi.json/': typeof ApiOpenapiDotjsonIndexRoute
   '/api/blog/$slug/views': typeof ApiBlogSlugViewsRoute
 }
@@ -125,6 +140,8 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/api/spotify/currently-playing': typeof ApiSpotifyCurrentlyPlayingRoute
+  '/api/spotify/authorize': typeof ApiSpotifyAuthorizeRoute
+  '/api/spotify/authorize/callback': typeof ApiSpotifyAuthorizeCallbackRoute
   '/api/openapi.json': typeof ApiOpenapiDotjsonIndexRoute
   '/api/blog/$slug/views': typeof ApiBlogSlugViewsRoute
 }
@@ -142,6 +159,8 @@ export interface FileRoutesById {
   '/blog/': typeof BlogIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/spotify/currently-playing': typeof ApiSpotifyCurrentlyPlayingRoute
+  '/api/spotify/authorize': typeof ApiSpotifyAuthorizeRoute
+  '/api/spotify/authorize/callback': typeof ApiSpotifyAuthorizeCallbackRoute
   '/api/openapi.json/': typeof ApiOpenapiDotjsonIndexRoute
   '/api/blog/$slug/views': typeof ApiBlogSlugViewsRoute
 }
@@ -160,6 +179,8 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/projects/'
     | '/api/spotify/currently-playing'
+    | '/api/spotify/authorize'
+    | '/api/spotify/authorize/callback'
     | '/api/openapi.json/'
     | '/api/blog/$slug/views'
   fileRoutesByTo: FileRoutesByTo
@@ -176,6 +197,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/projects'
     | '/api/spotify/currently-playing'
+    | '/api/spotify/authorize'
+    | '/api/spotify/authorize/callback'
     | '/api/openapi.json'
     | '/api/blog/$slug/views'
   id:
@@ -192,6 +215,8 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/projects/'
     | '/api/spotify/currently-playing'
+    | '/api/spotify/authorize'
+    | '/api/spotify/authorize/callback'
     | '/api/openapi.json/'
     | '/api/blog/$slug/views'
   fileRoutesById: FileRoutesById
@@ -209,6 +234,8 @@ export interface RootRouteChildren {
   BlogIndexRoute: typeof BlogIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiSpotifyCurrentlyPlayingRoute: typeof ApiSpotifyCurrentlyPlayingRoute
+  ApiSpotifyAuthorizeRoute: typeof ApiSpotifyAuthorizeRoute
+  ApiSpotifyAuthorizeCallbackRoute: typeof ApiSpotifyAuthorizeCallbackRoute
   ApiOpenapiDotjsonIndexRoute: typeof ApiOpenapiDotjsonIndexRoute
   ApiBlogSlugViewsRoute: typeof ApiBlogSlugViewsRoute
 }
@@ -306,6 +333,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSpotifyCurrentlyPlayingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/spotify/authorize': {
+      id: '/api/spotify/authorize'
+      path: '/api/spotify/authorize'
+      fullPath: '/api/spotify/authorize'
+      preLoaderRoute: typeof ApiSpotifyAuthorizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/spotify/authorize/callback': {
+      id: '/api/spotify/authorize/callback'
+      path: '/api/spotify/authorize/callback'
+      fullPath: '/api/spotify/authorize/callback'
+      preLoaderRoute: typeof ApiSpotifyAuthorizeCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/blog/$slug/views': {
       id: '/api/blog/$slug/views'
       path: '/api/blog/$slug/views'
@@ -329,6 +370,8 @@ const rootRouteChildren: RootRouteChildren = {
   BlogIndexRoute: BlogIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiSpotifyCurrentlyPlayingRoute: ApiSpotifyCurrentlyPlayingRoute,
+  ApiSpotifyAuthorizeRoute: ApiSpotifyAuthorizeRoute,
+  ApiSpotifyAuthorizeCallbackRoute: ApiSpotifyAuthorizeCallbackRoute,
   ApiOpenapiDotjsonIndexRoute: ApiOpenapiDotjsonIndexRoute,
   ApiBlogSlugViewsRoute: ApiBlogSlugViewsRoute,
 }
