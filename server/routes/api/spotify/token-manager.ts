@@ -26,19 +26,32 @@ async function persistRefreshToken(token: string): Promise<void> {
 	const env = getEnv();
 	if (!env.COOLIFY_API_TOKEN || !env.COOLIFY_API_URL || !env.COOLIFY_APP_UUID) return;
 
+	const base = `${env.COOLIFY_API_URL}/api/v1/applications/${env.COOLIFY_APP_UUID}/envs`;
+	const headers = {
+		Authorization: `Bearer ${env.COOLIFY_API_TOKEN}`,
+		'Content-Type': 'application/json'
+	};
+	const payload = { key: 'SPOTIFY_REFRESH_TOKEN', value: token, is_literal: true };
+
 	try {
-		await fetch(`${env.COOLIFY_API_URL}/api/v1/applications/${env.COOLIFY_APP_UUID}/envs`, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${env.COOLIFY_API_TOKEN}`,
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				key: 'SPOTIFY_REFRESH_TOKEN',
-				value: token,
-				is_literal: true
-			})
+		const res = await fetch(base, {
+			method: 'PATCH',
+			headers,
+			body: JSON.stringify(payload)
 		});
+
+		if (!res.ok) {
+			const createRes = await fetch(base, {
+				method: 'POST',
+				headers,
+				body: JSON.stringify(payload)
+			});
+			if (!createRes.ok) {
+				console.error(`[spotify] Coolify env persistence failed: ${createRes.status}`);
+				return;
+			}
+		}
+
 		console.log('[spotify] Refresh token persisted to Coolify');
 	} catch (error) {
 		console.error('[spotify] Failed to persist refresh token to Coolify:', error);
@@ -107,9 +120,4 @@ export function setSpotifyTokens(
 	currentRefreshToken = refreshToken;
 	tokenInvalid = false;
 	void persistRefreshToken(refreshToken);
-}
-
-/** @lintignore */
-export function isTokenInvalid(): boolean {
-	return tokenInvalid;
 }

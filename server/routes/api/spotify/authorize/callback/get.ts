@@ -1,5 +1,6 @@
 import { Buffer } from 'node:buffer';
 import { getEnv } from '@/lib/env';
+import { verifyOAuthState } from '@/server/routes/api/spotify/authorize/get';
 import { setSpotifyTokens } from '@/server/routes/api/spotify/token-manager';
 import type { SpotifyTokenResponse } from '@/server/routes/api/types/spotify';
 
@@ -17,7 +18,7 @@ export async function handleAuthorizeCallbackGet(request: Request): Promise<Resp
 		return Response.json({ error: `Spotify authorization denied: ${error}` }, { status: 400 });
 	}
 
-	if (!code || state !== env.SPOTIFY_ADMIN_SECRET) {
+	if (!code || !verifyOAuthState(state)) {
 		return Response.json({ error: 'Invalid callback parameters' }, { status: 400 });
 	}
 
