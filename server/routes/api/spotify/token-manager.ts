@@ -31,7 +31,7 @@ async function persistRefreshToken(token: string): Promise<void> {
 		Authorization: `Bearer ${env.COOLIFY_API_TOKEN}`,
 		'Content-Type': 'application/json'
 	};
-	const payload = { key: 'SPOTIFY_REFRESH_TOKEN', value: token, is_literal: true };
+	const payload = { key: 'SPOTIFY_REFRESH_TOKEN', value: token };
 
 	try {
 		const res = await fetch(base, {
