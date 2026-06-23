@@ -16,7 +16,11 @@ const serverEnvSchema = z.object({
 	SMTP_TO: z.string().trim().min(1),
 	SMTP_FROM: z.string().trim().min(1),
 	SMTP_PASSWORD: z.string().trim().min(1),
-	SANITY_API_WRITE_TOKEN: z.string().trim().min(1)
+	SANITY_API_WRITE_TOKEN: z.string().trim().min(1),
+	SPOTIFY_ADMIN_SECRET: z.string().trim().min(1).optional(),
+	COOLIFY_API_TOKEN: z.string().trim().min(1).optional(),
+	COOLIFY_API_URL: z.string().url().optional(),
+	COOLIFY_APP_UUID: z.string().trim().min(1).optional()
 });
 
 const envSchema = publicEnvSchema.extend(serverEnvSchema.shape);
