@@ -589,6 +589,11 @@
 		background: var(--color-orange-primary);
 	}
 
+	:root[data-menu-open] .progress {
+		opacity: 0;
+		pointer-events: none;
+	}
+
 	.animate-fade-in-left {
 		@apply animate-in fade-in slide-in-from-left-3.5 duration-1000 fill-mode-both transition-opacity;
 
