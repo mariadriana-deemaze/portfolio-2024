@@ -1,5 +1,4 @@
-import { Buffer } from 'node:buffer';
-import { getEnv } from '@/lib/env';
+import { getSpotifyAccessToken } from '@/server/routes/api/spotify/token-manager';
 import type {
 	NowPlayingData,
 	SpotifyArtist,
@@ -8,38 +7,6 @@ import type {
 
 function createNotPlayingResponse(status = 200): Response {
 	return Response.json({ data: { isPlaying: false } }, { status });
-}
-
-async function getAccessToken(): Promise<string> {
-	try {
-		const env = getEnv();
-		const basic = Buffer.from(`${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`).toString(
-			'base64'
-		);
-
-		const response = await fetch('https://accounts.spotify.com/api/token', {
-			method: 'POST',
-			headers: {
-				Authorization: `Basic ${basic}`,
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: new URLSearchParams({
-				grant_type: 'refresh_token',
-				refresh_token: env.SPOTIFY_REFRESH_TOKEN
-			})
-		});
-
-		if (!response.ok) {
-			return '';
-		}
-
-		const data = (await response.json()) as { access_token?: string };
-
-		return data.access_token ?? '';
-	} catch (error) {
-		console.error('Spotify token error:', error);
-		return '';
-	}
 }
 
 function mapNowPlayingData(song: SpotifyCurrentlyPlayingResponse): NowPlayingData {
@@ -59,7 +26,7 @@ function mapNowPlayingData(song: SpotifyCurrentlyPlayingResponse): NowPlayingDat
 }
 
 export async function handleCurrentlyPlayingGet(): Promise<Response> {
-	const accessToken = await getAccessToken();
+	const accessToken = await getSpotifyAccessToken();
 
 	if (!accessToken) {
 		return createNotPlayingResponse();
