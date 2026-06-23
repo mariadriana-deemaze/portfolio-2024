@@ -27,7 +27,13 @@ export function EntryCardLogo({ src, alt }: { src?: string; alt: string }) {
 	return (
 		<div className="w-11 h-11 rounded-[9px] border border-border bg-background dark:bg-[#0a0908] grid place-items-center overflow-hidden shrink-0 shadow-sm">
 			{src ? (
-				<img src={src} alt={alt} className="w-[26px] h-[26px] object-contain" />
+				<img
+					src={src}
+					alt={alt}
+					width={26}
+					height={26}
+					className="w-[26px] h-[26px] object-contain"
+				/>
 			) : (
 				<span className="font-clash font-semibold text-[17px] text-[var(--color-orange-primary)]">
 					{alt.charAt(0)}

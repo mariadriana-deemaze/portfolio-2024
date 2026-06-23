@@ -304,6 +304,8 @@ function ProjectItemRoute() {
 							alt={coverImage.alt ?? `${title} project cover`}
 							width={coverImage.width}
 							height={coverImage.height}
+							loading="eager"
+							fetchPriority="high"
 							className="block size-full object-cover"
 							{...(coverImage.lqip
 								? {

@@ -70,6 +70,8 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 					className="absolute -left-10 top-32 w-[300px] h-[600px] opacity-50"
 					style={{ transition: BLOB_TRANSITION }}
 					src="/images/color_grad.webp"
+					width={300}
+					height={600}
 					alt=""
 					aria-hidden="true"
 				/>
@@ -78,6 +80,8 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 					className="absolute -right-10 -top-32 w-[200px] h-[400px] opacity-[0.15]"
 					style={{ transition: BLOB_TRANSITION, transform: 'rotate(180deg)' }}
 					src="/images/color_grad.webp"
+					width={200}
+					height={400}
 					alt=""
 					aria-hidden="true"
 				/>

@@ -30,6 +30,8 @@ export const SectionWorkExperience = () => {
 									className="w-[26px] h-[26px] object-contain block"
 									src={preview}
 									alt={company}
+									width={26}
+									height={26}
 								/>
 							)}
 						</div>
