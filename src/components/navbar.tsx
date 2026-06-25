@@ -82,7 +82,7 @@ export function Navbar() {
 					hidden ? '-translate-y-[130%] opacity-0' : 'translate-y-0 opacity-100'
 				)}
 			>
-				<div className="max-w-[1100px] mx-auto px-6 pb-[9px] flex items-center justify-between gap-[10px]">
+				<div className="max-w-[1100px] mx-auto px-[var(--sideline-inset)] pb-[9px] flex items-center justify-between gap-[10px]">
 					<div className="flex items-center gap-1 min-w-0">
 						<Link
 							to={ROUTES.home}
@@ -118,7 +118,7 @@ export function Navbar() {
 						<ThemeToggle />
 
 						<button
-							className="group sm:hidden relative w-8 h-8 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[8px]"
+							className="group sm:hidden relative w-8 h-8 -mr-[8px] cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[8px]"
 							onClick={() => setMenuOpen((m) => !m)}
 							aria-label="Toggle menu"
 							aria-expanded={menuOpen}

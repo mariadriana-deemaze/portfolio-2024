@@ -197,8 +197,8 @@ function ProjectItemRoute() {
 
 	return (
 		<article className="w-full">
-			<header className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] pt-[132px]">
-				<div className="mx-auto max-w-[760px]">
+			<header className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] pt-[132px]">
+				<div>
 					<Link
 						to={ROUTES.projects}
 						className="mb-[30px] inline-flex items-center gap-2 font-mono text-xs text-muted-foreground no-underline whitespace-nowrap transition-colors duration-300 hover:gap-[11px] hover:text-[var(--color-orange-primary)] sm:text-sm"
@@ -216,7 +216,7 @@ function ProjectItemRoute() {
 						<span>{year}</span>
 					</div>
 
-					<h1 className="animate-fade-in-left delay-200 m-0 font-clash text-foreground font-medium leading-[0.92] tracking-[-0.035em] text-[clamp(54px,10vw,132px)] break-keep">
+					<h1 className="animate-fade-in-left delay-200 m-0 font-clash text-foreground font-medium leading-[0.92] tracking-[-0.035em] text-[clamp(54px,10vw,132px)] break-words">
 						<StaggerText text={title} autoReveal baseDelay={0.05} letterDelay={0.03} />
 					</h1>
 
@@ -331,7 +331,7 @@ function ProjectItemRoute() {
 			)}
 
 			{(overview || problem || approach) && (
-				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(80px,12vw,150px)]">
+				<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(80px,12vw,150px)]">
 					<div className="mx-auto max-w-[760px]">
 						{overview && <CaseStudyBlock label="Overview" text={overview} />}
 						{problem && (
@@ -355,7 +355,7 @@ function ProjectItemRoute() {
 			{statistics.length > 0 && <StatisticsGrid statistics={statistics} />}
 
 			{structuredBody && (
-				<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(60px,9vw,110px)]">
+				<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
 					<div className="mx-auto max-w-[760px]">
 						<PortableTextRenderer body={structuredBody} className="a-body" />
 					</div>
@@ -395,7 +395,7 @@ function ProjectItemRoute() {
 										/>
 									</div>
 								)}
-								<div className="relative z-[1] mx-auto w-full max-w-[1100px] p-[clamp(48px,9vw,110px)_max(24px,4vw)]">
+								<div className="relative z-[1] mx-auto w-full max-w-[1100px] p-[clamp(48px,9vw,110px)_var(--content-inset)]">
 									<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
 										Next project
 									</div>
@@ -450,7 +450,7 @@ function CaseStudyBlock({
 
 function StatisticsGrid({ statistics }: { statistics: ResolvedMetric[] }) {
 	return (
-		<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(60px,9vw,110px)]">
+		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
 			<div className="mx-auto max-w-[760px]">
 				<div className={SECTION_LABEL}>
 					<span className={SECTION_LINE} />
@@ -484,8 +484,8 @@ const GALLERY_LAYOUT_CLASSES: Record<ResolvedGalleryItem['layout'], string> = {
 
 function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 	return (
-		<section className="mx-auto w-full max-w-[1100px] px-[max(24px,4vw)] mt-[clamp(60px,9vw,110px)]">
-			<div className={cn(SECTION_LABEL, 'mx-auto max-w-[760px]')}>
+		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
+			<div className={cn(SECTION_LABEL, 'mx-auto max-w-[1100px]')}>
 				<span className={SECTION_LINE} />
 				Gallery
 			</div>

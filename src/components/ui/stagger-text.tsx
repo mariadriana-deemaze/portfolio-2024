@@ -32,7 +32,7 @@ export function StaggerText({
 		<span className={className}>
 			{words.map((word, wi) => (
 				<span key={wi}>
-					<span className="inline-block overflow-hidden align-top [padding:0.12em_0.04em_0.18em] [margin:-0.12em_-0.04em_-0.18em]">
+					<span className="inline-block overflow-hidden align-top [padding:0.12em_0.12em_0.18em] [margin:-0.12em_-0.12em_-0.18em]">
 						{[...word].map((ch) => {
 							charIndex++;
 							return (

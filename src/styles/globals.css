@@ -447,6 +447,9 @@
 		--color-orange-dark-border: #4d2512;
 		/* Navigation */
 		--nav-border: #f3c6a7;
+		/* Layout */
+		--sideline-inset: max(14px, 4vw);
+		--content-inset: calc(var(--sideline-inset) + 15px);
 		/* Font stacks */
 		--font-display: "ClashDisplay", "DM Sans", sans-serif;
 		--font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;

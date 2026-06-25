@@ -101,7 +101,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<div className="mx-auto w-full max-w-[1180px] px-[max(24px,4vw)]">
+			<div className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)]">
 				<header className="pt-[clamp(100px,14vw,138px)]">
 					<ScrollFadeReveal onLoadVisibility>
 						<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
@@ -111,7 +111,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							/>
 							Selected work · 2022—{new Date().getFullYear()}
 						</div>
-						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground">
+						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
 							<StaggerText text="Things I've" autoReveal baseDelay={0.08} letterDelay={0.028} />
 							<br />
 							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">

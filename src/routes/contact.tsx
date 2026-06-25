@@ -35,9 +35,9 @@ function ContactRoute(): JSX.Element {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<div className="mx-auto w-full max-w-[1100px] animate-fade-in-left delay-500">
+			<div className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] animate-fade-in-left delay-500">
 				<header className="pt-8 pb-[clamp(56px,9vw,104px)]">
-					<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,112px)] leading-[0.92] tracking-[-0.038em]">
+					<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,112px)] leading-[0.92] tracking-[-0.038em] break-words">
 						<StaggerText
 							text="Let's make"
 							revealed={revealed}
