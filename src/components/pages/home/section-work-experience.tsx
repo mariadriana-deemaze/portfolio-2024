@@ -43,7 +43,7 @@ export const SectionWorkExperience = () => {
 										href={link}
 										target="_blank"
 										rel="noreferrer"
-										className="text-foreground no-underline hover:underline hover:[text-decoration-color:var(--color-orange-primary)] [text-underline-offset:3px]"
+										className="text-foreground no-underline hover:text-[var(--color-orange-primary)] hover:underline hover:[text-decoration-color:var(--color-orange-primary)] [text-underline-offset:3px] transition-colors"
 									>
 										{company}
 									</a>
