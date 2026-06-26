@@ -266,8 +266,7 @@
 }
 
 @utility entry-card {
-	background: color-mix(in srgb, hsl(var(--card)) 72%, transparent);
-	backdrop-filter: blur(2px);
+	background: hsl(var(--card));
 }
 
 @utility bg-card-ghost {
