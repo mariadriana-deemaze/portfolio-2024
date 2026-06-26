@@ -282,27 +282,15 @@
 }
 
 @utility nav-bg {
-	background: linear-gradient(
-		to right,
-		color-mix(in srgb, hsl(var(--background)) 72%, transparent),
-		color-mix(in srgb, hsl(var(--background)) 92%, transparent) 12%,
-		color-mix(in srgb, hsl(var(--background)) 92%, transparent) 88%,
-		color-mix(in srgb, hsl(var(--background)) 72%, transparent)
-	);
-	backdrop-filter: blur(12px) saturate(1.1);
-	-webkit-backdrop-filter: blur(12px) saturate(1.1);
+	background: transparent;
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
 }
 
 @utility nav-bg-scrolled {
-	background: linear-gradient(
-		to right,
-		color-mix(in srgb, hsl(var(--background)) 72%, transparent),
-		color-mix(in srgb, hsl(var(--background)) 96%, transparent) 12%,
-		color-mix(in srgb, hsl(var(--background)) 96%, transparent) 88%,
-		color-mix(in srgb, hsl(var(--background)) 72%, transparent)
-	);
-	backdrop-filter: blur(12px) saturate(1.2);
-	-webkit-backdrop-filter: blur(12px) saturate(1.2);
+	background: color-mix(in srgb, hsl(var(--background)) 40%, transparent);
+	backdrop-filter: blur(10px) saturate(1.1);
+	-webkit-backdrop-filter: blur(10px) saturate(1.1);
 }
 
 @utility nav-overlay-open {

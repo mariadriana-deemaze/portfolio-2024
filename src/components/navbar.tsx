@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
 import { LogoMark } from '@/components/logo-ma';
+import { NowPlayingBadge } from '@/components/now-playing-badge';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { StaggerText } from '@/components/ui/stagger-text';
 import { data } from '@/data/main';
@@ -115,6 +116,7 @@ export function Navbar() {
 					</div>
 
 					<div className="flex items-center gap-[7px] shrink-0">
+						<NowPlayingBadge />
 						<ThemeToggle />
 
 						<button

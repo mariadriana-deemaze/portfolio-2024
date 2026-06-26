@@ -14,5 +14,5 @@
 		"type": true
 	},
 	"tags": ["-lintignore"],
-	"ignoreFiles": ["./.cz-config.cjs", "./src/data/**"]
+	"ignoreFiles": ["./.cz-config.cjs", "./src/data/**", "./src/components/now-playing.tsx"]
 }

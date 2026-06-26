@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 
-import { NowPlaying } from '@/components/now-playing';
 import { AnimatedMottos } from '@/components/pages/home/motto';
 import { Section } from '@/components/ui/section';
 import { data } from '@/data/main';
@@ -172,7 +171,7 @@ export const SectionHero = () => {
 						</div>
 					</div>
 
-					<NowPlaying />
+					{/* TODO: decide between hero widget vs navbar badge */}
 				</div>
 			</div>
 
