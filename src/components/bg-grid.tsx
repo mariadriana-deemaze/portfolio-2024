@@ -88,8 +88,8 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 			</div>
 
 			{/* Vertical orange sidelines */}
-			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px left-[max(14px,4vw)] bg-brand opacity-[0.22]" />
-			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px right-[max(14px,4vw)] bg-brand opacity-[0.22]" />
+			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px left-[var(--sideline-inset)] bg-brand opacity-[0.22]" />
+			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px right-[var(--sideline-inset)] bg-brand opacity-[0.22]" />
 		</>
 	);
 }

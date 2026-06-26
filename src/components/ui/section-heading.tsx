@@ -45,7 +45,7 @@ export function SectionHeading({ num, title, count, className }: SectionHeadingP
 					{num}
 				</span>
 			)}
-			<h2 className="m-0 font-clash text-3xl font-bold tracking-[-0.015em] leading-none">
+			<h2 className="m-0 font-clash text-3xl font-bold tracking-[-0.015em] leading-none shrink-0">
 				<StaggerText text={title} revealed={revealed} baseDelay={0.05} letterDelay={0.03} />
 			</h2>
 			<div

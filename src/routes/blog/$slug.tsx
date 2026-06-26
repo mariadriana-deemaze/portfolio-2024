@@ -86,7 +86,7 @@ function BlogShowRoute() {
 
 	return (
 		<article className="w-full">
-			<header className="mx-auto w-full max-w-4xl px-4 pt-[132px] sm:px-6">
+			<header className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] pt-[132px]">
 				<Link
 					to={ROUTES.blog}
 					className="mb-[30px] inline-flex items-center gap-2 font-mono text-xs text-muted-foreground no-underline whitespace-nowrap transition-colors duration-300 hover:gap-[11px] hover:text-[var(--color-orange-primary)] sm:text-sm"
@@ -107,7 +107,7 @@ function BlogShowRoute() {
 					<span className="whitespace-nowrap">{formattedDate}</span>
 				</div>
 
-				<h1 className="animate-fade-in-left delay-200 m-0 font-clash text-foreground font-medium leading-[0.98] tracking-[-0.03em] text-[clamp(40px,6.4vw,78px)]">
+				<h1 className="animate-fade-in-left delay-200 m-0 font-clash text-foreground font-medium leading-[0.98] tracking-[-0.03em] text-[clamp(40px,6.4vw,78px)] break-words">
 					{title}
 				</h1>
 
@@ -121,7 +121,7 @@ function BlogShowRoute() {
 			{coverImage?.url && <Cover src={coverImage.url} alt={coverImage.alt ?? title} />}
 
 			{structuredBody && (
-				<div className="mx-auto w-full max-w-4xl px-4 a-body sm:px-6">
+				<div className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] a-body">
 					<PortableTextRenderer body={structuredBody} />
 				</div>
 			)}
@@ -133,7 +133,7 @@ function BlogShowRoute() {
 					<Link
 						to="/blog/$slug"
 						params={{ slug: nextPost.slug }}
-						className="mx-auto block max-w-[1100px] p-[clamp(40px,7vw,80px)_max(24px,4vw)] text-foreground no-underline"
+						className="mx-auto block max-w-[1100px] p-[clamp(40px,7vw,80px)_var(--content-inset)] text-foreground no-underline"
 					>
 						<div className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
 							Next in the journal
@@ -157,7 +157,7 @@ function ArticleFooter({ author }: { author?: { name: string; avatar?: string; u
 	if (!author) return null;
 
 	return (
-		<footer className="mx-auto w-full max-w-4xl px-4 mt-[clamp(48px,7vw,80px)] sm:px-6">
+		<footer className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(48px,7vw,80px)]">
 			<div className="flex items-center gap-4">
 				{author.avatar && (
 					<img

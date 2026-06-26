@@ -3,6 +3,7 @@ import { ReactLenis } from 'lenis/react';
 import { useMemo } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
+import { ImageCard } from '@/components/ui/image-card';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import { StaggerText } from '@/components/ui/stagger-text';
 import type { BlogPost } from '@/data/blog';
@@ -11,66 +12,50 @@ import { cn } from '@/utils/utils';
 
 function FeaturedPostCard({ post }: { post: BlogPost }) {
 	return (
-		<a
-			href={toBlogSlug(post.slug)}
-			className={cn(
-				'group relative block no-underline text-white rounded-[18px] overflow-hidden',
-				'border border-white/20 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md',
-				'transition-[translate,box-shadow,border-color] duration-[550ms] [transition-timing-function:var(--ease-out)]',
-				'hover:-translate-y-[6px] hover:shadow-[0_44px_70px_-30px_rgba(0,0,0,0.36)]',
-				'hover:border-white/40',
-				'motion-reduce:transition-none'
-			)}
-		>
-			<div
-				className="relative overflow-hidden bg-muted"
-				style={{ height: 'clamp(340px, 42vw, 520px)' }}
-			>
-				{post.cover ? (
-					<img
-						src={post.cover}
-						alt=""
-						aria-hidden="true"
-						loading="eager"
-						className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1100ms] [transition-timing-function:var(--ease-out)] group-hover:scale-105 motion-reduce:transition-none"
-					/>
-				) : (
-					<div className="absolute inset-0 bg-gradient-to-br from-muted to-muted/50" />
-				)}
-
-				<div
-					className="absolute inset-0 z-[1] pointer-events-none"
-					style={{ background: 'linear-gradient(180deg, transparent 45%, rgba(15,8,4,0.8) 100%)' }}
-					aria-hidden="true"
-				/>
-
-				<div className="absolute left-0 right-0 bottom-0 z-[3] p-[clamp(20px,2.6vw,32px)]">
-					{post.category && (
-						<span className="inline-block font-mono text-[10px] tracking-[0.06em] uppercase text-orange-300 rounded-full px-[10px] py-[4px] mb-[12px] opacity-0 translate-y-[8px] transition-[opacity,translate] duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:opacity-100 group-hover:translate-y-0 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0 motion-reduce:transition-none">
-							{post.category}
-						</span>
+		<ImageCard href={toBlogSlug(post.slug)} image={post.cover} featured eagerImage>
+			{post.category && (
+				<span
+					className={cn(
+						'inline-block font-mono text-[10px] tracking-[0.06em] uppercase text-white/90 rounded-full px-[10px] py-[4px] mb-[12px]',
+						'bg-white/15 backdrop-blur-[4px]',
+						'opacity-0 translate-y-[8px]',
+						'transition-[opacity,translate] duration-[450ms] [transition-timing-function:var(--ease-out)]',
+						'group-hover:opacity-100 group-hover:translate-y-0',
+						'[@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0',
+						'motion-reduce:transition-none'
 					)}
+				>
+					{post.category}
+				</span>
+			)}
 
-					<h3 className="m-0 font-clash font-medium text-[clamp(34px,5vw,64px)] leading-[1.02] tracking-[-0.025em] text-white transition-[translate] duration-[500ms] [transition-timing-function:var(--ease-out)] group-hover:-translate-y-[2px] motion-reduce:transition-none">
-						{post.title}
-					</h3>
+			<h3 className="m-0 font-clash font-medium text-[clamp(34px,5vw,64px)] leading-[1.02] tracking-[-0.025em] text-white transition-[translate] duration-[500ms] [transition-timing-function:var(--ease-out)] group-hover:-translate-y-[2px] motion-reduce:transition-none">
+				{post.title}
+			</h3>
 
-					<p className="m-0 mt-[10px] font-mono text-[13px] leading-[1.55] text-white/90 max-w-[540px] overflow-hidden max-h-0 opacity-0 transition-[max-height,opacity] duration-[550ms] [transition-timing-function:var(--ease-out)] group-hover:max-h-[80px] group-hover:opacity-100 [@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100 motion-reduce:max-h-[90px] motion-reduce:opacity-100">
-						{post.description}
-					</p>
+			<p
+				className={cn(
+					'm-0 mt-[10px] font-mono text-[13px] leading-[1.55] text-white/90 max-w-[540px] overflow-hidden',
+					'max-h-0 opacity-0',
+					'transition-[max-height,opacity] duration-[550ms] [transition-timing-function:var(--ease-out)]',
+					'group-hover:max-h-[80px] group-hover:opacity-100',
+					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100',
+					'motion-reduce:max-h-[90px] motion-reduce:opacity-100'
+				)}
+			>
+				{post.description}
+			</p>
 
-					<div className="flex items-center gap-[14px] mt-[16px] text-white/75 font-mono text-[12px]">
-						<span>{format(new Date(post.date), 'do MMMM yyyy')}</span>
-						{post.readingTime && (
-							<>
-								<span>·</span>
-								<span>{post.readingTime} min read</span>
-							</>
-						)}
-					</div>
-				</div>
+			<div className="flex items-center gap-[14px] mt-[16px] text-white/75 font-mono text-[12px]">
+				<span>{format(new Date(post.date), 'do MMMM yyyy')}</span>
+				{post.readingTime && (
+					<>
+						<span>·</span>
+						<span>{post.readingTime} min read</span>
+					</>
+				)}
 			</div>
-		</a>
+		</ImageCard>
 	);
 }
 
@@ -85,7 +70,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<div className="mx-auto w-full max-w-[1180px] px-[max(24px,4vw)]">
+			<div className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)]">
 				<header className="pt-[clamp(100px,14vw,138px)]">
 					<ScrollFadeReveal onLoadVisibility>
 						<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
@@ -95,7 +80,7 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							/>
 							Journal · {new Date().getFullYear()}
 						</div>
-						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground">
+						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
 							<StaggerText
 								text="Thoughts & Essays"
 								autoReveal

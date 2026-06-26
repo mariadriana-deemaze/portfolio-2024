@@ -11,7 +11,7 @@ import type { Project } from '@/data/projects';
 export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<section className="mx-auto w-full max-w-[1100px] space-y-64 md:space-y-48 print:space-y-6 animate-fade-in-left delay-500">
+			<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] overflow-x-clip space-y-64 md:space-y-48 print:space-y-6 animate-fade-in-left delay-500">
 				<ScrollFadeReveal onLoadVisibility>
 					<SectionHero />
 				</ScrollFadeReveal>

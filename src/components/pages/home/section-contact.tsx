@@ -134,7 +134,7 @@ export const SectionContact = () => {
 				>
 					<h2
 						ref={headRef}
-						className="m-0 font-clash font-medium text-[clamp(46px,8vw,104px)] leading-[0.95] tracking-[-0.035em] text-[#2e1305] will-change-transform"
+						className="m-0 font-clash font-medium text-[clamp(46px,8vw,104px)] leading-[0.95] tracking-[-0.035em] text-[#2e1305] break-words will-change-transform"
 					>
 						Let's make
 						<br />

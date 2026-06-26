@@ -266,8 +266,7 @@
 }
 
 @utility entry-card {
-	background: color-mix(in srgb, hsl(var(--card)) 42%, transparent);
-	backdrop-filter: blur(2px);
+	background: hsl(var(--card));
 }
 
 @utility bg-card-ghost {
@@ -282,27 +281,15 @@
 }
 
 @utility nav-bg {
-	background: linear-gradient(
-		to right,
-		color-mix(in srgb, hsl(var(--background)) 72%, transparent),
-		color-mix(in srgb, hsl(var(--background)) 92%, transparent) 12%,
-		color-mix(in srgb, hsl(var(--background)) 92%, transparent) 88%,
-		color-mix(in srgb, hsl(var(--background)) 72%, transparent)
-	);
-	backdrop-filter: blur(12px) saturate(1.1);
-	-webkit-backdrop-filter: blur(12px) saturate(1.1);
+	background: transparent;
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
 }
 
 @utility nav-bg-scrolled {
-	background: linear-gradient(
-		to right,
-		color-mix(in srgb, hsl(var(--background)) 72%, transparent),
-		color-mix(in srgb, hsl(var(--background)) 96%, transparent) 12%,
-		color-mix(in srgb, hsl(var(--background)) 96%, transparent) 88%,
-		color-mix(in srgb, hsl(var(--background)) 72%, transparent)
-	);
-	backdrop-filter: blur(12px) saturate(1.2);
-	-webkit-backdrop-filter: blur(12px) saturate(1.2);
+	background: color-mix(in srgb, hsl(var(--background)) 40%, transparent);
+	backdrop-filter: blur(10px) saturate(1.1);
+	-webkit-backdrop-filter: blur(10px) saturate(1.1);
 }
 
 @utility nav-overlay-open {
@@ -447,6 +434,9 @@
 		--color-orange-dark-border: #4d2512;
 		/* Navigation */
 		--nav-border: #f3c6a7;
+		/* Layout */
+		--sideline-inset: max(14px, 4vw);
+		--content-inset: calc(var(--sideline-inset) + 15px);
 		/* Font stacks */
 		--font-display: "ClashDisplay", "DM Sans", sans-serif;
 		--font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
@@ -587,6 +577,11 @@
 		transform: scaleX(0);
 		@apply w-full;
 		background: var(--color-orange-primary);
+	}
+
+	:root[data-menu-open] .progress {
+		opacity: 0;
+		pointer-events: none;
 	}
 
 	.animate-fade-in-left {

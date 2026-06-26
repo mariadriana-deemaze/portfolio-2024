@@ -59,6 +59,7 @@ interface Props {
 export const CommandMenu = ({ links }: Props) => {
 	const [open, setOpen] = useState(false);
 	const [fabHidden, setFabHidden] = useState(false);
+	const [navMenuOpen, setNavMenuOpen] = useState(false);
 	const navigate = useNavigate();
 
 	const internalLinks = links.filter((link) => link.type === 'internal');
@@ -73,8 +74,15 @@ export const CommandMenu = ({ links }: Props) => {
 				setOpen((prev) => !prev);
 			}
 		};
+		const onNavMenu = (e: Event) => {
+			if (e instanceof CustomEvent) setNavMenuOpen(e.detail.open);
+		};
 		document.addEventListener('keydown', down);
-		return () => document.removeEventListener('keydown', down);
+		window.addEventListener('navmenu', onNavMenu);
+		return () => {
+			document.removeEventListener('keydown', down);
+			window.removeEventListener('navmenu', onNavMenu);
+		};
 	}, []);
 
 	useLenis(({ scroll }) => {
@@ -97,7 +105,7 @@ export const CommandMenu = ({ links }: Props) => {
 					'cursor-pointer',
 					'transition-[translate,opacity,box-shadow,color] duration-[450ms] [transition-timing-function:var(--ease-out)]',
 					'hover:text-foreground hover:-translate-y-[3px] hover:shadow-[0_22px_46px_-14px_rgba(0,0,0,0.42)]',
-					fabHidden
+					fabHidden || navMenuOpen
 						? 'opacity-0 translate-y-[140%] pointer-events-none'
 						: 'opacity-100 translate-y-0'
 				)}

@@ -1,7 +1,10 @@
 import { Link, useRouterState } from '@tanstack/react-router';
+import { useLenis } from 'lenis/react';
 import { useEffect, useRef, useState } from 'react';
+import { LuArrowUpRight } from 'react-icons/lu';
 
 import { LogoMark } from '@/components/logo-ma';
+import { NowPlayingBadge } from '@/components/now-playing-badge';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { StaggerText } from '@/components/ui/stagger-text';
 import { data } from '@/data/main';
@@ -31,6 +34,14 @@ export function Navbar() {
 		menuOpenRef.current = menuOpen;
 	}, [menuOpen]);
 
+	const lenis = useLenis();
+
+	useEffect(() => {
+		if (!lenis) return;
+		if (menuOpen) lenis.stop();
+		else lenis.start();
+	}, [menuOpen, lenis]);
+
 	useEffect(() => {
 		let last = window.scrollY;
 		const onScroll = () => {
@@ -52,10 +63,10 @@ export function Navbar() {
 	}, []);
 
 	useEffect(() => {
-		document.body.style.overflow = menuOpen ? 'hidden' : '';
-		return () => {
-			document.body.style.overflow = '';
-		};
+		if (menuOpen) document.documentElement.setAttribute('data-menu-open', '');
+		else document.documentElement.removeAttribute('data-menu-open');
+		window.dispatchEvent(new CustomEvent('navmenu', { detail: { open: menuOpen } }));
+		return () => document.documentElement.removeAttribute('data-menu-open');
 	}, [menuOpen]);
 
 	const isActive = (path: string) =>
@@ -72,7 +83,7 @@ export function Navbar() {
 					hidden ? '-translate-y-[130%] opacity-0' : 'translate-y-0 opacity-100'
 				)}
 			>
-				<div className="max-w-[1100px] mx-auto px-6 pb-[9px] flex items-center justify-between gap-[10px]">
+				<div className="max-w-[1100px] mx-auto px-[var(--sideline-inset)] pb-[9px] flex items-center justify-between gap-[10px]">
 					<div className="flex items-center gap-1 min-w-0">
 						<Link
 							to={ROUTES.home}
@@ -105,10 +116,11 @@ export function Navbar() {
 					</div>
 
 					<div className="flex items-center gap-[7px] shrink-0">
+						<NowPlayingBadge />
 						<ThemeToggle />
 
 						<button
-							className="sm:hidden bg-card-ghost relative w-8 h-8 rounded-[8px] border border-border cursor-pointer shrink-0 transition-[background] duration-[250ms] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+							className="group sm:hidden relative w-8 h-8 -mr-[8px] cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[8px]"
 							onClick={() => setMenuOpen((m) => !m)}
 							aria-label="Toggle menu"
 							aria-expanded={menuOpen}
@@ -119,7 +131,7 @@ export function Navbar() {
 									'transition-[translate,rotate] duration-[320ms] ease-out',
 									menuOpen
 										? 'translate-x-[-50%] translate-y-[-50%] rotate-45'
-										: 'translate-x-[-50%] translate-y-[calc(-50%_-_4px)]'
+										: 'translate-x-[-50%] translate-y-[calc(-50%_-_4px)] group-hover:translate-y-[calc(-50%_-_2.5px)]'
 								)}
 							/>
 							<span
@@ -128,7 +140,7 @@ export function Navbar() {
 									'transition-[translate,rotate] duration-[320ms] ease-out',
 									menuOpen
 										? 'translate-x-[-50%] translate-y-[-50%] -rotate-45'
-										: 'translate-x-[-50%] translate-y-[calc(-50%_+_4px)]'
+										: 'translate-x-[-50%] translate-y-[calc(-50%_+_4px)] group-hover:translate-y-[calc(-50%_+_2.5px)]'
 								)}
 							/>
 						</button>
@@ -148,7 +160,7 @@ export function Navbar() {
 				)}
 			>
 				<div
-					className="absolute inset-0 overlay-grid opacity-[0.04] pointer-events-none"
+					className="absolute inset-0 overlay-grid opacity-[0.04] pointer-events-none [mask-image:linear-gradient(180deg,white_30%,transparent_75%)]"
 					aria-hidden="true"
 				/>
 
@@ -176,7 +188,14 @@ export function Navbar() {
 							}
 							onClick={() => setMenuOpen(false)}
 						>
-							<span className="font-mono text-[13px] font-semibold text-[var(--color-orange-primary)] translate-y-[-0.4em]">
+							<span
+								className="font-mono text-[13px] font-semibold text-[var(--color-orange-primary)] translate-y-[-0.4em] transition-[opacity,filter] duration-[500ms] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none"
+								style={{
+									opacity: menuOpen ? 1 : 0,
+									filter: menuOpen ? 'blur(0px)' : 'blur(6px)',
+									transitionDelay: menuOpen ? `${0.25 + i * 0.08}s` : '0s'
+								}}
+							>
 								{String(i + 1).padStart(2, '0')}
 							</span>
 							<StaggerText
@@ -186,9 +205,9 @@ export function Navbar() {
 								letterDelay={0.025}
 								className="flex-1"
 							/>
-							<span
+							<LuArrowUpRight
 								className={cn(
-									'font-mono text-[22px]',
+									'w-[22px] h-[22px] shrink-0 self-center',
 									'[transition:opacity_300ms_ease-out,translate_300ms_ease-out,color_300ms_ease-out]',
 									isActive(path) ? 'text-[var(--color-orange-primary)]' : 'text-muted-foreground'
 								)}
@@ -196,33 +215,28 @@ export function Navbar() {
 									opacity: isActive(path) ? 1 : 0,
 									translate: isActive(path) ? 'none' : '-8px 4px'
 								}}
-							>
-								↗
-							</span>
+							/>
 						</Link>
 					))}
 				</nav>
 
-				<div
-					className={cn(
-						'relative flex items-center flex-wrap gap-4 mt-auto pt-8',
-						'transition-opacity duration-500',
-						menuOpen ? 'opacity-100' : 'opacity-0'
-					)}
-				>
-					<span className="flex gap-4 font-mono text-[12px]">
-						{data.contact.social.map((s) => (
-							<a
-								key={s.name}
-								href={s.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="lowercase text-foreground no-underline opacity-70 transition-[opacity,color] duration-200 hover:opacity-100 hover:text-[var(--color-orange-primary)]"
-							>
-								{s.name}
-							</a>
-						))}
-					</span>
+				<div className="relative flex items-center flex-wrap gap-4 mt-auto pt-8 font-mono text-[12px]">
+					{data.contact.social.map((s, i) => (
+						<a
+							key={s.name}
+							href={s.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="lowercase text-foreground no-underline opacity-70 transition-[opacity,color] duration-200 hover:opacity-100 hover:text-[var(--color-orange-primary)]"
+						>
+							<StaggerText
+								text={s.name}
+								revealed={menuOpen}
+								baseDelay={0.4 + i * 0.1}
+								letterDelay={0.04}
+							/>
+						</a>
+					))}
 				</div>
 			</div>
 		</>

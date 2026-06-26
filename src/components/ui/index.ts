@@ -9,6 +9,7 @@ export * from './dropdown-menu';
 export * from './empty-state';
 export * from './entry-card';
 export * from './eyebrow';
+export * from './image-card';
 export * from './image-frame';
 export * from './input';
 export * from './label';

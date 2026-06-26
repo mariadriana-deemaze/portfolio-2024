@@ -12,10 +12,9 @@ export function Chip({ children, interactive = false, className }: ChipProps) {
 	return (
 		<span
 			className={cn(
-				'inline-flex items-center font-mono text-[10px] font-medium border border-border rounded-full px-[9px] py-[3px] text-foreground',
-				'transition-[border-color,color,background] duration-[250ms] ease-linear',
-				interactive &&
-					'hover:border-[var(--color-orange-primary)] hover:text-[var(--color-orange-primary)]',
+				'inline-flex items-center select-none font-mono text-[10px] font-medium border border-border rounded-full px-[9px] py-[3px] text-foreground',
+				'transition-[border-color,background-color] duration-[250ms] ease-linear',
+				interactive && 'hover:border-foreground/25 hover:bg-foreground/[0.06]',
 				className
 			)}
 		>
