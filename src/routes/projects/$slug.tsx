@@ -31,7 +31,7 @@ export const Route = createFileRoute('/projects/$slug')({
 		const seo = project?.seo;
 		const url = `${BASE_URL}${toProjectsSlug(params.slug)}`;
 		return createSeoHead({
-			title: seo?.title ?? `${project?.title ?? 'Project'} | Project`,
+			title: seo?.title ?? `Maria Adriana | ${project?.title ?? 'Project'}`,
 			description: seo?.description ?? project?.description ?? 'Project details and information.',
 			image: seo?.ogImage ?? project?.coverImage?.url,
 			url,

@@ -30,7 +30,7 @@ export const Route = createFileRoute('/blog/$slug')({
 		const seo = post?.seo;
 		const canonical = post?.canonicalUrl ?? `${BASE_URL}${toBlogSlug(params.slug)}`;
 		return createSeoHead({
-			title: seo?.title ?? `${post?.title ?? 'Not found'} | Blog`,
+			title: seo?.title ?? `Maria Adriana | ${post?.title ?? 'Not found'}`,
 			description:
 				seo?.description ?? post?.description ?? 'The requested blog post could not be located.',
 			image: seo?.ogImage ?? post?.coverImage?.url,
