@@ -25,14 +25,19 @@ export const getPostFn = createServerFn({ method: 'GET' })
 	.inputValidator(slugSchema)
 	.handler(async ({ data }) => {
 		try {
-			const [{ getPost }, { renderMdxToHtml }] = await Promise.all([
+			const [{ getPost, getNextPost }, { highlightCodeBlocks }] = await Promise.all([
 				import('@/data/blog'),
-				import('@/server/mdx')
+				import('@/server/highlight')
 			]);
 			const post = await getPost(data.slug);
-			const postHtml = post?.body ? await renderMdxToHtml(post.body) : undefined;
+			const [nextPost, highlightedBody] = await Promise.all([
+				post?.date ? getNextPost(post.date, data.slug) : undefined,
+				post?.structuredBody ? highlightCodeBlocks(post.structuredBody) : undefined
+			]);
+			const processedPost =
+				post && highlightedBody ? { ...post, structuredBody: highlightedBody } : post;
 
-			return { post, postHtml };
+			return { post: processedPost, nextPost };
 		} catch (error) {
 			console.error('Failed to load blog post', error);
 			return {};
@@ -53,14 +58,19 @@ export const getProjectFn = createServerFn({ method: 'GET' })
 	.inputValidator(slugSchema)
 	.handler(async ({ data }) => {
 		try {
-			const [{ getProject }, { renderMdxToHtml }] = await Promise.all([
+			const [{ getProject, getNextProject }, { highlightCodeBlocks }] = await Promise.all([
 				import('@/data/projects'),
-				import('@/server/mdx')
+				import('@/server/highlight')
 			]);
 			const project = await getProject(data.slug);
-			const projectHtml = project?.content ? await renderMdxToHtml(project.content) : undefined;
+			const [nextProject, highlightedBody] = await Promise.all([
+				project ? getNextProject(project.displayOrder, data.slug) : undefined,
+				project?.structuredBody ? highlightCodeBlocks(project.structuredBody) : undefined
+			]);
+			const processedProject =
+				project && highlightedBody ? { ...project, structuredBody: highlightedBody } : project;
 
-			return { project, projectHtml };
+			return { project: processedProject, nextProject };
 		} catch (error) {
 			console.error('Failed to load project', error);
 			return {};

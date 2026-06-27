@@ -1,6 +1,6 @@
 import {defineCliConfig} from 'sanity/cli'
 
-import {publicEnvSchema} from '../src/lib/env'
+import {publicEnvSchema} from './lib/env'
 
 const parsedEnv = publicEnvSchema.safeParse(process.env)
 

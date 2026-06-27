@@ -1,7 +1,7 @@
 {
 	"name": "portfolio-2025",
 	"private": true,
-	"version": "0.0.0",
+	"version": "2.0.0",
 	"license": "UNLICENSED",
 	"type": "module",
 	"packageManager": "pnpm@10.33.2",
@@ -17,11 +17,15 @@
 		"format:check": "biome format --check .",
 		"validate": "tsc --noEmit && biome check . && knip",
 		"preview": "vite preview",
-		"cms": "pnpm --dir cms dev"
+		"cms": "pnpm --dir cms dev",
+		"dev:cms": "pnpm --dir cms dev",
+		"validate:all": "pnpm validate && pnpm --dir cms validate",
+		"build:all": "pnpm build && pnpm --dir cms build"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",
-		"@mdx-js/mdx": "^3.0.1",
+		"@portabletext/markdown": "^1.4.1",
+		"@portabletext/react": "^6.2.0",
 		"@radix-ui/react-avatar": "^1.0.4",
 		"@radix-ui/react-dialog": "^1.0.5",
 		"@radix-ui/react-dropdown-menu": "^2.0.5",
@@ -35,19 +39,12 @@
 		"clsx": "^2.0.0",
 		"cmdk": "^1.0.0",
 		"date-fns": "^4.0.0",
-		"gray-matter": "^4.0.3",
 		"lenis": "^1.2.3",
-		"nodemailer": "^8.0.5",
+		"nodemailer": "^9.0.1",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",
 		"react-hook-form": "^7.52.2",
 		"react-icons": "^5.3.0",
-		"rehype-autolink-headings": "^7.1.0",
-		"rehype-pretty-code": "^0.14.0",
-		"rehype-slug": "^6.0.0",
-		"remark-frontmatter": "^5.0.0",
-		"remark-gfm": "^4.0.0",
-		"remark-toc": "^9.0.0",
 		"shiki": "4.0.2",
 		"sonner": "^2.0.0",
 		"tailwind-merge": "^3.0.0",
@@ -91,10 +88,17 @@
 			"anymatch>picomatch": "4.0.4",
 			"commitizen>lodash": "4.18.1",
 			"cz-customizable>lodash": "4.18.1",
-			"knip>smol-toml": "1.6.1",
+			"dompurify": "3.4.11",
+			"filelist>minimatch": "10.2.5",
 			"micromatch>picomatch": "4.0.4",
 			"readdirp>picomatch": "4.0.4",
-			"tmp": "^0.2.4"
+			"tmp": "^0.2.4",
+			"@actions/github>undici": "8.5.0",
+			"@actions/http-client>undici": "8.5.0",
+			"@vercel/frameworks>js-yaml": "4.2.0",
+			"typeid-js>uuid": "11.1.1",
+			"@sanity/uuid>uuid": "11.1.1",
+			"esbuild": "0.28.1"
 		}
 	}
 }

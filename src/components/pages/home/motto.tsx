@@ -11,7 +11,7 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 		words.forEach((word) => {
 			const letters = word.textContent?.split('');
 			word.textContent = '';
-			letters.forEach((letter) => {
+			letters?.forEach((letter) => {
 				const span = document.createElement('span');
 				span.textContent = letter;
 				span.className = 'letter';
@@ -23,13 +23,7 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 	const animateText = useCallback(() => {
 		const words = document.querySelectorAll('.role-slide');
 
-		let lastWordIndex = 0;
-
-		if (roleIndex === 0) {
-			lastWordIndex = data.length - 1;
-		} else {
-			lastWordIndex = roleIndex - 1;
-		}
+		const lastWordIndex = roleIndex === 0 ? data.length - 1 : roleIndex - 1;
 
 		const currentWord = words[roleIndex];
 		const previousWord = words[lastWordIndex];
@@ -66,17 +60,18 @@ export const AnimatedMottos = ({ data, className }: { data: string[]; className?
 	}, [animateText]);
 
 	useEffect(() => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		const interval = setInterval(switchRole, 5000);
 		return () => clearInterval(interval);
 	}, [switchRole]);
 
 	return (
-		<h6 className="h-5 w-full relative roles-slider font-clash text-lg font-normal">
+		<p className="h-5 w-full relative roles-slider font-clash text-lg font-normal">
 			{data.map((item, index) => (
 				<span className={cn('role-slide', className)} key={`motto_item_${index}`}>
 					{item}
 				</span>
 			))}
-		</h6>
+		</p>
 	);
 };

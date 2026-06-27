@@ -1,25 +1,23 @@
+import { BASE_URL } from '@/data/main';
 import type { Seo } from '@/server/types';
 
-export function createSeoHead(seo: Seo) {
-	const meta = [
-		{ title: seo.title },
-		{ name: 'description', content: seo.description },
-		{ property: 'og:title', content: seo.title },
-		{ property: 'og:description', content: seo.description }
-	];
+const DEFAULT_OG_IMAGE = `${BASE_URL}/images/og-preview.png`;
 
-	if (seo.image) {
-		meta.push(
-			{ property: 'og:image', content: seo.image },
-			{ name: 'twitter:card', content: 'summary_large_image' },
-			{ name: 'twitter:title', content: seo.title },
-			{ name: 'twitter:description', content: seo.description },
-			{ name: 'twitter:image', content: seo.image }
-		);
-	}
+export function createSeoHead(seo: Seo) {
+	const image = seo.image ?? DEFAULT_OG_IMAGE;
 
 	return {
-		meta,
+		meta: [
+			{ title: seo.title },
+			{ name: 'description', content: seo.description },
+			{ property: 'og:title', content: seo.title },
+			{ property: 'og:description', content: seo.description },
+			{ property: 'og:type', content: seo.type ?? 'website' },
+			{ property: 'og:image', content: image },
+			{ name: 'twitter:card', content: 'summary_large_image' },
+			{ name: 'twitter:image', content: image },
+			...(seo.url ? [{ property: 'og:url', content: seo.url }] : [])
+		],
 		links: seo.alternates?.canonical
 			? [{ rel: 'canonical', href: seo.alternates.canonical }]
 			: undefined

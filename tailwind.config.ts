@@ -4,26 +4,23 @@ import tailwindcssAnimate from 'tailwindcss-animate';
 
 const config: Config = {
 	darkMode: 'class',
-	content: [
-		'./index.html',
-		'./src/**/*.{ts,tsx,mdx}',
-		'./src/styles/**/*.css',
-		'./content/**/*.mdx'
-	],
+	content: ['./index.html', './src/**/*.{ts,tsx}', './src/styles/**/*.css'],
 	theme: {
 		container: {
 			center: true,
-			padding: {
-				DEFAULT: '0.75rem',
-				sm: '2rem'
-			},
+			padding: '0px',
 			screens: {
 				'2xl': '1400px'
 			}
 		},
 		extend: {
 			fontFamily: {
-				clash: ['ClashDisplay', 'sans-serif']
+				clash: ['ClashDisplay', 'DM Sans', 'sans-serif'],
+				mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+			},
+			boxShadow: {
+				card: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+				'glow-brand': '0 0 20px -4px hsl(var(--brand) / 0.3)'
 			},
 			gridTemplateColumns: {
 				27: 'repeat(27, minmax(0, 1fr))',
@@ -70,6 +67,12 @@ const config: Config = {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				brand: {
+					DEFAULT: 'hsl(var(--brand))',
+					foreground: 'hsl(var(--brand-foreground))',
+					light: '#F18B3E',
+					muted: '#F3C6A7'
 				}
 			},
 			borderRadius: {

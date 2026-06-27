@@ -2,7 +2,8 @@ import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
-import {publicEnvSchema} from '../src/lib/env'
+import {deskStructure} from './desk-structure'
+import {publicEnvSchema} from './lib/env'
 import {schemaTypes} from './schemaTypes'
 
 const env = publicEnvSchema.parse({
@@ -17,7 +18,7 @@ export default defineConfig({
   title: 'Portfolio Blog',
   projectId: env.VITE_SANITY_PROJECT_ID,
   dataset: env.VITE_SANITY_DATASET,
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool({structure: deskStructure}), visionTool()],
   schema: {
     types: schemaTypes
   }

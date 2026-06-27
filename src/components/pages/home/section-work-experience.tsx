@@ -1,70 +1,83 @@
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Chip } from '@/components/ui/chip';
 import { Section } from '@/components/ui/section';
+import { SectionHeading } from '@/components/ui/section-heading';
 import { data } from '@/data/main';
 
 export const SectionWorkExperience = () => {
 	return (
-		<Section className="animate-fade-in-left delay-500">
-			<h2 className="font-clash text-xl font-bold">Work Experience</h2>
-			{data.work.map(({ company, title, description, link, preview, stack, start, end }) => {
-				return (
-					<Card key={company} className="bg-card/35 shadow-xl">
-						<CardHeader>
-							<div className="flex flex-row gap-x-4">
-								{preview && (
-									<div className="flex shrink-0 justify-center items-center border dark:border-white/20 rounded-md h-10 w-10 dark:bg-gray-950 shadow-xl overflow-hidden">
-										<img
-											className="self-center w-auto"
-											src={preview}
-											alt={`Logo of ${title}`}
-											height={25}
-											width={25}
-										/>
-									</div>
-								)}
-								<div className="flex flex-col grow gap-2 items-start">
-									<h3 className="inline-flex items-center justify-center font-semibold leading-none">
-										<a className="hover:underline" href={link}>
-											{company}
-										</a>
-									</h3>
-									<h4 className="font-mono text-sm leading-none opacity-50">{title}</h4>
-								</div>
+		<Section>
+			<SectionHeading num="02" title="Work Experience" count={`${data.work.length} roles`} />
+			<div className="flex flex-col gap-[14px]">
+				{data.work.map(({ company, title, description, link, preview, stack, start, end }) => (
+					<div
+						key={company}
+						className="entry-card spotlight-border grid grid-cols-[48px_1fr_auto] gap-[18px] p-[22px_22px_22px_20px] border border-border rounded-xl shadow-card"
+						onMouseMove={(e) => {
+							const r = e.currentTarget.getBoundingClientRect();
+							e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - r.left}px`);
+							e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - r.top}px`);
+						}}
+						onMouseLeave={(e) => {
+							e.currentTarget.style.setProperty('--mouse-x', '-999px');
+							e.currentTarget.style.setProperty('--mouse-y', '-999px');
+						}}
+					>
+						<div className="w-11 h-11 rounded-[9px] border border-border bg-background grid place-items-center overflow-hidden shrink-0">
+							{preview && (
+								<img
+									className="w-[26px] h-[26px] object-contain block"
+									src={preview}
+									alt={company}
+									width={26}
+									height={26}
+								/>
+							)}
+						</div>
 
-								<div className="font-mono text-sm text-gray-500 flex shrink-0">
-									{start} - {end}
-								</div>
-							</div>
-						</CardHeader>
-						<CardContent className="mt-2 text-pretty font-mono text-xs text-foreground leading-5">
-							{description}
-						</CardContent>
-						<CardFooter>
-							<div className="mt-2 flex flex-wrap gap-1">
+						<div className="min-w-0">
+							<h3 className="m-0 font-clash text-[16px] font-semibold leading-none">
+								{link ? (
+									<a
+										href={link}
+										target="_blank"
+										rel="noreferrer"
+										className="text-foreground no-underline hover:text-[var(--color-orange-primary)] hover:underline hover:[text-decoration-color:var(--color-orange-primary)] [text-underline-offset:3px] transition-colors"
+									>
+										{company}
+									</a>
+								) : (
+									company
+								)}
+							</h3>
+							<p className="m-0 mt-1 font-mono text-[12px] text-muted-foreground">{title}</p>
+						</div>
+
+						<span className="font-mono text-[11px] text-muted-foreground whitespace-nowrap pt-[3px]">
+							{start} — {end}
+						</span>
+
+						<p className="m-0 mt-3 font-mono text-[12.5px] leading-[1.7] text-foreground/90 text-pretty [grid-column:2_/-1]">
+							{description.trim()}
+						</p>
+
+						{stack.length > 0 && (
+							<div className="mt-[14px] flex flex-wrap gap-[5px] [grid-column:2_/-1]">
 								{stack.map((st) => {
-									const { label, icon } = st as {
-										label: string;
-										icon: ReactElement;
-									};
+									const { label, icon } = st as { label: string; icon: ReactElement };
 									return (
-										<Badge
-											className="py-1 px-3 gap-2 text-[10px] hover:mix-blend-luminosity cursor-default"
-											variant="outline"
-											key={label}
-										>
+										<Chip key={label} interactive className="gap-[5px]">
 											{icon}
-											<span>{label}</span>
-										</Badge>
+											{label}
+										</Chip>
 									);
 								})}
 							</div>
-						</CardFooter>
-					</Card>
-				);
-			})}
+						)}
+					</div>
+				))}
+			</div>
 		</Section>
 	);
 };

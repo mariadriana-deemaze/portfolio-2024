@@ -1,42 +1,95 @@
 import type { ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
+
+const BLOB_TRANSITION = 'transform 0.9s cubic-bezier(0.22,1,0.36,1)';
 
 export function BGGrid({ children }: { children?: ReactNode }) {
+	const gridRef = useRef<HTMLDivElement>(null);
+	const blob1Ref = useRef<HTMLImageElement>(null);
+	const blob2Ref = useRef<HTMLImageElement>(null);
+
+	useEffect(() => {
+		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (reduce) return;
+
+		let mx = 0,
+			my = 0,
+			sy = 0,
+			raf: number | null = null;
+
+		const apply = () => {
+			raf = null;
+			if (gridRef.current)
+				gridRef.current.style.transform = `translate(${mx * 14}px, ${my * 14 - sy * 0.04}px)`;
+			if (blob1Ref.current)
+				blob1Ref.current.style.transform = `translate(${mx * 50}px, ${my * 40 + sy * 0.05}px)`;
+			if (blob2Ref.current)
+				blob2Ref.current.style.transform = `rotate(180deg) translate(${mx * 60}px, ${my * 48 - sy * 0.05}px)`;
+		};
+
+		const schedule = () => {
+			if (!raf) raf = requestAnimationFrame(apply);
+		};
+
+		const onMove = (e: MouseEvent) => {
+			mx = e.clientX / window.innerWidth - 0.5;
+			my = e.clientY / window.innerHeight - 0.5;
+			schedule();
+		};
+
+		const onScroll = () => {
+			sy = window.scrollY;
+			schedule();
+		};
+
+		window.addEventListener('mousemove', onMove);
+		window.addEventListener('scroll', onScroll, { passive: true });
+
+		return () => {
+			window.removeEventListener('mousemove', onMove);
+			window.removeEventListener('scroll', onScroll);
+			if (raf) cancelAnimationFrame(raf);
+		};
+	}, []);
+
 	return (
 		<>
 			{children}
-			<div
-				className="fixed inset-0 z-[-1] bg-transparent h-screen w-screen bg-linear-to-b from-muted to-background"
-				style={{
-					backgroundImage: 'linear-gradient(hsl(var(--muted)), hsl(var(--background)))'
-				}}
-			>
-				<div
-					className="w-full h-full"
-					style={{
-						backgroundSize: '50px 50px',
-						backgroundImage:
-							'linear-gradient(0deg, transparent 24%, hsl(var(--muted)/80%) 25%, hsl(var(--muted)/80%) 26%, transparent 27%, transparent 74%, hsl(var(--muted)/80%) 75%, hsl(var(--muted)/80%) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, hsl(var(--muted)/80%) 25%, hsl(var(--muted)/80%) 26%, transparent 27%, transparent 74%, hsl(var(--muted)/80%) 75%, hsl(var(--muted)/80%) 76%, transparent 77%, transparent)'
-					}}
+
+			{/* Fixed background canvas */}
+			<div className="fixed inset-0 z-[-2] pointer-events-none overflow-hidden">
+				{/* Base gradient */}
+				<div className="absolute inset-[-10%] bg-grad-base" />
+
+				{/* Graph-paper grid — 1px lines, radial mask fades edges */}
+				<div ref={gridRef} className="absolute inset-[-120px] bg-grid-lines" />
+
+				{/* Colour blobs */}
+				<img
+					ref={blob1Ref}
+					className="absolute -left-10 top-32 w-[300px] h-[600px] opacity-50"
+					style={{ transition: BLOB_TRANSITION }}
+					src="/images/color_grad.webp"
+					width={300}
+					height={600}
+					alt=""
+					aria-hidden="true"
+				/>
+				<img
+					ref={blob2Ref}
+					className="absolute -right-10 -top-32 w-[200px] h-[400px] opacity-[0.15]"
+					style={{ transition: BLOB_TRANSITION, transform: 'rotate(180deg)' }}
+					src="/images/color_grad.webp"
+					width={200}
+					height={400}
+					alt=""
+					aria-hidden="true"
 				/>
 			</div>
-			<img
-				className="fixed -left-10 top-32 scale-150 fade-in-35 duration-1000 opacity-55 z-[-1]"
-				alt="Decorative image element"
-				src={'/images/color_grad.webp'}
-				height={400}
-				width={200}
-				loading="eager"
-			/>
-			<img
-				className="fixed -right-10 -top-32 rotate-180 fade-in-35 duration-1000 opacity-15 z-[-1]"
-				alt="Decorative image element"
-				src={'/images/color_grad.webp'}
-				height={400}
-				width={200}
-				loading="eager"
-			/>
-			<div className="h-screen fixed border-l border-orange-600 opacity-30 left-[5px] md:left-[10%] top-0 bottom-0" />
-			<div className="h-screen fixed border-l border-orange-600 opacity-30 right-[5px] md:right-[10%] top-0 bottom-0" />
+
+			{/* Vertical orange sidelines */}
+			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px left-[var(--sideline-inset)] bg-brand opacity-[0.22]" />
+			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px right-[var(--sideline-inset)] bg-brand opacity-[0.22]" />
 		</>
 	);
 }

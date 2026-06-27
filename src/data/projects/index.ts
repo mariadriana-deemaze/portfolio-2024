@@ -1,166 +1,213 @@
-import fs from 'node:fs/promises';
-import matter from 'gray-matter';
-import path from 'path';
-
 import { fetchSanityQuery } from '@/lib/sanity';
+import type {
+	PortableTextBody,
+	ResolvedGalleryItem,
+	ResolvedImage,
+	ResolvedLink,
+	ResolvedMetric,
+	ResolvedSeo
+} from '@/lib/sanity-types';
+import {
+	GALLERY_ITEM_PROJECTION,
+	LINK_PROJECTION,
+	RICH_IMAGE_PROJECTION,
+	SEO_PROJECTION,
+	STRUCTURED_BODY_PROJECTION
+} from '@/lib/sanity-types';
 
-const PROJECTS_DIR = './src/data/projects';
+// ── GROQ projections ──────────────────────────────────────────────────
 
 const PROJECT_FIELDS = `
-  hero,
   title,
   description,
   year,
+  displayOrder,
+  featured,
   "slug": slug.current,
-  repo,
-  liveUrl,
   medium,
+  role,
+  timeline,
+  context,
+  technologies,
   tags,
   colors,
-  technologies,
-  body,
-  published
+  published,
+  "coverImage": coverImage ${RICH_IMAGE_PROJECTION},
+  "links": links[] ${LINK_PROJECTION},
+  overview,
+  problem,
+  approach,
+  "statistics": statistics[] { value, label },
+  "gallery": gallery[] ${GALLERY_ITEM_PROJECTION},
+  "structuredBody": structuredBody ${STRUCTURED_BODY_PROJECTION},
+  "seo": seo ${SEO_PROJECTION},
+  // Legacy fields — still projected until migration completes
+  hero,
+  repo,
+  liveUrl,
+  body
 `;
 
-export interface ProjectRaw {
-	hero: string;
-	title: string;
-	description: string;
-	year: string;
-	slug: string;
-	repo: string;
-	liveUrl?: string;
-	medium: string;
-	tags: string[];
-	colors: string[];
-	technologies: string[];
-}
+const NEXT_PROJECT_FIELDS = `
+  title,
+  "slug": slug.current,
+  colors,
+  "coverImage": coverImage ${RICH_IMAGE_PROJECTION},
+  hero
+`;
+
+// ── Sanity response types ─────────────────────────────────────────────
 
 type SanityProject = {
-	hero: string;
 	title: string;
 	description: string;
 	year: number | string;
+	displayOrder?: number;
+	featured?: boolean;
 	slug: string;
-	repo: string;
-	liveUrl?: string;
 	medium: string;
+	role?: string;
+	timeline?: string;
+	context?: string;
+	technologies?: string[];
 	tags?: string[];
 	colors?: string[];
-	technologies?: string[];
-	body?: string;
 	published?: boolean;
+	coverImage?: ResolvedImage;
+	links?: ResolvedLink[];
+	overview?: string;
+	problem?: string;
+	approach?: string;
+	statistics?: ResolvedMetric[];
+	gallery?: ResolvedGalleryItem[];
+	structuredBody?: PortableTextBody;
+	seo?: ResolvedSeo;
+	// Legacy
+	hero?: string;
+	repo?: string;
+	liveUrl?: string;
+	body?: string;
 };
 
+// ── Application model ─────────────────────────────────────────────────
+
 export interface Project {
-	hero: string;
 	title: string;
 	description: string;
+	year: string;
+	displayOrder?: number;
+	featured: boolean;
+	slug: string;
 	medium: string;
+	role?: string;
+	timeline?: string;
+	context?: string;
+	technologies: { label: string }[];
 	tags: string[];
 	colors: string[];
-	year: string;
-	slug: string;
-	content: string;
-	technologies: {
-		label: string;
-	}[];
+	coverImage?: ResolvedImage;
+	links: ResolvedLink[];
+	overview?: string;
+	problem?: string;
+	approach?: string;
+	statistics: ResolvedMetric[];
+	gallery: ResolvedGalleryItem[];
+	structuredBody?: PortableTextBody;
+	seo?: ResolvedSeo;
+	// Legacy — available until migration completes
+	hero: string;
 	repo: string;
 	liveUrl?: string;
+	content: string;
 }
+
+// ── Normalizer ────────────────────────────────────────────────────────
 
 function normalizeProject(project: SanityProject): Project {
 	return {
-		hero: project.hero,
 		title: project.title,
 		description: project.description,
+		year: String(project.year),
+		displayOrder: project.displayOrder,
+		featured: project.featured ?? false,
+		slug: project.slug,
 		medium: project.medium,
+		role: project.role,
+		timeline: project.timeline,
+		context: project.context,
+		technologies: Array.isArray(project.technologies)
+			? project.technologies.map((t) => ({ label: t }))
+			: [],
 		tags: Array.isArray(project.tags) ? project.tags : [],
 		colors: Array.isArray(project.colors) ? project.colors : [],
-		year: String(project.year),
-		slug: project.slug,
-		content: project.body ?? '',
-		technologies: Array.isArray(project.technologies)
-			? project.technologies.map((technology) => ({ label: technology }))
-			: [],
-		repo: project.repo,
-		liveUrl: project.liveUrl
+		coverImage: project.coverImage,
+		links: Array.isArray(project.links) ? project.links : [],
+		overview: project.overview,
+		problem: project.problem,
+		approach: project.approach,
+		statistics: Array.isArray(project.statistics) ? project.statistics : [],
+		gallery: Array.isArray(project.gallery) ? project.gallery : [],
+		structuredBody: project.structuredBody,
+		seo: project.seo,
+		// Legacy
+		hero: project.coverImage?.url ?? project.hero ?? '',
+		repo: project.repo ?? '',
+		liveUrl: project.liveUrl,
+		content: project.body ?? ''
 	};
 }
 
-async function getProjectsFromMdx(): Promise<Project[]> {
-	const content = await fs.readdir(PROJECTS_DIR);
+// ── Queries ───────────────────────────────────────────────────────────
 
-	const projects = await Promise.all(
-		content
-			.filter((file) => path.extname(file) === '.mdx')
-			.map(async (file) => {
-				const filePath = `${PROJECTS_DIR}/${file}`;
-				const projectContent = await fs.readFile(filePath, 'utf8');
-
-				const { data, content } = matter(projectContent) as unknown as {
-					data: ProjectRaw;
-					content: string;
-				};
-
-				const project: Project = {
-					...data,
-					technologies: data.technologies.map((technology) => ({ label: technology })),
-					content
-				};
-				return project;
-			})
-	);
-
-	return projects
-		.filter((project) => project !== null)
-		.sort((a, b) =>
-			a && b ? new Date(b.year).getTime() - new Date(a.year).getTime() : 0
-		) as Project[];
-}
-
-async function getProjectsFromSanity(): Promise<Project[]> {
+export const getProjects = async (): Promise<Project[]> => {
 	const projects = await fetchSanityQuery<SanityProject[]>(
-		`*[_type == "project" && published != false] | order(year desc) { ${PROJECT_FIELDS} }`
+		`*[_type == "project" && published != false] | order(displayOrder asc, year desc) { ${PROJECT_FIELDS} }`
 	);
-
 	return projects.map(normalizeProject);
-}
-
-async function getProjectFromMdx(slug: string): Promise<Project | undefined> {
-	const projects = await getProjectsFromMdx();
-	return projects.find((project) => project.slug === slug);
-}
-
-export const getProjects = async () => {
-	try {
-		const projects = await getProjectsFromSanity();
-
-		if (projects.length > 0) {
-			return projects;
-		}
-
-		console.warn('No published projects found in Sanity. Falling back to local MDX content.');
-	} catch (error) {
-		console.error('Failed to load projects from Sanity. Falling back to local MDX content.', error);
-	}
-
-	return getProjectsFromMdx();
 };
 
-export async function getProject(slug: string) {
-	try {
-		const project = await fetchSanityQuery<SanityProject | null>(
-			`*[_type == "project" && published != false && slug.current == $slug][0] { ${PROJECT_FIELDS} }`,
-			{ slug }
-		);
+export async function getProject(slug: string): Promise<Project | undefined> {
+	const project = await fetchSanityQuery<SanityProject | null>(
+		`*[_type == "project" && published != false && slug.current == $slug][0] { ${PROJECT_FIELDS} }`,
+		{ slug }
+	);
+	return project ? normalizeProject(project) : undefined;
+}
 
-		if (project) {
-			return normalizeProject(project);
-		}
-	} catch (error) {
-		console.error('Failed to load project from Sanity. Falling back to local MDX content.', error);
-	}
+export interface NextProject {
+	title: string;
+	slug: string;
+	hero: string;
+	colors?: string[];
+	coverImage?: ResolvedImage;
+}
 
-	return getProjectFromMdx(slug);
+export async function getNextProject(
+	displayOrder: number | undefined,
+	slug: string
+): Promise<NextProject | undefined> {
+	const order = displayOrder ?? -1;
+	const result = await fetchSanityQuery<SanityProject | null>(
+		`*[_type == "project" && published != false && slug.current != $slug && displayOrder > $order] | order(displayOrder asc, year desc)[0]{ ${NEXT_PROJECT_FIELDS} }`,
+		{ slug, order }
+	);
+
+	if (result) return normalizeNextProject(result);
+
+	const wrap = await fetchSanityQuery<SanityProject | null>(
+		`*[_type == "project" && published != false && slug.current != $slug] | order(displayOrder asc, year desc)[0]{ ${NEXT_PROJECT_FIELDS} }`,
+		{ slug }
+	);
+
+	return wrap ? normalizeNextProject(wrap) : undefined;
+}
+
+function normalizeNextProject(p: SanityProject): NextProject {
+	return {
+		title: p.title,
+		slug: p.slug,
+		hero: p.coverImage?.url ?? p.hero ?? '',
+		colors: Array.isArray(p.colors) ? p.colors : [],
+		coverImage: p.coverImage
+	};
 }

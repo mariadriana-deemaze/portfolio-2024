@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter } from '@tanstack/react-router';
 
+import { PageLoader } from '@/components/page-loader';
 import { routeTree } from '@/routeTree.gen';
 
 function createAppRouter() {
@@ -10,7 +11,7 @@ function createAppRouter() {
 		routeTree,
 		defaultPreload: 'intent',
 		defaultPreloadDelay: 0,
-		defaultPendingComponent: () => <></>,
+		defaultPendingComponent: PageLoader,
 		defaultPendingMs: 150,
 		defaultPendingMinMs: 250,
 		notFoundMode: 'root',

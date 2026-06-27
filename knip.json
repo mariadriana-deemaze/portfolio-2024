@@ -1,10 +1,18 @@
 {
-	"$schema": "https://unpkg.com/knip@5/schema.json",
-	"entry": ["src/server.ts"],
+	"$schema": "https://unpkg.com/knip@6/schema.json",
+	"workspaces": {
+		".": {
+			"entry": [
+				"src/server.ts",
+				"src/components/ui/index.ts",
+				"src/components/portable-text/index.tsx"
+			]
+		}
+	},
 	"ignoreExportsUsedInFile": {
 		"interface": true,
 		"type": true
 	},
 	"tags": ["-lintignore"],
-	"ignoreFiles": ["./.cz-config.cjs", "./cms/**", "./src/data/**"]
+	"ignoreFiles": ["./.cz-config.cjs", "./src/data/**", "./src/components/now-playing.tsx"]
 }
