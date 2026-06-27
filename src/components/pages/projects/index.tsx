@@ -16,7 +16,7 @@ function ProjectCard({ project, i, featured }: { project: Project; i: number; fe
 	return (
 		<ImageCard
 			href={`/projects/${project.slug}`}
-			image={project.hero}
+			image={project.coverImage?.url}
 			gradient={gradient}
 			featured={featured}
 			index={i}
