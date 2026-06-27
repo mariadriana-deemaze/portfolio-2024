@@ -177,9 +177,9 @@ export const SectionProjects = ({ projects }: { projects: Project[] }) => {
 										background: `linear-gradient(145deg, ${project.colors[0]}, ${project.colors[1] ?? project.colors[0]} 55%, ${project.colors[2] ?? project.colors[0]})`
 									}}
 								/>
-								{project.hero && (
+								{project.coverImage?.url && (
 									<img
-										src={project.hero}
+										src={project.coverImage.url}
 										alt=""
 										className="absolute inset-0 w-full h-full object-cover"
 									/>

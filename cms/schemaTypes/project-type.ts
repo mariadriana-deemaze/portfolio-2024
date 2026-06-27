@@ -136,23 +136,6 @@ export const projectType = defineType({
       description: 'External links — live site, source repo, case study, etc.'
     }),
 
-    // ── Legacy link fields (kept for migration) ────────────────────
-    defineField({
-      name: 'repo',
-      title: 'Repository (legacy)',
-      type: 'string',
-      group: 'meta',
-      description: 'Legacy: repository path. Migrate to links[].',
-      deprecated: {reason: 'Use the links array instead.'}
-    }),
-    defineField({
-      name: 'liveUrl',
-      title: 'Live URL (legacy)',
-      type: 'url',
-      group: 'meta',
-      deprecated: {reason: 'Use the links array instead.'}
-    }),
-
     // ── Case Study ─────────────────────────────────────────────────
     defineField({
       name: 'overview',
@@ -201,26 +184,6 @@ export const projectType = defineType({
       type: 'body',
       group: 'caseStudy',
       description: 'Rich case-study content. Replaces the legacy MDX body.'
-    }),
-
-    // ── Legacy body (kept for migration) ───────────────────────────
-    defineField({
-      name: 'body',
-      title: 'Body — MDX (legacy)',
-      type: 'text',
-      rows: 20,
-      group: 'caseStudy',
-      deprecated: {reason: 'Use structuredBody instead.'}
-    }),
-
-    // ── Legacy hero path (kept for migration) ──────────────────────
-    defineField({
-      name: 'hero',
-      title: 'Hero Image Path (legacy)',
-      type: 'string',
-      group: 'content',
-      description: 'Legacy: public image path. Migrate to coverImage.',
-      deprecated: {reason: 'Use coverImage instead.'}
     }),
 
     // ── SEO ────────────────────────────────────────────────────────
