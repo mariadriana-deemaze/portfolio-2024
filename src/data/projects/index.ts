@@ -40,20 +40,14 @@ const PROJECT_FIELDS = `
   "statistics": statistics[] { value, label },
   "gallery": gallery[] ${GALLERY_ITEM_PROJECTION},
   "structuredBody": structuredBody ${STRUCTURED_BODY_PROJECTION},
-  "seo": seo ${SEO_PROJECTION},
-  // Legacy fields — still projected until migration completes
-  hero,
-  repo,
-  liveUrl,
-  body
+  "seo": seo ${SEO_PROJECTION}
 `;
 
 const NEXT_PROJECT_FIELDS = `
   title,
   "slug": slug.current,
   colors,
-  "coverImage": coverImage ${RICH_IMAGE_PROJECTION},
-  hero
+  "coverImage": coverImage ${RICH_IMAGE_PROJECTION}
 `;
 
 // ── Sanity response types ─────────────────────────────────────────────
@@ -82,11 +76,6 @@ type SanityProject = {
 	gallery?: ResolvedGalleryItem[];
 	structuredBody?: PortableTextBody;
 	seo?: ResolvedSeo;
-	// Legacy
-	hero?: string;
-	repo?: string;
-	liveUrl?: string;
-	body?: string;
 };
 
 // ── Application model ─────────────────────────────────────────────────
@@ -114,11 +103,6 @@ export interface Project {
 	gallery: ResolvedGalleryItem[];
 	structuredBody?: PortableTextBody;
 	seo?: ResolvedSeo;
-	// Legacy — available until migration completes
-	hero: string;
-	repo: string;
-	liveUrl?: string;
-	content: string;
 }
 
 // ── Normalizer ────────────────────────────────────────────────────────
@@ -148,12 +132,7 @@ function normalizeProject(project: SanityProject): Project {
 		statistics: Array.isArray(project.statistics) ? project.statistics : [],
 		gallery: Array.isArray(project.gallery) ? project.gallery : [],
 		structuredBody: project.structuredBody,
-		seo: project.seo,
-		// Legacy
-		hero: project.coverImage?.url ?? project.hero ?? '',
-		repo: project.repo ?? '',
-		liveUrl: project.liveUrl,
-		content: project.body ?? ''
+		seo: project.seo
 	};
 }
 
@@ -177,7 +156,6 @@ export async function getProject(slug: string): Promise<Project | undefined> {
 export interface NextProject {
 	title: string;
 	slug: string;
-	hero: string;
 	colors?: string[];
 	coverImage?: ResolvedImage;
 }
@@ -206,7 +184,6 @@ function normalizeNextProject(p: SanityProject): NextProject {
 	return {
 		title: p.title,
 		slug: p.slug,
-		hero: p.coverImage?.url ?? p.hero ?? '',
 		colors: Array.isArray(p.colors) ? p.colors : [],
 		coverImage: p.coverImage
 	};
