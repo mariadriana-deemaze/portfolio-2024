@@ -1,9 +1,11 @@
 import { createFileRoute, Link, notFound, useNavigate } from '@tanstack/react-router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 import { PortableTextRenderer } from '@/components/portable-text';
 import { getStackByName } from '@/components/stacks';
+import type { LightboxImage } from '@/components/ui/lightbox';
+import { Lightbox } from '@/components/ui/lightbox';
 import { NotFoundPage } from '@/components/ui/not-found-page';
 import { StaggerText } from '@/components/ui/stagger-text';
 import { BASE_URL } from '@/data/main';
@@ -483,6 +485,28 @@ const GALLERY_LAYOUT_CLASSES: Record<ResolvedGalleryItem['layout'], string> = {
 };
 
 function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
+	const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+	const validItems = gallery.reduce<{
+		images: LightboxImage[];
+		indexMap: Map<number, number>;
+	}>(
+		(acc, item, i) => {
+			if (item.image?.url) {
+				acc.indexMap.set(i, acc.images.length);
+				acc.images.push({
+					url: item.image.url,
+					alt: item.image.alt ?? undefined,
+					caption: item.image.caption ?? undefined,
+					width: item.image.width,
+					height: item.image.height
+				});
+			}
+			return acc;
+		},
+		{ images: [], indexMap: new Map() }
+	);
+
 	return (
 		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
 			<div className={cn(SECTION_LABEL, 'mx-auto max-w-[1100px]')}>
@@ -490,12 +514,17 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 				Gallery
 			</div>
 			<div className="grid grid-cols-2 gap-[clamp(12px,1.6vw,20px)] max-sm:grid-cols-1">
-				{gallery.map((item) => {
+				{gallery.map((item, i) => {
 					const { image } = item;
 					if (!image?.url) return null;
 					return (
 						<figure key={image.url} className={cn('m-0', GALLERY_LAYOUT_CLASSES[item.layout])}>
-							<div className="overflow-hidden rounded-2xl border border-border bg-muted shadow-[var(--shadow-card)]">
+							<button
+								type="button"
+								className="w-full overflow-hidden rounded-2xl border border-border bg-muted shadow-[var(--shadow-card)] cursor-zoom-in transition-[box-shadow,scale] duration-300 [transition-timing-function:var(--ease-out)] hover:shadow-xl hover:scale-[1.015] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-orange-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none"
+								onClick={() => setActiveIndex(validItems.indexMap.get(i) ?? 0)}
+								aria-label={`View ${image.alt ?? 'gallery image'} fullscreen`}
+							>
 								<img
 									src={image.url}
 									alt={image.alt ?? ''}
@@ -513,7 +542,7 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 											}
 										: {})}
 								/>
-							</div>
+							</button>
 							{image.caption && (
 								<figcaption className="mt-[10px] text-center font-mono text-[11.5px] text-muted-foreground">
 									{image.caption}
@@ -523,6 +552,15 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 					);
 				})}
 			</div>
+
+			<Lightbox
+				images={validItems.images}
+				initialIndex={activeIndex ?? 0}
+				open={activeIndex !== null}
+				onOpenChange={(open) => {
+					if (!open) setActiveIndex(null);
+				}}
+			/>
 		</section>
 	);
 }
