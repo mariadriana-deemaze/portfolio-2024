@@ -12,6 +12,7 @@ import {
 	CommandList,
 	CommandSeparator
 } from '@/components/ui/command';
+import { useLocale } from '@/contexts/locale-context';
 import { cn } from '@/utils/utils';
 
 const FAB_HIDE_MARGIN = 130;
@@ -57,6 +58,7 @@ interface Props {
 }
 
 export const CommandMenu = ({ links }: Props) => {
+	const { t } = useLocale();
 	const [open, setOpen] = useState(false);
 	const [fabHidden, setFabHidden] = useState(false);
 	const [navMenuOpen, setNavMenuOpen] = useState(false);
@@ -110,10 +112,10 @@ export const CommandMenu = ({ links }: Props) => {
 						: 'opacity-100 translate-y-0'
 				)}
 				onClick={() => setOpen(true)}
-				aria-label="Open command menu"
+				aria-label={t('components.command-menu.fab.label')}
 			>
 				<LuSearch className="w-[14px] h-[14px] shrink-0" />
-				<span className="max-[480px]:hidden">search & jump anywhere</span>
+				<span className="max-[480px]:hidden">{t('components.command-menu.fab.text')}</span>
 				<span className="flex gap-[3px]">
 					<kbd className="font-mono text-[10px] border border-border rounded-[4px] px-[5px] py-[3px] bg-background text-foreground leading-none">
 						⌘
@@ -125,11 +127,11 @@ export const CommandMenu = ({ links }: Props) => {
 			</button>
 
 			<CommandDialog open={open} onOpenChange={setOpen}>
-				<CommandInput placeholder="Type a command or search…" />
+				<CommandInput placeholder={t('components.command-menu.placeholder')} />
 				<CommandList>
-					<CommandEmpty>No results found.</CommandEmpty>
+					<CommandEmpty>{t('components.command-menu.empty')}</CommandEmpty>
 					<LinkGroup
-						heading="Links"
+						heading={t('components.command-menu.links')}
 						links={internalLinks}
 						onSelect={(url) => {
 							setOpen(false);
@@ -138,7 +140,7 @@ export const CommandMenu = ({ links }: Props) => {
 					/>
 					<CommandSeparator />
 					<LinkGroup
-						heading="Projects"
+						heading={t('components.command-menu.projects')}
 						links={projectsLinks}
 						onSelect={(url) => {
 							setOpen(false);
@@ -147,7 +149,7 @@ export const CommandMenu = ({ links }: Props) => {
 					/>
 					<CommandSeparator />
 					<LinkGroup
-						heading="Blog"
+						heading={t('components.command-menu.blog')}
 						links={blogLinks}
 						onSelect={(url) => {
 							setOpen(false);
@@ -156,7 +158,7 @@ export const CommandMenu = ({ links }: Props) => {
 					/>
 					<CommandSeparator />
 					<LinkGroup
-						heading="Socials"
+						heading={t('components.command-menu.socials')}
 						links={socialsLinks}
 						onSelect={(url) => {
 							setOpen(false);

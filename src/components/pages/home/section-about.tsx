@@ -1,15 +1,18 @@
 import { Section } from '@/components/ui/section';
 import { SectionHeading } from '@/components/ui/section-heading';
-import { data } from '@/data/main';
+import { useLocale } from '@/contexts/locale-context';
 
 export const SectionAbout = () => {
-	const paragraphs = data.summary.split('\n').filter((p) => p.trim() !== '');
+	const { t } = useLocale();
+	const paragraphs = t('data.summary')
+		.split('\n')
+		.filter((p) => p.trim() !== '');
 
-	const HIGHLIGHT = 'problem-solving';
+	const HIGHLIGHT = t('pages.home.about.highlight');
 
 	return (
 		<Section>
-			<SectionHeading num="01" title="About" />
+			<SectionHeading num="01" title={t('pages.home.about.heading')} />
 			<div className="flex flex-col gap-4">
 				{paragraphs.map((paragraph, index) => {
 					if (index === 0) {
