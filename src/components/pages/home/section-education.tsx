@@ -1,13 +1,15 @@
 import { Section } from '@/components/ui/section';
 import { SectionHeading } from '@/components/ui/section-heading';
+import { useLocale } from '@/contexts/locale-context';
 import { data } from '@/data/main';
 
 export const SectionEducation = () => {
+	const { t, translations } = useLocale();
 	return (
 		<Section>
-			<SectionHeading num="03" title="Education" />
+			<SectionHeading num="03" title={t('pages.home.education.heading')} />
 			<div className="flex flex-col gap-[14px]">
-				{data.education.map(({ school, preview, summary, start, end, degree }) => (
+				{data.education.map(({ school, preview, summary, start, end, degree }, i) => (
 					<div
 						key={school}
 						className="entry-card spotlight-border grid grid-cols-[48px_1fr_auto] gap-[18px] p-[22px_22px_22px_20px] border border-border rounded-xl shadow-card"
@@ -45,7 +47,9 @@ export const SectionEducation = () => {
 							<h3 className="m-0 font-clash text-[16px] font-semibold leading-none text-foreground">
 								{school}
 							</h3>
-							<p className="m-0 mt-1 font-mono text-[12px] text-muted-foreground">{degree}</p>
+							<p className="m-0 mt-1 font-mono text-[12px] text-muted-foreground">
+								{translations.data.education[i]?.degree ?? degree}
+							</p>
 						</div>
 
 						<span className="font-mono text-[11px] text-muted-foreground whitespace-nowrap pt-[3px]">
@@ -53,7 +57,7 @@ export const SectionEducation = () => {
 						</span>
 
 						<p className="m-0 mt-3 font-mono text-[12.5px] leading-[1.7] text-foreground/90 text-pretty [grid-column:2_/-1]">
-							{summary.trim()}
+							{(translations.data.education[i]?.summary ?? summary).trim()}
 						</p>
 					</div>
 				))}

@@ -8,6 +8,7 @@ import type { LightboxImage } from '@/components/ui/lightbox';
 import { Lightbox } from '@/components/ui/lightbox';
 import { NotFoundPage } from '@/components/ui/not-found-page';
 import { StaggerText } from '@/components/ui/stagger-text';
+import { useLocale } from '@/contexts/locale-context';
 import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
 import type { ResolvedGalleryItem, ResolvedMetric } from '@/lib/sanity-types';
@@ -161,6 +162,7 @@ const BTN_PRIMARY = `${BTN_BASE} bg-[var(--color-orange-primary)] border border-
 const BTN_GHOST = `${BTN_BASE} border border-border text-foreground transition-[translate,border-color,color] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:border-[var(--color-orange-primary)] hover:text-[var(--color-orange-primary)] motion-reduce:transition-none`;
 
 function ProjectItemRoute() {
+	const { t } = useLocale();
 	const { project, nextProject } = Route.useLoaderData();
 	const {
 		title,
@@ -206,7 +208,7 @@ function ProjectItemRoute() {
 						className="mb-[30px] inline-flex items-center gap-2 font-mono text-xs text-muted-foreground no-underline whitespace-nowrap transition-colors duration-300 hover:gap-[11px] hover:text-[var(--color-orange-primary)] sm:text-sm"
 					>
 						<span>←</span>
-						<span>back to work</span>
+						<span>{t('pages.project-detail.back-to-work')}</span>
 					</Link>
 
 					<div className="mb-[22px] flex flex-wrap items-center gap-3 font-mono text-xs tracking-[0.05em] text-muted-foreground">
@@ -232,19 +234,19 @@ function ProjectItemRoute() {
 								<div className="grid grid-cols-3 max-sm:grid-cols-2 gap-6">
 									{role && (
 										<div>
-											<div className={META_KEY}>Role</div>
+											<div className={META_KEY}>{t('pages.project-detail.role')}</div>
 											<div className={META_VAL}>{role}</div>
 										</div>
 									)}
 									{timeline && (
 										<div>
-											<div className={META_KEY}>Timeline</div>
+											<div className={META_KEY}>{t('pages.project-detail.timeline')}</div>
 											<div className={META_VAL}>{timeline}</div>
 										</div>
 									)}
 									{context && (
 										<div>
-											<div className={META_KEY}>Context</div>
+											<div className={META_KEY}>{t('pages.project-detail.context')}</div>
 											<div className={META_VAL}>{context}</div>
 										</div>
 									)}
@@ -252,7 +254,7 @@ function ProjectItemRoute() {
 							)}
 							{technologies.length > 0 && (
 								<div className={hasMetaRow ? 'mt-[22px]' : ''}>
-									<div className={META_KEY}>Stack</div>
+									<div className={META_KEY}>{t('pages.project-detail.stack')}</div>
 									<div className={cn(META_VAL, 'flex flex-wrap gap-1')}>
 										{technologies.map(({ label }) => {
 											const icon = getStackByName(label)?.icon ?? null;
@@ -335,17 +337,19 @@ function ProjectItemRoute() {
 			{(overview || problem || approach) && (
 				<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(80px,12vw,150px)]">
 					<div className="mx-auto max-w-[760px]">
-						{overview && <CaseStudyBlock label="Overview" text={overview} />}
+						{overview && (
+							<CaseStudyBlock label={t('pages.project-detail.overview')} text={overview} />
+						)}
 						{problem && (
 							<CaseStudyBlock
-								label="Problem"
+								label={t('pages.project-detail.problem')}
 								text={problem}
 								className={overview ? 'mt-[48px]' : ''}
 							/>
 						)}
 						{approach && (
 							<CaseStudyBlock
-								label="Approach"
+								label={t('pages.project-detail.approach')}
 								text={approach}
 								className={overview || problem ? 'mt-[48px]' : ''}
 							/>
@@ -354,7 +358,9 @@ function ProjectItemRoute() {
 				</section>
 			)}
 
-			{statistics.length > 0 && <StatisticsGrid statistics={statistics} />}
+			{statistics.length > 0 && (
+				<StatisticsGrid statistics={statistics} label={t('pages.project-detail.key-metrics')} />
+			)}
 
 			{structuredBody && (
 				<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
@@ -399,7 +405,7 @@ function ProjectItemRoute() {
 								)}
 								<div className="relative z-[1] mx-auto w-full max-w-[1100px] p-[clamp(48px,9vw,110px)_var(--content-inset)]">
 									<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
-										Next project
+										{t('pages.project-detail.next-project')}
 									</div>
 									<div className="mt-[18px] flex items-center justify-between gap-6">
 										<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[translate,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white motion-reduce:transition-none">
@@ -450,13 +456,13 @@ function CaseStudyBlock({
 	);
 }
 
-function StatisticsGrid({ statistics }: { statistics: ResolvedMetric[] }) {
+function StatisticsGrid({ statistics, label }: { statistics: ResolvedMetric[]; label: string }) {
 	return (
 		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
 			<div className="mx-auto max-w-[760px]">
 				<div className={SECTION_LABEL}>
 					<span className={SECTION_LINE} />
-					Key metrics
+					{label}
 				</div>
 				<div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
 					{statistics.map((stat) => (
@@ -485,6 +491,7 @@ const GALLERY_LAYOUT_CLASSES: Record<ResolvedGalleryItem['layout'], string> = {
 };
 
 function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
+	const { t } = useLocale();
 	const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
 	const validItems = gallery.reduce<{
@@ -511,7 +518,7 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
 			<div className={cn(SECTION_LABEL, 'mx-auto max-w-[1100px]')}>
 				<span className={SECTION_LINE} />
-				Gallery
+				{t('pages.project-detail.gallery')}
 			</div>
 			<div className="grid grid-cols-2 gap-[clamp(12px,1.6vw,20px)] max-sm:grid-cols-1">
 				{gallery.map((item, i) => {
@@ -523,7 +530,9 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 								type="button"
 								className="w-full overflow-hidden rounded-2xl border border-border bg-muted shadow-[var(--shadow-card)] cursor-zoom-in transition-[box-shadow,scale] duration-300 [transition-timing-function:var(--ease-out)] hover:shadow-xl hover:scale-[1.015] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-orange-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none"
 								onClick={() => setActiveIndex(validItems.indexMap.get(i) ?? 0)}
-								aria-label={`View ${image.alt ?? 'gallery image'} fullscreen`}
+								aria-label={t('components.lightbox.view-fullscreen', {
+									alt: image.alt ?? 'gallery image'
+								})}
 							>
 								<img
 									src={image.url}
@@ -566,12 +575,13 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 }
 
 function ProjectNotFoundRoute() {
+	const { t } = useLocale();
 	return (
 		<NotFoundPage
-			title="Project not found"
-			description="The requested project could not be located."
+			title={t('pages.project-detail.not-found.title')}
+			description={t('pages.project-detail.not-found.description')}
 			backTo={ROUTES.projects}
-			backLabel="Back to projects"
+			backLabel={t('pages.project-detail.not-found.back')}
 		/>
 	);
 }

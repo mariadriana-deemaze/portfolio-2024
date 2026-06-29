@@ -1,7 +1,14 @@
+// ── Localization helper ───────────────────────────────────────────────
+
+/** Resolves an internationalized field with locale → English → flat-string fallback */
+export function localizedField(field: string): string {
+	return `coalesce(${field}[_key == $locale][0].value, ${field}[_key == "en"][0].value, ${field})`;
+}
+
 // ── Reusable GROQ projection fragments ────────────────────────────────
 
 /** Resolves a richImage to url, dimensions, alt, caption, and crop/hotspot */
-export const RICH_IMAGE_PROJECTION = `{
+const RICH_IMAGE_PROJECTION = `{
   alt,
   caption,
   "url": asset->url,
@@ -10,19 +17,6 @@ export const RICH_IMAGE_PROJECTION = `{
   "lqip": asset->metadata.lqip,
   hotspot,
   crop
-}`;
-
-/** Resolves a gallery item's nested richImage + layout */
-export const GALLERY_ITEM_PROJECTION = `{
-  layout,
-  "image": image ${RICH_IMAGE_PROJECTION}
-}`;
-
-/** Resolves an SEO object's ogImage */
-export const SEO_PROJECTION = `{
-  title,
-  description,
-  "ogImage": ogImage.asset->url
 }`;
 
 /** Resolves a link object */
@@ -35,10 +29,22 @@ export const AUTHOR_PROJECTION = `{
   url
 }`;
 
-/** Resolves a structuredBody array with embedded richImage assets */
-export const STRUCTURED_BODY_PROJECTION = `[]{
-  ...,
-  _type == "richImage" => ${RICH_IMAGE_PROJECTION}
+/** Resolves an internationalized Portable Text body with inline richImage projection */
+export function localizedBody(field: string): string {
+	const inner = `{ ..., _type == "richImage" => ${RICH_IMAGE_PROJECTION} }`;
+	return `coalesce(${field}[_key == $locale][0].value[]${inner}, ${field}[_key == "en"][0].value[]${inner}, ${field}[]${inner})`;
+}
+
+/** Resolves a richImage with localized alt and caption */
+export const LOCALIZED_RICH_IMAGE_PROJECTION = `{
+  "alt": ${localizedField('alt')},
+  "caption": ${localizedField('caption')},
+  "url": asset->url,
+  "width": asset->metadata.dimensions.width,
+  "height": asset->metadata.dimensions.height,
+  "lqip": asset->metadata.lqip,
+  hotspot,
+  crop
 }`;
 
 // ── Resolved application types ─────────────────────────────────────────

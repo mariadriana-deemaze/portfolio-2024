@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
+import { useLocale } from '@/contexts/locale-context';
 import type { NowPlayingData } from '@/server/routes/api/types/spotify';
 
 const ALBUM_ART_SIZE = 64;
-const BADGE_PADDING_EXPANDED = 12; // px-3 = 12px
-const CONTENT_PADDING = 4; // p-1 = 4px
+const BADGE_PADDING_EXPANDED = 12;
+const CONTENT_PADDING = 4;
 
 export const NowPlayingBadge = () => {
+	const { t } = useLocale();
 	const { data: nowPlaying } = useQuery<{ data: NowPlayingData }>({
 		queryKey: ['nowPlaying'],
 		queryFn: async () => fetch('/api/spotify/currently-playing').then((r) => r.json()),
@@ -63,7 +65,7 @@ export const NowPlayingBadge = () => {
 											) : null}
 											<div className="flex h-16 min-w-0 flex-col justify-center">
 												<p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-													Now Playing
+													{t('components.now-playing.label')}
 												</p>
 												<p className="font-clash text-[14px] font-semibold leading-snug text-foreground line-clamp-1 mt-[2px]">
 													{nowPlaying?.data.title}
@@ -98,7 +100,7 @@ export const NowPlayingBadge = () => {
 						variant="outline"
 						className="bg-card-ghost text-card-foreground font-mono text-[11px]"
 					>
-						not playing
+						{t('components.now-playing.idle')}
 					</Badge>
 					<span className="ml-1">
 						<svg className="h-4 w-4" viewBox="0 0 168 168" aria-hidden="true">

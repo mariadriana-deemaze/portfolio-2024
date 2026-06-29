@@ -6,11 +6,13 @@ import { Chip } from '@/components/ui/chip';
 import { Section } from '@/components/ui/section';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { StaggerText } from '@/components/ui/stagger-text';
+import { useLocale } from '@/contexts/locale-context';
 import type { Project } from '@/data/projects';
 
-const TILT_RANGE = 30; // ±15deg — half applied each side of center
+const TILT_RANGE = 30;
 
 export const SectionProjects = ({ projects }: { projects: Project[] }) => {
+	const { t } = useLocale();
 	const cursorRef = useRef<HTMLDivElement>(null);
 	const layerRefs = useRef<(HTMLDivElement | null)[]>([]);
 	const posRef = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
@@ -104,20 +106,20 @@ export const SectionProjects = ({ projects }: { projects: Project[] }) => {
 		<Section>
 			<SectionHeading
 				num="04"
-				title="Selected Work"
+				title={t('pages.home.selected-work.heading')}
 				count={
 					<a
 						href="/projects"
 						className="no-underline hover:text-[var(--color-orange-primary)] transition-colors"
 					>
-						view all →
+						{t('pages.home.selected-work.view-all')}
 					</a>
 				}
 			/>
 
 			{projects.length === 0 ? (
 				<p className="font-mono text-[13px] text-muted-foreground py-10 text-center">
-					No projects yet — check back soon.
+					{t('pages.home.selected-work.empty')}
 				</p>
 			) : (
 				<div className="flex flex-col" onMouseLeave={hidePreview}>

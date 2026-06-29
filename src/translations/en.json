@@ -1,0 +1,221 @@
+{
+	"components": {
+		"navbar": {
+			"home": "home",
+			"projects": "projects",
+			"blog": "blog",
+			"contact": "contact",
+			"home-label": "Home",
+			"toggle-menu": "Toggle menu"
+		},
+		"now-playing": {
+			"label": "Now Playing",
+			"idle": "not playing"
+		},
+		"command-menu": {
+			"fab": {
+				"label": "Open command menu",
+				"text": "search & jump anywhere"
+			},
+			"placeholder": "Type a command or search…",
+			"empty": "No results found.",
+			"links": "Links",
+			"projects": "Projects",
+			"blog": "Blog",
+			"socials": "Socials"
+		},
+		"lightbox": {
+			"view-fullscreen": "View {{alt}} fullscreen"
+		},
+		"blog-meta": {
+			"views": "views",
+			"min-read": "min read",
+			"share": {
+				"label": "Share",
+				"twitter": "Share on X",
+				"linkedin": "Share on LinkedIn"
+			},
+			"copy-link": "Copy link to clipboard",
+			"link-copied": "Link copied"
+		}
+	},
+	"validation": {
+		"required": "Required.",
+		"too-long": "Too long.",
+		"invalid-email": "Invalid email."
+	},
+	"pages": {
+		"home": {
+			"hero": {
+				"focus": "Focus",
+				"currently": "Currently",
+				"scroll-cue": "scroll to explore"
+			},
+			"about": {
+				"heading": "About",
+				"highlight": "problem-solving"
+			},
+			"work-experience": {
+				"heading": "Work Experience",
+				"roles-suffix": "roles"
+			},
+			"education": {
+				"heading": "Education"
+			},
+			"selected-work": {
+				"heading": "Selected Work",
+				"view-all": "view all →",
+				"empty": "No projects yet — check back soon."
+			},
+			"contact": {
+				"overline": "get in touch",
+				"heading": {
+					"line-1": "Let's make",
+					"accent": "something",
+					"suffix": "together"
+				},
+				"form-button": "open contact form"
+			}
+		},
+		"projects": {
+			"overline": "Selected work",
+			"heading": {
+				"line-1": "Things I've",
+				"accent": "built"
+			},
+			"intro": "Web and mobile products, end to end — design-minded front end with a solid back end.",
+			"project": "project",
+			"projects": "projects",
+			"filter-by": "Filter by",
+			"empty": "Nothing here yet — more soon.",
+			"cta": {
+				"line-1": "Have something you'd like to",
+				"accent": "build",
+				"button": "Start a conversation"
+			}
+		},
+		"project-detail": {
+			"back-to-work": "back to work",
+			"role": "Role",
+			"timeline": "Timeline",
+			"context": "Context",
+			"stack": "Stack",
+			"overview": "Overview",
+			"problem": "Problem",
+			"approach": "Approach",
+			"key-metrics": "Key metrics",
+			"gallery": "Gallery",
+			"next-project": "Next project",
+			"not-found": {
+				"title": "Project not found",
+				"description": "The requested project could not be located.",
+				"back": "Back to projects"
+			}
+		},
+		"blog": {
+			"overline": "Journal",
+			"heading": "Thoughts & Essays",
+			"intro": "Personal musings on full-stack development, design patterns, and the occasional philosophical rabbit hole.",
+			"post": "post",
+			"posts": "posts",
+			"more-stories": "More Stories",
+			"empty": "No posts yet — check back soon."
+		},
+		"blog-detail": {
+			"back-to-journal": "the journal",
+			"next-in-journal": "Next in the journal",
+			"written-by": "Written by",
+			"not-found": {
+				"title": "Post not found",
+				"description": "The requested blog post could not be located.",
+				"back": "Back to the journal"
+			}
+		},
+		"contact": {
+			"heading": {
+				"line-1": "Let's make",
+				"accent": "something",
+				"suffix": "together"
+			},
+			"intro": "Have a project in mind, a question, or just want to say hi? Drop me a line — I read everything.",
+			"email": "Email",
+			"based-in": "Based in",
+			"response-time": "Response time",
+			"response-time-value": "Usually within a day or two.",
+			"elsewhere": "Elsewhere",
+			"good-to-know": "Good to know",
+			"faq-heading": "A few quick answers",
+			"form": {
+				"name": {
+					"label": "Your name",
+					"placeholder": "Jane Doe"
+				},
+				"email": {
+					"label": "Email",
+					"placeholder": "jane@email.com"
+				},
+				"subject": {
+					"label": "Subject",
+					"placeholder": "What's this about?"
+				},
+				"message": {
+					"label": "Message",
+					"placeholder": "Tell me a little about it…"
+				},
+				"submit": "Send message",
+				"submitting": "Sending…",
+				"email-fallback": "Or just email me directly — whatever's easier.",
+				"toast": {
+					"success": "Sent! I'll get back to you soon.",
+					"error": "Failed to send. Please try again."
+				}
+			}
+		},
+		"not-found": {
+			"title": "Page not found",
+			"description": "Whatever you were looking for, is simply not here.",
+			"back-home": "Back to home"
+		}
+	},
+	"data": {
+		"role": "Full Stack Developer",
+		"mottos": [
+			"Full Stack Developer",
+			"Communication Designer",
+			"Curious Overthinker",
+			"Coffee Overconsumer"
+		],
+		"about": "The dangerous combo of a curious yet anxious overthinker - I think coffee is also somewhere in the equation.",
+		"summary": "A communication designer turned software developer, driven by a deep passion for problem-solving and the precision of the exact sciences. \n\nMy journey began in the world of web design, crafting intuitive and visually striking digital experiences. As my curiosity grew, I embraced the challenge of bringing those designs to life through code—blurring the lines between creativity and technical execution. This natural progression led me to fully immerse myself in software development, where I now thrive. \n\nI'm excited to continue building innovative solutions that merge design sensibility with technical expertise, leveraging my unique background to create meaningful and impactful digital experiences.",
+		"faq": [
+			{
+				"q": "Available for work?",
+				"a": "Not at the moment — currently committed full-time. Feel free to reach out for future opportunities."
+			},
+			{
+				"q": "What do you build?",
+				"a": "Web and mobile products end-to-end — design-minded front end with solid Node.js and Rails back end."
+			},
+			{
+				"q": "Where are you?",
+				"a": "Coimbra, Portugal — happy working remotely across European and overlapping time zones."
+			}
+		],
+		"work": [
+			{
+				"title": "Full Stack Developer",
+				"description": "Consulting in delivering software solutions by closely collaborating with clients to understand their needs and translating them into functional applications. This role has honed my problem-solving skills and adaptability, as I've been challenged on diverse projects with varying technological requirements. I primarily work with web technologies, mainly within the Ruby and NodeJS landscapes."
+			},
+			{
+				"title": "Designer/Front-end developer",
+				"description": "Developed cross-platform mobile apps with React Native (TS), Kalipso, and Axway Titanium for seamless experiences on multiple devices. Provided support for e-commerce stores, including customizing and maintaining systems built on WooCommerce and PrestaShop. Designed and implemented intuitive user interfaces that met client acceptance criteria and enhanced the overall user experience. Created visually appealing graphics for web and print materials, and edited video content for social media to promote the brand and drive engagement."
+			}
+		],
+		"education": [
+			{
+				"degree": "Communication design",
+				"summary": "Learned the basics of communication design, gaining a broader, enriching vision and background on design history and its applications in today's primary communication mediums. Came into contact with a variety of multimedia tools, along with traditional art methods. As a highlight, represented EUAC, with my peers, in a group project at the 2015 Eunique Fair."
+			}
+		]
+	}
+}

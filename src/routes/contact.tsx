@@ -5,6 +5,7 @@ import { ContactForm } from '@/components/pages/contact/form';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import { StaggerText } from '@/components/ui/stagger-text';
+import { useLocale } from '@/contexts/locale-context';
 import { BASE_URL, data } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
 import { ROUTES } from '@/utils/routes';
@@ -27,6 +28,7 @@ const LINE2_DELAY = 0.08 + 10 * 0.028;
 const EM_END_DELAY = LINE2_DELAY + 9 * 0.028;
 
 function ContactRoute(): JSX.Element {
+	const { t, translations } = useLocale();
 	const [revealed, setRevealed] = useState(false);
 
 	useEffect(() => {
@@ -39,7 +41,7 @@ function ContactRoute(): JSX.Element {
 				<header className="pt-8 pb-[clamp(56px,9vw,104px)]">
 					<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,112px)] leading-[0.92] tracking-[-0.038em] break-words">
 						<StaggerText
-							text="Let's make"
+							text={t('pages.contact.heading.line-1')}
 							revealed={revealed}
 							baseDelay={0.08}
 							letterDelay={0.028}
@@ -47,7 +49,7 @@ function ContactRoute(): JSX.Element {
 						<br />
 						<em className="font-normal text-[var(--color-orange-primary)]">
 							<StaggerText
-								text="something"
+								text={t('pages.contact.heading.accent')}
 								revealed={revealed}
 								baseDelay={LINE2_DELAY}
 								letterDelay={0.028}
@@ -55,7 +57,7 @@ function ContactRoute(): JSX.Element {
 						</em>
 						<br />
 						<StaggerText
-							text="together"
+							text={t('pages.contact.heading.suffix')}
 							revealed={revealed}
 							baseDelay={EM_END_DELAY}
 							letterDelay={0.028}
@@ -63,8 +65,7 @@ function ContactRoute(): JSX.Element {
 					</h1>
 
 					<p className="m-0 mt-7 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[560px] text-pretty">
-						Have a project in mind, a question, or just want to say hi? Drop me a line — I read
-						everything.
+						{t('pages.contact.intro')}
 					</p>
 				</header>
 
@@ -72,7 +73,7 @@ function ContactRoute(): JSX.Element {
 					<div className="flex flex-col gap-8">
 						<div>
 							<p className="m-0 mb-3 font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground">
-								Email
+								{t('pages.contact.email')}
 							</p>
 							<a
 								href={`mailto:${data.contact.email}`}
@@ -86,7 +87,7 @@ function ContactRoute(): JSX.Element {
 
 						<div>
 							<p className="m-0 mb-3 font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground">
-								Based in
+								{t('pages.contact.based-in')}
 							</p>
 							<p className="m-0 font-mono text-[14px] text-foreground leading-[1.6]">
 								{data.location} · WET (UTC+1)
@@ -95,16 +96,16 @@ function ContactRoute(): JSX.Element {
 
 						<div>
 							<p className="m-0 mb-3 font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground">
-								Response time
+								{t('pages.contact.response-time')}
 							</p>
 							<p className="m-0 font-mono text-[14px] text-foreground leading-[1.6]">
-								Usually within a day or two.
+								{t('pages.contact.response-time-value')}
 							</p>
 						</div>
 
 						<div>
 							<p className="m-0 mb-3 font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground">
-								Elsewhere
+								{t('pages.contact.elsewhere')}
 							</p>
 							<div className="flex gap-[14px]">
 								{data.contact.social.map((s) => (
@@ -147,12 +148,12 @@ function ContactRoute(): JSX.Element {
 								aria-hidden="true"
 							/>
 							<span className="font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)]">
-								Good to know
+								{t('pages.contact.good-to-know')}
 							</span>
 						</div>
-						<SectionHeading title="A few quick answers" />
+						<SectionHeading title={t('pages.contact.faq-heading')} />
 						<div className="grid grid-cols-1 sm:grid-cols-3 gap-[18px] mb-10 lg:mb-20">
-							{data.contact.faq.map((item) => (
+							{translations.data.faq.map((item) => (
 								<div key={item.q} className="entry-card border border-border rounded-[14px] p-6">
 									<h4 className="m-0 mb-[10px] font-clash font-medium text-[18px] tracking-[-0.01em]">
 										{item.q}

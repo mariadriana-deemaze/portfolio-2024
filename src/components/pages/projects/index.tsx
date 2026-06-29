@@ -5,6 +5,7 @@ import { LuArrowUpRight } from 'react-icons/lu';
 import { ImageCard } from '@/components/ui/image-card';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import { StaggerText } from '@/components/ui/stagger-text';
+import { useLocale } from '@/contexts/locale-context';
 import type { Project } from '@/data/projects';
 import { cn } from '@/utils/utils';
 
@@ -78,6 +79,7 @@ function ProjectCard({ project, i, featured }: { project: Project; i: number; fe
 }
 
 export default function ProjectsList({ projects }: { projects: Project[] }) {
+	const { t } = useLocale();
 	const [selectedFilter, setSelectedFilter] = useState('All');
 
 	// Extract unique medium values, preserving order of appearance
@@ -109,24 +111,36 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 								className="w-[40px] h-px bg-[var(--color-orange-primary)] opacity-50 shrink-0"
 								aria-hidden="true"
 							/>
-							Selected work · 2022—{new Date().getFullYear()}
+							{t('pages.projects.overline')} · 2022—{new Date().getFullYear()}
 						</div>
 						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
-							<StaggerText text="Things I've" autoReveal baseDelay={0.08} letterDelay={0.028} />
+							<StaggerText
+								text={t('pages.projects.heading.line-1')}
+								autoReveal
+								baseDelay={0.08}
+								letterDelay={0.028}
+							/>
 							<br />
 							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
-								<StaggerText text="built" autoReveal baseDelay={0.39} letterDelay={0.028} />
+								<StaggerText
+									text={t('pages.projects.heading.accent')}
+									autoReveal
+									baseDelay={0.39}
+									letterDelay={0.028}
+								/>
 							</em>
 						</h1>
 						<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
 							<p className="m-0 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[520px] text-foreground text-pretty">
-								Web and mobile products, end to end — design-minded front end with a solid back end.
+								{t('pages.projects.intro')}
 							</p>
 							<span className="font-mono text-[12px] text-muted-foreground whitespace-nowrap">
 								<b className="text-[var(--color-orange-primary)] font-semibold">
 									{filteredProjects.length}
 								</b>{' '}
-								{filteredProjects.length === 1 ? 'project' : 'projects'}
+								{filteredProjects.length === 1
+									? t('pages.projects.project')
+									: t('pages.projects.projects')}
 								{selectedFilter !== 'All' && ` · ${selectedFilter}`}
 							</span>
 						</div>
@@ -137,7 +151,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 					<ScrollFadeReveal>
 						<div className="flex items-center justify-between gap-[16px] flex-wrap mt-[clamp(48px,7vw,80px)] pb-[18px] border-b border-border">
 							<span className="font-mono text-[12px] tracking-[0.06em] uppercase text-muted-foreground">
-								Filter by
+								{t('pages.projects.filter-by')}
 							</span>
 							<div className="flex gap-[7px] flex-wrap">
 								{mediums.map((medium) => (
@@ -170,7 +184,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 					>
 						{filteredProjects.length === 0 ? (
 							<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
-								Nothing here yet — more soon.
+								{t('pages.projects.empty')}
 							</p>
 						) : (
 							filteredProjects.map((project, i) => (
@@ -188,9 +202,9 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 				<ScrollFadeReveal>
 					<section className="mt-[clamp(90px,13vw,150px)] border-t border-border pt-[clamp(48px,7vw,80px)] pb-[clamp(60px,9vw,110px)] flex items-end justify-between gap-[28px] flex-wrap">
 						<h2 className="m-0 font-clash font-medium text-[clamp(30px,5vw,60px)] leading-[1.0] tracking-[-0.03em] max-w-[620px]">
-							Have something you'd like to{' '}
+							{t('pages.projects.cta.line-1')}{' '}
 							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
-								build
+								{t('pages.projects.cta.accent')}
 							</em>
 							?
 						</h2>
@@ -198,7 +212,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							href="/contact"
 							className="group inline-flex items-center gap-[11px] font-mono text-[14px] text-white bg-[var(--color-orange-primary)] rounded-full px-[26px] py-[15px] no-underline whitespace-nowrap transition-[translate,box-shadow] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:shadow-[0_20px_36px_-12px_color-mix(in_srgb,var(--color-orange-primary)_60%,transparent)] motion-reduce:transition-none"
 						>
-							Start a conversation
+							{t('pages.projects.cta.button')}
 							<LuArrowUpRight className="w-[16px] h-[16px] transition-[translate] duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:translate-x-[4px] group-hover:-translate-y-[4px] motion-reduce:transition-none" />
 						</a>
 					</section>
