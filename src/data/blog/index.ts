@@ -7,9 +7,9 @@ import type {
 } from '@/lib/sanity-types';
 import {
 	AUTHOR_PROJECTION,
-	RICH_IMAGE_PROJECTION,
-	SEO_PROJECTION,
-	STRUCTURED_BODY_PROJECTION
+	LOCALIZED_RICH_IMAGE_PROJECTION,
+	localizedBody,
+	localizedField
 } from '@/lib/sanity-types';
 
 // ── Helpers ───────────────────────────────────────────────────────────
@@ -24,25 +24,27 @@ function calculateReadingTime(text: string): number {
 // ── GROQ projections ──────────────────────────────────────────────────
 
 const POST_FIELDS = `
-  title,
-  description,
+  "title": ${localizedField('title')},
+  "description": ${localizedField('description')},
   date,
   "slug": slug.current,
   published,
   featured,
   category,
   "tags": tags,
-  "coverImage": coverImage ${RICH_IMAGE_PROJECTION},
+  "coverImage": coverImage ${LOCALIZED_RICH_IMAGE_PROJECTION},
   "author": author ${AUTHOR_PROJECTION},
   canonicalUrl,
-  "structuredBody": structuredBody ${STRUCTURED_BODY_PROJECTION},
-  "seo": seo ${SEO_PROJECTION},
+  "structuredBody": ${localizedBody('structuredBody')},
+  "seo": seo { "title": ${localizedField('title')}, "description": ${localizedField('description')}, "ogImage": ogImage.asset->url },
   // Legacy fields — still projected until migration completes
   body,
   link,
   keywords,
   "cover": cover.asset->url
 `;
+
+const NEXT_POST_FIELDS = `"title": ${localizedField('title')}, "slug": slug.current`;
 
 // ── Sanity response types ─────────────────────────────────────────────
 
@@ -151,14 +153,14 @@ export async function getPostViews(slug: string) {
 
 export async function getNextPost(date: string, slug: string) {
 	const next = await fetchSanityQuery<SanityBlogPost | null>(
-		`*[_type == "post" && published != false && date < $date && slug.current != $slug] | order(date desc)[0]{ title, "slug": slug.current }`,
+		`*[_type == "post" && published != false && date < $date && slug.current != $slug] | order(date desc)[0]{ ${NEXT_POST_FIELDS} }`,
 		{ date, slug }
 	);
 
 	if (next) return { title: next.title, slug: next.slug };
 
 	const newest = await fetchSanityQuery<SanityBlogPost | null>(
-		`*[_type == "post" && published != false && slug.current != $slug] | order(date desc)[0]{ title, "slug": slug.current }`,
+		`*[_type == "post" && published != false && slug.current != $slug] | order(date desc)[0]{ ${NEXT_POST_FIELDS} }`,
 		{ slug }
 	);
 
