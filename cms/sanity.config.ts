@@ -1,6 +1,7 @@
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
+import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 
 import {deskStructure} from './desk-structure'
 import {publicEnvSchema} from './lib/env'
@@ -18,7 +19,18 @@ export default defineConfig({
   title: 'Portfolio Blog',
   projectId: env.VITE_SANITY_PROJECT_ID,
   dataset: env.VITE_SANITY_DATASET,
-  plugins: [structureTool({structure: deskStructure}), visionTool()],
+  plugins: [
+    structureTool({structure: deskStructure}),
+    visionTool(),
+    internationalizedArray({
+      languages: [
+        {id: 'en', title: 'English'},
+        {id: 'pt', title: 'Portuguese'}
+      ],
+      defaultLanguages: ['en'],
+      fieldTypes: ['string', 'text', 'body']
+    })
+  ],
   schema: {
     types: schemaTypes
   }

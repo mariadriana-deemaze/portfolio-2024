@@ -1,5 +1,7 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
+import {resolveI18nPreview, resolveI18nSlugSource, sanityI18n} from './utils'
+
 export const projectType = defineType({
   name: 'project',
   title: 'Project',
@@ -15,7 +17,7 @@ export const projectType = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: sanityI18n.string,
       group: 'content',
       validation: (rule) => rule.required()
     }),
@@ -24,14 +26,13 @@ export const projectType = defineType({
       title: 'Slug',
       type: 'slug',
       group: 'content',
-      options: {source: 'title'},
+      options: {source: resolveI18nSlugSource('title')},
       validation: (rule) => rule.required()
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 3,
+      type: sanityI18n.text,
       group: 'content',
       validation: (rule) => rule.required()
     }),
@@ -87,28 +88,28 @@ export const projectType = defineType({
     defineField({
       name: 'medium',
       title: 'Medium',
-      type: 'string',
+      type: sanityI18n.string,
       group: 'meta',
       validation: (rule) => rule.required()
     }),
     defineField({
       name: 'role',
       title: 'Role',
-      type: 'string',
+      type: sanityI18n.string,
       group: 'meta',
       description: 'Your role on this project, e.g. "Design & Full-Stack".'
     }),
     defineField({
       name: 'timeline',
       title: 'Timeline',
-      type: 'string',
+      type: sanityI18n.string,
       group: 'meta',
       description: 'Project duration, e.g. "8 weeks · 2024".'
     }),
     defineField({
       name: 'context',
       title: 'Context',
-      type: 'string',
+      type: sanityI18n.string,
       group: 'meta',
       description: 'Client or context, e.g. "Internal / Open-source".'
     }),
@@ -140,24 +141,21 @@ export const projectType = defineType({
     defineField({
       name: 'overview',
       title: 'Overview',
-      type: 'text',
-      rows: 5,
+      type: sanityI18n.text,
       group: 'caseStudy',
       description: 'High-level project summary for the case-study page.'
     }),
     defineField({
       name: 'problem',
       title: 'Problem',
-      type: 'text',
-      rows: 5,
+      type: sanityI18n.text,
       group: 'caseStudy',
       description: 'What challenge or opportunity prompted this project.'
     }),
     defineField({
       name: 'approach',
       title: 'Approach',
-      type: 'text',
-      rows: 5,
+      type: sanityI18n.text,
       group: 'caseStudy',
       description: 'How the problem was tackled — process, decisions, trade-offs.'
     }),
@@ -181,7 +179,7 @@ export const projectType = defineType({
     defineField({
       name: 'structuredBody',
       title: 'Structured Body',
-      type: 'body',
+      type: sanityI18n.body,
       group: 'caseStudy',
       description: 'Rich case-study content. Replaces the legacy MDX body.'
     }),
@@ -202,9 +200,10 @@ export const projectType = defineType({
       media: 'coverImage'
     },
     prepare({title, subtitle, order, media}) {
+      const resolvedTitle = resolveI18nPreview(title, 'Untitled')
       return {
-        title: order != null ? `${order}. ${title}` : title,
-        subtitle: subtitle || '',
+        title: order != null ? `${order}. ${resolvedTitle}` : resolvedTitle,
+        subtitle: resolveI18nPreview(subtitle),
         media
       }
     }

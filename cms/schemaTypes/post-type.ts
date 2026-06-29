@@ -1,5 +1,7 @@
 import {defineField, defineType} from 'sanity'
 
+import {resolveI18nPreview, resolveI18nSlugSource, sanityI18n} from './utils'
+
 export const postType = defineType({
   name: 'post',
   title: 'Post',
@@ -14,7 +16,7 @@ export const postType = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: sanityI18n.string,
       group: 'content',
       validation: (rule) => rule.required()
     }),
@@ -23,14 +25,13 @@ export const postType = defineType({
       title: 'Slug',
       type: 'slug',
       group: 'content',
-      options: {source: 'title'},
+      options: {source: resolveI18nSlugSource('title')},
       validation: (rule) => rule.required()
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 3,
+      type: sanityI18n.text,
       group: 'content',
       validation: (rule) => rule.required()
     }),
@@ -70,7 +71,7 @@ export const postType = defineType({
     defineField({
       name: 'structuredBody',
       title: 'Structured Body',
-      type: 'body',
+      type: sanityI18n.body,
       group: 'content',
       description: 'Rich article content. Replaces the legacy MDX body.'
     }),
@@ -201,7 +202,7 @@ export const postType = defineType({
           })
         : ''
       return {
-        title: `${prefix}${title}`,
+        title: `${prefix}${resolveI18nPreview(title, 'Untitled')}`,
         subtitle: [subtitle, formattedDate].filter(Boolean).join(' · '),
         media
       }
