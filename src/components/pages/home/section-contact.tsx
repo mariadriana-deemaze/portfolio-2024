@@ -2,10 +2,12 @@ import { useLenis } from 'lenis/react';
 import { useEffect, useRef, useState } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
+import { useLocale } from '@/contexts/locale-context';
 import { data } from '@/data/main';
 import { cn } from '@/utils/utils';
 
 export const SectionContact = () => {
+	const { t } = useLocale();
 	const sectionRef = useRef<HTMLElement>(null);
 	const headRef = useRef<HTMLHeadingElement>(null);
 	const ctaRef = useRef<HTMLDivElement>(null);
@@ -121,7 +123,9 @@ export const SectionContact = () => {
 				>
 					<div className="flex items-center gap-[10px] font-mono text-[12px] tracking-[0.04em] text-[#5a2a12] mb-[22px]">
 						<span className="font-semibold text-[#2e1305]">05</span>
-						<span>— get in touch</span>
+						<span>
+							{'—'} {t('pages.home.contact.overline')}
+						</span>
 					</div>
 				</div>
 
@@ -136,9 +140,12 @@ export const SectionContact = () => {
 						ref={headRef}
 						className="m-0 font-clash font-medium text-[clamp(46px,8vw,104px)] leading-[0.95] tracking-[-0.035em] text-[#2e1305] break-words will-change-transform"
 					>
-						Let's make
+						{t('pages.home.contact.heading.line-1')}
 						<br />
-						<em className="not-italic font-normal italic">something</em> together
+						<em className="not-italic font-normal italic">
+							{t('pages.home.contact.heading.accent')}
+						</em>{' '}
+						{t('pages.home.contact.heading.suffix')}
 					</h2>
 				</div>
 
@@ -169,7 +176,7 @@ export const SectionContact = () => {
 							href="/contact"
 							className="group inline-flex items-center gap-[10px] font-mono text-[13px] no-underline text-[#4a2010] border border-[#4a2010]/40 rounded-full px-[18px] py-[10px] transition-[background,color,border-color] duration-300 hover:bg-[#2e1305] hover:text-[var(--color-orange-light)] hover:border-[#2e1305]"
 						>
-							<span>open contact form</span>
+							<span>{t('pages.home.contact.form-button')}</span>
 							<LuArrowUpRight className="w-[13px] h-[13px] transition-[translate] duration-300 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" />
 						</a>
 					</div>

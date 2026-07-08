@@ -3,14 +3,20 @@ import type { ReactElement } from 'react';
 import { Chip } from '@/components/ui/chip';
 import { Section } from '@/components/ui/section';
 import { SectionHeading } from '@/components/ui/section-heading';
+import { useLocale } from '@/contexts/locale-context';
 import { data } from '@/data/main';
 
 export const SectionWorkExperience = () => {
+	const { t, translations } = useLocale();
 	return (
 		<Section>
-			<SectionHeading num="02" title="Work Experience" count={`${data.work.length} roles`} />
+			<SectionHeading
+				num="02"
+				title={t('pages.home.work-experience.heading')}
+				count={`${data.work.length} ${t('pages.home.work-experience.roles-suffix')}`}
+			/>
 			<div className="flex flex-col gap-[14px]">
-				{data.work.map(({ company, title, description, link, preview, stack, start, end }) => (
+				{data.work.map(({ company, title, description, link, preview, stack, start, end }, i) => (
 					<div
 						key={company}
 						className="entry-card spotlight-border grid grid-cols-[48px_1fr_auto] gap-[18px] p-[22px_22px_22px_20px] border border-border rounded-xl shadow-card"
@@ -51,7 +57,9 @@ export const SectionWorkExperience = () => {
 									company
 								)}
 							</h3>
-							<p className="m-0 mt-1 font-mono text-[12px] text-muted-foreground">{title}</p>
+							<p className="m-0 mt-1 font-mono text-[12px] text-muted-foreground">
+								{translations.data.work[i]?.title ?? title}
+							</p>
 						</div>
 
 						<span className="font-mono text-[11px] text-muted-foreground whitespace-nowrap pt-[3px]">
@@ -59,7 +67,7 @@ export const SectionWorkExperience = () => {
 						</span>
 
 						<p className="m-0 mt-3 font-mono text-[12.5px] leading-[1.7] text-foreground/90 text-pretty [grid-column:2_/-1]">
-							{description.trim()}
+							{(translations.data.work[i]?.description ?? description).trim()}
 						</p>
 
 						{stack.length > 0 && (

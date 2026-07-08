@@ -1,3 +1,4 @@
+import { getRequestHeader } from '@tanstack/react-start/server';
 import { z } from 'zod';
 
 import { publicEnvSchema } from '@/lib/env';
@@ -23,6 +24,17 @@ function getSanityConfig() {
 	};
 }
 
+function getLocaleFromRequest(): string {
+	try {
+		const cookie = getRequestHeader('cookie') ?? '';
+		const match = cookie.match(/locale=(\w+)/);
+		const val = match?.[1];
+		return val === 'pt' ? 'pt' : 'en';
+	} catch {
+		return 'en';
+	}
+}
+
 export async function fetchSanityQuery<T>(
 	query: string,
 	params: Record<string, unknown> = {}
@@ -35,7 +47,8 @@ export async function fetchSanityQuery<T>(
 
 	url.searchParams.set('query', query);
 
-	for (const [key, value] of Object.entries(params)) {
+	const mergedParams = { locale: getLocaleFromRequest(), ...params };
+	for (const [key, value] of Object.entries(mergedParams)) {
 		url.searchParams.set(`$${key}`, JSON.stringify(value));
 	}
 

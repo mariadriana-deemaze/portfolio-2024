@@ -6,6 +6,7 @@ import Layout from '@/components/layout';
 import { NotFoundPage } from '@/components/ui/not-found-page';
 import { Toaster } from '@/components/ui/sonner';
 import { WebMcpRegistration } from '@/components/webmcp';
+import { LocaleProvider, useLocale } from '@/contexts/locale-context';
 import { getCommandLinksFn } from '@/server-fns/content';
 import { ROUTES } from '@/utils/routes';
 import { getThemeInitScript } from '@/utils/theme';
@@ -48,7 +49,9 @@ function RootDocument({ children }: { children: ReactNode }) {
 			</head>
 			<body>
 				<AppLoaderShell />
-				<Layout commandLinks={commandLinks}>{children}</Layout>
+				<LocaleProvider>
+					<Layout commandLinks={commandLinks}>{children}</Layout>
+				</LocaleProvider>
 				<WebMcpRegistration />
 				<Toaster />
 				<AppLoaderDismiss />
@@ -59,12 +62,13 @@ function RootDocument({ children }: { children: ReactNode }) {
 }
 
 function NotFoundRoute() {
+	const { t } = useLocale();
 	return (
 		<NotFoundPage
-			title="Page not found"
-			description="Whatever you were looking for, is simply not here."
+			title={t('pages.not-found.title')}
+			description={t('pages.not-found.description')}
 			backTo={ROUTES.home}
-			backLabel="Back to home"
+			backLabel={t('pages.not-found.back-home')}
 		/>
 	);
 }

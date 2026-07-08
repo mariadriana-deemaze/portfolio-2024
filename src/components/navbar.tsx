@@ -3,10 +3,12 @@ import { useLenis } from 'lenis/react';
 import { useEffect, useRef, useState } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
+import { LocaleToggle } from '@/components/locale-toggle';
 import { LogoMark } from '@/components/logo-ma';
 import { NowPlayingBadge } from '@/components/now-playing-badge';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { StaggerText } from '@/components/ui/stagger-text';
+import { useLocale } from '@/contexts/locale-context';
 import { data } from '@/data/main';
 import { ROUTES } from '@/utils/routes';
 import { cn } from '@/utils/utils';
@@ -15,14 +17,15 @@ const SM_BREAKPOINT = 640;
 const SCROLL_HIDE_THRESHOLD = 140;
 const SCROLL_BG_THRESHOLD = 20;
 
-const navItems = [
-	{ path: ROUTES.home, name: 'home' },
-	{ path: ROUTES.projects, name: 'projects' },
-	{ path: ROUTES.blog, name: 'blog' },
-	{ path: ROUTES.contact, name: 'contact' }
-];
+const NAV_KEYS = [
+	{ path: ROUTES.home, key: 'components.navbar.home' },
+	{ path: ROUTES.projects, key: 'components.navbar.projects' },
+	{ path: ROUTES.blog, key: 'components.navbar.blog' },
+	{ path: ROUTES.contact, key: 'components.navbar.contact' }
+] as const;
 
 export function Navbar() {
+	const { t } = useLocale();
 	const [hidden, setHidden] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -88,14 +91,14 @@ export function Navbar() {
 						<Link
 							to={ROUTES.home}
 							className="flex items-center mr-2 no-underline text-foreground"
-							aria-label="Home"
+							aria-label={t('components.navbar.home-label')}
 							onClick={() => setMenuOpen(false)}
 						>
 							<LogoMark className="logo-fade h-[19px]" />
 						</Link>
 
 						<div className="hidden sm:flex gap-px">
-							{navItems.map(({ path, name }) => (
+							{NAV_KEYS.map(({ path, key }) => (
 								<Link
 									key={path}
 									to={path}
@@ -109,7 +112,7 @@ export function Navbar() {
 											: 'text-foreground'
 									)}
 								>
-									{name}
+									{t(key)}
 								</Link>
 							))}
 						</div>
@@ -117,12 +120,13 @@ export function Navbar() {
 
 					<div className="flex items-center gap-[7px] shrink-0">
 						<NowPlayingBadge />
+						<LocaleToggle />
 						<ThemeToggle />
 
 						<button
 							className="group sm:hidden relative w-8 h-8 -mr-[8px] cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[8px]"
 							onClick={() => setMenuOpen((m) => !m)}
-							aria-label="Toggle menu"
+							aria-label={t('components.navbar.toggle-menu')}
 							aria-expanded={menuOpen}
 						>
 							<span
@@ -165,7 +169,7 @@ export function Navbar() {
 				/>
 
 				<nav className="relative flex flex-col">
-					{navItems.map(({ path, name }, i) => (
+					{NAV_KEYS.map(({ path, key }, i) => (
 						<Link
 							key={path}
 							to={path}
@@ -199,7 +203,7 @@ export function Navbar() {
 								{String(i + 1).padStart(2, '0')}
 							</span>
 							<StaggerText
-								text={name}
+								text={t(key)}
 								revealed={menuOpen}
 								baseDelay={0.15 + i * 0.05}
 								letterDelay={0.025}

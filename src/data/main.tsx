@@ -7,17 +7,8 @@ export const BASE_URL = 'https://maria-adriana.com';
 export const data = {
 	name: 'Maria Adriana',
 	role: 'Full Stack Developer',
-	available: false,
 	focus: ['Web', 'Mobile', 'Full Stack'],
-	github: 'https://github.com/mariadriana-deemaze',
-	mottos: [
-		'Full Stack Developer',
-		'Communication Designer',
-		'Curious Overthinker',
-		'Coffee Overconsumer'
-	],
 	location: 'Portugal, Coimbra',
-	locationLink: 'https://www.google.com/maps/place/Coimbra',
 	about:
 		'The dangerous combo of a curious yet anxious overthinker - I think coffee is also somewhere in the equation.',
 	summary: `A communication designer turned software developer, driven by a deep passion for problem-solving and the precision of the exact sciences. \n
@@ -25,20 +16,6 @@ My journey began in the world of web design, crafting intuitive and visually str
 I’m excited to continue building innovative solutions that merge design sensibility with technical expertise, leveraging my unique background to create meaningful and impactful digital experiences.`,
 	contact: {
 		email: 'hello@maria-adriana.com',
-		faq: [
-			{
-				q: 'Available for work?',
-				a: 'Not at the moment — currently committed full-time. Feel free to reach out for future opportunities.'
-			},
-			{
-				q: 'What do you build?',
-				a: 'Web and mobile products end-to-end — design-minded front end with solid Node.js and Rails back end.'
-			},
-			{
-				q: 'Where are you?',
-				a: 'Coimbra, Portugal — happy working remotely across European and overlapping time zones.'
-			}
-		],
 		social: [
 			{
 				name: 'GitHub',

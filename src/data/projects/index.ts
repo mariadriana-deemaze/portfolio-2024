@@ -8,46 +8,45 @@ import type {
 	ResolvedSeo
 } from '@/lib/sanity-types';
 import {
-	GALLERY_ITEM_PROJECTION,
 	LINK_PROJECTION,
-	RICH_IMAGE_PROJECTION,
-	SEO_PROJECTION,
-	STRUCTURED_BODY_PROJECTION
+	LOCALIZED_RICH_IMAGE_PROJECTION,
+	localizedBody,
+	localizedField
 } from '@/lib/sanity-types';
 
 // ── GROQ projections ──────────────────────────────────────────────────
 
 const PROJECT_FIELDS = `
-  title,
-  description,
+  "title": ${localizedField('title')},
+  "description": ${localizedField('description')},
   year,
   displayOrder,
   featured,
   "slug": slug.current,
-  medium,
-  role,
-  timeline,
-  context,
+  "medium": ${localizedField('medium')},
+  "role": ${localizedField('role')},
+  "timeline": ${localizedField('timeline')},
+  "context": ${localizedField('context')},
   technologies,
   tags,
   colors,
   published,
-  "coverImage": coverImage ${RICH_IMAGE_PROJECTION},
+  "coverImage": coverImage ${LOCALIZED_RICH_IMAGE_PROJECTION},
   "links": links[] ${LINK_PROJECTION},
-  overview,
-  problem,
-  approach,
-  "statistics": statistics[] { value, label },
-  "gallery": gallery[] ${GALLERY_ITEM_PROJECTION},
-  "structuredBody": structuredBody ${STRUCTURED_BODY_PROJECTION},
-  "seo": seo ${SEO_PROJECTION}
+  "overview": ${localizedField('overview')},
+  "problem": ${localizedField('problem')},
+  "approach": ${localizedField('approach')},
+  "statistics": statistics[] { value, "label": ${localizedField('label')} },
+  "gallery": gallery[] { layout, "image": image ${LOCALIZED_RICH_IMAGE_PROJECTION} },
+  "structuredBody": ${localizedBody('structuredBody')},
+  "seo": seo { "title": ${localizedField('title')}, "description": ${localizedField('description')}, "ogImage": ogImage.asset->url }
 `;
 
 const NEXT_PROJECT_FIELDS = `
-  title,
+  "title": ${localizedField('title')},
   "slug": slug.current,
   colors,
-  "coverImage": coverImage ${RICH_IMAGE_PROJECTION}
+  "coverImage": coverImage ${LOCALIZED_RICH_IMAGE_PROJECTION}
 `;
 
 // ── Sanity response types ─────────────────────────────────────────────

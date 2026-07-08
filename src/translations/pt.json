@@ -1,0 +1,221 @@
+{
+	"components": {
+		"navbar": {
+			"home": "início",
+			"projects": "projetos",
+			"blog": "blog",
+			"contact": "contacto",
+			"home-label": "Início",
+			"toggle-menu": "Alternar menu"
+		},
+		"now-playing": {
+			"label": "A Ouvir",
+			"idle": "sem reprodução"
+		},
+		"command-menu": {
+			"fab": {
+				"label": "Abrir menu de comandos",
+				"text": "pesquisar e navegar"
+			},
+			"placeholder": "Escreva um comando ou pesquise…",
+			"empty": "Sem resultados.",
+			"links": "Links",
+			"projects": "Projetos",
+			"blog": "Blog",
+			"socials": "Redes sociais"
+		},
+		"lightbox": {
+			"view-fullscreen": "Ver {{alt}} em ecrã inteiro"
+		},
+		"blog-meta": {
+			"views": "visualizações",
+			"min-read": "min de leitura",
+			"share": {
+				"label": "Partilhar",
+				"twitter": "Partilhar no X",
+				"linkedin": "Partilhar no LinkedIn"
+			},
+			"copy-link": "Copiar link",
+			"link-copied": "Link copiado"
+		}
+	},
+	"validation": {
+		"required": "Obrigatório.",
+		"too-long": "Demasiado longo.",
+		"invalid-email": "Email inválido."
+	},
+	"pages": {
+		"home": {
+			"hero": {
+				"focus": "Foco",
+				"currently": "Atualmente",
+				"scroll-cue": "deslize para explorar"
+			},
+			"about": {
+				"heading": "Sobre",
+				"highlight": "resolução de problemas"
+			},
+			"work-experience": {
+				"heading": "Experiência Profissional",
+				"roles-suffix": "funções"
+			},
+			"education": {
+				"heading": "Formação"
+			},
+			"selected-work": {
+				"heading": "Trabalho Selecionado",
+				"view-all": "ver tudo →",
+				"empty": "Ainda sem projetos — em breve."
+			},
+			"contact": {
+				"overline": "entrar em contacto",
+				"heading": {
+					"line-1": "Vamos criar",
+					"accent": "algo",
+					"suffix": "juntos"
+				},
+				"form-button": "abrir formulário"
+			}
+		},
+		"projects": {
+			"overline": "Trabalho selecionado",
+			"heading": {
+				"line-1": "Coisas que",
+				"accent": "construí"
+			},
+			"intro": "Produtos web e mobile, de ponta a ponta — front end com visão de design e back end sólido.",
+			"project": "projeto",
+			"projects": "projetos",
+			"filter-by": "Filtrar por",
+			"empty": "Nada por aqui ainda — em breve.",
+			"cta": {
+				"line-1": "Tem algo que gostaria de",
+				"accent": "construir",
+				"button": "Iniciar conversa"
+			}
+		},
+		"project-detail": {
+			"back-to-work": "voltar ao trabalho",
+			"role": "Função",
+			"timeline": "Período",
+			"context": "Contexto",
+			"stack": "Stack",
+			"overview": "Visão geral",
+			"problem": "Problema",
+			"approach": "Abordagem",
+			"key-metrics": "Métricas-chave",
+			"gallery": "Galeria",
+			"next-project": "Próximo projeto",
+			"not-found": {
+				"title": "Projeto não encontrado",
+				"description": "O projeto solicitado não foi encontrado.",
+				"back": "Voltar aos projetos"
+			}
+		},
+		"blog": {
+			"overline": "Diário",
+			"heading": "Pensamentos & Ensaios",
+			"intro": "Reflexões pessoais sobre desenvolvimento full-stack, padrões de design e a ocasional toca de coelho filosófica.",
+			"post": "artigo",
+			"posts": "artigos",
+			"more-stories": "Mais Histórias",
+			"empty": "Ainda sem artigos — em breve."
+		},
+		"blog-detail": {
+			"back-to-journal": "o diário",
+			"next-in-journal": "Próximo no diário",
+			"written-by": "Escrito por",
+			"not-found": {
+				"title": "Artigo não encontrado",
+				"description": "O artigo solicitado não foi encontrado.",
+				"back": "Voltar ao diário"
+			}
+		},
+		"contact": {
+			"heading": {
+				"line-1": "Vamos criar",
+				"accent": "algo",
+				"suffix": "juntos"
+			},
+			"intro": "Tem um projeto em mente, uma pergunta, ou só quer dizer olá? Envie uma mensagem — leio tudo.",
+			"email": "Email",
+			"based-in": "Baseada em",
+			"response-time": "Tempo de resposta",
+			"response-time-value": "Normalmente dentro de um ou dois dias.",
+			"elsewhere": "Outras redes",
+			"good-to-know": "Bom saber",
+			"faq-heading": "Algumas respostas rápidas",
+			"form": {
+				"name": {
+					"label": "O seu nome",
+					"placeholder": "Maria Silva"
+				},
+				"email": {
+					"label": "Email",
+					"placeholder": "maria@email.com"
+				},
+				"subject": {
+					"label": "Assunto",
+					"placeholder": "Sobre o quê?"
+				},
+				"message": {
+					"label": "Mensagem",
+					"placeholder": "Conte-me um pouco sobre isso…"
+				},
+				"submit": "Enviar mensagem",
+				"submitting": "A enviar…",
+				"email-fallback": "Ou envie-me um email diretamente — o que for mais fácil.",
+				"toast": {
+					"success": "Enviado! Responderei em breve.",
+					"error": "Falha ao enviar. Por favor, tente novamente."
+				}
+			}
+		},
+		"not-found": {
+			"title": "Página não encontrada",
+			"description": "O que quer que estivesse à procura, simplesmente não está aqui.",
+			"back-home": "Voltar ao início"
+		}
+	},
+	"data": {
+		"role": "Desenvolvedora Full Stack",
+		"mottos": [
+			"Desenvolvedora Full Stack",
+			"Designer de Comunicação",
+			"Pensadora Curiosa",
+			"Consumidora de Café"
+		],
+		"about": "A combinação perigosa de uma pensadora curiosa e ansiosa - acho que o café também está algures na equação.",
+		"summary": "Uma designer de comunicação que se tornou desenvolvedora de software, movida por uma profunda paixão pela resolução de problemas e pela precisão das ciências exatas. \n\nA minha jornada começou no mundo do web design, criando experiências digitais intuitivas e visualmente marcantes. À medida que a minha curiosidade cresceu, abracei o desafio de dar vida a esses designs através de código — esbatendo as fronteiras entre criatividade e execução técnica. Esta progressão natural levou-me a mergulhar totalmente no desenvolvimento de software, onde agora prospero. \n\nEstou entusiasmada por continuar a construir soluções inovadoras que unem sensibilidade de design com perícia técnica, aproveitando o meu background único para criar experiências digitais significativas e impactantes.",
+		"faq": [
+			{
+				"q": "Disponível para trabalho?",
+				"a": "Não de momento — atualmente comprometida a tempo inteiro. Não hesite em contactar para oportunidades futuras."
+			},
+			{
+				"q": "O que constróis?",
+				"a": "Produtos web e mobile de ponta a ponta — front end com visão de design e back end sólido em Node.js e Rails."
+			},
+			{
+				"q": "Onde estás?",
+				"a": "Coimbra, Portugal — feliz a trabalhar remotamente em fusos horários europeus e compatíveis."
+			}
+		],
+		"work": [
+			{
+				"title": "Desenvolvedora Full Stack",
+				"description": "Consultoria na entrega de soluções de software, colaborando de perto com clientes para compreender as suas necessidades e traduzi-las em aplicações funcionais. Esta função aperfeiçoou as minhas competências de resolução de problemas e adaptabilidade, tendo sido desafiada em projetos diversos com requisitos tecnológicos variados. Trabalho principalmente com tecnologias web, maioritariamente nos ecossistemas Ruby e NodeJS."
+			},
+			{
+				"title": "Designer/Desenvolvedora Front-end",
+				"description": "Desenvolvimento de aplicações mobile multiplataforma com React Native (TS), Kalipso e Axway Titanium para experiências fluidas em múltiplos dispositivos. Suporte a lojas e-commerce, incluindo personalização e manutenção de sistemas construídos em WooCommerce e PrestaShop. Design e implementação de interfaces intuitivas que correspondiam aos critérios de aceitação dos clientes. Criação de gráficos para materiais web e impressos, e edição de conteúdo vídeo para redes sociais."
+			}
+		],
+		"education": [
+			{
+				"degree": "Design de comunicação",
+				"summary": "Aprendi as bases do design de comunicação, obtendo uma visão mais ampla e enriquecedora sobre a história do design e as suas aplicações nos meios de comunicação atuais. Contactei com uma variedade de ferramentas multimédia, juntamente com métodos artísticos tradicionais. Como destaque, representei a EUAC, com os meus colegas, num projeto de grupo na Feira Eunique de 2015."
+			}
+		]
+	}
+}

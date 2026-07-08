@@ -2,11 +2,13 @@ import { useRef } from 'react';
 
 import { AnimatedMottos } from '@/components/pages/home/motto';
 import { Section } from '@/components/ui/section';
+import { useLocale } from '@/contexts/locale-context';
 import { data } from '@/data/main';
 
 const TILT_MAX = 16;
 
 export const SectionHero = () => {
+	const { t, translations } = useLocale();
 	const currentWork = data.work.find((w) => w.end === 'Present');
 	const avatarRef = useRef<HTMLDivElement>(null);
 	const borderRef = useRef<HTMLDivElement>(null);
@@ -65,13 +67,13 @@ export const SectionHero = () => {
 				<div style={{ flex: '0 1 420px' }}>
 					<div className="font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
 						<AnimatedMottos
-							data={[...data.mottos]}
+							data={translations.data.mottos}
 							className="bg-[linear-gradient(to_bottom,var(--color-orange-light),var(--color-orange-primary))] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent] text-transparent"
 						/>
 					</div>
 
 					<p className="font-mono text-sm leading-[1.7] max-w-[380px] mt-[14px] text-foreground m-0">
-						{data.about}
+						{t('data.about')}
 					</p>
 
 					<div className="flex gap-[14px] mt-[26px] print:hidden">
@@ -95,7 +97,7 @@ export const SectionHero = () => {
 						<div className="flex flex-col gap-[14px] min-w-[168px] max-sm:min-w-0">
 							<div>
 								<div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground">
-									Focus
+									{t('pages.home.hero.focus')}
 								</div>
 								<div className="font-mono text-[13px] text-foreground mt-[3px] whitespace-nowrap">
 									{data.focus.join(' · ')}
@@ -104,7 +106,7 @@ export const SectionHero = () => {
 							{currentWork && (
 								<div>
 									<div className="font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground">
-										Currently
+										{t('pages.home.hero.currently')}
 									</div>
 									<div className="font-mono text-[13px] text-foreground mt-[3px] whitespace-nowrap">
 										<a
@@ -180,7 +182,7 @@ export const SectionHero = () => {
 				aria-hidden="true"
 			>
 				<span className="relative w-px h-[38px] bg-border overflow-hidden shrink-0 hero-scrollcue-bar" />
-				scroll to explore
+				{t('pages.home.hero.scroll-cue')}
 			</div>
 		</Section>
 	);
