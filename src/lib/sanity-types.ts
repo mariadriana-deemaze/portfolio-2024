@@ -1,23 +1,17 @@
 // ── Localization helper ───────────────────────────────────────────────
 
-/** Resolves an internationalized field with locale → English → flat-string fallback */
+/**
+ * Resolves an internationalized field: locale → English (both keyed on the v5 `language` field),
+ * with a v4 `_key`-keyed fallback for any not-yet-backfilled items. The final branch returns the
+ * raw value only when the field is a genuine legacy flat string (`field[0]` undefined) — never a
+ * wrapper array with no usable value, which would otherwise leak `{_key,_type,language,value}`
+ * objects into the renderer.
+ */
 export function localizedField(field: string): string {
-	return `coalesce(${field}[_key == $locale][0].value, ${field}[_key == "en"][0].value, ${field})`;
+	return `coalesce(${field}[language == $locale][0].value, ${field}[language == "en"][0].value, ${field}[_key == "en"][0].value, select(!defined(${field}[0]) => ${field}))`;
 }
 
 // ── Reusable GROQ projection fragments ────────────────────────────────
-
-/** Resolves a richImage to url, dimensions, alt, caption, and crop/hotspot */
-const RICH_IMAGE_PROJECTION = `{
-  alt,
-  caption,
-  "url": asset->url,
-  "width": asset->metadata.dimensions.width,
-  "height": asset->metadata.dimensions.height,
-  "lqip": asset->metadata.lqip,
-  hotspot,
-  crop
-}`;
 
 /** Resolves a link object */
 export const LINK_PROJECTION = `{ title, url }`;
@@ -28,12 +22,6 @@ export const AUTHOR_PROJECTION = `{
   "avatar": avatar.asset->url,
   url
 }`;
-
-/** Resolves an internationalized Portable Text body with inline richImage projection */
-export function localizedBody(field: string): string {
-	const inner = `{ ..., _type == "richImage" => ${RICH_IMAGE_PROJECTION} }`;
-	return `coalesce(${field}[_key == $locale][0].value[]${inner}, ${field}[_key == "en"][0].value[]${inner}, ${field}[]${inner})`;
-}
 
 /** Resolves a richImage with localized alt and caption */
 export const LOCALIZED_RICH_IMAGE_PROJECTION = `{
@@ -46,6 +34,18 @@ export const LOCALIZED_RICH_IMAGE_PROJECTION = `{
   hotspot,
   crop
 }`;
+
+/**
+ * Resolves an internationalized Portable Text body with inline richImage projection.
+ * Matches the v5 `language` field first, falls back to v4 `_key`, then to a raw (unwrapped)
+ * Portable Text array. The wrapped branches always win for migrated data, so a wrapper object
+ * never leaks into the renderer. Inline images resolve alt/caption through the localized
+ * projection, so their internationalized-array values are flattened to strings too.
+ */
+export function localizedBody(field: string): string {
+	const inner = `{ ..., _type == "richImage" => ${LOCALIZED_RICH_IMAGE_PROJECTION} }`;
+	return `coalesce(${field}[language == $locale][0].value[]${inner}, ${field}[language == "en"][0].value[]${inner}, ${field}[_key == "en"][0].value[]${inner}, ${field}[]${inner})`;
+}
 
 // ── Resolved application types ─────────────────────────────────────────
 

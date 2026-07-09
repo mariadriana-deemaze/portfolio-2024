@@ -1,5 +1,7 @@
 import {defineField, defineType} from 'sanity'
 
+import {resolveI18nPreview, sanityI18n} from '../utils'
+
 export const metricType = defineType({
   name: 'metric',
   title: 'Metric',
@@ -15,12 +17,15 @@ export const metricType = defineType({
     defineField({
       name: 'label',
       title: 'Label',
-      type: 'string',
+      type: sanityI18n.string,
       description: 'Short description beneath the value.',
       validation: (rule) => rule.required()
     })
   ],
   preview: {
-    select: {title: 'value', subtitle: 'label'}
+    select: {title: 'value', subtitle: 'label'},
+    prepare({title, subtitle}) {
+      return {title, subtitle: resolveI18nPreview(subtitle)}
+    }
   }
 })
