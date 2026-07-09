@@ -225,12 +225,10 @@
 @utility nav-bg {
 	background: transparent;
 	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
 }
 
 @utility nav-bg-scrolled {
 	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
 }
 
 @utility nav-overlay-open {
