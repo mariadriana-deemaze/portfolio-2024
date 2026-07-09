@@ -68,7 +68,7 @@ export const SectionHero = () => {
 					<div className="font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
 						<AnimatedMottos
 							data={translations.data.mottos}
-							className="bg-[linear-gradient(to_bottom,var(--color-orange-light),var(--color-orange-primary))] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent] text-transparent"
+							className="text-[var(--color-orange-primary)]"
 						/>
 					</div>
 

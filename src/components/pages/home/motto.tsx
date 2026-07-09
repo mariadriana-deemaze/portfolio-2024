@@ -1,75 +1,56 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { cn } from '@/utils/utils';
 
+const ROTATE_INTERVAL_MS = 5000;
+
 export const AnimatedMottos = ({ data, className }: { data: string[]; className?: string }) => {
-	const [roleIndex, setRoleIndex] = useState(0);
+	const sliderRef = useRef<HTMLParagraphElement>(null);
 
-	const splitWords = useCallback(() => {
-		const words = document.querySelectorAll('.role-slide');
+	useEffect(() => {
+		const slider = sliderRef.current;
+		if (!slider) return;
 
-		words.forEach((word) => {
-			const letters = word.textContent?.split('');
-			word.textContent = '';
-			letters?.forEach((letter) => {
-				const span = document.createElement('span');
-				span.textContent = letter;
-				span.className = 'letter';
-				word.append(span);
+		const words = slider.querySelectorAll<HTMLElement>('.role-slide');
+		if (words.length === 0) return;
+
+		for (const word of words) {
+			word.querySelectorAll<HTMLElement>('.letter').forEach((letter, i) => {
+				letter.style.setProperty('--li', String(i));
 			});
-		});
-	}, []);
+		}
 
-	const animateText = useCallback(() => {
-		const words = document.querySelectorAll('.role-slide');
+		const showWord = (index: number) => {
+			const previousIndex = (index + data.length - 1) % data.length;
+			words.forEach((word, wordIndex) => {
+				const state =
+					wordIndex === index ? 'letter in' : wordIndex === previousIndex ? 'letter out' : 'letter';
+				for (const letter of word.children) letter.className = state;
+			});
+		};
 
-		const lastWordIndex = roleIndex === 0 ? data.length - 1 : roleIndex - 1;
+		showWord(0);
 
-		const currentWord = words[roleIndex];
-		const previousWord = words[lastWordIndex];
-
-		Array.from(previousWord.children).forEach((letter, i) => {
-			setTimeout(() => {
-				letter.className = 'letter out';
-			}, i * 80);
-		});
-
-		Array.from(currentWord.children).forEach((letter, i) => {
-			letter.className = 'letter behind';
-			setTimeout(
-				() => {
-					letter.className = 'letter in';
-				},
-				340 + i * 80
-			);
-		});
-	}, [roleIndex, data.length]);
-
-	const switchRole = useCallback(() => {
-		setRoleIndex((currentRoleIndex) =>
-			currentRoleIndex === data.length - 1 ? 0 : currentRoleIndex + 1
-		);
-	}, [data.length]);
-
-	useEffect(() => {
-		splitWords();
-	}, [splitWords]);
-
-	useEffect(() => {
-		animateText();
-	}, [animateText]);
-
-	useEffect(() => {
 		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-		const interval = setInterval(switchRole, 5000);
+
+		let currentIndex = 0;
+		const interval = window.setInterval(() => {
+			currentIndex = (currentIndex + 1) % data.length;
+			showWord(currentIndex);
+		}, ROTATE_INTERVAL_MS);
+
 		return () => clearInterval(interval);
-	}, [switchRole]);
+	}, [data]);
 
 	return (
-		<p className="h-5 w-full relative roles-slider font-clash text-lg font-normal">
+		<p ref={sliderRef} className="h-5 w-full relative roles-slider font-clash text-lg font-normal">
 			{data.map((item, index) => (
 				<span className={cn('role-slide', className)} key={`motto_item_${index}`}>
-					{item}
+					{item.split('').map((char, letterIndex) => (
+						<span className="letter" key={`motto_${index}_letter_${letterIndex}`}>
+							{char}
+						</span>
+					))}
 				</span>
 			))}
 		</p>
