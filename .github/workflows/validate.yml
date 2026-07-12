@@ -20,10 +20,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 11.12.0
+      - name: Enable corepack
+        run: corepack enable pnpm
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
