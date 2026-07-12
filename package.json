@@ -75,30 +75,5 @@
 		"cz-customizable": {
 			"config": ".cz-config.cjs"
 		}
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild",
-			"unrs-resolver"
-		],
-		"overrides": {
-			"@tanstack/start-plugin-core>srvx": "0.11.16",
-			"@tanstack/start-server-core>h3-v2": "npm:h3@2.0.1-rc.22",
-			"ajv>fast-uri": "3.1.2",
-			"anymatch>picomatch": "4.0.4",
-			"commitizen>lodash": "4.18.1",
-			"cz-customizable>lodash": "4.18.1",
-			"dompurify": "3.4.11",
-			"filelist>minimatch": "10.2.5",
-			"micromatch>picomatch": "4.0.4",
-			"readdirp>picomatch": "4.0.4",
-			"tmp": "^0.2.4",
-			"@actions/github>undici": "8.5.0",
-			"@actions/http-client>undici": "8.5.0",
-			"@vercel/frameworks>js-yaml": "4.2.0",
-			"typeid-js>uuid": "11.1.1",
-			"@sanity/uuid>uuid": "14.0.1",
-			"esbuild": "0.28.1"
-		}
 	}
 }
