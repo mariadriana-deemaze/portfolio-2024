@@ -2,12 +2,17 @@ name: Deploy To Coolify
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Validate"]
+    branches: [main]
+    types: [completed]
 
 permissions:
   contents: read
 
 jobs:
   deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
