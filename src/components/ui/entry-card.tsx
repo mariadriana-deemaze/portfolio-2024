@@ -11,12 +11,20 @@ export function EntryCard({ children, className }: EntryCardProps) {
 	return (
 		<div
 			className={cn(
-				'entry-card',
-				'relative grid grid-cols-[48px_1fr_auto] gap-[18px] p-[22px_22px_22px_20px]',
-				'border border-border rounded-[12px] overflow-hidden shadow-card',
-				'transition-[transform,border-color,box-shadow] duration-500 ease-out will-change-transform',
+				'entry-card spotlight-border',
+				'grid grid-cols-[48px_1fr_auto] gap-[14px] sm:gap-[18px] p-[14px] sm:p-[22px_22px_22px_20px]',
+				'border border-border rounded-xl shadow-card',
 				className
 			)}
+			onMouseMove={(e) => {
+				const r = e.currentTarget.getBoundingClientRect();
+				e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - r.left}px`);
+				e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - r.top}px`);
+			}}
+			onMouseLeave={(e) => {
+				e.currentTarget.style.setProperty('--mouse-x', '-999px');
+				e.currentTarget.style.setProperty('--mouse-y', '-999px');
+			}}
 		>
 			{children}
 		</div>

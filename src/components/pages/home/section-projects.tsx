@@ -131,7 +131,7 @@ export const SectionProjects = ({ projects }: { projects: Project[] }) => {
 							}}
 							data-idx={i}
 							href={`/projects/${project.slug}`}
-							className="group relative grid grid-cols-[56px_1fr_auto_auto] items-center gap-[26px] px-[14px] py-[30px] border-b border-border last:border-b-0 text-inherit no-underline"
+							className="group relative grid grid-cols-[auto_1fr_auto_auto] sm:grid-cols-[56px_1fr_auto_auto] items-center gap-[14px] sm:gap-[26px] py-[18px] sm:py-[30px] sm:px-[14px] border-b border-border last:border-b-0 text-inherit no-underline"
 							onMouseEnter={(e) => showPreview(i, e)}
 						>
 							<span className="font-mono text-[12px] text-muted-foreground group-hover:text-[var(--color-orange-primary)] transition-colors duration-300">

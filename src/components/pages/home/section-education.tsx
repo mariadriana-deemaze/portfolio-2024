@@ -1,3 +1,4 @@
+import { EntryCard } from '@/components/ui/entry-card';
 import { Section } from '@/components/ui/section';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { useLocale } from '@/contexts/locale-context';
@@ -10,19 +11,7 @@ export const SectionEducation = () => {
 			<SectionHeading num="03" title={t('pages.home.education.heading')} />
 			<div className="flex flex-col gap-[14px]">
 				{data.education.map(({ school, preview, summary, start, end, degree }, i) => (
-					<div
-						key={school}
-						className="entry-card spotlight-border grid grid-cols-[48px_1fr_auto] gap-[18px] p-[22px_22px_22px_20px] border border-border rounded-xl shadow-card"
-						onMouseMove={(e) => {
-							const r = e.currentTarget.getBoundingClientRect();
-							e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - r.left}px`);
-							e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - r.top}px`);
-						}}
-						onMouseLeave={(e) => {
-							e.currentTarget.style.setProperty('--mouse-x', '-999px');
-							e.currentTarget.style.setProperty('--mouse-y', '-999px');
-						}}
-					>
+					<EntryCard key={school}>
 						<div className="w-11 h-11 rounded-[9px] border border-border bg-background grid place-items-center overflow-hidden shrink-0">
 							{preview ? (
 								<img
@@ -56,10 +45,10 @@ export const SectionEducation = () => {
 							{start} — {end}
 						</span>
 
-						<p className="m-0 mt-3 font-mono text-[12.5px] leading-[1.7] text-foreground/90 text-pretty [grid-column:2_/-1]">
+						<p className="m-0 mt-3 font-mono text-[12.5px] leading-[1.7] text-foreground/90 text-pretty [grid-column:1_/-1] sm:[grid-column:2_/-1]">
 							{(translations.data.education[i]?.summary ?? summary).trim()}
 						</p>
-					</div>
+					</EntryCard>
 				))}
 			</div>
 		</Section>
