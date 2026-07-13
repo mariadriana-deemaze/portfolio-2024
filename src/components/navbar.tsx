@@ -75,6 +75,12 @@ export function Navbar() {
 	const isActive = (path: string) =>
 		path === ROUTES.home ? location.pathname === ROUTES.home : location.pathname.startsWith(path);
 
+	const MOBILE_THEME_TOGGLE_WRAPPER_CLASS = cn(
+		'transition-[opacity,filter] duration-[400ms]',
+		'[transition-timing-function:var(--ease-out)] motion-reduce:transition-none',
+		menuOpen ? 'opacity-100 blur-[0px] delay-[380ms]' : 'opacity-0 blur-[4px] delay-0'
+	);
+
 	return (
 		<>
 			<nav
@@ -121,7 +127,9 @@ export function Navbar() {
 					<div className="flex items-center gap-[7px] shrink-0">
 						<NowPlayingBadge />
 						<LocaleToggle />
-						<ThemeToggle />
+						<div className="hidden sm:block">
+							<ThemeToggle />
+						</div>
 
 						<button
 							className="group sm:hidden relative w-8 h-8 -mr-[8px] cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[8px]"
@@ -225,6 +233,9 @@ export function Navbar() {
 				</nav>
 
 				<div className="relative flex items-center flex-wrap gap-4 mt-auto pt-8 font-mono text-[12px]">
+					<div className={MOBILE_THEME_TOGGLE_WRAPPER_CLASS}>
+						<ThemeToggle align="start" side="top" />
+					</div>
 					{data.contact.social.map((s, i) => (
 						<a
 							key={s.name}
