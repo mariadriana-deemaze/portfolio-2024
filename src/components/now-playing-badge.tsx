@@ -1,11 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { Badge } from '@/components/ui/badge';
 import { useLocale } from '@/contexts/locale-context';
 import type { NowPlayingData } from '@/server/routes/api/types/spotify';
 
-const ALBUM_ART_SIZE = 64;
-const BADGE_PADDING_EXPANDED = 12;
-const CONTENT_PADDING = 4;
+const SpotifyLogo = ({ className }: { className: string }) => (
+	<span className="ml-1">
+		<svg className={className} viewBox="0 0 168 168" aria-hidden="true">
+			<path
+				fill="#1ED760"
+				d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741 0-46.246-37.49-83.738-83.745-83.738l.001-.004zm38.404 120.78a5.217 5.217 0 01-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 01-6.249-3.93 5.213 5.213 0 013.926-6.25c31.9-7.291 59.263-4.15 81.337 9.34 2.46 1.51 3.24 4.72 1.73 7.18zm10.25-22.805c-1.89 3.075-5.91 4.045-8.98 2.155-22.51-13.839-56.823-17.846-83.448-9.764-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 014.354-8.143c30.413-9.228 68.222-4.758 94.072 11.127 3.07 1.89 4.04 5.91 2.15 8.976v-.001zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684-4.138 1.255-8.514-1.081-9.768-5.219a7.835 7.835 0 015.221-9.771c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 012.74 10.733c-2.2 3.722-7.02 4.949-10.73 2.739z"
+			/>
+		</svg>
+	</span>
+);
 
 export const NowPlayingBadge = () => {
 	const { t } = useLocale();
@@ -20,31 +28,20 @@ export const NowPlayingBadge = () => {
 			{nowPlaying?.data.isPlaying ? (
 				<a href={nowPlaying?.data.songUrl} target="_blank" rel="noreferrer" className="group block">
 					<div className="flex items-start">
-						<div className="relative h-6 inline-block max-w-[220px] align-top">
+						<div className="relative h-6 inline-block max-w-[180px] sm:max-w-[220px] align-top">
 							<span className="invisible block h-6 px-2 py-0 font-mono text-[11px] font-medium leading-snug truncate">
 								{nowPlaying?.data.title} - {nowPlaying?.data.artist}
 							</span>
 							<Badge
 								variant="outline"
-								className="absolute left-0 top-0 text-card-foreground h-6 w-max max-w-[220px] rounded-[24px] px-2 py-0 sm:left-auto sm:right-0 group-hover:h-24 group-hover:w-[320px] group-hover:max-w-none group-hover:rounded-[10px] group-hover:px-3 group-hover:py-2 group-focus-within:h-24 group-focus-within:w-[320px] group-focus-within:max-w-none group-focus-within:rounded-[10px] group-focus-within:px-3 group-focus-within:py-2 z-10 bg-card-ghost"
-								style={{
-									transition:
-										'width 600ms cubic-bezier(0.22,1,0.36,1), height 600ms cubic-bezier(0.22,1,0.36,1), border-radius 900ms ease-out'
-								}}
+								className="absolute right-0 top-0 z-10 bg-card-ghost text-card-foreground h-6 w-max max-w-[180px] sm:max-w-[220px] rounded-[24px] px-2 py-0 now-playing-transition group-hover:h-24 group-hover:w-[320px] group-hover:max-w-none group-hover:rounded-[10px] group-hover:px-3 group-hover:py-2 group-focus-within:h-24 group-focus-within:w-[320px] group-focus-within:max-w-none group-focus-within:rounded-[10px] group-focus-within:px-3 group-focus-within:py-2"
 							>
-								{/* Blur glow — positioned to land behind the album art in expanded state */}
 								{nowPlaying?.data.albumImageUrl && (
 									<img
 										src={nowPlaying.data.albumImageUrl}
 										alt=""
 										aria-hidden="true"
-										className="absolute opacity-0 object-cover blur-[8px] scale-[1.12] rounded-[9px] pointer-events-none transition-opacity duration-75 group-hover:opacity-40 group-hover:duration-500 group-focus-within:opacity-40 group-focus-within:duration-500"
-										style={{
-											width: ALBUM_ART_SIZE,
-											height: ALBUM_ART_SIZE,
-											left: BADGE_PADDING_EXPANDED + CONTENT_PADDING,
-											top: BADGE_PADDING_EXPANDED + CONTENT_PADDING
-										}}
+										className="absolute w-16 h-16 left-4 top-4 opacity-0 object-cover blur-[8px] scale-[1.12] rounded-[9px] pointer-events-none transition-opacity duration-75 group-hover:opacity-40 group-hover:duration-500 group-focus-within:opacity-40 group-focus-within:duration-500"
 									/>
 								)}
 								<div className="relative flex h-full min-w-0 flex-col justify-center gap-0 overflow-hidden">
@@ -84,14 +81,7 @@ export const NowPlayingBadge = () => {
 								</div>
 							</Badge>
 						</div>
-						<span className="order-first mr-1 ml-0 sm:order-none sm:ml-1 sm:mr-0">
-							<svg className="h-4 w-4 mt-1" viewBox="0 0 168 168" aria-hidden="true">
-								<path
-									fill="#1ED760"
-									d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741 0-46.246-37.49-83.738-83.745-83.738l.001-.004zm38.404 120.78a5.217 5.217 0 01-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 01-6.249-3.93 5.213 5.213 0 013.926-6.25c31.9-7.291 59.263-4.15 81.337 9.34 2.46 1.51 3.24 4.72 1.73 7.18zm10.25-22.805c-1.89 3.075-5.91 4.045-8.98 2.155-22.51-13.839-56.823-17.846-83.448-9.764-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 014.354-8.143c30.413-9.228 68.222-4.758 94.072 11.127 3.07 1.89 4.04 5.91 2.15 8.976v-.001zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684-4.138 1.255-8.514-1.081-9.768-5.219a7.835 7.835 0 015.221-9.771c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 012.74 10.733c-2.2 3.722-7.02 4.949-10.73 2.739z"
-								/>
-							</svg>
-						</span>
+						<SpotifyLogo className="h-4 w-4 mt-1" />
 					</div>
 				</a>
 			) : (
@@ -102,14 +92,7 @@ export const NowPlayingBadge = () => {
 					>
 						{t('components.now-playing.idle')}
 					</Badge>
-					<span className="ml-1">
-						<svg className="h-4 w-4" viewBox="0 0 168 168" aria-hidden="true">
-							<path
-								fill="#1ED760"
-								d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741 0-46.246-37.49-83.738-83.745-83.738l.001-.004zm38.404 120.78a5.217 5.217 0 01-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 01-6.249-3.93 5.213 5.213 0 013.926-6.25c31.9-7.291 59.263-4.15 81.337 9.34 2.46 1.51 3.24 4.72 1.73 7.18zm10.25-22.805c-1.89 3.075-5.91 4.045-8.98 2.155-22.51-13.839-56.823-17.846-83.448-9.764-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 014.354-8.143c30.413-9.228 68.222-4.758 94.072 11.127 3.07 1.89 4.04 5.91 2.15 8.976v-.001zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684-4.138 1.255-8.514-1.081-9.768-5.219a7.835 7.835 0 015.221-9.771c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 012.74 10.733c-2.2 3.722-7.02 4.949-10.73 2.739z"
-							/>
-						</svg>
-					</span>
+					<SpotifyLogo className="h-4 w-4" />
 				</div>
 			)}
 		</div>
