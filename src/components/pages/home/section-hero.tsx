@@ -4,17 +4,26 @@ import { AnimatedMottos } from '@/components/pages/home/motto';
 import { Section } from '@/components/ui/section';
 import { useLocale } from '@/contexts/locale-context';
 import { data } from '@/data/main';
+import { cn } from '@/utils/utils';
 
 const TILT_MAX = 16;
+const AVATAR_SIZE_DESKTOP = 92;
+const AVATAR_SIZE_MOBILE = 150;
 
-export const SectionHero = () => {
-	const { t, translations } = useLocale();
-	const currentWork = data.work.find((w) => w.end === 'Present');
+const WaveBadge = () => (
+	<div
+		className="absolute bottom-[-6px] right-[-6px] w-[30px] h-[30px] rounded-full bg-background border border-border grid place-items-center text-[15px] animate-[hero-wave_3.4s_ease-in-out_infinite] origin-[70%_80%] motion-reduce:animate-none"
+		aria-hidden="true"
+	>
+		👋
+	</div>
+);
+
+const AvatarCard = ({ size, className }: { size: number; className?: string }) => {
 	const avatarRef = useRef<HTMLDivElement>(null);
 	const borderRef = useRef<HTMLDivElement>(null);
 	const shineRef = useRef<HTMLDivElement>(null);
 	const highlightRef = useRef<HTMLDivElement>(null);
-
 	const tiltRaf = useRef(0);
 
 	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -53,7 +62,63 @@ export const SectionHero = () => {
 	};
 
 	return (
+		<div
+			ref={avatarRef}
+			className={cn('relative w-fit flex-shrink-0 will-change-transform', className)}
+			style={{ transition: 'transform 0.6s var(--ease-out)' }}
+			onMouseMove={handleMouseMove}
+			onMouseLeave={handleMouseLeave}
+		>
+			<div
+				ref={borderRef}
+				className="rounded-[8px] p-px shadow-card"
+				style={{ background: 'hsl(var(--border))', transition: 'background 0.2s ease' }}
+			>
+				<div
+					className="relative rounded-[7px] overflow-hidden bg-background"
+					style={{ width: size, height: size }}
+				>
+					<img
+						className="w-full h-full object-cover block"
+						alt={data.name}
+						src="images/avatar.jpeg"
+						width={size}
+						height={size}
+						loading="eager"
+					/>
+					<div
+						ref={shineRef}
+						className="absolute pointer-events-none mix-blend-overlay opacity-0 will-change-transform"
+						style={{
+							inset: '-50%',
+							backgroundImage:
+								'linear-gradient(105deg, hsla(0,50%,72%,0.9) 0%, hsla(60,50%,72%,0.9) 17%, hsla(120,50%,72%,0.9) 33%, hsla(180,50%,72%,0.9) 50%, hsla(240,50%,72%,0.9) 67%, hsla(300,50%,72%,0.9) 83%, hsla(360,50%,72%,0.9) 100%)',
+							transition: 'opacity 0.4s ease, transform 0.12s ease'
+						}}
+					/>
+					<div
+						ref={highlightRef}
+						className="absolute top-0 left-0 w-[80px] h-[80px] rounded-full pointer-events-none mix-blend-screen opacity-0 will-change-transform"
+						style={{
+							background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 65%)',
+							transition: 'opacity 0.25s ease, transform 0.08s ease'
+						}}
+					/>
+				</div>
+			</div>
+			<WaveBadge />
+		</div>
+	);
+};
+
+export const SectionHero = () => {
+	const { t, translations } = useLocale();
+	const currentWork = data.work.find((w) => w.end === 'Present');
+
+	return (
 		<Section className="mt-20 animate-fade-in delay-100">
+			<AvatarCard size={AVATAR_SIZE_MOBILE} className="sm:hidden mb-[22px]" />
+
 			<h1 className="font-clash font-medium text-[clamp(64px,20vw,116px)] leading-[0.92] tracking-[-0.035em] m-0">
 				<span className="block w-fit pb-[0.04em] bg-[linear-gradient(to_right,var(--color-fg-base)_50%,transparent)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent]">
 					maria
@@ -122,58 +187,8 @@ export const SectionHero = () => {
 							)}
 						</div>
 
-						<div
-							ref={avatarRef}
-							className="relative flex-shrink-0 will-change-transform"
-							style={{ transition: 'transform 0.6s var(--ease-out)' }}
-							onMouseMove={handleMouseMove}
-							onMouseLeave={handleMouseLeave}
-						>
-							<div
-								ref={borderRef}
-								className="rounded-[8px] p-px shadow-card"
-								style={{ background: 'hsl(var(--border))', transition: 'background 0.2s ease' }}
-							>
-								<div className="relative w-[92px] h-[92px] rounded-[7px] overflow-hidden bg-background">
-									<img
-										className="w-full h-full object-cover block"
-										alt={data.name}
-										src="images/avatar.jpeg"
-										width={92}
-										height={92}
-										loading="eager"
-									/>
-									<div
-										ref={shineRef}
-										className="absolute pointer-events-none mix-blend-overlay opacity-0 will-change-transform"
-										style={{
-											inset: '-50%',
-											backgroundImage:
-												'linear-gradient(105deg, hsla(0,50%,72%,0.9) 0%, hsla(60,50%,72%,0.9) 17%, hsla(120,50%,72%,0.9) 33%, hsla(180,50%,72%,0.9) 50%, hsla(240,50%,72%,0.9) 67%, hsla(300,50%,72%,0.9) 83%, hsla(360,50%,72%,0.9) 100%)',
-											transition: 'opacity 0.4s ease, transform 0.12s ease'
-										}}
-									/>
-									<div
-										ref={highlightRef}
-										className="absolute top-0 left-0 w-[80px] h-[80px] rounded-full pointer-events-none mix-blend-screen opacity-0 will-change-transform"
-										style={{
-											background:
-												'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 65%)',
-											transition: 'opacity 0.25s ease, transform 0.08s ease'
-										}}
-									/>
-								</div>
-							</div>
-							<div
-								className="absolute bottom-[-6px] right-[-6px] w-[30px] h-[30px] rounded-full bg-background border border-border grid place-items-center text-[15px] animate-[hero-wave_3.4s_ease-in-out_infinite] origin-[70%_80%] motion-reduce:animate-none"
-								aria-hidden="true"
-							>
-								👋
-							</div>
-						</div>
+						<AvatarCard size={AVATAR_SIZE_DESKTOP} className="max-sm:hidden" />
 					</div>
-
-					{/* TODO: decide between hero widget vs navbar badge */}
 				</div>
 			</div>
 
