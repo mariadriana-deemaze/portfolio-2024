@@ -49,12 +49,12 @@ export function SectionHeading({ num, title, count, className }: SectionHeadingP
 				<StaggerText text={title} revealed={revealed} baseDelay={0.05} letterDelay={0.03} />
 			</h2>
 			<div
-				className="flex-1 h-px bg-border self-center origin-left transition-[scale] duration-[1.2s] [transition-timing-function:var(--ease-out)]"
+				className="flex-1 h-px bg-border self-center origin-left transition-[scale] duration-[1.2s] [transition-timing-function:var(--ease-out)] max-sm:hidden"
 				style={{ scale: revealed ? '1' : '0 1', transitionDelay: revealed ? '0.3s' : '0s' }}
 			/>
 			{count && (
 				<span
-					className="font-mono text-[11px] text-muted-foreground self-center transition-[opacity,color] duration-700 [&_a:hover]:text-[var(--color-orange-primary)]"
+					className="font-mono text-[11px] text-muted-foreground self-center transition-[opacity,color] duration-700 [&_a:hover]:text-[var(--color-orange-primary)] max-sm:hidden"
 					style={{ opacity: revealed ? 1 : 0, transitionDelay: revealed ? '0.3s' : '0s' }}
 				>
 					{count}
