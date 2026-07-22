@@ -239,6 +239,13 @@
 	clip-path: circle(0% at calc(100% - 42px) 34px);
 }
 
+@utility now-playing-transition {
+	transition:
+		width 600ms cubic-bezier(0.22, 1, 0.36, 1),
+		height 600ms cubic-bezier(0.22, 1, 0.36, 1),
+		border-radius 900ms ease-out;
+}
+
 @utility overlay-grid {
 	background-size: 54px 54px;
 	background-image:

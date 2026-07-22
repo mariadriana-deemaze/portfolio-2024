@@ -1,4 +1,5 @@
 import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
+import type React from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -9,7 +10,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { applyTheme } from '@/utils/theme';
 
-export function ThemeToggle() {
+type ContentProps = React.ComponentPropsWithoutRef<typeof DropdownMenuContent>;
+
+export function ThemeToggle({
+	align = 'end',
+	side = 'bottom'
+}: Pick<ContentProps, 'align' | 'side'>) {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -24,7 +30,7 @@ export function ThemeToggle() {
 					<span className="sr-only">Toggle theme</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end">
+			<DropdownMenuContent align={align} side={side}>
 				<DropdownMenuItem onClick={() => applyTheme('light')}>Light</DropdownMenuItem>
 				<DropdownMenuItem onClick={() => applyTheme('dark')}>Dark</DropdownMenuItem>
 				<DropdownMenuItem onClick={() => applyTheme('system')}>System</DropdownMenuItem>
