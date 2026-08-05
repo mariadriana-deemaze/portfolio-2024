@@ -16,7 +16,7 @@ overrides:
   micromatch>picomatch: 4.0.4
   readdirp>picomatch: 4.0.4
   tmp: ^0.2.4
-  '@actions/github>undici': 8.5.0
+  '@actions/github>undici': 8.9.0
   '@actions/http-client>undici': 8.5.0
   '@vercel/frameworks>js-yaml': 4.3.0
   typeid-js>uuid: 11.1.1
@@ -6836,6 +6836,10 @@ packages:
     resolution: {integrity: sha512-xamtWoB1EshgjpmlXd7GGm2VfdDtw1+rD8uhry8pSNW3If6S8E0m2T2+orSKeZXEn/aPJMviCpDBA65WJt8zhg==}
     engines: {node: '>=22.19.0'}
 
+  undici@8.9.0:
+    resolution: {integrity: sha512-aWZpUj7XoGonMClx4gdDRfgBjqeA+F473aDmROQQbM9n6PRfK/u1q/a0X4wMTgcHfT8H6fpbt98PFuDUwFg2YA==}
+    engines: {node: '>=22.19.0'}
+
   unenv@2.0.0-rc.24:
     resolution: {integrity: sha512-i7qRCmY42zmCwnYlh9H2SvLEypEFGye5iRmEMKjcGi7zk9UquigRjFtTLz0TYqr0ZGLZhaMHl/foy1bZR+Cwlw==}
 
@@ -7343,7 +7347,7 @@ snapshots:
       '@octokit/plugin-rest-endpoint-methods': 17.0.0(@octokit/core@7.0.6)
       '@octokit/request': 10.0.11
       '@octokit/request-error': 7.1.0
-      undici: 8.5.0
+      undici: 8.9.0
 
   '@actions/http-client@3.0.2':
     dependencies:
@@ -10185,7 +10189,7 @@ snapshots:
     dependencies:
       '@sanity/eventsource': 5.0.4
       get-it: 8.8.0
-      nanoid: 3.3.16
+      nanoid: 3.3.17
       rxjs: 7.8.2
 
   '@sanity/codegen@7.0.3(@oclif/core@4.13.2)(@sanity/cli-core@2.7.1(@noble/hashes@2.2.0)(@types/node@24.12.4)(esbuild@0.28.1)(supports-color@8.1.1)(yaml@2.9.0))(react@19.2.8)(supports-color@8.1.1)':
@@ -14395,6 +14399,8 @@ snapshots:
   undici@7.29.0: {}
 
   undici@8.5.0: {}
+
+  undici@8.9.0: {}
 
   unenv@2.0.0-rc.24:
     dependencies:
