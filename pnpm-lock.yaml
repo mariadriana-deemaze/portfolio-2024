@@ -6,7 +6,7 @@ settings:
 
 overrides:
   '@tanstack/start-plugin-core>srvx': 0.11.16
-  '@tanstack/start-server-core>h3-v2': npm:h3@2.0.1-rc.22
+  '@tanstack/start-server-core>h3-v2': npm:h3@2.0.1-rc.26
   ajv>fast-uri: 3.1.5
   anymatch>picomatch: 4.0.4
   commitizen>lodash: 4.18.1
@@ -4942,18 +4942,18 @@ packages:
       ocache:
         optional: true
 
-  h3@2.0.1-rc.22:
-    resolution: {integrity: sha512-Esv0DMIuPkCTSWCA0vO73vcTqwzH1wjSrAO1TXNu/K3up1sZHa9EKMapbmxCDYBeymC3fVTk4qxp7ogQWQ+KgA==}
+  h3@2.0.1-rc.25:
+    resolution: {integrity: sha512-uIK++Up28xDt4n0+bSWfVssRivNXpUmMmA6CCiK6j9+utLcBMcFK97Gn9PlSZwAPW9oLy3CjGJ4ag40CY9YYtQ==}
     engines: {node: '>=20.11.1'}
     hasBin: true
     peerDependencies:
-      crossws: ^0.4.1
+      crossws: ^0.4.9
     peerDependenciesMeta:
       crossws:
         optional: true
 
-  h3@2.0.1-rc.25:
-    resolution: {integrity: sha512-uIK++Up28xDt4n0+bSWfVssRivNXpUmMmA6CCiK6j9+utLcBMcFK97Gn9PlSZwAPW9oLy3CjGJ4ag40CY9YYtQ==}
+  h3@2.0.1-rc.26:
+    resolution: {integrity: sha512-GDxlvDsKxgjRvG5UBRJYyGJTMWLV30CJ4cV+e7QCTgftDHihrvio1fVPbNembhEr6J4WNm8IWy3fookgyTweLw==}
     engines: {node: '>=20.11.1'}
     hasBin: true
     peerDependencies:
@@ -6370,9 +6370,6 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rou3@0.8.1:
-    resolution: {integrity: sha512-ePa+XGk00/3HuCqrEnK3LxJW7I0SdNg6EFzKUJG73hMAdDcOUC/i/aSz7LSDwLrGr33kal/rqOGydzwl6U7zBA==}
-
   rou3@0.9.1:
     resolution: {integrity: sha512-z/sSmzvtwMDDnxsPVhfWMuG6F6mbmhFDXoVqLmMfbpDD9qfV3GDmSQpf0+W296/ZDIpW2wcMmBfpVFzcnOi/nA==}
 
@@ -6569,6 +6566,11 @@ packages:
 
   srvx@0.11.22:
     resolution: {integrity: sha512-LqZxxBDMKuMAZzFzJnDCkFOrs9MZQZr0LvHiO/SuSZVdQaXD7xQ5UWTUxheJrQPve1qk9MG2B/yttUvJxw8egQ==}
+    engines: {node: '>=20.16.0'}
+    hasBin: true
+
+  srvx@0.12.5:
+    resolution: {integrity: sha512-IuvtDNQg5EIwv3c6dleyau7u8hCyGQ7D6+V/QM799Aud07z0wCUcurKLTRfyG33C8oUY+UWcVBFkfHMcbtmRLA==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -11080,7 +11082,7 @@ snapshots:
       '@tanstack/start-client-core': 1.170.6
       '@tanstack/start-storage-context': 1.167.10
       fetchdts: 0.1.7
-      h3-v2: h3@2.0.1-rc.22(crossws@0.4.9(srvx@0.11.22))
+      h3-v2: h3@2.0.1-rc.26(crossws@0.4.9(srvx@0.11.22))
       seroval: 1.5.4
     transitivePeerDependencies:
       - crossws
@@ -12364,17 +12366,17 @@ snapshots:
     optionalDependencies:
       ocache: 0.2.0
 
-  h3@2.0.1-rc.22(crossws@0.4.9(srvx@0.11.22)):
-    dependencies:
-      rou3: 0.8.1
-      srvx: 0.11.22
-    optionalDependencies:
-      crossws: 0.4.9(srvx@0.11.22)
-
   h3@2.0.1-rc.25(crossws@0.4.9(srvx@0.11.22)):
     dependencies:
       rou3: 0.9.1
       srvx: 0.11.22
+    optionalDependencies:
+      crossws: 0.4.9(srvx@0.11.22)
+
+  h3@2.0.1-rc.26(crossws@0.4.9(srvx@0.11.22)):
+    dependencies:
+      rou3: 0.9.1
+      srvx: 0.12.5
     optionalDependencies:
       crossws: 0.4.9(srvx@0.11.22)
 
@@ -13819,8 +13821,6 @@ snapshots:
       fsevents: 2.3.3
     optional: true
 
-  rou3@0.8.1: {}
-
   rou3@0.9.1: {}
 
   run-applescript@7.1.0: {}
@@ -14118,6 +14118,8 @@ snapshots:
   srvx@0.11.21: {}
 
   srvx@0.11.22: {}
+
+  srvx@0.12.5: {}
 
   stdin-discarder@0.3.2: {}
 
