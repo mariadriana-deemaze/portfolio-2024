@@ -77,7 +77,7 @@ importers:
         version: 4.4.0
       lenis:
         specifier: ^1.2.3
-        version: 1.3.23(react@19.2.8)
+        version: 1.3.26(react@19.2.8)
       nodemailer:
         specifier: ^9.0.1
         version: 9.0.1
@@ -5364,8 +5364,8 @@ packages:
     resolution: {integrity: sha512-fre88KwPAjsDq8jeenv8GlgkdqbKf4wPGTlnKMXEDA5K12A3IptirNFv1koG47IBcgSykCbWYF9T3wmmKJFJtQ==}
     engines: {node: '>=22'}
 
-  lenis@1.3.23:
-    resolution: {integrity: sha512-YxYq3TJqj9sJNv0V9SkyQHejt14xwyIwgDaaMK89Uf9SxQfIszu+gTQSSphh6BWlLTNVKvvXAGkg+Zf+oFIevg==}
+  lenis@1.3.26:
+    resolution: {integrity: sha512-s/xTCZCxTFvHbAN1OzuhNaN5YPJH2ail0XAkctKW1b+RUAG4nUL5UHLXwNko1h8aEeT2jspBXegMgPJd8zcuag==}
     peerDependencies:
       '@nuxt/kit': '>=3.0.0'
       react: '>=17.0.0'
@@ -12656,7 +12656,7 @@ snapshots:
 
   lambda-runtimes@3.0.0: {}
 
-  lenis@1.3.23(react@19.2.8):
+  lenis@1.3.26(react@19.2.8):
     optionalDependencies:
       react: 19.2.8
 
