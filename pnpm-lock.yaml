@@ -17,7 +17,7 @@ overrides:
   readdirp>picomatch: 4.0.4
   tmp: ^0.2.4
   '@actions/github>undici': 8.9.0
-  '@actions/http-client>undici': 8.9.0
+  '@actions/http-client>undici': 8.10.0
   '@vercel/frameworks>js-yaml': 5.2.3
   typeid-js>uuid: 11.1.1
   '@sanity/uuid>uuid': 14.0.1
@@ -6673,6 +6673,10 @@ packages:
     resolution: {integrity: sha512-IDxfleLmmbSskfWSUATiN1nfn2rDuvnMOqb5CWR92iIfojA0Ud+ulOAAEQ57LPr9rWmsreUyf5lwyao+7GNNVw==}
     engines: {node: '>=20.18.1'}
 
+  undici@8.10.0:
+    resolution: {integrity: sha512-HvltHd7avK13QIw/oLe4qoOLyoVSoafqJ2jYOrtMRBkbYT31eiBQ8O0ehRKZiEZCMEyLFQNIADpgCWC5fALvYQ==}
+    engines: {node: '>=22.19.0'}
+
   undici@8.9.0:
     resolution: {integrity: sha512-aWZpUj7XoGonMClx4gdDRfgBjqeA+F473aDmROQQbM9n6PRfK/u1q/a0X4wMTgcHfT8H6fpbt98PFuDUwFg2YA==}
     engines: {node: '>=22.19.0'}
@@ -7171,12 +7175,12 @@ snapshots:
   '@actions/http-client@3.0.2':
     dependencies:
       tunnel: 0.0.6
-      undici: 8.9.0
+      undici: 8.10.0
 
   '@actions/http-client@4.0.1':
     dependencies:
       tunnel: 0.0.6
-      undici: 8.9.0
+      undici: 8.10.0
 
   '@actions/io@3.0.2': {}
 
@@ -13996,6 +14000,8 @@ snapshots:
   undici@7.28.0: {}
 
   undici@7.29.0: {}
+
+  undici@8.10.0: {}
 
   undici@8.9.0: {}
 
