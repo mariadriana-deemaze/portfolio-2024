@@ -16,7 +16,7 @@ overrides:
   micromatch>picomatch: 4.0.4
   readdirp>picomatch: 4.0.4
   tmp: ^0.2.4
-  '@actions/github>undici': 8.9.0
+  '@actions/github>undici': 8.10.0
   '@actions/http-client>undici': 8.10.0
   '@vercel/frameworks>js-yaml': 5.2.3
   typeid-js>uuid: 11.1.1
@@ -6673,10 +6673,6 @@ packages:
     resolution: {integrity: sha512-HvltHd7avK13QIw/oLe4qoOLyoVSoafqJ2jYOrtMRBkbYT31eiBQ8O0ehRKZiEZCMEyLFQNIADpgCWC5fALvYQ==}
     engines: {node: '>=22.19.0'}
 
-  undici@8.9.0:
-    resolution: {integrity: sha512-aWZpUj7XoGonMClx4gdDRfgBjqeA+F473aDmROQQbM9n6PRfK/u1q/a0X4wMTgcHfT8H6fpbt98PFuDUwFg2YA==}
-    engines: {node: '>=22.19.0'}
-
   unenv@2.0.0-rc.24:
     resolution: {integrity: sha512-i7qRCmY42zmCwnYlh9H2SvLEypEFGye5iRmEMKjcGi7zk9UquigRjFtTLz0TYqr0ZGLZhaMHl/foy1bZR+Cwlw==}
 
@@ -7166,7 +7162,7 @@ snapshots:
       '@octokit/plugin-rest-endpoint-methods': 17.0.0(@octokit/core@7.0.7)
       '@octokit/request': 10.0.13
       '@octokit/request-error': 7.1.1
-      undici: 8.9.0
+      undici: 8.10.0
 
   '@actions/http-client@3.0.2':
     dependencies:
@@ -13990,8 +13986,6 @@ snapshots:
   undici@7.29.0: {}
 
   undici@8.10.0: {}
-
-  undici@8.9.0: {}
 
   unenv@2.0.0-rc.24:
     dependencies:
