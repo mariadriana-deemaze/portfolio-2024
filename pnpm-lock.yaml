@@ -19,7 +19,7 @@ overrides:
   '@actions/github>undici': 8.10.0
   '@actions/http-client>undici': 8.10.0
   '@vercel/frameworks>js-yaml': 5.2.3
-  typeid-js>uuid: 11.1.1
+  typeid-js>uuid: 14.0.1
   '@sanity/uuid>uuid': 14.0.1
   esbuild: 0.28.1
 
@@ -6892,10 +6892,6 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  uuid@11.1.1:
-    resolution: {integrity: sha512-vIYxrBCC/N/K+Js3qSN88go7kIfNPssr/hHCesKCQNAjmgvYS2oqr69kIufEG+O4+PfezOH4EbIeHCfFov8ZgQ==}
-    hasBin: true
 
   uuid@14.0.1:
     resolution: {integrity: sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==}
@@ -13948,7 +13944,7 @@ snapshots:
 
   typeid-js@1.2.0:
     dependencies:
-      uuid: 11.1.1
+      uuid: 14.0.1
 
   typescript@7.0.2:
     optionalDependencies:
@@ -14105,8 +14101,6 @@ snapshots:
       os-homedir: 1.0.2
 
   util-deprecate@1.0.2: {}
-
-  uuid@11.1.1: {}
 
   uuid@14.0.1: {}
 
