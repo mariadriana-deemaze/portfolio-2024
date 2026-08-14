@@ -19,7 +19,7 @@ overrides:
   'cz-customizable>lodash': '4.18.1'
   'dompurify': '3.4.13'
   'filelist>minimatch': '10.2.5'
-  'micromatch>picomatch': '4.0.4'
+  'micromatch>picomatch': '4.0.5'
   'readdirp>picomatch': '4.0.5'
   'tmp': '^0.2.4'
   '@actions/github>undici': '8.10.0'
