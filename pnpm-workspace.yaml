@@ -27,4 +27,4 @@ overrides:
   '@vercel/frameworks>js-yaml': '5.2.3'
   'typeid-js>uuid': '14.0.1'
   '@sanity/uuid>uuid': '14.0.1'
-  'esbuild': '0.28.1'
+  'esbuild': '0.28.2'
