@@ -32,7 +32,7 @@ importers:
         version: 5.7.1(ajv@8.20.0)(react-hook-form@7.85.0(react@19.2.8))(zod@4.4.3)
       '@portabletext/markdown':
         specifier: ^1.4.1
-        version: 1.4.4
+        version: 1.5.0
       '@portabletext/react':
         specifier: ^7.0.0
         version: 7.0.1(react@19.2.8)
@@ -2058,6 +2058,10 @@ packages:
     resolution: {integrity: sha512-XNzCKBHaZ9e/4cB5qI+mpZBSFYvWNwSft7EYQ90kIT1e7nm++rwcOmF6BEjlpMnkny72NAhhgVH5stmqO2Eykg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
+  '@portabletext/markdown@1.5.0':
+    resolution: {integrity: sha512-TLlWrsLT6kXUeE4Fn6KWW+NMOBB/epT5qZiD92+15cJje6R7xmmQ/orCwViSicCiQ77t1/zwguilCUzdNB4XDA==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
+
   '@portabletext/patches@2.0.5':
     resolution: {integrity: sha512-PUhFBFT+aToiU5G13v8uY3808RiFvFgxnPpk9bhMJuYOw1jZVEOfnmgQ2GA03sgO+bVbDQ13Hhx3axLwq73VUg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
@@ -2138,6 +2142,10 @@ packages:
 
   '@portabletext/schema@2.2.3':
     resolution: {integrity: sha512-C3+BvyDmUk3ZMgdTXowVdzqxHHPotgy2tFsiuuaxhOsXCeb1+iYUnxoDQKV+7HO9CYwA3H6I85/t+1b5VJWPEA==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
+
+  '@portabletext/schema@2.2.4':
+    resolution: {integrity: sha512-pTDrGxBk2LFVK4awpyBBOEkwGZwQOUWFyQAnhPfuLHIIgjcljOhzGHB+Mz89ddxi+zAXlxJ/A3U2xmFibe8qNQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
   '@portabletext/to-html@5.0.2':
@@ -9044,6 +9052,13 @@ snapshots:
       '@portabletext/toolkit': 5.0.2
       markdown-it: 14.3.0
 
+  '@portabletext/markdown@1.5.0':
+    dependencies:
+      '@mdit/plugin-alert': 0.23.2(markdown-it@14.3.0)
+      '@portabletext/schema': 2.2.4
+      '@portabletext/toolkit': 5.0.2
+      markdown-it: 14.3.0
+
   '@portabletext/patches@2.0.5':
     dependencies:
       '@sanity/diff-match-patch': 3.2.0
@@ -9125,6 +9140,8 @@ snapshots:
       - '@types/react'
 
   '@portabletext/schema@2.2.3': {}
+
+  '@portabletext/schema@2.2.4': {}
 
   '@portabletext/to-html@5.0.2':
     dependencies:
