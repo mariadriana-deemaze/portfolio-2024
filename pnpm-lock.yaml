@@ -32,7 +32,7 @@ importers:
         version: 5.7.1(ajv@8.20.0)(react-hook-form@7.85.0(react@19.2.8))(zod@4.4.3)
       '@portabletext/markdown':
         specifier: ^1.4.1
-        version: 1.4.4
+        version: 1.5.0
       '@portabletext/react':
         specifier: ^7.0.0
         version: 7.0.1(react@19.2.8)
@@ -2058,6 +2058,10 @@ packages:
     resolution: {integrity: sha512-XNzCKBHaZ9e/4cB5qI+mpZBSFYvWNwSft7EYQ90kIT1e7nm++rwcOmF6BEjlpMnkny72NAhhgVH5stmqO2Eykg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
+  '@portabletext/markdown@1.5.0':
+    resolution: {integrity: sha512-TLlWrsLT6kXUeE4Fn6KWW+NMOBB/epT5qZiD92+15cJje6R7xmmQ/orCwViSicCiQ77t1/zwguilCUzdNB4XDA==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
+
   '@portabletext/patches@2.0.5':
     resolution: {integrity: sha512-PUhFBFT+aToiU5G13v8uY3808RiFvFgxnPpk9bhMJuYOw1jZVEOfnmgQ2GA03sgO+bVbDQ13Hhx3axLwq73VUg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
@@ -2138,6 +2142,10 @@ packages:
 
   '@portabletext/schema@2.2.3':
     resolution: {integrity: sha512-C3+BvyDmUk3ZMgdTXowVdzqxHHPotgy2tFsiuuaxhOsXCeb1+iYUnxoDQKV+7HO9CYwA3H6I85/t+1b5VJWPEA==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
+
+  '@portabletext/schema@2.2.4':
+    resolution: {integrity: sha512-pTDrGxBk2LFVK4awpyBBOEkwGZwQOUWFyQAnhPfuLHIIgjcljOhzGHB+Mz89ddxi+zAXlxJ/A3U2xmFibe8qNQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
   '@portabletext/to-html@5.0.2':
@@ -3511,8 +3519,8 @@ packages:
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
 
-  '@types/markdown-it@14.1.2':
-    resolution: {integrity: sha512-promo4eFwuiW+TfGxhi+0x3czqTYJkG8qB17ZUJiVF10Xm7NLVRSLUsfRTU/6h1e24VvRnXCx+hG7li58lkzog==}
+  '@types/markdown-it@14.2.0':
+    resolution: {integrity: sha512-NoQ2yGlLWj4wpxMs+TYmRKk3thDrQ97agr7sFqfLsAlvoS8SNQuTrlObhFqG9iugdTtgOE9jpJ6FNM4ZGsa5xQ==}
 
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
@@ -5477,6 +5485,10 @@ packages:
 
   markdown-it@14.3.0:
     resolution: {integrity: sha512-RCEsPjR+sr0x+AuYp601tKTkgFG4YEPLCzHST3cQ/fhlJkqAkz1L2/Qbp1j9qw5SBwQHFBoW8+hoN5xssOF0Tw==}
+    hasBin: true
+
+  markdown-it@14.3.1:
+    resolution: {integrity: sha512-4Ej49aYTDFIQ+uBkfX8GBvJGccoARxxPep+7aWTs55ozbjQJpW9M26Fe53vnGgvLeVzva/amzjQQaQu9w0vMhA==}
     hasBin: true
 
   math-intrinsics@1.1.0:
@@ -8635,9 +8647,15 @@ snapshots:
 
   '@mdit/plugin-alert@0.23.2(markdown-it@14.3.0)':
     dependencies:
-      '@types/markdown-it': 14.1.2
+      '@types/markdown-it': 14.2.0
     optionalDependencies:
       markdown-it: 14.3.0
+
+  '@mdit/plugin-alert@0.23.2(markdown-it@14.3.1)':
+    dependencies:
+      '@types/markdown-it': 14.2.0
+    optionalDependencies:
+      markdown-it: 14.3.1
 
   '@module-federation/dts-plugin@2.8.1(typescript@7.0.2)':
     dependencies:
@@ -9044,6 +9062,13 @@ snapshots:
       '@portabletext/toolkit': 5.0.2
       markdown-it: 14.3.0
 
+  '@portabletext/markdown@1.5.0':
+    dependencies:
+      '@mdit/plugin-alert': 0.23.2(markdown-it@14.3.1)
+      '@portabletext/schema': 2.2.4
+      '@portabletext/toolkit': 5.0.2
+      markdown-it: 14.3.1
+
   '@portabletext/patches@2.0.5':
     dependencies:
       '@sanity/diff-match-patch': 3.2.0
@@ -9125,6 +9150,8 @@ snapshots:
       - '@types/react'
 
   '@portabletext/schema@2.2.3': {}
+
+  '@portabletext/schema@2.2.4': {}
 
   '@portabletext/to-html@5.0.2':
     dependencies:
@@ -10763,7 +10790,7 @@ snapshots:
 
   '@types/linkify-it@5.0.0': {}
 
-  '@types/markdown-it@14.1.2':
+  '@types/markdown-it@14.2.0':
     dependencies:
       '@types/linkify-it': 5.0.0
       '@types/mdurl': 2.0.0
@@ -12593,6 +12620,15 @@ snapshots:
       semver: 5.7.2
 
   markdown-it@14.3.0:
+    dependencies:
+      argparse: 2.0.1
+      entities: 4.5.0
+      linkify-it: 5.0.2
+      mdurl: 2.1.0
+      punycode.js: 2.3.1
+      uc.micro: 2.1.0
+
+  markdown-it@14.3.1:
     dependencies:
       argparse: 2.0.1
       entities: 4.5.0
