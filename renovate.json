@@ -2,5 +2,17 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["config:recommended"],
 	"schedule": ["on the first day of the month"],
-	"commitBody": "Co-authored-by: Maria Adriana <maria.adriana.cardoso@deemaze.com>"
+	"commitBody": "Co-authored-by: Maria Adriana <maria.adriana.cardoso@deemaze.com>",
+	"packageRules": [
+		{
+			"matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+			"automerge": true,
+			"automergeType": "pr",
+			"platformAutomerge": true
+		},
+		{
+			"matchUpdateTypes": ["major"],
+			"automerge": false
+		}
+	]
 }
