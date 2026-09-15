@@ -22,7 +22,7 @@ overrides:
   'micromatch>picomatch': '4.0.7'
   'readdirp>picomatch': '4.0.5'
   'tmp': '^0.2.4'
-  '@actions/github>undici': '8.10.0'
+  '@actions/github>undici': '8.10.2'
   '@actions/http-client>undici': '8.10.2'
   '@vercel/frameworks>js-yaml': '5.2.3'
   'typeid-js>uuid': '14.0.1'
