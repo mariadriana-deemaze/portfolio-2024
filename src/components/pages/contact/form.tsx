@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { LuArrowUpRight } from 'react-icons/lu';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { TurnstileWidget } from '@/components/pages/contact/turnstile';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -29,41 +30,57 @@ function createContactSchema(t: (key: TranslationKey) => string) {
 			.string()
 			.min(1, t('validation.required'))
 			.max(CONTACT_FIELD_MAX.message, t('validation.too-long')),
-		website: z.string().trim().max(0, 'Invalid submission.')
+		website: z.string().trim().max(0, 'Invalid submission.'),
+		turnstileToken: z.string().min(1, t('validation.challenge-required'))
 	});
 }
 type ContactFormValues = z.infer<ReturnType<typeof createContactSchema>>;
 
 export const ContactForm = () => {
-	const { t } = useLocale();
+	const { t, locale } = useLocale();
 	const contactSchema = useMemo(() => createContactSchema(t), [t]);
+	const [challengeResetSignal, setChallengeResetSignal] = useState(0);
 	const {
 		register,
 		handleSubmit,
 		reset,
+		setValue,
 		formState: { errors, isValid, isSubmitting }
 	} = useForm<ContactFormValues>({
 		resolver: zodResolver(contactSchema),
 		mode: 'onChange',
-		defaultValues: { website: '' }
+		defaultValues: { website: '', turnstileToken: '' }
 	});
 
+	const setChallengeToken = (token: string) => {
+		setValue('turnstileToken', token, { shouldValidate: true });
+	};
+
 	const onSubmit: SubmitHandler<ContactFormValues> = async (data) => {
-		const request = await fetch('/api/send', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(data)
-		});
+		try {
+			const request = await fetch('/api/send', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data)
+			});
 
-		const response: ContactResponse = await request.json();
+			const response: ContactResponse = await request.json();
 
-		if (!request.ok) {
-			toast.error(response.message || t('pages.contact.form.toast.error'));
-			return;
+			if (!request.ok) {
+				toast.error(response.message || t('pages.contact.form.toast.error'));
+				return;
+			}
+
+			reset();
+			toast.success(t('pages.contact.form.toast.success'));
+		} catch (error) {
+			console.error('Contact form submission failed:', error);
+			toast.error(t('pages.contact.form.toast.error'));
+		} finally {
+			// Turnstile tokens are single-use, so every attempt burns the current one.
+			setChallengeToken('');
+			setChallengeResetSignal((signal) => signal + 1);
 		}
-
-		reset();
-		toast.success(t('pages.contact.form.toast.success'));
 	};
 
 	return (
@@ -126,6 +143,13 @@ export const ContactForm = () => {
 					{...register('message')}
 				/>
 			</div>
+
+			<TurnstileWidget
+				language={locale}
+				onVerify={setChallengeToken}
+				onExpire={() => setChallengeToken('')}
+				resetSignal={challengeResetSignal}
+			/>
 
 			<div className="flex flex-col gap-[10px]">
 				<Button

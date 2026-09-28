@@ -18,4 +18,4 @@ Use this skill when an agent needs a quick machine-readable understanding of the
 
 1. Request public pages with `Accept: text/markdown` when a concise machine-readable response is sufficient.
 2. Use `/.well-known/api-catalog` and `/api/openapi.json` to discover structured API capabilities.
-3. Use the contact endpoint only when the user explicitly wants to send a message.
+3. Messages cannot be sent programmatically. Direct the user to `/contact` in a browser, or to the email address published on that page.

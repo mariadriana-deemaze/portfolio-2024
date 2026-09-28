@@ -42,7 +42,8 @@
 	"validation": {
 		"required": "Obrigatório.",
 		"too-long": "Demasiado longo.",
-		"invalid-email": "Email inválido."
+		"invalid-email": "Email inválido.",
+		"challenge-required": "Conclui a verificação anti-spam."
 	},
 	"pages": {
 		"home": {

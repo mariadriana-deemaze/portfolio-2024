@@ -4,7 +4,8 @@ type PublicEnvVariable =
 	| 'VITE_SANITY_PROJECT_ID'
 	| 'VITE_SANITY_DATASET'
 	| 'VITE_SANITY_API_VERSION'
-	| 'VITE_SANITY_USE_CDN';
+	| 'VITE_SANITY_USE_CDN'
+	| 'VITE_TURNSTILE_SITE_KEY';
 type ServerEnvVariable =
 	| 'SPOTIFY_CLIENT_ID'
 	| 'SPOTIFY_CLIENT_SECRET'
@@ -13,7 +14,8 @@ type ServerEnvVariable =
 	| 'SMTP_PORT'
 	| 'SMTP_TO'
 	| 'SMTP_FROM'
-	| 'SMTP_PASSWORD';
+	| 'SMTP_PASSWORD'
+	| 'TURNSTILE_SECRET_KEY';
 
 type PublicEnvVariables = Partial<Record<PublicEnvVariable, string>>;
 

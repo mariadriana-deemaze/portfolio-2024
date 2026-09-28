@@ -4,7 +4,8 @@ export const publicEnvSchema = z.object({
 	VITE_SANITY_PROJECT_ID: z.string().trim().min(1),
 	VITE_SANITY_DATASET: z.string().trim().min(1),
 	VITE_SANITY_API_VERSION: z.string().trim().min(1),
-	VITE_SANITY_USE_CDN: z.stringbool().prefault('true')
+	VITE_SANITY_USE_CDN: z.stringbool().prefault('true'),
+	VITE_TURNSTILE_SITE_KEY: z.string().trim().min(1)
 });
 
 const serverEnvSchema = z.object({
@@ -16,7 +17,8 @@ const serverEnvSchema = z.object({
 	SMTP_TO: z.string().trim().min(1),
 	SMTP_FROM: z.string().trim().min(1),
 	SMTP_PASSWORD: z.string().trim().min(1),
-	SANITY_API_WRITE_TOKEN: z.string().trim().min(1)
+	SANITY_API_WRITE_TOKEN: z.string().trim().min(1),
+	TURNSTILE_SECRET_KEY: z.string().trim().min(1)
 });
 
 const envSchema = publicEnvSchema.extend(serverEnvSchema.shape);
