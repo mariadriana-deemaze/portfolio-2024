@@ -8,10 +8,18 @@ import {
 } from '@/server/routes/api/types/contact';
 import { normalizeString } from '@/utils/string';
 
+import {
+	clearEmailSend,
+	getEmailRateLimitKey,
+	isEmailRateLimited,
+	isIpRateLimited,
+	recordEmailSend
+} from './rate-limit';
 import { buildContactEmailHtml } from './template';
+import { verifyTurnstileToken } from './turnstile';
 
-const RATE_LIMIT_WINDOW_MS = 3 * 60 * 1000;
-const recentByEmail = new Map<string, number>();
+const TURNSTILE_TOKEN_MAX = 2048;
+const UNKNOWN_CLIENT_IP = 'unknown';
 
 const contactInfoSchema = z.object({
 	email: z.email().max(CONTACT_FIELD_MAX.email),
@@ -22,6 +30,10 @@ const contactInfoSchema = z.object({
 
 const honeypotSchema = z.object({
 	website: z.string().trim().max(0).optional()
+});
+
+const turnstileSchema = z.object({
+	turnstileToken: z.string().trim().min(1).max(TURNSTILE_TOKEN_MAX)
 });
 
 function createTransporter() {
@@ -48,34 +60,63 @@ function getValidatedContactInfo(body: unknown): ContactInfo | undefined {
 	return result.success ? result.data : undefined;
 }
 
+function getTurnstileToken(body: unknown): string | undefined {
+	const result = turnstileSchema.safeParse(body);
+
+	return result.success ? result.data.turnstileToken : undefined;
+}
+
+/**
+ * Coolify's proxy appends the address it received from to `x-forwarded-for`, so
+ * the rightmost entry is the one it wrote. Anything a client injects itself
+ * lands to the left of that, which makes the rightmost the least spoofable
+ * value available here.
+ */
+function getClientIp(request: Request): string {
+	const forwardedFor = request.headers.get('x-forwarded-for');
+
+	if (forwardedFor) {
+		const entries = forwardedFor.split(',');
+		const closest = entries[entries.length - 1]?.trim();
+
+		if (closest) return closest;
+	}
+
+	return UNKNOWN_CLIENT_IP;
+}
+
+async function parseJsonBody(request: Request): Promise<unknown> {
+	try {
+		return await request.json();
+	} catch {
+		return undefined;
+	}
+}
+
+function badRequest(): Response {
+	return Response.json({ message: 'Missing required fields.' } satisfies ContactResponse, {
+		status: 400
+	});
+}
+
 export async function handleSendPost(request: Request): Promise<Response> {
-	const body = await request.json();
+	const body = await parseJsonBody(request);
 
 	if (!hasValidHoneypot(body)) {
-		return Response.json(
-			{
-				message: 'Missing required fields.'
-			} satisfies ContactResponse,
-			{ status: 400 }
-		);
+		return badRequest();
 	}
 
 	const contactInfo = getValidatedContactInfo(body);
+	const turnstileToken = getTurnstileToken(body);
 
-	if (!contactInfo) {
-		return Response.json(
-			{
-				message: 'Missing required fields.'
-			} satisfies ContactResponse,
-			{ status: 400 }
-		);
+	if (!contactInfo || !turnstileToken) {
+		return badRequest();
 	}
 
-	const normalizedEmail = normalizeString(contactInfo.email);
-	const now = Date.now();
-	const lastSendAt = recentByEmail.get(normalizedEmail);
+	const clientIp = getClientIp(request);
+	const emailKey = getEmailRateLimitKey(contactInfo.email);
 
-	if (lastSendAt && now - lastSendAt < RATE_LIMIT_WINDOW_MS) {
+	if (isIpRateLimited(clientIp) || isEmailRateLimited(emailKey)) {
 		return Response.json(
 			{
 				message: 'Please wait a few minutes before sending again.'
@@ -84,10 +125,16 @@ export async function handleSendPost(request: Request): Promise<Response> {
 		);
 	}
 
-	recentByEmail.set(normalizedEmail, now);
-	setTimeout(() => {
-		if (recentByEmail.get(normalizedEmail) === now) recentByEmail.delete(normalizedEmail);
-	}, RATE_LIMIT_WINDOW_MS);
+	if (!(await verifyTurnstileToken(turnstileToken, clientIp))) {
+		return Response.json(
+			{
+				message: 'Anti-spam check failed. Please try again.'
+			} satisfies ContactResponse,
+			{ status: 400 }
+		);
+	}
+
+	recordEmailSend(emailKey);
 
 	try {
 		const env = getEnv();
@@ -98,7 +145,7 @@ export async function handleSendPost(request: Request): Promise<Response> {
 			subject: `Contact request: ${safeSubject}`,
 			html: buildContactEmailHtml({
 				name: contactInfo.name,
-				email: normalizedEmail,
+				email: normalizeString(contactInfo.email),
 				message: contactInfo.message
 			})
 		});
@@ -107,7 +154,7 @@ export async function handleSendPost(request: Request): Promise<Response> {
 			status: 200
 		});
 	} catch (error) {
-		recentByEmail.delete(normalizedEmail);
+		clearEmailSend(emailKey);
 		console.error('Error sending email:', error);
 
 		return Response.json(

@@ -260,11 +260,9 @@ export async function getMarkdownDocument(pathname: string): Promise<string | un
 				'',
 				markdownList(socialLinks, '- No social profiles available.'),
 				'',
-				'## Contact API',
+				'## Sending a message',
 				'',
-				`POST ${toAbsoluteUrl('/api/send')}`,
-				'',
-				'JSON body fields: `name`, `email`, `subject`, `message`.'
+				'The contact form is browser-only and protected by an anti-spam challenge. There is no programmatic submission endpoint — use the email address above instead.'
 			].join('\n');
 		}
 	}
@@ -345,7 +343,6 @@ export async function getMarkdownDocument(pathname: string): Promise<string | un
 export function createApiCatalogDocument(): ApiCatalogDocument {
 	return {
 		linkset: [
-			createApiCatalogEntry('/api/send'),
 			createApiCatalogEntry('/api/spotify/currently-playing'),
 			createApiCatalogEntry('/api/blog/{slug}/views')
 		]
@@ -369,42 +366,6 @@ export function createOpenApiDocument(): OpenApiDocument {
 					responses: {
 						'200': {
 							description: 'Service health summary.'
-						}
-					}
-				}
-			},
-			'/api/send': {
-				post: {
-					summary: 'Submit a contact request',
-					requestBody: {
-						required: true,
-						content: {
-							'application/json': {
-								schema: {
-									type: 'object',
-									required: ['name', 'email', 'subject', 'message'],
-									properties: {
-										name: { type: 'string' },
-										email: { type: 'string', format: 'email' },
-										subject: { type: 'string' },
-										message: { type: 'string' }
-									}
-								}
-							}
-						}
-					},
-					responses: {
-						'200': {
-							description: 'Message accepted for delivery.'
-						},
-						'400': {
-							description: 'Validation failed.'
-						},
-						'429': {
-							description: 'Rate limited.'
-						},
-						'500': {
-							description: 'Email delivery failed.'
 						}
 					}
 				}
@@ -482,20 +443,6 @@ export function createApiDocsMarkdown(): string {
 		'',
 		'### `GET /api/health`',
 		'Returns a small health payload for automated checks.',
-		'',
-		'### `POST /api/send`',
-		'Submits the portfolio contact form.',
-		'',
-		'Request body:',
-		'',
-		'```json',
-		'{',
-		'  "name": "Jane Doe",',
-		'  "email": "jane@example.com",',
-		'  "subject": "Project inquiry",',
-		'  "message": "I would like to discuss a collaboration."',
-		'}',
-		'```',
 		'',
 		'### `GET /api/spotify/currently-playing`',
 		'Returns the latest Spotify now-playing snapshot when available.',
