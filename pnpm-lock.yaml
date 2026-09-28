@@ -18,7 +18,7 @@ overrides:
   tmp: ^0.2.4
   '@actions/github>undici': 8.11.2
   '@actions/http-client>undici': 8.10.2
-  '@vercel/frameworks>js-yaml': 5.2.3
+  '@vercel/frameworks>js-yaml': 5.4.2
   typeid-js>uuid: 14.0.2
   '@sanity/uuid>uuid': 14.0.2
   esbuild: 0.28.2
@@ -5161,8 +5161,8 @@ packages:
     resolution: {integrity: sha512-CY6crGq313MX8GkwvB7tzgp99vjQxY1++5y10/BKN/GUfHqWaOGQMNZkBvqSzsZKWk/ijwHlWzzkLulsGHhjWQ==}
     hasBin: true
 
-  js-yaml@5.2.3:
-    resolution: {integrity: sha512-n+mUVyUX5bVv7G/G2zyIHOhdxfuU1dY2NOFzTQUWiMUbFss8b57NFlgCCaggU78wSw5KVS9cllzeLyzyR+n5nw==}
+  js-yaml@5.4.2:
+    resolution: {integrity: sha512-m+aqu+LwO1O6sIopafj8HUVl5aawITwZQe/yHpMCKjaWBaA/d07B/QdMb3529REftiU+RMMHL3Vlsw3hON7vWg==}
     hasBin: true
 
   jsdom@28.1.0:
@@ -10869,7 +10869,7 @@ snapshots:
   '@vercel/frameworks@3.29.0':
     dependencies:
       '@vercel/error-utils': 2.2.0
-      js-yaml: 5.2.3
+      js-yaml: 5.4.2
       smol-toml: 1.5.2
 
   '@vercel/stega@1.1.0': {}
@@ -12289,7 +12289,7 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  js-yaml@5.2.3:
+  js-yaml@5.4.2:
     dependencies:
       argparse: 2.0.1
 
