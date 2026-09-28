@@ -67,8 +67,10 @@ function getTurnstileToken(body: unknown): string | undefined {
 }
 
 /**
- * The rightmost `x-forwarded-for` entry is the one appended by the closest
- * proxy, so it is the least spoofable value available to us behind Railway.
+ * Coolify's proxy appends the address it received from to `x-forwarded-for`, so
+ * the rightmost entry is the one it wrote. Anything a client injects itself
+ * lands to the left of that, which makes the rightmost the least spoofable
+ * value available here.
  */
 function getClientIp(request: Request): string {
 	const forwardedFor = request.headers.get('x-forwarded-for');
@@ -80,7 +82,7 @@ function getClientIp(request: Request): string {
 		if (closest) return closest;
 	}
 
-	return request.headers.get('cf-connecting-ip')?.trim() || UNKNOWN_CLIENT_IP;
+	return UNKNOWN_CLIENT_IP;
 }
 
 async function parseJsonBody(request: Request): Promise<unknown> {
