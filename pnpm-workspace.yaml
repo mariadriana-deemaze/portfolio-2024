@@ -20,7 +20,7 @@ overrides:
   'dompurify': '3.4.16'
   'filelist>minimatch': '10.2.6'
   'micromatch>picomatch': '4.0.7'
-  'readdirp>picomatch': '4.0.5'
+  'readdirp>picomatch': '4.0.7'
   'tmp': '^0.2.4'
   '@actions/github>undici': '8.11.2'
   '@actions/http-client>undici': '8.11.2'
