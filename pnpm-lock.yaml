@@ -20,7 +20,7 @@ overrides:
   '@actions/http-client>undici': 8.11.2
   '@vercel/frameworks>js-yaml': 5.4.2
   typeid-js>uuid: 14.0.2
-  '@sanity/uuid>uuid': 14.0.2
+  '@sanity/uuid>uuid': 14.0.3
   esbuild: 0.28.2
 
 importers:
@@ -10601,7 +10601,7 @@ snapshots:
 
   '@sanity/uuid@3.0.3':
     dependencies:
-      uuid: 14.0.2
+      uuid: 14.0.3
 
   '@sanity/validation@6.19.0(@types/react@19.3.0)(typescript@7.0.2)':
     dependencies:
