@@ -4,7 +4,7 @@
 	"version": "2.0.0",
 	"license": "UNLICENSED",
 	"type": "module",
-	"packageManager": "pnpm@11.28.3",
+	"packageManager": "pnpm@11.28.10",
 	"scripts": {
 		"commit": "git-cz",
 		"dev": "vite dev",

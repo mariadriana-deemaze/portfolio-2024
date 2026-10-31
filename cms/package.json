@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "package.json",
   "license": "UNLICENSED",
-  "packageManager": "pnpm@11.28.3",
+  "packageManager": "pnpm@11.28.10",
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
