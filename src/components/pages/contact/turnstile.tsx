@@ -1,6 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { publicEnvSchema } from '@/lib/env';
+
+type TurnstileSize = 'normal' | 'compact';
 
 type TurnstileRenderOptions = {
 	sitekey: string;
@@ -10,6 +12,7 @@ type TurnstileRenderOptions = {
 	theme: 'auto' | 'light' | 'dark';
 	appearance: 'always' | 'execute' | 'interaction-only';
 	language: string;
+	size: TurnstileSize;
 };
 
 type TurnstileApi = {
@@ -27,6 +30,11 @@ declare global {
 
 const ONLOAD_CALLBACK = 'onTurnstileLoad';
 const SCRIPT_ID = 'cf-turnstile-script';
+const NORMAL_WIDTH = 300;
+const MIN_HEIGHT: Record<TurnstileSize, string> = {
+	normal: 'min-h-[65px]',
+	compact: 'min-h-[140px]'
+};
 const SCRIPT_SRC = `https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=${ONLOAD_CALLBACK}`;
 
 const { VITE_TURNSTILE_SITE_KEY } = publicEnvSchema.parse(import.meta.env);
@@ -85,6 +93,7 @@ export const TurnstileWidget = ({
 	onVerify,
 	resetSignal
 }: TurnstileWidgetProps) => {
+	const [size, setSize] = useState<TurnstileSize | undefined>(undefined);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const widgetIdRef = useRef<string | undefined>(undefined);
 	const handlersRef = useRef({ onExpire, onVerify });
@@ -94,6 +103,21 @@ export const TurnstileWidget = ({
 	});
 
 	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		const observer = new ResizeObserver(([entry]) => {
+			setSize(entry.contentRect.width < NORMAL_WIDTH ? 'compact' : 'normal');
+		});
+
+		observer.observe(container);
+
+		return () => observer.disconnect();
+	}, []);
+
+	useEffect(() => {
+		if (!size) return;
+
 		const container = containerRef.current;
 		let cancelled = false;
 
@@ -108,7 +132,8 @@ export const TurnstileWidget = ({
 					'error-callback': () => handlersRef.current.onExpire(),
 					theme: 'auto',
 					appearance: 'always',
-					language
+					language,
+					size
 				});
 			})
 			.catch((error) => {
@@ -124,7 +149,7 @@ export const TurnstileWidget = ({
 				widgetIdRef.current = undefined;
 			}
 		};
-	}, [language]);
+	}, [language, size]);
 
 	useEffect(() => {
 		const widgetId = widgetIdRef.current;
@@ -134,5 +159,5 @@ export const TurnstileWidget = ({
 		window.turnstile.reset(widgetId);
 	}, [resetSignal]);
 
-	return <div ref={containerRef} className="min-h-[65px]" />;
+	return <div ref={containerRef} className={MIN_HEIGHT[size ?? 'normal']} />;
 };
