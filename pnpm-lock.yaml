@@ -41,7 +41,7 @@ importers:
         version: 5.9.2(ajv@8.20.0)(react-hook-form@7.89.0(@types/react@19.3.0)(react@19.3.1))(valibot@1.5.0(typescript@7.0.2))(zod@4.6.7)
       '@portabletext/markdown':
         specifier: ^2.0.0
-        version: 2.5.0
+        version: 2.9.1
       '@portabletext/react':
         specifier: ^8.0.0
         version: 8.0.1(react@19.3.1)
@@ -2138,8 +2138,8 @@ packages:
     resolution: {integrity: sha512-YsK/3mkFEVHs021S9EGA885p6eIe3XzFcARKD7scqtNaPBz7y579XXoa78kXe6XBLgiuKmB8eU3/Ucdnvi5SCA==}
     engines: {node: '>=22.12'}
 
-  '@portabletext/markdown@2.5.0':
-    resolution: {integrity: sha512-ODxM2OFclDuzqnluuOuQOZw4b+iNUZD/l0ArxA+23ZHPmmcbtzlGoGZfcLGA6LRUKve6+cvCwXCbeX3Z1l+sKA==}
+  '@portabletext/markdown@2.9.1':
+    resolution: {integrity: sha512-YCWFUNUxvSLyoXk+ERCUJYy/ASBwiOFl2pRd7hUvpkHgv8r8eS5Rjbis5hmMWPk8oBmkNPXtyzw3BUWcKkC2DQ==}
     engines: {node: '>=22.12'}
 
   '@portabletext/patches@3.0.1':
@@ -2220,12 +2220,12 @@ packages:
     resolution: {integrity: sha512-hkbZ1OfET4B1U3yDkEC/SA4rZCy5RUyLM+Dea2WfhlUBCm1Fp6TjL++/f4furP6LPviWjhHbrHjZzAgoxShdkA==}
     engines: {node: '>=22.12'}
 
-  '@portabletext/schema@3.0.0':
-    resolution: {integrity: sha512-mNv1YShl0e6XJZIntQYm7nr9UbLXCf3+JktfGp1OO8iPxpdMRnhaIq3iGSMVrO9fIBcB7TNQgFfOdqQCSfXFew==}
-    engines: {node: '>=22.12'}
-
   '@portabletext/schema@3.0.1':
     resolution: {integrity: sha512-kVs12KNNtKfIYt7GbIYPVB7qJY8ZuErIa5C8NGBHR/sRN8ciR7C0UpOCTbcIvKSCiqjc47hJxEkWIyPg8XZGUQ==}
+    engines: {node: '>=22.12'}
+
+  '@portabletext/schema@3.1.0':
+    resolution: {integrity: sha512-Th8x0I21GDDv+yQEqF1w/G9iuyLkFdUM424VSSCCdZRSnfor2m23m+GFdf3pVTte6TPOzu4Ku89FwqyRRJ2vxQ==}
     engines: {node: '>=22.12'}
 
   '@portabletext/to-html@6.0.0':
@@ -9223,10 +9223,10 @@ snapshots:
 
   '@portabletext/keyboard-shortcuts@3.0.0': {}
 
-  '@portabletext/markdown@2.5.0':
+  '@portabletext/markdown@2.9.1':
     dependencies:
       '@mdit/plugin-alert': 2.0.2(markdown-it@15.0.3)
-      '@portabletext/schema': 3.0.0
+      '@portabletext/schema': 3.1.0
       '@portabletext/toolkit': 6.0.0
       '@sanity/diff-match-patch': 3.2.1
       linkify-it: 6.1.0
@@ -9313,9 +9313,9 @@ snapshots:
       - '@types/react'
       - vitest
 
-  '@portabletext/schema@3.0.0': {}
-
   '@portabletext/schema@3.0.1': {}
+
+  '@portabletext/schema@3.1.0': {}
 
   '@portabletext/to-html@6.0.0':
     dependencies:
