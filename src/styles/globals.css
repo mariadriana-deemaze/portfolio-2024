@@ -289,6 +289,16 @@
 	);
 }
 
+/* Brand-toned hatch, for a band that should read as an accent rather than
+   as more of the neutral grid. */
+@utility hatch-lines-brand {
+	background-image: repeating-linear-gradient(
+		144deg,
+		var(--color-orange-primary) 0 1px,
+		transparent 1px 15px
+	);
+}
+
 @utility bg-dots-layer {
 	background-size: 54px 54px;
 	background-image: radial-gradient(

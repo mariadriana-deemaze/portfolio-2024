@@ -15,9 +15,12 @@ export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
 			<div className="overflow-x-clip animate-fade-in-left delay-500">
+				{/* Unruled: the navbar's bottom border already draws this line. */}
+				<FrameRule hatched tone="brand" ruled={false} />
+
 				{/* No side padding: the beam panel runs edge to edge inside the
 				    frame, and the copy below it carries the padding itself. */}
-				<FrameBand ruled={false} innerClassName="pb-16 md:pb-20 lg:pb-24 print:pb-6">
+				<FrameBand innerClassName="pb-16 md:pb-20 lg:pb-24 print:pb-6">
 					<ScrollFadeReveal onLoadVisibility>
 						<SectionHero />
 					</ScrollFadeReveal>

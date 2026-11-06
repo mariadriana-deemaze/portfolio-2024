@@ -77,13 +77,29 @@ export interface FrameRuleProps {
 	className?: string;
 	/** Fill the band with diagonal hatching instead of leaving it blank. */
 	hatched?: boolean;
+	/** Hatch colour: the neutral grid, or the brand accent. */
+	tone?: 'line' | 'brand';
+	/** Off when the band sits directly under something that already draws a rule. */
+	ruled?: boolean;
 }
 
-export function FrameRule({ className, hatched = false }: FrameRuleProps) {
+export function FrameRule({
+	className,
+	hatched = false,
+	tone = 'line',
+	ruled = true
+}: FrameRuleProps) {
 	return (
 		<div aria-hidden="true" className="w-full px-[var(--frame-gutter)]">
-			<Frame className={cn('h-16 md:h-20', className)}>
-				{hatched && <div className="hatch-lines h-full w-full opacity-60" />}
+			<Frame ruled={ruled} className={cn('h-16 md:h-20', className)}>
+				{hatched && (
+					<div
+						className={cn(
+							'h-full w-full',
+							tone === 'brand' ? 'hatch-lines-brand opacity-40' : 'hatch-lines opacity-60'
+						)}
+					/>
+				)}
 			</Frame>
 		</div>
 	);
