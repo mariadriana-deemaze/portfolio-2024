@@ -79,14 +79,14 @@ export const SectionHero = () => {
 					className="absolute inset-0"
 					style={{
 						background:
-							'radial-gradient(ellipse 34% 40% at 50% 46%, rgba(10,9,8,0.82) 0%, rgba(10,9,8,0.45) 45%, transparent 75%)'
+							'radial-gradient(ellipse 38% 44% at 50% 46%, rgba(10,9,8,0.5) 0%, rgba(10,9,8,0.22) 50%, transparent 78%)'
 					}}
 				/>
 
 				<div className="absolute inset-0 grid place-items-center">
 					<div ref={markRef} className="will-change-transform">
 						<LogoMark
-							className="h-[clamp(52px,9vw,104px)] text-[#fff6e8] [&_path]:[fill-opacity:0.3] drop-shadow-[0_0_26px_color-mix(in_srgb,var(--color-orange-primary)_70%,transparent)]"
+							className="h-[clamp(64px,11vw,132px)] text-[#fff6e8] [&_path]:[fill-opacity:0.07] [&_path]:[stroke-width:0.35] drop-shadow-[0_0_30px_color-mix(in_srgb,var(--color-orange-primary)_45%,transparent)]"
 							aria-label={data.name}
 						/>
 					</div>

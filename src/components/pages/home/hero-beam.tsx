@@ -11,6 +11,9 @@ import { cn } from '@/utils/utils';
   global prefers-reduced-motion rule flattens both animations.
 */
 
+const GRAIN =
+	"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E\")";
+
 const RAYS = [
 	{ angle: -32, width: 13, swing: 2.4, sway: 15, flicker: 7, dim: 0.26, lit: 0.5 },
 	{ angle: -22, width: 9, swing: 1.6, sway: 19, flicker: 9, dim: 0.34, lit: 0.62 },
@@ -71,6 +74,13 @@ export function HeroBeam({ className }: { className?: string }) {
 					background:
 						'radial-gradient(ellipse 120% 105% at 50% 102%, transparent 58%, #0d0c0b 100%)'
 				}}
+			/>
+
+			{/* Film grain over the whole panel, so the gradients read as light on
+			    stock rather than as flat CSS. */}
+			<div
+				className="absolute inset-0 opacity-[0.11] mix-blend-screen"
+				style={{ backgroundImage: GRAIN, backgroundSize: '180px 180px' }}
 			/>
 		</div>
 	);
