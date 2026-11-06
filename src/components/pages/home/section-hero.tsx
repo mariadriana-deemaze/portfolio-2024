@@ -119,7 +119,7 @@ export const SectionHero = () => {
 						{data.name}
 					</h1>
 
-					<div className="mt-[10px] font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
+					<div className="font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
 						<AnimatedMottos
 							data={translations.data.mottos}
 							className="text-[var(--color-orange-primary)]"
