@@ -72,10 +72,21 @@ export const SectionHero = () => {
 		<Section className="gap-y-0">
 			<div className="relative h-[clamp(300px,44vh,520px)] overflow-hidden border border-border print:hidden">
 				<HeroBeam />
+				{/* Scrim: the mark sits where the rays converge, so the panel is
+				    darkened behind it to keep the silhouette readable. */}
+				<div
+					aria-hidden="true"
+					className="absolute inset-0"
+					style={{
+						background:
+							'radial-gradient(ellipse 34% 40% at 50% 46%, rgba(10,9,8,0.82) 0%, rgba(10,9,8,0.45) 45%, transparent 75%)'
+					}}
+				/>
+
 				<div className="absolute inset-0 grid place-items-center">
 					<div ref={markRef} className="will-change-transform">
 						<LogoMark
-							className="h-[clamp(52px,9vw,104px)] text-[#fff6e8] drop-shadow-[0_0_32px_color-mix(in_srgb,var(--color-orange-primary)_55%,transparent)]"
+							className="h-[clamp(52px,9vw,104px)] text-[#fff6e8] [&_path]:[fill-opacity:0.3] drop-shadow-[0_0_26px_color-mix(in_srgb,var(--color-orange-primary)_70%,transparent)]"
 							aria-label={data.name}
 						/>
 					</div>

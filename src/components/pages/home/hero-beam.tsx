@@ -49,7 +49,7 @@ export function HeroBeam({ className }: { className?: string }) {
 							rotate: `${ray.angle}deg`,
 							opacity: ray.dim,
 							background:
-								'linear-gradient(to top, color-mix(in srgb, var(--color-orange-primary) 86%, #fff) 0%, var(--color-orange-primary) 16%, color-mix(in srgb, var(--color-orange-light) 62%, transparent) 46%, color-mix(in srgb, var(--color-orange-muted) 22%, transparent) 72%, transparent 96%)',
+								'linear-gradient(to top, color-mix(in srgb, var(--color-orange-primary) 86%, #fff) 0%, var(--color-orange-primary) 12%, color-mix(in srgb, var(--color-orange-light) 52%, transparent) 34%, color-mix(in srgb, var(--color-orange-muted) 16%, transparent) 58%, transparent 82%)',
 							animation: `beam-sway ${ray.sway}s var(--ease-in-out) infinite, beam-flicker ${ray.flicker}s var(--ease-in-out) infinite`
 						} as RayVars
 					}
