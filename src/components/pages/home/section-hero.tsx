@@ -11,12 +11,17 @@ import { Section } from '@/components/ui/section';
 import { useLocale } from '@/contexts/locale-context';
 import { data } from '@/data/main';
 
-/* How far the mark drifts, in px, at the extremes of pointer and scroll. */
-const POINTER_DRIFT = 10;
-const SCROLL_DRIFT = 0.07;
+/*
+  Two layers drifting at different rates is what reads as depth — matching them
+  would just slide the whole panel. The beam sits behind, so it moves least.
+*/
+const MARK_POINTER_DRIFT = 6;
+const MARK_SCROLL_DRIFT = 0.04;
+const BEAM_RATE = 0.4;
 
-function useMarkParallax() {
+function useHeroParallax() {
 	const markRef = useRef<HTMLDivElement>(null);
+	const beamRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -28,11 +33,17 @@ function useMarkParallax() {
 
 		const apply = () => {
 			raf = null;
-			const el = markRef.current;
-			if (!el) return;
-			const x = mx * POINTER_DRIFT;
-			const y = my * POINTER_DRIFT - sy * SCROLL_DRIFT;
-			el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+			const x = mx * MARK_POINTER_DRIFT;
+			const y = my * MARK_POINTER_DRIFT - sy * MARK_SCROLL_DRIFT;
+
+			if (markRef.current) {
+				markRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+			}
+			if (beamRef.current) {
+				const bx = (x * BEAM_RATE).toFixed(2);
+				const by = (y * BEAM_RATE).toFixed(2);
+				beamRef.current.style.transform = `translate3d(${bx}px, ${by}px, 0)`;
+			}
 		};
 
 		const schedule = () => {
@@ -60,18 +71,26 @@ function useMarkParallax() {
 		};
 	}, []);
 
-	return markRef;
+	return { markRef, beamRef };
 }
 
 export const SectionHero = () => {
 	const { t, translations } = useLocale();
 	const currentWork = data.work.find((w) => w.end === 'Present');
-	const markRef = useMarkParallax();
+	const { markRef, beamRef } = useHeroParallax();
 
 	return (
 		<Section className="gap-y-0">
 			<div className="relative h-[clamp(300px,44vh,520px)] overflow-hidden border border-border print:hidden">
-				<HeroBeam />
+				{/* Scaled up so the drift never pulls an edge into view. */}
+				<div
+					ref={beamRef}
+					className="absolute inset-0 will-change-transform"
+					style={{ scale: '1.06' }}
+				>
+					<HeroBeam />
+				</div>
+
 				{/* Scrim: the mark sits where the rays converge, so the panel is
 				    darkened behind it to keep the silhouette readable. */}
 				<div
