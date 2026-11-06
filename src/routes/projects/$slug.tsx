@@ -386,50 +386,54 @@ function ProjectItemRoute() {
 
 			{nextProject && (
 				<>
-					<div
-						ref={transitionWrapperRef}
-						className="relative left-1/2 mt-[clamp(90px,14vw,170px)] w-screen -translate-x-1/2"
-					>
-						<section
-							data-next-section
-							className="sticky bottom-0 flex flex-col border-t border-border overflow-hidden"
+					{/* The takeover runway is a band too, so the frame's vertical
+					    rules carry on down it instead of stopping short. */}
+					<div className="w-full px-[var(--frame-gutter)]">
+						<div
+							ref={transitionWrapperRef}
+							className="relative mx-auto w-full max-w-[var(--frame-max)] border-x border-t border-border"
 						>
-							<Link
-								to="/projects/$slug"
-								params={{ slug: nextProject.slug }}
-								className="group relative flex flex-1 flex-col justify-end overflow-hidden text-foreground no-underline"
+							<section
+								data-next-section
+								className="sticky bottom-0 flex flex-col border-t border-border overflow-hidden"
 							>
-								{nextProject.coverImage && (
-									<div className="absolute inset-0 z-0 pointer-events-none [clip-path:polygon(0%_100%,100%_100%,100%_100%,0%_100%)] transition-[clip-path] duration-700 [transition-timing-function:var(--ease-out)] group-hover:[clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)]">
-										<img
-											src={nextProject.coverImage.url}
-											alt=""
-											className="absolute inset-0 size-full object-cover scale-[1.12] transition-transform duration-[1.1s] [transition-timing-function:var(--ease-out)] group-hover:scale-100"
-										/>
-										<div
-											className="absolute inset-0"
-											style={{
-												background:
-													'linear-gradient(115deg, color-mix(in srgb, var(--color-orange-primary) 88%, transparent) 0%, color-mix(in srgb, var(--color-orange-primary) 52%, transparent) 55%, rgba(20,8,3,0.5) 100%)'
-											}}
-										/>
-									</div>
-								)}
-								<div className="relative z-[1] mx-auto w-full max-w-[var(--frame-max)] p-[clamp(48px,9vw,110px)_var(--frame-pad)]">
-									<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
-										{t('pages.project-detail.next-project')}
-									</div>
-									<div className="mt-[18px] flex items-center justify-between gap-6">
-										<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[translate,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white motion-reduce:transition-none">
-											{nextProject.title}
+								<Link
+									to="/projects/$slug"
+									params={{ slug: nextProject.slug }}
+									className="group relative flex flex-1 flex-col justify-end overflow-hidden text-foreground no-underline"
+								>
+									{nextProject.coverImage && (
+										<div className="absolute inset-0 z-0 pointer-events-none [clip-path:polygon(0%_100%,100%_100%,100%_100%,0%_100%)] transition-[clip-path] duration-700 [transition-timing-function:var(--ease-out)] group-hover:[clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)]">
+											<img
+												src={nextProject.coverImage.url}
+												alt=""
+												className="absolute inset-0 size-full object-cover scale-[1.12] transition-transform duration-[1.1s] [transition-timing-function:var(--ease-out)] group-hover:scale-100"
+											/>
+											<div
+												className="absolute inset-0"
+												style={{
+													background:
+														'linear-gradient(115deg, color-mix(in srgb, var(--color-orange-primary) 88%, transparent) 0%, color-mix(in srgb, var(--color-orange-primary) 52%, transparent) 55%, rgba(20,8,3,0.5) 100%)'
+												}}
+											/>
 										</div>
-										<div className="grid size-[clamp(54px,8vw,88px)] flex-shrink-0 place-items-center rounded-full border-[1.5px] border-border text-[var(--color-orange-primary)] transition-[rotate,scale,background,color,border-color] duration-[550ms] ease-[var(--ease-out)] group-hover:-rotate-45 group-hover:scale-[1.04] group-hover:bg-white group-hover:border-white group-hover:text-[var(--color-orange-primary)] motion-reduce:transition-none [&>svg]:h-[42%] [&>svg]:w-[42%]">
-											<LuArrowUpRight />
+									)}
+									<div className="relative z-[1] mx-auto w-full max-w-[var(--frame-max)] p-[clamp(48px,9vw,110px)_var(--frame-pad)]">
+										<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
+											{t('pages.project-detail.next-project')}
+										</div>
+										<div className="mt-[18px] flex items-center justify-between gap-6">
+											<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[translate,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white motion-reduce:transition-none">
+												{nextProject.title}
+											</div>
+											<div className="grid size-[clamp(54px,8vw,88px)] flex-shrink-0 place-items-center rounded-full border-[1.5px] border-border text-[var(--color-orange-primary)] transition-[rotate,scale,background,color,border-color] duration-[550ms] ease-[var(--ease-out)] group-hover:-rotate-45 group-hover:scale-[1.04] group-hover:bg-white group-hover:border-white group-hover:text-[var(--color-orange-primary)] motion-reduce:transition-none [&>svg]:h-[42%] [&>svg]:w-[42%]">
+												<LuArrowUpRight />
+											</div>
 										</div>
 									</div>
-								</div>
-							</Link>
-						</section>
+								</Link>
+							</section>
+						</div>
 					</div>
 					<div
 						ref={fadeOverlayRef}
