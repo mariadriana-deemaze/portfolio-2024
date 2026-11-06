@@ -26,7 +26,7 @@ export default function Layout({ children, commandLinks = [] }: LayoutProps): Re
 			<GoogleAnalytics />
 			<Navbar />
 			<ProgressIndicator />
-			<main className="relative mt-28 flex flex-1 flex-col print:p-12 no-scrollbar">
+			<main className="relative mt-[var(--nav-h)] flex flex-1 flex-col print:p-12 no-scrollbar">
 				<BGGrid>{children}</BGGrid>
 				<CommandMenu links={commandLinks} />
 			</main>

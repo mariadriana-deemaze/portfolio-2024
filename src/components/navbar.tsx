@@ -30,6 +30,25 @@ export function Navbar() {
 	const [scrolled, setScrolled] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
 	const menuOpenRef = useRef(false);
+	const navRef = useRef<HTMLElement>(null);
+
+	/* The navbar is fixed, so the layout below it needs its height to start
+	   flush with its bottom border. It differs by breakpoint and when the nav
+	   wraps, so publish the measured value instead of hard-coding an offset. */
+	useEffect(() => {
+		const nav = navRef.current;
+		if (!nav) return;
+
+		const publish = () => {
+			const h = Math.round(nav.getBoundingClientRect().height);
+			document.documentElement.style.setProperty('--nav-h', `${h}px`);
+		};
+
+		publish();
+		const observer = new ResizeObserver(publish);
+		observer.observe(nav);
+		return () => observer.disconnect();
+	}, []);
 
 	const location = useRouterState({ select: (s) => s.location });
 
@@ -84,6 +103,7 @@ export function Navbar() {
 	return (
 		<>
 			<nav
+				ref={navRef}
 				className={cn(
 					'fixed top-0 left-0 w-full z-50 pt-3',
 					'border-b border-[var(--nav-border)]',

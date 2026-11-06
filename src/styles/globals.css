@@ -392,9 +392,13 @@
 		--color-orange-muted: #f3c6a7;
 		--color-orange-dark-border: #4d2512;
 		/* Navigation */
-		--nav-border: #f3c6a7;
+		--nav-border: hsl(var(--border));
 		/* Layout — ruled frame. The frame is a 84rem box centred in the viewport;
 		   --frame-gutter is the margin outside it, not padding inside. */
+		/* Kept in sync with the real navbar height by the Navbar component; this
+		   is the pre-hydration fallback. Content sits below it, so the frame's
+		   vertical rules start exactly at the navbar's bottom border. */
+		--nav-h: 52px;
 		--frame-max: 84rem;
 		--frame-gutter: 1rem;
 		--frame-pad: 1.5rem;
@@ -481,7 +485,7 @@
 		/* Brand */
 		--brand-foreground: 0 3% 6%;
 		/* Navigation */
-		--nav-border: #4d2512;
+		--nav-border: hsl(var(--border));
 	}
 
 	* {

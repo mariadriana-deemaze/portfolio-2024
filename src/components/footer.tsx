@@ -7,8 +7,7 @@ export function Footer() {
 	return (
 		<FrameBand
 			as="footer"
-			className="mb-6"
-			innerClassName="flex flex-wrap items-center justify-center sm:justify-between gap-3 px-[var(--frame-pad)] py-4 font-mono text-xs text-muted-foreground"
+			innerClassName="flex flex-wrap items-center justify-center sm:justify-between gap-3 border-b px-[var(--frame-pad)] py-4 font-mono text-xs text-muted-foreground"
 		>
 			<span>
 				© {year} {data.name} · {data.location}
