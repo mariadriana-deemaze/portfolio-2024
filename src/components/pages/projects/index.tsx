@@ -104,127 +104,131 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			{/* Unruled: the navbar's bottom border already draws this line. */}
-			<FrameRule hatched tone="brand" ruled={false} />
+			{/* One entry for the whole page, frame included, so the rules never
+			    land before the content they belong to. */}
+			<div className="animate-fade-in-left delay-500">
+				{/* Unruled: the navbar's bottom border already draws this line. */}
+				<FrameRule hatched tone="brand" ruled={false} />
 
-			<FrameBand as="header" innerClassName={BAND_PADDING}>
-				<ScrollFadeReveal onLoadVisibility>
-					<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
-						<span
-							className="w-[40px] h-px bg-[var(--color-orange-primary)] opacity-50 shrink-0"
-							aria-hidden="true"
-						/>
-						{t('pages.projects.overline')} · 2022—{new Date().getFullYear()}
-					</div>
-					<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
-						<StaggerText
-							text={t('pages.projects.heading.line-1')}
-							autoReveal
-							baseDelay={0.08}
-							letterDelay={0.028}
-						/>
-						<br />
-						<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
+				<FrameBand as="header" innerClassName={BAND_PADDING}>
+					<ScrollFadeReveal onLoadVisibility>
+						<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
+							<span
+								className="w-[40px] h-px bg-[var(--color-orange-primary)] opacity-50 shrink-0"
+								aria-hidden="true"
+							/>
+							{t('pages.projects.overline')} · 2022—{new Date().getFullYear()}
+						</div>
+						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
 							<StaggerText
-								text={t('pages.projects.heading.accent')}
+								text={t('pages.projects.heading.line-1')}
 								autoReveal
-								baseDelay={0.39}
+								baseDelay={0.08}
 								letterDelay={0.028}
 							/>
-						</em>
-					</h1>
-					<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
-						<p className="m-0 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[520px] text-foreground text-pretty">
-							{t('pages.projects.intro')}
-						</p>
-						<span className="font-mono text-[12px] text-muted-foreground whitespace-nowrap">
-							<b className="text-[var(--color-orange-primary)] font-semibold">
-								{filteredProjects.length}
-							</b>{' '}
-							{filteredProjects.length === 1
-								? t('pages.projects.project')
-								: t('pages.projects.projects')}
-							{selectedFilter !== 'All' && ` · ${selectedFilter}`}
-						</span>
-					</div>
-				</ScrollFadeReveal>
-			</FrameBand>
-
-			{projects.length > 1 && (
-				<FrameBand innerClassName="px-[var(--frame-pad)] py-5">
-					<ScrollFadeReveal>
-						<div className="flex items-center justify-between gap-[16px] flex-wrap">
-							<span className="font-mono text-[12px] tracking-[0.06em] uppercase text-muted-foreground">
-								{t('pages.projects.filter-by')}
+							<br />
+							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
+								<StaggerText
+									text={t('pages.projects.heading.accent')}
+									autoReveal
+									baseDelay={0.39}
+									letterDelay={0.028}
+								/>
+							</em>
+						</h1>
+						<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
+							<p className="m-0 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[520px] text-foreground text-pretty">
+								{t('pages.projects.intro')}
+							</p>
+							<span className="font-mono text-[12px] text-muted-foreground whitespace-nowrap">
+								<b className="text-[var(--color-orange-primary)] font-semibold">
+									{filteredProjects.length}
+								</b>{' '}
+								{filteredProjects.length === 1
+									? t('pages.projects.project')
+									: t('pages.projects.projects')}
+								{selectedFilter !== 'All' && ` · ${selectedFilter}`}
 							</span>
-							<div className="flex gap-[7px] flex-wrap">
-								{mediums.map((medium) => (
-									<button
-										key={medium}
-										onClick={() => setSelectedFilter(medium)}
-										className={cn(
-											'font-mono text-[12px] border rounded-full px-[14px] py-[6px] cursor-pointer',
-											'transition-[background,border-color,color] duration-[250ms] ease-linear',
-											selectedFilter === medium
-												? 'bg-[var(--color-orange-primary)] border-[var(--color-orange-primary)] text-white'
-												: 'bg-transparent border-border text-foreground hover:border-[var(--color-orange-primary)] hover:text-[var(--color-orange-primary)]'
-										)}
-									>
-										{medium}
-									</button>
-								))}
-							</div>
 						</div>
 					</ScrollFadeReveal>
 				</FrameBand>
-			)}
 
-			<FrameBand innerClassName={BAND_PADDING}>
-				<ScrollFadeReveal>
-					<div
-						className={cn(
-							filteredProjects.length > 0 &&
-								'grid grid-cols-2 max-sm:grid-cols-1 gap-[clamp(16px,2.4vw,28px)]'
-						)}
-					>
-						{filteredProjects.length === 0 ? (
-							<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
-								{t('pages.projects.empty')}
-							</p>
-						) : (
-							filteredProjects.map((project, i) => (
-								<ProjectCard
-									key={project.slug}
-									project={project}
-									i={i}
-									featured={selectedFilter === 'All' && i === 0}
-								/>
-							))
-						)}
-					</div>
-				</ScrollFadeReveal>
-			</FrameBand>
+				{projects.length > 1 && (
+					<FrameBand innerClassName="px-[var(--frame-pad)] py-5">
+						<ScrollFadeReveal>
+							<div className="flex items-center justify-between gap-[16px] flex-wrap">
+								<span className="font-mono text-[12px] tracking-[0.06em] uppercase text-muted-foreground">
+									{t('pages.projects.filter-by')}
+								</span>
+								<div className="flex gap-[7px] flex-wrap">
+									{mediums.map((medium) => (
+										<button
+											key={medium}
+											onClick={() => setSelectedFilter(medium)}
+											className={cn(
+												'font-mono text-[12px] border rounded-full px-[14px] py-[6px] cursor-pointer',
+												'transition-[background,border-color,color] duration-[250ms] ease-linear',
+												selectedFilter === medium
+													? 'bg-[var(--color-orange-primary)] border-[var(--color-orange-primary)] text-white'
+													: 'bg-transparent border-border text-foreground hover:border-[var(--color-orange-primary)] hover:text-[var(--color-orange-primary)]'
+											)}
+										>
+											{medium}
+										</button>
+									))}
+								</div>
+							</div>
+						</ScrollFadeReveal>
+					</FrameBand>
+				)}
 
-			<FrameBand innerClassName={BAND_PADDING}>
-				<ScrollFadeReveal>
-					<section className="flex items-end justify-between gap-[28px] flex-wrap">
-						<h2 className="m-0 font-clash font-medium text-[clamp(30px,5vw,60px)] leading-[1.0] tracking-[-0.03em] max-w-[620px]">
-							{t('pages.projects.cta.line-1')}{' '}
-							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
-								{t('pages.projects.cta.accent')}
-							</em>
-							?
-						</h2>
-						<a
-							href="/contact"
-							className="group inline-flex items-center gap-[11px] font-mono text-[14px] text-white bg-[var(--color-orange-primary)] rounded-full px-[26px] py-[15px] no-underline whitespace-nowrap transition-[translate,box-shadow] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:shadow-[0_20px_36px_-12px_color-mix(in_srgb,var(--color-orange-primary)_60%,transparent)] motion-reduce:transition-none"
+				<FrameBand innerClassName={BAND_PADDING}>
+					<ScrollFadeReveal>
+						<div
+							className={cn(
+								filteredProjects.length > 0 &&
+									'grid grid-cols-2 max-sm:grid-cols-1 gap-[clamp(16px,2.4vw,28px)]'
+							)}
 						>
-							{t('pages.projects.cta.button')}
-							<LuArrowUpRight className="w-[16px] h-[16px] transition-[translate] duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:translate-x-[4px] group-hover:-translate-y-[4px] motion-reduce:transition-none" />
-						</a>
-					</section>
-				</ScrollFadeReveal>
-			</FrameBand>
+							{filteredProjects.length === 0 ? (
+								<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
+									{t('pages.projects.empty')}
+								</p>
+							) : (
+								filteredProjects.map((project, i) => (
+									<ProjectCard
+										key={project.slug}
+										project={project}
+										i={i}
+										featured={selectedFilter === 'All' && i === 0}
+									/>
+								))
+							)}
+						</div>
+					</ScrollFadeReveal>
+				</FrameBand>
+
+				<FrameBand innerClassName={BAND_PADDING}>
+					<ScrollFadeReveal>
+						<section className="flex items-end justify-between gap-[28px] flex-wrap">
+							<h2 className="m-0 font-clash font-medium text-[clamp(30px,5vw,60px)] leading-[1.0] tracking-[-0.03em] max-w-[620px]">
+								{t('pages.projects.cta.line-1')}{' '}
+								<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
+									{t('pages.projects.cta.accent')}
+								</em>
+								?
+							</h2>
+							<a
+								href="/contact"
+								className="group inline-flex items-center gap-[11px] font-mono text-[14px] text-white bg-[var(--color-orange-primary)] rounded-full px-[26px] py-[15px] no-underline whitespace-nowrap transition-[translate,box-shadow] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:shadow-[0_20px_36px_-12px_color-mix(in_srgb,var(--color-orange-primary)_60%,transparent)] motion-reduce:transition-none"
+							>
+								{t('pages.projects.cta.button')}
+								<LuArrowUpRight className="w-[16px] h-[16px] transition-[translate] duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:translate-x-[4px] group-hover:-translate-y-[4px] motion-reduce:transition-none" />
+							</a>
+						</section>
+					</ScrollFadeReveal>
+				</FrameBand>
+			</div>
 		</ReactLenis>
 	);
 }

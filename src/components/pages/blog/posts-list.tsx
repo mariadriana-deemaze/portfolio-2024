@@ -71,109 +71,118 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			{/* Unruled: the navbar's bottom border already draws this line. */}
-			<FrameRule hatched tone="brand" ruled={false} />
+			{/* One entry for the whole page, frame included, so the rules never
+			    land before the content they belong to. */}
+			<div className="animate-fade-in-left delay-500">
+				{/* Unruled: the navbar's bottom border already draws this line. */}
+				<FrameRule hatched tone="brand" ruled={false} />
 
-			<FrameBand as="header" innerClassName={BAND_PADDING}>
-				<ScrollFadeReveal onLoadVisibility>
-					<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
-						<span
-							className="w-[40px] h-px bg-[var(--color-orange-primary)] opacity-50 shrink-0"
-							aria-hidden="true"
-						/>
-						Journal · {new Date().getFullYear()}
-					</div>
-					<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
-						<StaggerText text="Thoughts & Essays" autoReveal baseDelay={0.08} letterDelay={0.028} />
-					</h1>
-					<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
-						<p className="m-0 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[520px] text-foreground text-pretty">
-							Personal musings on full-stack development, design patterns, and the occasional
-							philosophical rabbit hole.
-						</p>
-						<span className="font-mono text-[12px] text-muted-foreground whitespace-nowrap">
-							<b className="text-[var(--color-orange-primary)] font-semibold">{posts.length}</b>{' '}
-							{posts.length === 1 ? 'post' : 'posts'}
-						</span>
-					</div>
-				</ScrollFadeReveal>
-			</FrameBand>
-
-			{posts.length > 0 && (
-				<FrameBand innerClassName={BAND_PADDING}>
-					<ScrollFadeReveal>
-						<div>
-							{featuredPost && <FeaturedPostCard post={featuredPost} />}
-
-							{remainingPosts.length > 0 && (
-								<div className="mt-[clamp(60px,8vw,80px)]">
-									<h2 className="m-0 mb-[clamp(28px,4vw,44px)] font-clash font-medium text-[clamp(32px,6vw,56px)] leading-[1.1] tracking-[-0.032em] text-foreground">
-										More Stories
-									</h2>
-
-									<div className="flex flex-col divide-y divide-border">
-										{remainingPosts.map((post, i) => (
-											<a
-												key={post.slug}
-												href={toBlogSlug(post.slug)}
-												className={cn(
-													'group relative grid grid-cols-[1fr_auto] items-center gap-[26px] px-[14px] py-[30px] text-inherit no-underline',
-													'transition-[opacity] duration-[300ms] [transition-timing-function:var(--ease-out)]',
-													'hover:text-[var(--color-orange-primary)]',
-													'motion-reduce:transition-none',
-													'animate-[px-in_0.5s_var(--ease-out)_both]'
-												)}
-												style={{ animationDelay: `${i * 0.05}s` }}
-											>
-												<div className="min-w-0">
-													<h3 className="m-0 font-clash font-medium text-[clamp(24px,3vw,40px)] leading-[1.1] tracking-[-0.032em] text-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none">
-														{post.title}
-													</h3>
-													<p className="m-0 mt-[8px] font-mono text-[13px] text-muted-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] delay-[30ms] [transition-timing-function:var(--ease-out)] max-sm:hidden motion-reduce:transition-none">
-														{post.description}
-													</p>
-												</div>
-
-												<div className="flex flex-col items-end gap-[8px] shrink-0 max-sm:flex-col max-sm:items-start">
-													<div className="flex items-center gap-[12px] text-[12px] text-muted-foreground whitespace-nowrap">
-														<span>{format(new Date(post.date), 'MMM do, yyyy')}</span>
-														{post.readingTime && (
-															<>
-																<span>·</span>
-																<span>{post.readingTime} min</span>
-															</>
-														)}
-													</div>
-													{post.category && (
-														<span className="font-mono text-[10px] tracking-[0.06em] uppercase text-muted-foreground">
-															{post.category}
-														</span>
-													)}
-												</div>
-
-												<LuArrowUpRight className="w-[18px] h-[18px] text-muted-foreground group-hover:text-foreground transition-[translate,color] duration-300 motion-reduce:transition-none absolute right-[14px]" />
-											</a>
-										))}
-									</div>
-								</div>
-							)}
+				<FrameBand as="header" innerClassName={BAND_PADDING}>
+					<ScrollFadeReveal onLoadVisibility>
+						<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
+							<span
+								className="w-[40px] h-px bg-[var(--color-orange-primary)] opacity-50 shrink-0"
+								aria-hidden="true"
+							/>
+							Journal · {new Date().getFullYear()}
+						</div>
+						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
+							<StaggerText
+								text="Thoughts & Essays"
+								autoReveal
+								baseDelay={0.08}
+								letterDelay={0.028}
+							/>
+						</h1>
+						<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
+							<p className="m-0 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[520px] text-foreground text-pretty">
+								Personal musings on full-stack development, design patterns, and the occasional
+								philosophical rabbit hole.
+							</p>
+							<span className="font-mono text-[12px] text-muted-foreground whitespace-nowrap">
+								<b className="text-[var(--color-orange-primary)] font-semibold">{posts.length}</b>{' '}
+								{posts.length === 1 ? 'post' : 'posts'}
+							</span>
 						</div>
 					</ScrollFadeReveal>
 				</FrameBand>
-			)}
 
-			{/* Closes the page on the grid rather than on dead space above the footer. */}
-			<FrameRule hatched />
+				{posts.length > 0 && (
+					<FrameBand innerClassName={BAND_PADDING}>
+						<ScrollFadeReveal>
+							<div>
+								{featuredPost && <FeaturedPostCard post={featuredPost} />}
 
-			{posts.length === 0 && (
-				<FrameBand innerClassName={BAND_PADDING}>
-					<ScrollFadeReveal>
-						<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
-							No posts yet — check back soon.
-						</p>
-					</ScrollFadeReveal>
-				</FrameBand>
-			)}
+								{remainingPosts.length > 0 && (
+									<div className="mt-[clamp(60px,8vw,80px)]">
+										<h2 className="m-0 mb-[clamp(28px,4vw,44px)] font-clash font-medium text-[clamp(32px,6vw,56px)] leading-[1.1] tracking-[-0.032em] text-foreground">
+											More Stories
+										</h2>
+
+										<div className="flex flex-col divide-y divide-border">
+											{remainingPosts.map((post, i) => (
+												<a
+													key={post.slug}
+													href={toBlogSlug(post.slug)}
+													className={cn(
+														'group relative grid grid-cols-[1fr_auto] items-center gap-[26px] px-[14px] py-[30px] text-inherit no-underline',
+														'transition-[opacity] duration-[300ms] [transition-timing-function:var(--ease-out)]',
+														'hover:text-[var(--color-orange-primary)]',
+														'motion-reduce:transition-none',
+														'animate-[px-in_0.5s_var(--ease-out)_both]'
+													)}
+													style={{ animationDelay: `${i * 0.05}s` }}
+												>
+													<div className="min-w-0">
+														<h3 className="m-0 font-clash font-medium text-[clamp(24px,3vw,40px)] leading-[1.1] tracking-[-0.032em] text-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none">
+															{post.title}
+														</h3>
+														<p className="m-0 mt-[8px] font-mono text-[13px] text-muted-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] delay-[30ms] [transition-timing-function:var(--ease-out)] max-sm:hidden motion-reduce:transition-none">
+															{post.description}
+														</p>
+													</div>
+
+													<div className="flex flex-col items-end gap-[8px] shrink-0 max-sm:flex-col max-sm:items-start">
+														<div className="flex items-center gap-[12px] text-[12px] text-muted-foreground whitespace-nowrap">
+															<span>{format(new Date(post.date), 'MMM do, yyyy')}</span>
+															{post.readingTime && (
+																<>
+																	<span>·</span>
+																	<span>{post.readingTime} min</span>
+																</>
+															)}
+														</div>
+														{post.category && (
+															<span className="font-mono text-[10px] tracking-[0.06em] uppercase text-muted-foreground">
+																{post.category}
+															</span>
+														)}
+													</div>
+
+													<LuArrowUpRight className="w-[18px] h-[18px] text-muted-foreground group-hover:text-foreground transition-[translate,color] duration-300 motion-reduce:transition-none absolute right-[14px]" />
+												</a>
+											))}
+										</div>
+									</div>
+								)}
+							</div>
+						</ScrollFadeReveal>
+					</FrameBand>
+				)}
+
+				{/* Closes the page on the grid rather than on dead space above the footer. */}
+				<FrameRule hatched />
+
+				{posts.length === 0 && (
+					<FrameBand innerClassName={BAND_PADDING}>
+						<ScrollFadeReveal>
+							<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
+								No posts yet — check back soon.
+							</p>
+						</ScrollFadeReveal>
+					</FrameBand>
+				)}
+			</div>
 		</ReactLenis>
 	);
 }

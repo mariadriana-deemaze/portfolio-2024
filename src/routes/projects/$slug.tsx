@@ -205,7 +205,7 @@ function ProjectItemRoute() {
 	const hasMetaSection = hasMetaRow || technologies.length > 0;
 
 	return (
-		<article className="w-full">
+		<article className="w-full animate-fade-in-left delay-500">
 			{/* Unruled: the navbar's bottom border already draws this line. */}
 			<FrameRule hatched tone="brand" ruled={false} />
 
