@@ -153,6 +153,12 @@ function useNextProjectTransition(
 	}, [wrapperRef, overlayRef, slug, navigate]);
 }
 
+/* The article is the full-bleed wrapper; every band below is the ruled frame box,
+   so the vertical rules run unbroken down the page. Bands touch — vertical space
+   is padding inside a band, never margin between two of them. */
+const FRAME_BOX = 'mx-auto w-full max-w-[var(--frame-max)] border-x border-border';
+const FRAME_BAND = `${FRAME_BOX} border-t px-[var(--frame-pad)]`;
+
 const META_KEY = 'font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground';
 const META_VAL = 'font-mono text-[13px] text-foreground mt-[7px] leading-[1.55]';
 
@@ -200,8 +206,8 @@ function ProjectItemRoute() {
 	const hasMetaSection = hasMetaRow || technologies.length > 0;
 
 	return (
-		<article className="w-full">
-			<header className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] pt-[132px]">
+		<article className="w-full px-[var(--frame-gutter)]">
+			<header className={cn(FRAME_BOX, 'px-[var(--frame-pad)] pt-[132px] pb-10')}>
 				<div>
 					<Link
 						to={ROUTES.projects}
@@ -335,7 +341,7 @@ function ProjectItemRoute() {
 			)}
 
 			{(overview || problem || approach) && (
-				<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(80px,12vw,150px)]">
+				<section className={cn(FRAME_BAND, 'py-[clamp(60px,9vw,110px)]')}>
 					<div className="mx-auto max-w-[760px]">
 						{overview && (
 							<CaseStudyBlock label={t('pages.project-detail.overview')} text={overview} />
@@ -363,7 +369,7 @@ function ProjectItemRoute() {
 			)}
 
 			{structuredBody && (
-				<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
+				<section className={cn(FRAME_BAND, 'py-[clamp(50px,7vw,90px)]')}>
 					<div className="mx-auto max-w-[760px]">
 						<PortableTextRenderer body={structuredBody} className="a-body" />
 					</div>
@@ -403,7 +409,7 @@ function ProjectItemRoute() {
 										/>
 									</div>
 								)}
-								<div className="relative z-[1] mx-auto w-full max-w-[1100px] p-[clamp(48px,9vw,110px)_var(--content-inset)]">
+								<div className="relative z-[1] mx-auto w-full max-w-[var(--frame-max)] p-[clamp(48px,9vw,110px)_var(--frame-pad)]">
 									<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
 										{t('pages.project-detail.next-project')}
 									</div>
@@ -458,7 +464,7 @@ function CaseStudyBlock({
 
 function StatisticsGrid({ statistics, label }: { statistics: ResolvedMetric[]; label: string }) {
 	return (
-		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
+		<section className={cn(FRAME_BAND, 'py-[clamp(50px,7vw,90px)]')}>
 			<div className="mx-auto max-w-[760px]">
 				<div className={SECTION_LABEL}>
 					<span className={SECTION_LINE} />
@@ -515,8 +521,8 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 	);
 
 	return (
-		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
-			<div className={cn(SECTION_LABEL, 'mx-auto max-w-[1100px]')}>
+		<section className={cn(FRAME_BAND, 'py-[clamp(50px,7vw,90px)]')}>
+			<div className={SECTION_LABEL}>
 				<span className={SECTION_LINE} />
 				{t('pages.project-detail.gallery')}
 			</div>

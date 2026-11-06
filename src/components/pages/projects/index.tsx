@@ -2,6 +2,7 @@ import { ReactLenis } from 'lenis/react';
 import { useMemo, useState } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
+import { FrameBand } from '@/components/ui/frame';
 import { ImageCard } from '@/components/ui/image-card';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import { StaggerText } from '@/components/ui/stagger-text';
@@ -103,7 +104,11 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<div className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)]">
+			<FrameBand
+				as="div"
+				ruled={false}
+				innerClassName="px-[var(--frame-pad)] pb-16 md:pb-20 lg:pb-24"
+			>
 				<header className="pt-[clamp(100px,14vw,138px)]">
 					<ScrollFadeReveal onLoadVisibility>
 						<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
@@ -217,7 +222,7 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 						</a>
 					</section>
 				</ScrollFadeReveal>
-			</div>
+			</FrameBand>
 		</ReactLenis>
 	);
 }

@@ -92,70 +92,72 @@ export function Navbar() {
 					hidden ? '-translate-y-[130%] opacity-0' : 'translate-y-0 opacity-100'
 				)}
 			>
-				<div className="max-w-[1100px] mx-auto px-[var(--content-inset)] pb-[9px] flex items-center justify-between gap-[10px]">
-					<div className="flex items-center gap-1 min-w-0">
-						<Link
-							to={ROUTES.home}
-							className="flex items-center mr-2 no-underline text-foreground"
-							aria-label={t('components.navbar.home-label')}
-							onClick={() => setMenuOpen(false)}
-						>
-							<LogoMark className="logo-fade h-[19px]" />
-						</Link>
+				<div className="w-full px-[var(--frame-gutter)]">
+					<div className="mx-auto w-full max-w-[var(--frame-max)] px-[var(--frame-pad)] pb-[9px] flex items-center justify-between gap-[10px]">
+						<div className="flex items-center gap-1 min-w-0">
+							<Link
+								to={ROUTES.home}
+								className="flex items-center mr-2 no-underline text-foreground"
+								aria-label={t('components.navbar.home-label')}
+								onClick={() => setMenuOpen(false)}
+							>
+								<LogoMark className="logo-fade h-[19px]" />
+							</Link>
 
-						<div className="hidden sm:flex gap-px">
-							{NAV_KEYS.map(({ path, key }) => (
-								<Link
-									key={path}
-									to={path}
+							<div className="hidden sm:flex gap-px">
+								{NAV_KEYS.map(({ path, key }) => (
+									<Link
+										key={path}
+										to={path}
+										className={cn(
+											'font-mono text-[13px] tracking-[0.01em] no-underline',
+											'opacity-70 px-[9px] py-1 rounded-[6px] cursor-pointer',
+											'transition-[opacity,background,color] duration-[250ms] ease-linear',
+											'hover:opacity-100 hover:bg-[color-mix(in_srgb,hsl(var(--accent))_55%,transparent)]',
+											isActive(path)
+												? 'opacity-100 text-[var(--color-orange-primary)]'
+												: 'text-foreground'
+										)}
+									>
+										{t(key)}
+									</Link>
+								))}
+							</div>
+						</div>
+
+						<div className="flex items-center gap-[7px] shrink-0">
+							<NowPlayingBadge />
+							<LocaleToggle />
+							<div className="hidden sm:block">
+								<ThemeToggle />
+							</div>
+
+							<button
+								className="group sm:hidden relative w-8 h-8 -mr-[8px] cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[8px]"
+								onClick={() => setMenuOpen((m) => !m)}
+								aria-label={t('components.navbar.toggle-menu')}
+								aria-expanded={menuOpen}
+							>
+								<span
 									className={cn(
-										'font-mono text-[13px] tracking-[0.01em] no-underline',
-										'opacity-70 px-[9px] py-1 rounded-[6px] cursor-pointer',
-										'transition-[opacity,background,color] duration-[250ms] ease-linear',
-										'hover:opacity-100 hover:bg-[color-mix(in_srgb,hsl(var(--accent))_55%,transparent)]',
-										isActive(path)
-											? 'opacity-100 text-[var(--color-orange-primary)]'
-											: 'text-foreground'
+										'absolute left-1/2 top-1/2 w-[15px] h-[1.5px] bg-foreground rounded-[2px]',
+										'transition-[translate,rotate] duration-[320ms] ease-out',
+										menuOpen
+											? 'translate-x-[-50%] translate-y-[-50%] rotate-45'
+											: 'translate-x-[-50%] translate-y-[calc(-50%_-_4px)] group-hover:translate-y-[calc(-50%_-_2.5px)]'
 									)}
-								>
-									{t(key)}
-								</Link>
-							))}
+								/>
+								<span
+									className={cn(
+										'absolute left-1/2 top-1/2 w-[15px] h-[1.5px] bg-foreground rounded-[2px]',
+										'transition-[translate,rotate] duration-[320ms] ease-out',
+										menuOpen
+											? 'translate-x-[-50%] translate-y-[-50%] -rotate-45'
+											: 'translate-x-[-50%] translate-y-[calc(-50%_+_4px)] group-hover:translate-y-[calc(-50%_+_2.5px)]'
+									)}
+								/>
+							</button>
 						</div>
-					</div>
-
-					<div className="flex items-center gap-[7px] shrink-0">
-						<NowPlayingBadge />
-						<LocaleToggle />
-						<div className="hidden sm:block">
-							<ThemeToggle />
-						</div>
-
-						<button
-							className="group sm:hidden relative w-8 h-8 -mr-[8px] cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-[8px]"
-							onClick={() => setMenuOpen((m) => !m)}
-							aria-label={t('components.navbar.toggle-menu')}
-							aria-expanded={menuOpen}
-						>
-							<span
-								className={cn(
-									'absolute left-1/2 top-1/2 w-[15px] h-[1.5px] bg-foreground rounded-[2px]',
-									'transition-[translate,rotate] duration-[320ms] ease-out',
-									menuOpen
-										? 'translate-x-[-50%] translate-y-[-50%] rotate-45'
-										: 'translate-x-[-50%] translate-y-[calc(-50%_-_4px)] group-hover:translate-y-[calc(-50%_-_2.5px)]'
-								)}
-							/>
-							<span
-								className={cn(
-									'absolute left-1/2 top-1/2 w-[15px] h-[1.5px] bg-foreground rounded-[2px]',
-									'transition-[translate,rotate] duration-[320ms] ease-out',
-									menuOpen
-										? 'translate-x-[-50%] translate-y-[-50%] -rotate-45'
-										: 'translate-x-[-50%] translate-y-[calc(-50%_+_4px)] group-hover:translate-y-[calc(-50%_+_2.5px)]'
-								)}
-							/>
-						</button>
 					</div>
 				</div>
 			</nav>

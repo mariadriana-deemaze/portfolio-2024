@@ -13,7 +13,7 @@ export const SectionAbout = () => {
 	return (
 		<Section>
 			<SectionHeading num="01" title={t('pages.home.about.heading')} />
-			<div className="flex flex-col gap-4">
+			<div className="flex flex-col gap-4 max-w-[var(--measure-lg)]">
 				{paragraphs.map((paragraph, index) => {
 					if (index === 0) {
 						const parts = paragraph.split(HIGHLIGHT);

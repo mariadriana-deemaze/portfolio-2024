@@ -5,30 +5,57 @@ import { SectionEducation } from '@/components/pages/home/section-education';
 import { SectionHero } from '@/components/pages/home/section-hero';
 import { SectionProjects } from '@/components/pages/home/section-projects';
 import { SectionWorkExperience } from '@/components/pages/home/section-work-experience';
+import { FrameBand, FrameRule } from '@/components/ui/frame';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import type { Project } from '@/data/projects';
+
+const BAND = 'px-[var(--frame-pad)] py-16 md:py-20 lg:py-24 print:py-6';
 
 export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] overflow-x-clip space-y-64 md:space-y-48 print:space-y-6 animate-fade-in-left delay-500">
-				<ScrollFadeReveal onLoadVisibility>
-					<SectionHero />
-				</ScrollFadeReveal>
-				<ScrollFadeReveal onLoadVisibility>
-					<SectionAbout />
-				</ScrollFadeReveal>
-				<ScrollFadeReveal>
-					<SectionWorkExperience />
-				</ScrollFadeReveal>
-				<ScrollFadeReveal>
-					<SectionEducation />
-				</ScrollFadeReveal>
-				<ScrollFadeReveal>
-					<SectionProjects projects={projects} />
-				</ScrollFadeReveal>
-				<SectionContact />
-			</section>
+			<div className="overflow-x-clip animate-fade-in-left delay-500">
+				<FrameBand
+					ruled={false}
+					innerClassName="px-[var(--frame-pad)] pb-16 md:pb-20 lg:pb-24 print:pb-6"
+				>
+					<ScrollFadeReveal onLoadVisibility>
+						<SectionHero />
+					</ScrollFadeReveal>
+				</FrameBand>
+
+				<FrameRule />
+
+				<FrameBand innerClassName={BAND}>
+					<ScrollFadeReveal onLoadVisibility>
+						<SectionAbout />
+					</ScrollFadeReveal>
+				</FrameBand>
+
+				<FrameBand innerClassName={BAND}>
+					<ScrollFadeReveal>
+						<SectionWorkExperience />
+					</ScrollFadeReveal>
+				</FrameBand>
+
+				<FrameBand innerClassName={BAND}>
+					<ScrollFadeReveal>
+						<SectionEducation />
+					</ScrollFadeReveal>
+				</FrameBand>
+
+				<FrameRule />
+
+				<FrameBand innerClassName={BAND}>
+					<ScrollFadeReveal>
+						<SectionProjects projects={projects} />
+					</ScrollFadeReveal>
+				</FrameBand>
+
+				<FrameBand innerClassName={BAND}>
+					<SectionContact />
+				</FrameBand>
+			</div>
 		</ReactLenis>
 	);
 };

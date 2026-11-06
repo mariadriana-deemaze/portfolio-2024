@@ -6,6 +6,7 @@ import { LuArrowUpRight } from 'react-icons/lu';
 import { Cover } from '@/components/pages/blog/cover';
 import { MetaBar } from '@/components/pages/blog/meta-bar';
 import { PortableTextRenderer } from '@/components/portable-text';
+import { FrameBand } from '@/components/ui/frame';
 import { NotFoundPage } from '@/components/ui/not-found-page';
 import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
@@ -86,7 +87,7 @@ function BlogShowRoute() {
 
 	return (
 		<article className="w-full">
-			<header className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] pt-[132px]">
+			<FrameBand as="header" ruled={false} innerClassName="px-[var(--frame-pad)] pt-[132px] pb-10">
 				<Link
 					to={ROUTES.blog}
 					className="mb-[30px] inline-flex items-center gap-2 font-mono text-xs text-muted-foreground no-underline whitespace-nowrap transition-colors duration-300 hover:gap-[11px] hover:text-[var(--color-orange-primary)] sm:text-sm"
@@ -116,24 +117,24 @@ function BlogShowRoute() {
 				</p>
 
 				<MetaBar slug={slug} title={title} readingTime={readingTime} views={liveViews} />
-			</header>
+			</FrameBand>
 
 			{coverImage?.url && <Cover src={coverImage.url} alt={coverImage.alt ?? title} />}
 
 			{structuredBody && (
-				<div className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] a-body">
+				<FrameBand as="div" innerClassName="px-[var(--frame-pad)] pb-10 a-body">
 					<PortableTextRenderer body={structuredBody} />
-				</div>
+				</FrameBand>
 			)}
 
 			<ArticleFooter author={author} />
 
 			{nextPost && (
-				<section className="relative left-1/2 mt-[clamp(80px,12vw,140px)] w-screen -translate-x-1/2 border-t border-border">
+				<FrameBand as="section" className="mt-[clamp(80px,12vw,140px)]">
 					<Link
 						to="/blog/$slug"
 						params={{ slug: nextPost.slug }}
-						className="mx-auto block max-w-[1100px] p-[clamp(40px,7vw,80px)_var(--content-inset)] text-foreground no-underline"
+						className="block p-[clamp(40px,7vw,80px)_var(--frame-pad)] text-foreground no-underline"
 					>
 						<div className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">
 							Next in the journal
@@ -147,7 +148,7 @@ function BlogShowRoute() {
 							</div>
 						</div>
 					</Link>
-				</section>
+				</FrameBand>
 			)}
 		</article>
 	);
@@ -157,7 +158,7 @@ function ArticleFooter({ author }: { author?: { name: string; avatar?: string; u
 	if (!author) return null;
 
 	return (
-		<footer className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(48px,7vw,80px)]">
+		<FrameBand as="footer" innerClassName="px-[var(--frame-pad)] py-[clamp(32px,5vw,56px)]">
 			<div className="flex items-center gap-4">
 				{author.avatar && (
 					<img
@@ -187,7 +188,7 @@ function ArticleFooter({ author }: { author?: { name: string; avatar?: string; u
 					)}
 				</div>
 			</div>
-		</footer>
+		</FrameBand>
 	);
 }
 

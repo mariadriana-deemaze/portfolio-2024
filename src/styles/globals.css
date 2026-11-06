@@ -380,9 +380,15 @@
 		--color-orange-dark-border: #4d2512;
 		/* Navigation */
 		--nav-border: #f3c6a7;
-		/* Layout */
-		--sideline-inset: max(14px, 4vw);
-		--content-inset: calc(var(--sideline-inset) + 15px);
+		/* Layout — ruled frame. The frame is a 84rem box centred in the viewport;
+		   --frame-gutter is the margin outside it, not padding inside. */
+		--frame-max: 84rem;
+		--frame-gutter: 1rem;
+		--frame-pad: 1.5rem;
+		/* Reading measures, for text inside a frame far wider than a line should be */
+		--measure-sm: 22.5rem;
+		--measure-md: 28rem;
+		--measure-lg: 40rem;
 		/* Font stacks */
 		--font-display: "ClashDisplay", "DM Sans", sans-serif;
 		--font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
@@ -415,6 +421,20 @@
 		--duration-fast: 0.32s;
 		--duration-base: 0.5s;
 		--duration-slow: 1s;
+	}
+
+	@media (min-width: 48rem) {
+		:root {
+			--frame-gutter: 2rem;
+			--frame-pad: 2rem;
+		}
+	}
+
+	@media (min-width: 64rem) {
+		:root {
+			--frame-gutter: 3rem;
+			--frame-pad: 3rem;
+		}
 	}
 
 	.dark {

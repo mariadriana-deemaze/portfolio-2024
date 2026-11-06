@@ -86,10 +86,6 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 					aria-hidden="true"
 				/>
 			</div>
-
-			{/* Vertical orange sidelines */}
-			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px left-[var(--sideline-inset)] bg-brand opacity-[0.22]" />
-			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px right-[var(--sideline-inset)] bg-brand opacity-[0.22]" />
 		</>
 	);
 }
