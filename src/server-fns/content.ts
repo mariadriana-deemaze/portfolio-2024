@@ -22,7 +22,7 @@ export const getPostsFn = createServerFn({ method: 'GET' }).handler(async () => 
 });
 
 export const getPostFn = createServerFn({ method: 'GET' })
-	.inputValidator(slugSchema)
+	.validator(slugSchema)
 	.handler(async ({ data }) => {
 		try {
 			const [{ getPost, getNextPost }, { highlightCodeBlocks }] = await Promise.all([
@@ -55,7 +55,7 @@ export const getProjectsFn = createServerFn({ method: 'GET' }).handler(async () 
 });
 
 export const getProjectFn = createServerFn({ method: 'GET' })
-	.inputValidator(slugSchema)
+	.validator(slugSchema)
 	.handler(async ({ data }) => {
 		try {
 			const [{ getProject, getNextProject }, { highlightCodeBlocks }] = await Promise.all([
