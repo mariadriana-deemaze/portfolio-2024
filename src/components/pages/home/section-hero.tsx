@@ -81,7 +81,8 @@ export const SectionHero = () => {
 
 	return (
 		<Section className="gap-y-0">
-			<div className="relative h-[clamp(300px,44vh,520px)] overflow-hidden border border-border print:hidden">
+			{/* Flush with the frame rules, so only the bottom edge is drawn. */}
+			<div className="relative h-[clamp(300px,44vh,420px)] lg:h-[60vh] overflow-hidden border-b border-border print:hidden">
 				{/* Scaled up so the drift never pulls an edge into view. */}
 				<div
 					ref={beamRef}
@@ -112,7 +113,7 @@ export const SectionHero = () => {
 				</div>
 			</div>
 
-			<div className="mt-[clamp(28px,4vw,44px)] flex items-start justify-start gap-7 max-sm:gap-[22px] flex-wrap">
+			<div className="mt-[clamp(28px,4vw,44px)] flex items-start justify-start gap-7 max-sm:gap-[22px] flex-wrap px-[var(--frame-pad)]">
 				<div style={{ flex: '0 1 420px' }}>
 					<h1 className="m-0 font-clash text-[clamp(28px,4vw,40px)] font-medium leading-[1.05] tracking-[-0.03em] text-foreground">
 						{data.name}
@@ -180,14 +181,6 @@ export const SectionHero = () => {
 				</div>
 
 				<AvatarCard size={AVATAR_SIZE_MOBILE} className="sm:hidden" />
-			</div>
-
-			<div
-				className="flex items-center gap-[10px] mt-[44px] font-mono text-[11px] tracking-[0.1em] uppercase text-muted-foreground print:hidden"
-				aria-hidden="true"
-			>
-				<span className="relative w-px h-[38px] bg-border overflow-hidden shrink-0 hero-scrollcue-bar" />
-				{t('pages.home.hero.scroll-cue')}
 			</div>
 		</Section>
 	);
