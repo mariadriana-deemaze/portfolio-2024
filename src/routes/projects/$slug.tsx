@@ -4,6 +4,7 @@ import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 import { PortableTextRenderer } from '@/components/portable-text';
 import { getStackByName } from '@/components/stacks';
+import { FrameBand } from '@/components/ui/frame';
 import type { LightboxImage } from '@/components/ui/lightbox';
 import { Lightbox } from '@/components/ui/lightbox';
 import { NotFoundPage } from '@/components/ui/not-found-page';
@@ -153,11 +154,9 @@ function useNextProjectTransition(
 	}, [wrapperRef, overlayRef, slug, navigate]);
 }
 
-/* The article is the full-bleed wrapper; every band below is the ruled frame box,
-   so the vertical rules run unbroken down the page. Bands touch — vertical space
-   is padding inside a band, never margin between two of them. */
-const FRAME_BOX = 'mx-auto w-full max-w-[var(--frame-max)] border-x border-border';
-const FRAME_BAND = `${FRAME_BOX} border-t px-[var(--frame-pad)]`;
+/* Bands touch — vertical space is padding inside a band, never margin between
+   two of them, so the frame's vertical rules run unbroken down the page. */
+const BAND_PAD = 'px-[var(--frame-pad)]';
 
 const META_KEY = 'font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground';
 const META_VAL = 'font-mono text-[13px] text-foreground mt-[7px] leading-[1.55]';
@@ -206,8 +205,8 @@ function ProjectItemRoute() {
 	const hasMetaSection = hasMetaRow || technologies.length > 0;
 
 	return (
-		<article className="w-full px-[var(--frame-gutter)]">
-			<header className={cn(FRAME_BOX, 'px-[var(--frame-pad)] pt-[132px] pb-10')}>
+		<article className="w-full">
+			<FrameBand as="header" ruled={false} innerClassName={cn(BAND_PAD, 'pt-[132px] pb-10')}>
 				<div>
 					<Link
 						to={ROUTES.projects}
@@ -301,7 +300,7 @@ function ProjectItemRoute() {
 						</div>
 					)}
 				</div>
-			</header>
+			</FrameBand>
 
 			{coverImage && (
 				<div className="animate-fade-in-left delay-300 relative left-1/2 mt-16 w-screen -translate-x-1/2 overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]">
@@ -341,7 +340,7 @@ function ProjectItemRoute() {
 			)}
 
 			{(overview || problem || approach) && (
-				<section className={cn(FRAME_BAND, 'py-[clamp(60px,9vw,110px)]')}>
+				<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(60px,9vw,110px)]')}>
 					<div className="mx-auto max-w-[760px]">
 						{overview && (
 							<CaseStudyBlock label={t('pages.project-detail.overview')} text={overview} />
@@ -361,7 +360,7 @@ function ProjectItemRoute() {
 							/>
 						)}
 					</div>
-				</section>
+				</FrameBand>
 			)}
 
 			{statistics.length > 0 && (
@@ -369,11 +368,11 @@ function ProjectItemRoute() {
 			)}
 
 			{structuredBody && (
-				<section className={cn(FRAME_BAND, 'py-[clamp(50px,7vw,90px)]')}>
+				<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(50px,7vw,90px)]')}>
 					<div className="mx-auto max-w-[760px]">
 						<PortableTextRenderer body={structuredBody} className="a-body" />
 					</div>
-				</section>
+				</FrameBand>
 			)}
 
 			{gallery.length > 0 && <ProjectGallery gallery={gallery} />}
@@ -464,7 +463,7 @@ function CaseStudyBlock({
 
 function StatisticsGrid({ statistics, label }: { statistics: ResolvedMetric[]; label: string }) {
 	return (
-		<section className={cn(FRAME_BAND, 'py-[clamp(50px,7vw,90px)]')}>
+		<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(50px,7vw,90px)]')}>
 			<div className="mx-auto max-w-[760px]">
 				<div className={SECTION_LABEL}>
 					<span className={SECTION_LINE} />
@@ -486,7 +485,7 @@ function StatisticsGrid({ statistics, label }: { statistics: ResolvedMetric[]; l
 					))}
 				</div>
 			</div>
-		</section>
+		</FrameBand>
 	);
 }
 
@@ -521,7 +520,7 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 	);
 
 	return (
-		<section className={cn(FRAME_BAND, 'py-[clamp(50px,7vw,90px)]')}>
+		<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(50px,7vw,90px)]')}>
 			<div className={SECTION_LABEL}>
 				<span className={SECTION_LINE} />
 				{t('pages.project-detail.gallery')}
@@ -576,7 +575,7 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 					if (!open) setActiveIndex(null);
 				}}
 			/>
-		</section>
+		</FrameBand>
 	);
 }
 
