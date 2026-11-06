@@ -257,23 +257,14 @@
 	background: linear-gradient(180deg, hsl(var(--muted)), hsl(var(--background)) 70%);
 }
 
-@utility bg-grid-lines {
-	background-size: 54px 54px;
-	background-image:
-		linear-gradient(
-			to right,
-			color-mix(in srgb, hsl(var(--border)) 55%, transparent) 1px,
-			transparent 1px
-		),
-		linear-gradient(
-			to bottom,
-			color-mix(in srgb, hsl(var(--border)) 55%, transparent) 1px,
-			transparent 1px
-		);
-	mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, #000 55%, transparent 100%);
-	-webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, #000 55%, transparent 100%);
-	will-change: transform;
-	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+/* Diagonal hatch for empty frame bands. Lines run at 36°, 15px apart,
+   in the same color as the frame rules so a spacer reads as part of the grid. */
+@utility hatch-lines {
+	background-image: repeating-linear-gradient(
+		144deg,
+		hsl(var(--border)) 0 1px,
+		transparent 1px 15px
+	);
 }
 
 @utility bg-dots-layer {

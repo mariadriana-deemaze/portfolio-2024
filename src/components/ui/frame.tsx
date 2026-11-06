@@ -51,10 +51,18 @@ export function FrameBand({
 	);
 }
 
-export function FrameRule({ className }: { className?: string }) {
+export interface FrameRuleProps {
+	className?: string;
+	/** Fill the band with diagonal hatching instead of leaving it blank. */
+	hatched?: boolean;
+}
+
+export function FrameRule({ className, hatched = false }: FrameRuleProps) {
 	return (
 		<div aria-hidden="true" className="w-full px-[var(--frame-gutter)]">
-			<div className={cn(FRAME, 'border-t h-16 md:h-20', className)} />
+			<div className={cn(FRAME, 'border-t h-16 md:h-20 overflow-hidden', className)}>
+				{hatched && <div className="hatch-lines h-full w-full opacity-60" />}
+			</div>
 		</div>
 	);
 }

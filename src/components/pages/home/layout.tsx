@@ -24,7 +24,7 @@ export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 					</ScrollFadeReveal>
 				</FrameBand>
 
-				<FrameRule />
+				<FrameRule hatched />
 
 				<FrameBand innerClassName={BAND}>
 					<ScrollFadeReveal onLoadVisibility>
@@ -51,6 +51,8 @@ export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 						<SectionProjects projects={projects} />
 					</ScrollFadeReveal>
 				</FrameBand>
+
+				<FrameRule hatched />
 
 				<FrameBand innerClassName={BAND}>
 					<SectionContact />
