@@ -127,6 +127,28 @@
 	}
 }
 
+/* Hero beam: rays rise from an origin below the box, drifting and fading
+   out of phase with each other so the fan never reads as a static image. */
+@keyframes beam-sway {
+	0%,
+	100% {
+		rotate: calc(var(--ray-angle) - var(--ray-swing));
+	}
+	50% {
+		rotate: calc(var(--ray-angle) + var(--ray-swing));
+	}
+}
+
+@keyframes beam-flicker {
+	0%,
+	100% {
+		opacity: var(--ray-dim);
+	}
+	50% {
+		opacity: var(--ray-lit);
+	}
+}
+
 @keyframes scrollcue {
 	0% {
 		top: -50%;

@@ -1,136 +1,94 @@
-import { useRef } from 'react';
-
+import { useEffect, useRef } from 'react';
+import { LogoMark } from '@/components/logo-ma';
+import {
+	AVATAR_SIZE_DESKTOP,
+	AVATAR_SIZE_MOBILE,
+	AvatarCard
+} from '@/components/pages/home/avatar-card';
+import { HeroBeam } from '@/components/pages/home/hero-beam';
 import { AnimatedMottos } from '@/components/pages/home/motto';
 import { Section } from '@/components/ui/section';
 import { useLocale } from '@/contexts/locale-context';
 import { data } from '@/data/main';
-import { cn } from '@/utils/utils';
 
-const TILT_MAX = 16;
-const AVATAR_SIZE_DESKTOP = 92;
-const AVATAR_SIZE_MOBILE = 150;
+/* How far the mark drifts, in px, at the extremes of pointer and scroll. */
+const POINTER_DRIFT = 10;
+const SCROLL_DRIFT = 0.07;
 
-const WaveBadge = () => (
-	<div
-		className="absolute bottom-[-6px] right-[-6px] w-[30px] h-[30px] rounded-full bg-background border border-border grid place-items-center text-[15px] animate-[hero-wave_3.4s_ease-in-out_infinite] origin-[70%_80%] motion-reduce:animate-none"
-		aria-hidden="true"
-	>
-		👋
-	</div>
-);
+function useMarkParallax() {
+	const markRef = useRef<HTMLDivElement>(null);
 
-const AvatarCard = ({ size, className }: { size: number; className?: string }) => {
-	const avatarRef = useRef<HTMLDivElement>(null);
-	const borderRef = useRef<HTMLDivElement>(null);
-	const shineRef = useRef<HTMLDivElement>(null);
-	const highlightRef = useRef<HTMLDivElement>(null);
-	const tiltRaf = useRef(0);
+	useEffect(() => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-		const el = avatarRef.current;
-		const border = borderRef.current;
-		const shine = shineRef.current;
-		const highlight = highlightRef.current;
-		if (!el || !border || !shine || !highlight) return;
-		const { clientX, clientY } = e;
-		if (tiltRaf.current) return;
-		tiltRaf.current = requestAnimationFrame(() => {
-			tiltRaf.current = 0;
-			const rect = el.getBoundingClientRect();
-			const x = (clientX - rect.left) / rect.width - 0.5;
-			const y = (clientY - rect.top) / rect.height - 0.5;
-			el.style.transform = `perspective(500px) rotateY(${x * TILT_MAX}deg) rotateX(${-y * TILT_MAX}deg) scale3d(1.04,1.04,1.04)`;
-			shine.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
-			shine.style.opacity = '0.18';
-			const px = (x + 0.5) * rect.width;
-			const py = (y + 0.5) * rect.height;
-			highlight.style.transform = `translate(${px - 40}px, ${py - 40}px)`;
-			highlight.style.opacity = '0.45';
-			const angle = Math.atan2(y, x) * (180 / Math.PI) - 90;
-			border.style.background = `conic-gradient(from ${angle - 25}deg at 50% 50%, hsl(var(--border)) 0deg, rgba(241,90,36,0.9) 25deg, rgba(251,146,60,0.6) 40deg, hsl(var(--border)) 55deg, hsl(var(--border)) 360deg)`;
-		});
-	};
+		let mx = 0;
+		let my = 0;
+		let sy = 0;
+		let raf: number | null = null;
 
-	const handleMouseLeave = () => {
-		if (avatarRef.current) avatarRef.current.style.transform = '';
-		if (shineRef.current) {
-			shineRef.current.style.opacity = '0';
-			shineRef.current.style.transform = 'translate(0,0)';
-		}
-		if (highlightRef.current) highlightRef.current.style.opacity = '0';
-		if (borderRef.current) borderRef.current.style.background = '';
-	};
+		const apply = () => {
+			raf = null;
+			const el = markRef.current;
+			if (!el) return;
+			const x = mx * POINTER_DRIFT;
+			const y = my * POINTER_DRIFT - sy * SCROLL_DRIFT;
+			el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+		};
 
-	return (
-		<div
-			ref={avatarRef}
-			className={cn('relative w-fit flex-shrink-0 will-change-transform', className)}
-			style={{ transition: 'transform 0.6s var(--ease-out)' }}
-			onMouseMove={handleMouseMove}
-			onMouseLeave={handleMouseLeave}
-		>
-			<div
-				ref={borderRef}
-				className="rounded-[8px] p-px shadow-card"
-				style={{ background: 'hsl(var(--border))', transition: 'background 0.2s ease' }}
-			>
-				<div
-					className="relative rounded-[7px] overflow-hidden bg-background"
-					style={{ width: size, height: size }}
-				>
-					<img
-						className="w-full h-full object-cover block"
-						alt={data.name}
-						src="images/avatar.jpeg"
-						width={size}
-						height={size}
-						loading="eager"
-					/>
-					<div
-						ref={shineRef}
-						className="absolute pointer-events-none mix-blend-overlay opacity-0 will-change-transform"
-						style={{
-							inset: '-50%',
-							backgroundImage:
-								'linear-gradient(105deg, hsla(0,50%,72%,0.9) 0%, hsla(60,50%,72%,0.9) 17%, hsla(120,50%,72%,0.9) 33%, hsla(180,50%,72%,0.9) 50%, hsla(240,50%,72%,0.9) 67%, hsla(300,50%,72%,0.9) 83%, hsla(360,50%,72%,0.9) 100%)',
-							transition: 'opacity 0.4s ease, transform 0.12s ease'
-						}}
-					/>
-					<div
-						ref={highlightRef}
-						className="absolute top-0 left-0 w-[80px] h-[80px] rounded-full pointer-events-none mix-blend-screen opacity-0 will-change-transform"
-						style={{
-							background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 65%)',
-							transition: 'opacity 0.25s ease, transform 0.08s ease'
-						}}
-					/>
-				</div>
-			</div>
-			<WaveBadge />
-		</div>
-	);
-};
+		const schedule = () => {
+			if (raf === null) raf = requestAnimationFrame(apply);
+		};
+
+		const onMove = (e: MouseEvent) => {
+			mx = e.clientX / window.innerWidth - 0.5;
+			my = e.clientY / window.innerHeight - 0.5;
+			schedule();
+		};
+
+		const onScroll = () => {
+			sy = window.scrollY;
+			schedule();
+		};
+
+		window.addEventListener('mousemove', onMove);
+		window.addEventListener('scroll', onScroll, { passive: true });
+
+		return () => {
+			window.removeEventListener('mousemove', onMove);
+			window.removeEventListener('scroll', onScroll);
+			if (raf !== null) cancelAnimationFrame(raf);
+		};
+	}, []);
+
+	return markRef;
+}
 
 export const SectionHero = () => {
 	const { t, translations } = useLocale();
 	const currentWork = data.work.find((w) => w.end === 'Present');
+	const markRef = useMarkParallax();
 
 	return (
-		<Section className="mt-20 animate-fade-in delay-100">
-			<AvatarCard size={AVATAR_SIZE_MOBILE} className="sm:hidden mb-[22px]" />
+		<Section className="gap-y-0">
+			<div className="relative h-[clamp(300px,44vh,520px)] overflow-hidden border border-border print:hidden">
+				<HeroBeam />
+				<div className="absolute inset-0 grid place-items-center">
+					<div ref={markRef} className="will-change-transform">
+						<LogoMark
+							className="h-[clamp(52px,9vw,104px)] text-[#fff6e8] drop-shadow-[0_0_32px_color-mix(in_srgb,var(--color-orange-primary)_55%,transparent)]"
+							aria-label={data.name}
+						/>
+					</div>
+				</div>
+			</div>
 
-			<h1 className="font-clash font-medium text-[clamp(64px,20vw,116px)] leading-[0.92] tracking-[-0.035em] m-0">
-				<span className="block w-fit pb-[0.04em] bg-[linear-gradient(to_right,var(--color-fg-base)_50%,transparent)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent]">
-					maria
-				</span>
-				<span className="block w-fit pb-[0.04em] bg-[linear-gradient(to_right,var(--color-orange-primary)_50%,transparent)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent]">
-					adriana
-				</span>
-			</h1>
-
-			<div className="flex items-start justify-start gap-7 max-sm:gap-[22px] mt-[34px] flex-wrap">
+			<div className="mt-[clamp(28px,4vw,44px)] flex items-start justify-start gap-7 max-sm:gap-[22px] flex-wrap">
 				<div style={{ flex: '0 1 420px' }}>
-					<div className="font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
+					<h1 className="m-0 font-clash text-[clamp(28px,4vw,40px)] font-medium leading-[1.05] tracking-[-0.03em] text-foreground">
+						{data.name}
+					</h1>
+
+					<div className="mt-[10px] font-clash text-[19px] font-normal h-[26px] overflow-hidden flex items-center">
 						<AnimatedMottos
 							data={translations.data.mottos}
 							className="text-[var(--color-orange-primary)]"
@@ -190,10 +148,12 @@ export const SectionHero = () => {
 						<AvatarCard size={AVATAR_SIZE_DESKTOP} className="max-sm:hidden" />
 					</div>
 				</div>
+
+				<AvatarCard size={AVATAR_SIZE_MOBILE} className="sm:hidden" />
 			</div>
 
 			<div
-				className="flex items-center gap-[10px] mt-[56px] font-mono text-[11px] tracking-[0.1em] uppercase text-muted-foreground print:hidden"
+				className="flex items-center gap-[10px] mt-[44px] font-mono text-[11px] tracking-[0.1em] uppercase text-muted-foreground print:hidden"
 				aria-hidden="true"
 			>
 				<span className="relative w-px h-[38px] bg-border overflow-hidden shrink-0 hero-scrollcue-bar" />

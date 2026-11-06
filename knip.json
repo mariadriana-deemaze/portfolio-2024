@@ -14,5 +14,10 @@
 		"type": true
 	},
 	"tags": ["-lintignore"],
-	"ignoreFiles": ["./.cz-config.cjs", "./src/data/**", "./src/components/now-playing.tsx"]
+	"ignoreFiles": [
+		"./.cz-config.cjs",
+		"./src/data/**",
+		"./src/components/now-playing.tsx",
+		"./src/components/pages/home/section-hero-classic.tsx"
+	]
 }
