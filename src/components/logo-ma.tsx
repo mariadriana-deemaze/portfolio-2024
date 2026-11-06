@@ -3,15 +3,9 @@ import { useId } from 'react';
 
 import { cn } from '@/utils/utils';
 
-/** Where the stroke gradient starts, before it fades into currentColor. */
-const STROKE_ACCENT = '#F15A24';
+type LogoMAProps = SVGProps<SVGSVGElement>;
 
-type LogoMAProps = SVGProps<SVGSVGElement> & {
-	/** Override the stroke's accent stop, e.g. a lighter tone over a dark panel. */
-	accent?: string;
-};
-
-export const LogoMark = ({ className, accent = STROKE_ACCENT, ...props }: LogoMAProps) => {
+export const LogoMark = ({ className, ...props }: LogoMAProps) => {
 	/* Unique per instance: the navbar and the hero both render this mark, and
 	   duplicate gradient ids make every url(#...) resolve to the first one in
 	   the document, so the other instance inherits its currentColor. */
@@ -64,7 +58,7 @@ export const LogoMark = ({ className, accent = STROKE_ACCENT, ...props }: LogoMA
 					y2="20.83"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop stopColor={accent} />
+					<stop stopColor="#F15A24" />
 					<stop offset="1" stopColor="currentColor" />
 				</linearGradient>
 				<linearGradient
@@ -86,7 +80,7 @@ export const LogoMark = ({ className, accent = STROKE_ACCENT, ...props }: LogoMA
 					y2="21"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop stopColor={accent} />
+					<stop stopColor="#F15A24" />
 					<stop offset="1" stopColor="currentColor" />
 				</linearGradient>
 			</defs>

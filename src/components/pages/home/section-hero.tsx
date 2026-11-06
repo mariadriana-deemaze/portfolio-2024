@@ -86,8 +86,7 @@ export const SectionHero = () => {
 				<div className="absolute inset-0 grid place-items-center">
 					<div ref={markRef} className="will-change-transform">
 						<LogoMark
-							accent="#F9A765"
-							className="h-[clamp(64px,11vw,132px)] text-[#fff6e8] [&_path]:[fill-opacity:0.07] [&_path]:[stroke-width:0.5] [filter:drop-shadow(0_0_2px_rgba(6,5,4,0.9))_drop-shadow(0_0_9px_rgba(6,5,4,0.75))_drop-shadow(0_0_34px_color-mix(in_srgb,var(--color-orange-primary)_45%,transparent))]"
+							className="h-[clamp(64px,11vw,132px)] text-[#fff6e8] [&_path]:[fill-opacity:0.07] [&_path]:[stroke-width:0.32] [filter:drop-shadow(0_0_2px_rgba(6,5,4,0.9))_drop-shadow(0_0_9px_rgba(6,5,4,0.75))_drop-shadow(0_0_34px_color-mix(in_srgb,var(--color-orange-primary)_45%,transparent))]"
 							aria-label={data.name}
 						/>
 					</div>
