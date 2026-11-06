@@ -235,9 +235,15 @@ function ProjectItemRoute() {
 					<p className="animate-fade-in-left delay-300 mt-[28px] font-clash text-foreground text-pretty font-normal leading-[1.35] tracking-[-0.01em] text-[clamp(20px,2.6vw,30px)] max-w-[620px]">
 						{description}
 					</p>
+				</div>
+			</FrameBand>
 
+			{/* Its own band: these details used to draw their own rules 48px
+			    short of the frame, leaving a gap at both ends. */}
+			{(hasMetaSection || links.length > 0) && (
+				<FrameBand innerClassName="px-[var(--frame-pad)] py-[clamp(24px,3vw,34px)]">
 					{hasMetaSection && (
-						<div className="animate-fade-in-left delay-400 mt-[52px] border-t border-b border-border py-[26px]">
+						<div className="animate-fade-in-left delay-400">
 							{hasMetaRow && (
 								<div className="grid grid-cols-3 max-sm:grid-cols-2 gap-6">
 									{role && (
@@ -302,8 +308,8 @@ function ProjectItemRoute() {
 							})}
 						</div>
 					)}
-				</div>
-			</FrameBand>
+				</FrameBand>
+			)}
 
 			{/* Bleeds to the frame rules, like the hero beam: no side padding. */}
 			{coverImage && (
