@@ -4,7 +4,7 @@ import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 import { PortableTextRenderer } from '@/components/portable-text';
 import { getStackByName } from '@/components/stacks';
-import { FrameBand } from '@/components/ui/frame';
+import { BAND_PADDING, FrameBand, FrameRule } from '@/components/ui/frame';
 import type { LightboxImage } from '@/components/ui/lightbox';
 import { Lightbox } from '@/components/ui/lightbox';
 import { NotFoundPage } from '@/components/ui/not-found-page';
@@ -206,7 +206,10 @@ function ProjectItemRoute() {
 
 	return (
 		<article className="w-full">
-			<FrameBand as="header" ruled={false} innerClassName={cn(BAND_PAD, 'pt-[132px] pb-10')}>
+			{/* Unruled: the navbar's bottom border already draws this line. */}
+			<FrameRule hatched tone="brand" ruled={false} />
+
+			<FrameBand as="header" innerClassName={BAND_PADDING}>
 				<div>
 					<Link
 						to={ROUTES.projects}
@@ -302,8 +305,12 @@ function ProjectItemRoute() {
 				</div>
 			</FrameBand>
 
+			{/* Bleeds to the frame rules, like the hero beam: no side padding. */}
 			{coverImage && (
-				<div className="animate-fade-in-left delay-300 relative left-1/2 mt-16 w-screen -translate-x-1/2 overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]">
+				<FrameBand
+					as="div"
+					innerClassName="animate-fade-in-left delay-300 relative overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]"
+				>
 					{heroGradient && (
 						<div className="absolute inset-0" style={{ background: heroGradient, opacity: 0.3 }} />
 					)}
@@ -336,7 +343,7 @@ function ProjectItemRoute() {
 					<span className="absolute left-[max(24px,5vw)] bottom-[22px] z-[2] font-mono text-[11px] text-white bg-black/45 border border-white/25 rounded-full px-3 py-[5px] backdrop-blur-[6px]">
 						{title} — {year}
 					</span>
-				</div>
+				</FrameBand>
 			)}
 
 			{(overview || problem || approach) && (

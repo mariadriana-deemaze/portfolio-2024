@@ -6,7 +6,7 @@ import { LuArrowUpRight } from 'react-icons/lu';
 import { Cover } from '@/components/pages/blog/cover';
 import { MetaBar } from '@/components/pages/blog/meta-bar';
 import { PortableTextRenderer } from '@/components/portable-text';
-import { FrameBand } from '@/components/ui/frame';
+import { BAND_PADDING, FrameBand, FrameRule } from '@/components/ui/frame';
 import { NotFoundPage } from '@/components/ui/not-found-page';
 import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
@@ -87,7 +87,10 @@ function BlogShowRoute() {
 
 	return (
 		<article className="w-full">
-			<FrameBand as="header" ruled={false} innerClassName="px-[var(--frame-pad)] pt-[132px] pb-10">
+			{/* Unruled: the navbar's bottom border already draws this line. */}
+			<FrameRule hatched tone="brand" ruled={false} />
+
+			<FrameBand as="header" innerClassName={BAND_PADDING}>
 				<Link
 					to={ROUTES.blog}
 					className="mb-[30px] inline-flex items-center gap-2 font-mono text-xs text-muted-foreground no-underline whitespace-nowrap transition-colors duration-300 hover:gap-[11px] hover:text-[var(--color-orange-primary)] sm:text-sm"
@@ -119,18 +122,27 @@ function BlogShowRoute() {
 				<MetaBar slug={slug} title={title} readingTime={readingTime} views={liveViews} />
 			</FrameBand>
 
-			{coverImage?.url && <Cover src={coverImage.url} alt={coverImage.alt ?? title} />}
+			{/* Bleeds to the frame rules, like the hero beam: no side padding. */}
+			{coverImage?.url && (
+				<FrameBand as="div">
+					<Cover src={coverImage.url} alt={coverImage.alt ?? title} />
+				</FrameBand>
+			)}
 
+			{/* a-body sits inside the band, not on it: its margin-top would
+			    otherwise push the band off the one above and break the rules. */}
 			{structuredBody && (
-				<FrameBand as="div" innerClassName="px-[var(--frame-pad)] pb-10 a-body">
-					<PortableTextRenderer body={structuredBody} />
+				<FrameBand as="div" innerClassName={BAND_PADDING}>
+					<div className="a-body">
+						<PortableTextRenderer body={structuredBody} />
+					</div>
 				</FrameBand>
 			)}
 
 			<ArticleFooter author={author} />
 
 			{nextPost && (
-				<FrameBand as="section" className="mt-[clamp(80px,12vw,140px)]">
+				<FrameBand as="section">
 					<Link
 						to="/blog/$slug"
 						params={{ slug: nextPost.slug }}

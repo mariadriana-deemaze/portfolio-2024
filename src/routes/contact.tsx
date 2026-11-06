@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { ReactLenis } from 'lenis/react';
 import { type JSX, useEffect, useState } from 'react';
 import { ContactForm } from '@/components/pages/contact/form';
-import { FrameBand } from '@/components/ui/frame';
+import { BAND_PADDING, FrameBand, FrameRule } from '@/components/ui/frame';
 import { SectionHeading } from '@/components/ui/section-heading';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import { StaggerText } from '@/components/ui/stagger-text';
@@ -38,43 +38,45 @@ function ContactRoute(): JSX.Element {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
+			{/* Unruled: the navbar's bottom border already draws this line. */}
+			<FrameRule hatched tone="brand" ruled={false} />
+
 			<FrameBand
-				as="div"
-				ruled={false}
+				as="header"
 				className="animate-fade-in-left delay-500"
-				innerClassName="px-[var(--frame-pad)] pb-16 md:pb-20 lg:pb-24"
+				innerClassName={BAND_PADDING}
 			>
-				<header className="pt-8 pb-[clamp(56px,9vw,104px)]">
-					<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,112px)] leading-[0.92] tracking-[-0.038em] break-words">
+				<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,112px)] leading-[0.92] tracking-[-0.038em] break-words">
+					<StaggerText
+						text={t('pages.contact.heading.line-1')}
+						revealed={revealed}
+						baseDelay={0.08}
+						letterDelay={0.028}
+					/>
+					<br />
+					<em className="font-normal text-[var(--color-orange-primary)]">
 						<StaggerText
-							text={t('pages.contact.heading.line-1')}
+							text={t('pages.contact.heading.accent')}
 							revealed={revealed}
-							baseDelay={0.08}
+							baseDelay={LINE2_DELAY}
 							letterDelay={0.028}
 						/>
-						<br />
-						<em className="font-normal text-[var(--color-orange-primary)]">
-							<StaggerText
-								text={t('pages.contact.heading.accent')}
-								revealed={revealed}
-								baseDelay={LINE2_DELAY}
-								letterDelay={0.028}
-							/>
-						</em>
-						<br />
-						<StaggerText
-							text={t('pages.contact.heading.suffix')}
-							revealed={revealed}
-							baseDelay={EM_END_DELAY}
-							letterDelay={0.028}
-						/>
-					</h1>
+					</em>
+					<br />
+					<StaggerText
+						text={t('pages.contact.heading.suffix')}
+						revealed={revealed}
+						baseDelay={EM_END_DELAY}
+						letterDelay={0.028}
+					/>
+				</h1>
 
-					<p className="m-0 mt-7 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[560px] text-pretty">
-						{t('pages.contact.intro')}
-					</p>
-				</header>
+				<p className="m-0 mt-7 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[560px] text-pretty">
+					{t('pages.contact.intro')}
+				</p>
+			</FrameBand>
 
+			<FrameBand innerClassName={BAND_PADDING}>
 				<div className="grid grid-cols-1 min-[880px]:grid-cols-[0.82fr_1.18fr] gap-[clamp(32px,6vw,88px)] items-start">
 					<div className="flex flex-col gap-8">
 						<div>
@@ -145,8 +147,10 @@ function ContactRoute(): JSX.Element {
 						<ContactForm />
 					</div>
 				</div>
+			</FrameBand>
 
-				<ScrollFadeReveal className="mt-[clamp(80px,12vw,140px)]">
+			<FrameBand innerClassName={BAND_PADDING}>
+				<ScrollFadeReveal>
 					<section>
 						<div className="flex items-center gap-3 mb-[26px]">
 							<span

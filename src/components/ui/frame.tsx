@@ -19,6 +19,9 @@ import { cn } from '@/utils/utils';
 
 const FRAME = 'relative mx-auto w-full max-w-[var(--frame-max)] border-x border-border';
 
+/** Standard band padding: the side gutter plus the page's vertical rhythm. */
+export const BAND_PADDING = 'px-[var(--frame-pad)] py-16 md:py-20 lg:py-24 print:py-6';
+
 const ARM = 'pointer-events-none absolute border-[var(--color-orange-primary)]';
 
 function Crosshairs() {

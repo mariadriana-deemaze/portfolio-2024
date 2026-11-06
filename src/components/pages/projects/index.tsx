@@ -2,7 +2,7 @@ import { ReactLenis } from 'lenis/react';
 import { useMemo, useState } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
-import { FrameBand } from '@/components/ui/frame';
+import { BAND_PADDING, FrameBand, FrameRule } from '@/components/ui/frame';
 import { ImageCard } from '@/components/ui/image-card';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import { StaggerText } from '@/components/ui/stagger-text';
@@ -104,57 +104,56 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<FrameBand
-				as="div"
-				ruled={false}
-				innerClassName="px-[var(--frame-pad)] pb-16 md:pb-20 lg:pb-24"
-			>
-				<header className="pt-[clamp(100px,14vw,138px)]">
-					<ScrollFadeReveal onLoadVisibility>
-						<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
-							<span
-								className="w-[40px] h-px bg-[var(--color-orange-primary)] opacity-50 shrink-0"
-								aria-hidden="true"
-							/>
-							{t('pages.projects.overline')} · 2022—{new Date().getFullYear()}
-						</div>
-						<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
+			{/* Unruled: the navbar's bottom border already draws this line. */}
+			<FrameRule hatched tone="brand" ruled={false} />
+
+			<FrameBand as="header" innerClassName={BAND_PADDING}>
+				<ScrollFadeReveal onLoadVisibility>
+					<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
+						<span
+							className="w-[40px] h-px bg-[var(--color-orange-primary)] opacity-50 shrink-0"
+							aria-hidden="true"
+						/>
+						{t('pages.projects.overline')} · 2022—{new Date().getFullYear()}
+					</div>
+					<h1 className="m-0 font-clash font-medium text-[clamp(52px,9.5vw,128px)] leading-[0.9] tracking-[-0.038em] text-foreground break-words">
+						<StaggerText
+							text={t('pages.projects.heading.line-1')}
+							autoReveal
+							baseDelay={0.08}
+							letterDelay={0.028}
+						/>
+						<br />
+						<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
 							<StaggerText
-								text={t('pages.projects.heading.line-1')}
+								text={t('pages.projects.heading.accent')}
 								autoReveal
-								baseDelay={0.08}
+								baseDelay={0.39}
 								letterDelay={0.028}
 							/>
-							<br />
-							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
-								<StaggerText
-									text={t('pages.projects.heading.accent')}
-									autoReveal
-									baseDelay={0.39}
-									letterDelay={0.028}
-								/>
-							</em>
-						</h1>
-						<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
-							<p className="m-0 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[520px] text-foreground text-pretty">
-								{t('pages.projects.intro')}
-							</p>
-							<span className="font-mono text-[12px] text-muted-foreground whitespace-nowrap">
-								<b className="text-[var(--color-orange-primary)] font-semibold">
-									{filteredProjects.length}
-								</b>{' '}
-								{filteredProjects.length === 1
-									? t('pages.projects.project')
-									: t('pages.projects.projects')}
-								{selectedFilter !== 'All' && ` · ${selectedFilter}`}
-							</span>
-						</div>
-					</ScrollFadeReveal>
-				</header>
+						</em>
+					</h1>
+					<div className="flex items-end justify-between gap-[28px] flex-wrap mt-[30px]">
+						<p className="m-0 font-clash font-normal text-[clamp(18px,2.4vw,26px)] leading-[1.4] tracking-[-0.01em] max-w-[520px] text-foreground text-pretty">
+							{t('pages.projects.intro')}
+						</p>
+						<span className="font-mono text-[12px] text-muted-foreground whitespace-nowrap">
+							<b className="text-[var(--color-orange-primary)] font-semibold">
+								{filteredProjects.length}
+							</b>{' '}
+							{filteredProjects.length === 1
+								? t('pages.projects.project')
+								: t('pages.projects.projects')}
+							{selectedFilter !== 'All' && ` · ${selectedFilter}`}
+						</span>
+					</div>
+				</ScrollFadeReveal>
+			</FrameBand>
 
-				{projects.length > 1 && (
+			{projects.length > 1 && (
+				<FrameBand innerClassName="px-[var(--frame-pad)] py-5">
 					<ScrollFadeReveal>
-						<div className="flex items-center justify-between gap-[16px] flex-wrap mt-[clamp(48px,7vw,80px)] pb-[18px] border-b border-border">
+						<div className="flex items-center justify-between gap-[16px] flex-wrap">
 							<span className="font-mono text-[12px] tracking-[0.06em] uppercase text-muted-foreground">
 								{t('pages.projects.filter-by')}
 							</span>
@@ -177,12 +176,13 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							</div>
 						</div>
 					</ScrollFadeReveal>
-				)}
+				</FrameBand>
+			)}
 
+			<FrameBand innerClassName={BAND_PADDING}>
 				<ScrollFadeReveal>
 					<div
 						className={cn(
-							'mt-[clamp(28px,4vw,44px)]',
 							filteredProjects.length > 0 &&
 								'grid grid-cols-2 max-sm:grid-cols-1 gap-[clamp(16px,2.4vw,28px)]'
 						)}
@@ -203,9 +203,11 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 						)}
 					</div>
 				</ScrollFadeReveal>
+			</FrameBand>
 
+			<FrameBand innerClassName={BAND_PADDING}>
 				<ScrollFadeReveal>
-					<section className="mt-[clamp(90px,13vw,150px)] border-t border-border pt-[clamp(48px,7vw,80px)] pb-[clamp(60px,9vw,110px)] flex items-end justify-between gap-[28px] flex-wrap">
+					<section className="flex items-end justify-between gap-[28px] flex-wrap">
 						<h2 className="m-0 font-clash font-medium text-[clamp(30px,5vw,60px)] leading-[1.0] tracking-[-0.03em] max-w-[620px]">
 							{t('pages.projects.cta.line-1')}{' '}
 							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
