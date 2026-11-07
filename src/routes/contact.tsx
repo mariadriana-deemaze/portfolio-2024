@@ -75,9 +75,9 @@ function ContactRoute(): JSX.Element {
 					</p>
 				</FrameBand>
 
-				<FrameBand innerClassName={BAND_PADDING}>
-					<div className="grid grid-cols-1 min-[880px]:grid-cols-[0.82fr_1.18fr] gap-[clamp(32px,6vw,88px)] items-start">
-						<div className="flex flex-col gap-8">
+				<FrameBand>
+					<div className="flex flex-col min-[880px]:flex-row min-[880px]:gap-[clamp(32px,6vw,88px)]">
+						<div className="flex flex-col gap-8 py-16 md:py-20 lg:py-24 px-[var(--frame-pad)]">
 							<div>
 								<p className="m-0 mb-3 font-mono text-[11px] tracking-[0.12em] uppercase text-muted-foreground">
 									{t('pages.contact.email')}
@@ -131,19 +131,12 @@ function ContactRoute(): JSX.Element {
 							</div>
 						</div>
 
-						<div
-							className="relative entry-card spotlight-border border border-border rounded-[22px] overflow-hidden shadow-card p-[clamp(26px,3.6vw,46px)]"
-							onMouseMove={(e) => {
-								const r = e.currentTarget.getBoundingClientRect();
-								e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - r.left}px`);
-								e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - r.top}px`);
-							}}
-							onMouseLeave={(e) => {
-								e.currentTarget.style.setProperty('--mouse-x', '-999px');
-								e.currentTarget.style.setProperty('--mouse-y', '-999px');
-							}}
-						>
-							<ContactForm />
+						<div className="flex-1 min-[880px]:basis-[50%]">
+							<div className="bg-background h-full border-t border-border min-[880px]:border-t-0 min-[880px]:border-l">
+								<div className="py-16 md:py-20 lg:py-24 px-[var(--frame-pad)]">
+									<ContactForm />
+								</div>
+							</div>
 						</div>
 					</div>
 				</FrameBand>
