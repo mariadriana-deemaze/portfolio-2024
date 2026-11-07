@@ -99,14 +99,14 @@ export const SectionHero = () => {
 					className="absolute inset-0"
 					style={{
 						background:
-							'radial-gradient(ellipse 38% 44% at 50% 46%, rgba(10,9,8,0.5) 0%, rgba(10,9,8,0.22) 50%, transparent 78%)'
+							'radial-gradient(ellipse 38% 44% at 50% 46%, color-mix(in srgb, hsl(var(--background)) 72%, transparent) 0%, color-mix(in srgb, hsl(var(--background)) 34%, transparent) 50%, transparent 78%)'
 					}}
 				/>
 
 				<div className="absolute inset-0 grid place-items-center">
 					<div ref={markRef} className="will-change-transform">
 						<LogoMark
-							className="h-[clamp(64px,11vw,132px)] text-[#fff6e8] [&_path]:[fill-opacity:0.07] [&_path]:[stroke-width:0.32] [filter:drop-shadow(0_0_2px_rgba(6,5,4,0.9))_drop-shadow(0_0_9px_rgba(6,5,4,0.75))_drop-shadow(0_0_34px_color-mix(in_srgb,var(--color-orange-primary)_45%,transparent))]"
+							className="h-[clamp(64px,11vw,132px)] text-foreground [&_path]:[fill-opacity:0.07] [&_path]:[stroke-width:0.32] [filter:drop-shadow(0_0_2px_color-mix(in_srgb,hsl(var(--background))_90%,transparent))_drop-shadow(0_0_9px_color-mix(in_srgb,hsl(var(--background))_75%,transparent))_drop-shadow(0_0_34px_color-mix(in_srgb,var(--color-orange-primary)_45%,transparent))]"
 							aria-label={data.name}
 						/>
 					</div>

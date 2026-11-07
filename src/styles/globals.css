@@ -394,6 +394,21 @@
 		--color-orange-light: #f18b3e;
 		--color-orange-muted: #f3c6a7;
 		--color-orange-dark-border: #4d2512;
+		/* Hero beam. Light stock shades the rays in ink; dark stock emits light.
+		   --beam-hot is where a ray lands under the cursor: denser on ink,
+		   brighter on glow. */
+		--beam-ray: linear-gradient(
+			to top,
+			color-mix(in srgb, var(--color-orange-primary) 92%, transparent) 0%,
+			color-mix(in srgb, var(--color-orange-primary) 68%, transparent) 18%,
+			color-mix(in srgb, var(--color-orange-light) 44%, transparent) 46%,
+			color-mix(in srgb, var(--color-orange-muted) 20%, transparent) 70%,
+			transparent 88%
+		);
+		--beam-haze: color-mix(in srgb, var(--color-orange-primary) 28%, transparent);
+		--beam-blend: multiply;
+		--beam-hot: 0.82;
+		--beam-density: 1.25;
 		/* Navigation */
 		--nav-border: hsl(var(--border));
 		/* Layout — ruled frame. The frame is a 84rem box centred in the viewport;
@@ -487,6 +502,19 @@
 		--color-fg-secondary: hsl(43 3% 52%);
 		/* Brand */
 		--brand-foreground: 0 3% 6%;
+		/* Hero beam: light emitted on dark stock. */
+		--beam-ray: linear-gradient(
+			to top,
+			color-mix(in srgb, var(--color-orange-primary) 86%, #fff) 0%,
+			var(--color-orange-primary) 12%,
+			color-mix(in srgb, var(--color-orange-light) 52%, transparent) 34%,
+			color-mix(in srgb, var(--color-orange-muted) 16%, transparent) 58%,
+			transparent 82%
+		);
+		--beam-haze: color-mix(in srgb, var(--color-orange-light) 32%, transparent);
+		--beam-blend: normal;
+		--beam-hot: 1.3;
+		--beam-density: 1;
 		/* Navigation */
 		--nav-border: hsl(var(--border));
 	}
