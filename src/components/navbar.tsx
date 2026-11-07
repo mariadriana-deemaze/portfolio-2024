@@ -113,7 +113,7 @@ export function Navbar() {
 				)}
 			>
 				<div className="w-full px-[var(--frame-gutter)]">
-					<div className="mx-auto w-full max-w-[var(--frame-max)] border-x border-transparent px-[var(--frame-pad)] pb-[9px] flex items-center justify-between gap-[10px]">
+					<div className="mx-auto w-full max-w-[var(--frame-max)] border-x border-transparent pb-[9px] flex items-center justify-between gap-[10px]">
 						<div className="flex items-center gap-1 min-w-0">
 							<Link
 								to={ROUTES.home}
@@ -186,14 +186,14 @@ export function Navbar() {
 				aria-hidden={!menuOpen}
 				className={cn(
 					'fixed inset-0 z-[48] flex flex-col justify-center',
-					'px-[max(28px,7vw)] pt-24 pb-10 bg-background',
+					'px-[var(--frame-gutter)] pt-24 pb-10 bg-background',
 					'transition-[clip-path] duration-500 [transition-timing-function:cubic-bezier(0.25,1,0.5,1)]',
 					menuOpen
 						? 'nav-overlay-open pointer-events-auto'
 						: 'nav-overlay-closed pointer-events-none'
 				)}
 			>
-				<nav className="relative flex flex-col">
+				<nav className="relative mx-auto flex w-full max-w-[var(--frame-max)] flex-col border-x border-transparent">
 					{NAV_KEYS.map(({ path, key }, i) => (
 						<Link
 							key={path}
@@ -249,7 +249,7 @@ export function Navbar() {
 					))}
 				</nav>
 
-				<div className="relative flex items-center flex-wrap gap-4 mt-auto pt-8 font-mono text-[12px]">
+				<div className="relative mx-auto flex w-full max-w-[var(--frame-max)] items-center flex-wrap gap-4 mt-auto border-x border-transparent pt-8 font-mono text-[12px]">
 					<div className={MOBILE_THEME_TOGGLE_WRAPPER_CLASS}>
 						<ThemeToggle align="start" side="top" />
 					</div>
