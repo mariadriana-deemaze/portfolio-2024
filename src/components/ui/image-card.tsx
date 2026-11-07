@@ -6,6 +6,8 @@ import { cn } from '@/utils/utils';
 const FEATURED_HEIGHT = 'clamp(340px, 42vw, 520px)';
 const DEFAULT_HEIGHT = '300px';
 
+const SCRIM_MASK = 'linear-gradient(180deg, transparent 16%, rgba(0,0,0,0.75) 46%, #000 62%)';
+
 type ImageCardProps = {
 	href: string;
 	image?: string | null;
@@ -31,7 +33,7 @@ export function ImageCard({
 		<a
 			href={href}
 			className={cn(
-				'group relative block no-underline text-foreground border border-border rounded-[18px] overflow-hidden',
+				'group relative block no-underline text-foreground border border-border overflow-hidden',
 				'bg-[color-mix(in_srgb,var(--card)_42%,transparent)] shadow-[var(--shadow-card)]',
 				'transition-[translate,box-shadow] duration-[550ms] [transition-timing-function:var(--ease-out)] will-change-transform',
 				'hover:-translate-y-[6px] hover:shadow-[0_44px_70px_-30px_rgba(0,0,0,0.36)]',
@@ -78,11 +80,22 @@ export function ImageCard({
 					aria-hidden="true"
 				/>
 
-				{/* Bottom gradient scrim */}
+				{image && (
+					<img
+						src={image}
+						alt=""
+						aria-hidden="true"
+						loading={eagerImage ? 'eager' : 'lazy'}
+						className="absolute inset-0 w-full h-full object-cover scale-[1.08] blur-[16px] z-[2] pointer-events-none transition-transform duration-[1100ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.14] motion-reduce:transition-none"
+						style={{ maskImage: SCRIM_MASK, WebkitMaskImage: SCRIM_MASK }}
+					/>
+				)}
+
 				<div
-					className="absolute inset-0 z-[1] pointer-events-none"
+					className="absolute inset-x-0 bottom-0 z-[2] h-[88%] sm:h-[74%] pointer-events-none"
 					style={{
-						background: 'linear-gradient(180deg, transparent 40%, rgba(10,6,2,0.65) 100%)'
+						background:
+							'linear-gradient(180deg, transparent 0%, rgba(10,6,2,0.32) 40%, rgba(10,6,2,0.74) 72%, rgba(10,6,2,0.93) 100%)'
 					}}
 					aria-hidden="true"
 				/>

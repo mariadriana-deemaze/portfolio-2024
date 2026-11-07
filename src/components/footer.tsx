@@ -1,10 +1,14 @@
+import { FrameBand } from '@/components/ui/frame';
 import { data } from '@/data/main';
 
 export function Footer() {
 	const year = new Date().getFullYear();
 
 	return (
-		<footer className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-16 mb-6 flex flex-wrap items-center justify-center sm:justify-between gap-3 border-t border-border pt-4 font-mono text-xs text-muted-foreground">
+		<FrameBand
+			as="footer"
+			innerClassName="flex flex-wrap items-center justify-center sm:justify-between gap-3 border-b px-[var(--frame-pad)] py-4 font-mono text-xs text-muted-foreground"
+		>
 			<span>
 				© {year} {data.name} · {data.location}
 			</span>
@@ -21,6 +25,6 @@ export function Footer() {
 					</a>
 				))}
 			</span>
-		</footer>
+		</FrameBand>
 	);
 }

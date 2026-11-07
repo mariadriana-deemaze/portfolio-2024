@@ -4,6 +4,7 @@ import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 import { PortableTextRenderer } from '@/components/portable-text';
 import { getStackByName } from '@/components/stacks';
+import { BAND_PADDING, FrameBand, FrameRule } from '@/components/ui/frame';
 import type { LightboxImage } from '@/components/ui/lightbox';
 import { Lightbox } from '@/components/ui/lightbox';
 import { NotFoundPage } from '@/components/ui/not-found-page';
@@ -153,6 +154,10 @@ function useNextProjectTransition(
 	}, [wrapperRef, overlayRef, slug, navigate]);
 }
 
+/* Bands touch — vertical space is padding inside a band, never margin between
+   two of them, so the frame's vertical rules run unbroken down the page. */
+const BAND_PAD = 'px-[var(--frame-pad)]';
+
 const META_KEY = 'font-mono text-[10px] tracking-[0.12em] uppercase text-muted-foreground';
 const META_VAL = 'font-mono text-[13px] text-foreground mt-[7px] leading-[1.55]';
 
@@ -200,8 +205,11 @@ function ProjectItemRoute() {
 	const hasMetaSection = hasMetaRow || technologies.length > 0;
 
 	return (
-		<article className="w-full">
-			<header className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] pt-[132px]">
+		<article className="w-full animate-fade-in-left delay-500">
+			{/* Unruled: the navbar's bottom border already draws this line. */}
+			<FrameRule hatched tone="brand" ruled={false} />
+
+			<FrameBand as="header" innerClassName={BAND_PADDING}>
 				<div>
 					<Link
 						to={ROUTES.projects}
@@ -227,9 +235,15 @@ function ProjectItemRoute() {
 					<p className="animate-fade-in-left delay-300 mt-[28px] font-clash text-foreground text-pretty font-normal leading-[1.35] tracking-[-0.01em] text-[clamp(20px,2.6vw,30px)] max-w-[620px]">
 						{description}
 					</p>
+				</div>
+			</FrameBand>
 
+			{/* Its own band: these details used to draw their own rules 48px
+			    short of the frame, leaving a gap at both ends. */}
+			{(hasMetaSection || links.length > 0) && (
+				<FrameBand innerClassName="px-[var(--frame-pad)] py-[clamp(24px,3vw,34px)]">
 					{hasMetaSection && (
-						<div className="animate-fade-in-left delay-400 mt-[52px] border-t border-b border-border py-[26px]">
+						<div className="animate-fade-in-left delay-400">
 							{hasMetaRow && (
 								<div className="grid grid-cols-3 max-sm:grid-cols-2 gap-6">
 									{role && (
@@ -294,11 +308,15 @@ function ProjectItemRoute() {
 							})}
 						</div>
 					)}
-				</div>
-			</header>
+				</FrameBand>
+			)}
 
+			{/* Bleeds to the frame rules, like the hero beam: no side padding. */}
 			{coverImage && (
-				<div className="animate-fade-in-left delay-300 relative left-1/2 mt-16 w-screen -translate-x-1/2 overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]">
+				<FrameBand
+					as="div"
+					innerClassName="animate-fade-in-left delay-300 relative overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]"
+				>
 					{heroGradient && (
 						<div className="absolute inset-0" style={{ background: heroGradient, opacity: 0.3 }} />
 					)}
@@ -331,11 +349,11 @@ function ProjectItemRoute() {
 					<span className="absolute left-[max(24px,5vw)] bottom-[22px] z-[2] font-mono text-[11px] text-white bg-black/45 border border-white/25 rounded-full px-3 py-[5px] backdrop-blur-[6px]">
 						{title} — {year}
 					</span>
-				</div>
+				</FrameBand>
 			)}
 
 			{(overview || problem || approach) && (
-				<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(80px,12vw,150px)]">
+				<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(60px,9vw,110px)]')}>
 					<div className="mx-auto max-w-[760px]">
 						{overview && (
 							<CaseStudyBlock label={t('pages.project-detail.overview')} text={overview} />
@@ -355,7 +373,7 @@ function ProjectItemRoute() {
 							/>
 						)}
 					</div>
-				</section>
+				</FrameBand>
 			)}
 
 			{statistics.length > 0 && (
@@ -363,61 +381,65 @@ function ProjectItemRoute() {
 			)}
 
 			{structuredBody && (
-				<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
+				<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(50px,7vw,90px)]')}>
 					<div className="mx-auto max-w-[760px]">
 						<PortableTextRenderer body={structuredBody} className="a-body" />
 					</div>
-				</section>
+				</FrameBand>
 			)}
 
 			{gallery.length > 0 && <ProjectGallery gallery={gallery} />}
 
 			{nextProject && (
 				<>
-					<div
-						ref={transitionWrapperRef}
-						className="relative left-1/2 mt-[clamp(90px,14vw,170px)] w-screen -translate-x-1/2"
-					>
-						<section
-							data-next-section
-							className="sticky bottom-0 flex flex-col border-t border-border overflow-hidden"
+					{/* The takeover runway is a band too, so the frame's vertical
+					    rules carry on down it instead of stopping short. */}
+					<div className="w-full px-[var(--frame-gutter)]">
+						<div
+							ref={transitionWrapperRef}
+							className="relative mx-auto w-full max-w-[var(--frame-max)] border-x border-border"
 						>
-							<Link
-								to="/projects/$slug"
-								params={{ slug: nextProject.slug }}
-								className="group relative flex flex-1 flex-col justify-end overflow-hidden text-foreground no-underline"
+							<section
+								data-next-section
+								className="sticky bottom-0 flex flex-col border-t border-border overflow-hidden"
 							>
-								{nextProject.coverImage && (
-									<div className="absolute inset-0 z-0 pointer-events-none [clip-path:polygon(0%_100%,100%_100%,100%_100%,0%_100%)] transition-[clip-path] duration-700 [transition-timing-function:var(--ease-out)] group-hover:[clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)]">
-										<img
-											src={nextProject.coverImage.url}
-											alt=""
-											className="absolute inset-0 size-full object-cover scale-[1.12] transition-transform duration-[1.1s] [transition-timing-function:var(--ease-out)] group-hover:scale-100"
-										/>
-										<div
-											className="absolute inset-0"
-											style={{
-												background:
-													'linear-gradient(115deg, color-mix(in srgb, var(--color-orange-primary) 88%, transparent) 0%, color-mix(in srgb, var(--color-orange-primary) 52%, transparent) 55%, rgba(20,8,3,0.5) 100%)'
-											}}
-										/>
-									</div>
-								)}
-								<div className="relative z-[1] mx-auto w-full max-w-[1100px] p-[clamp(48px,9vw,110px)_var(--content-inset)]">
-									<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
-										{t('pages.project-detail.next-project')}
-									</div>
-									<div className="mt-[18px] flex items-center justify-between gap-6">
-										<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[translate,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white motion-reduce:transition-none">
-											{nextProject.title}
+								<Link
+									to="/projects/$slug"
+									params={{ slug: nextProject.slug }}
+									className="group relative flex flex-1 flex-col justify-end overflow-hidden text-foreground no-underline"
+								>
+									{nextProject.coverImage && (
+										<div className="absolute inset-0 z-0 pointer-events-none [clip-path:polygon(0%_100%,100%_100%,100%_100%,0%_100%)] transition-[clip-path] duration-700 [transition-timing-function:var(--ease-out)] group-hover:[clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)]">
+											<img
+												src={nextProject.coverImage.url}
+												alt=""
+												className="absolute inset-0 size-full object-cover scale-[1.12] transition-transform duration-[1.1s] [transition-timing-function:var(--ease-out)] group-hover:scale-100"
+											/>
+											<div
+												className="absolute inset-0"
+												style={{
+													background:
+														'linear-gradient(115deg, color-mix(in srgb, var(--color-orange-primary) 88%, transparent) 0%, color-mix(in srgb, var(--color-orange-primary) 52%, transparent) 55%, rgba(20,8,3,0.5) 100%)'
+												}}
+											/>
 										</div>
-										<div className="grid size-[clamp(54px,8vw,88px)] flex-shrink-0 place-items-center rounded-full border-[1.5px] border-border text-[var(--color-orange-primary)] transition-[rotate,scale,background,color,border-color] duration-[550ms] ease-[var(--ease-out)] group-hover:-rotate-45 group-hover:scale-[1.04] group-hover:bg-white group-hover:border-white group-hover:text-[var(--color-orange-primary)] motion-reduce:transition-none [&>svg]:h-[42%] [&>svg]:w-[42%]">
-											<LuArrowUpRight />
+									)}
+									<div className="relative z-[1] mx-auto w-full max-w-[var(--frame-max)] p-[clamp(48px,9vw,110px)_var(--frame-pad)]">
+										<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
+											{t('pages.project-detail.next-project')}
+										</div>
+										<div className="mt-[18px] flex items-center justify-between gap-6">
+											<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[translate,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white motion-reduce:transition-none">
+												{nextProject.title}
+											</div>
+											<div className="grid size-[clamp(54px,8vw,88px)] flex-shrink-0 place-items-center rounded-full border-[1.5px] border-border text-[var(--color-orange-primary)] transition-[rotate,scale,background,color,border-color] duration-[550ms] ease-[var(--ease-out)] group-hover:-rotate-45 group-hover:scale-[1.04] group-hover:bg-white group-hover:border-white group-hover:text-[var(--color-orange-primary)] motion-reduce:transition-none [&>svg]:h-[42%] [&>svg]:w-[42%]">
+												<LuArrowUpRight />
+											</div>
 										</div>
 									</div>
-								</div>
-							</Link>
-						</section>
+								</Link>
+							</section>
+						</div>
 					</div>
 					<div
 						ref={fadeOverlayRef}
@@ -458,7 +480,7 @@ function CaseStudyBlock({
 
 function StatisticsGrid({ statistics, label }: { statistics: ResolvedMetric[]; label: string }) {
 	return (
-		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
+		<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(50px,7vw,90px)]')}>
 			<div className="mx-auto max-w-[760px]">
 				<div className={SECTION_LABEL}>
 					<span className={SECTION_LINE} />
@@ -480,7 +502,7 @@ function StatisticsGrid({ statistics, label }: { statistics: ResolvedMetric[]; l
 					))}
 				</div>
 			</div>
-		</section>
+		</FrameBand>
 	);
 }
 
@@ -515,8 +537,8 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 	);
 
 	return (
-		<section className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)] mt-[clamp(60px,9vw,110px)]">
-			<div className={cn(SECTION_LABEL, 'mx-auto max-w-[1100px]')}>
+		<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(50px,7vw,90px)]')}>
+			<div className={SECTION_LABEL}>
 				<span className={SECTION_LINE} />
 				{t('pages.project-detail.gallery')}
 			</div>
@@ -570,7 +592,7 @@ function ProjectGallery({ gallery }: { gallery: ResolvedGalleryItem[] }) {
 					if (!open) setActiveIndex(null);
 				}}
 			/>
-		</section>
+		</FrameBand>
 	);
 }
 

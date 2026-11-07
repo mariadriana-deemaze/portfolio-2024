@@ -3,6 +3,7 @@ import { ReactLenis } from 'lenis/react';
 import { useMemo } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
+import { BAND_PADDING, FrameBand, FrameRule } from '@/components/ui/frame';
 import { ImageCard } from '@/components/ui/image-card';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import { StaggerText } from '@/components/ui/stagger-text';
@@ -35,18 +36,18 @@ function FeaturedPostCard({ post }: { post: BlogPost }) {
 
 			<p
 				className={cn(
-					'm-0 mt-[10px] font-mono text-[13px] leading-[1.55] text-white/90 max-w-[540px] overflow-hidden',
+					'm-0 pt-0 font-mono text-[13px] leading-[1.55] text-white/90 max-w-[540px] overflow-hidden',
 					'max-h-0 opacity-0',
-					'transition-[max-height,opacity] duration-[550ms] [transition-timing-function:var(--ease-out)]',
-					'group-hover:max-h-[80px] group-hover:opacity-100',
-					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100',
-					'motion-reduce:max-h-[90px] motion-reduce:opacity-100'
+					'transition-[max-height,opacity,padding] duration-[550ms] [transition-timing-function:var(--ease-out)]',
+					'group-hover:max-h-[80px] group-hover:opacity-100 group-hover:pt-[10px]',
+					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100 [@media(hover:none)]:pt-[10px]',
+					'motion-reduce:max-h-[90px] motion-reduce:opacity-100 motion-reduce:pt-[10px]'
 				)}
 			>
 				{post.description}
 			</p>
 
-			<div className="flex items-center gap-[14px] mt-[16px] text-white/75 font-mono text-[12px]">
+			<div className="flex items-center gap-[14px] mt-[8px] text-white/75 font-mono text-[12px]">
 				<span>{format(new Date(post.date), 'do MMMM yyyy')}</span>
 				{post.readingTime && (
 					<>
@@ -70,8 +71,13 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<div className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)]">
-				<header className="pt-[clamp(100px,14vw,138px)]">
+			{/* One entry for the whole page, frame included, so the rules never
+			    land before the content they belong to. */}
+			<div className="animate-fade-in-left delay-500">
+				{/* Unruled: the navbar's bottom border already draws this line. */}
+				<FrameRule hatched tone="brand" ruled={false} />
+
+				<FrameBand as="header" innerClassName={BAND_PADDING}>
 					<ScrollFadeReveal onLoadVisibility>
 						<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
 							<span
@@ -99,75 +105,82 @@ export default function PostsList({ posts }: { posts: BlogPost[] }) {
 							</span>
 						</div>
 					</ScrollFadeReveal>
-				</header>
+				</FrameBand>
 
 				{posts.length > 0 && (
-					<ScrollFadeReveal>
-						<div className="mt-[clamp(48px,7vw,80px)]">
-							{featuredPost && <FeaturedPostCard post={featuredPost} />}
+					<FrameBand innerClassName={BAND_PADDING}>
+						<ScrollFadeReveal>
+							<div>
+								{featuredPost && <FeaturedPostCard post={featuredPost} />}
 
-							{remainingPosts.length > 0 && (
-								<div className="mt-[clamp(60px,8vw,80px)]">
-									<h2 className="m-0 mb-[clamp(28px,4vw,44px)] font-clash font-medium text-[clamp(32px,6vw,56px)] leading-[1.1] tracking-[-0.032em] text-foreground">
-										More Stories
-									</h2>
+								{remainingPosts.length > 0 && (
+									<div className="mt-[clamp(60px,8vw,80px)]">
+										<h2 className="m-0 mb-[clamp(28px,4vw,44px)] font-clash font-medium text-[clamp(32px,6vw,56px)] leading-[1.1] tracking-[-0.032em] text-foreground">
+											More Stories
+										</h2>
 
-									<div className="flex flex-col divide-y divide-border">
-										{remainingPosts.map((post, i) => (
-											<a
-												key={post.slug}
-												href={toBlogSlug(post.slug)}
-												className={cn(
-													'group relative grid grid-cols-[1fr_auto] items-center gap-[26px] px-[14px] py-[30px] text-inherit no-underline',
-													'transition-[opacity] duration-[300ms] [transition-timing-function:var(--ease-out)]',
-													'hover:text-[var(--color-orange-primary)]',
-													'motion-reduce:transition-none',
-													'animate-[px-in_0.5s_var(--ease-out)_both]'
-												)}
-												style={{ animationDelay: `${i * 0.05}s` }}
-											>
-												<div className="min-w-0">
-													<h3 className="m-0 font-clash font-medium text-[clamp(24px,3vw,40px)] leading-[1.1] tracking-[-0.032em] text-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none">
-														{post.title}
-													</h3>
-													<p className="m-0 mt-[8px] font-mono text-[13px] text-muted-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] delay-[30ms] [transition-timing-function:var(--ease-out)] max-sm:hidden motion-reduce:transition-none">
-														{post.description}
-													</p>
-												</div>
+										<div className="flex flex-col divide-y divide-border">
+											{remainingPosts.map((post, i) => (
+												<a
+													key={post.slug}
+													href={toBlogSlug(post.slug)}
+													className={cn(
+														'group relative grid grid-cols-[1fr_auto] items-center gap-[26px] px-[14px] py-[30px] text-inherit no-underline',
+														'transition-[opacity] duration-[300ms] [transition-timing-function:var(--ease-out)]',
+														'hover:text-[var(--color-orange-primary)]',
+														'motion-reduce:transition-none',
+														'animate-[px-in_0.5s_var(--ease-out)_both]'
+													)}
+													style={{ animationDelay: `${i * 0.05}s` }}
+												>
+													<div className="min-w-0">
+														<h3 className="m-0 font-clash font-medium text-[clamp(24px,3vw,40px)] leading-[1.1] tracking-[-0.032em] text-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none">
+															{post.title}
+														</h3>
+														<p className="m-0 mt-[8px] font-mono text-[13px] text-muted-foreground group-hover:translate-x-5 transition-[translate] duration-[550ms] delay-[30ms] [transition-timing-function:var(--ease-out)] max-sm:hidden motion-reduce:transition-none">
+															{post.description}
+														</p>
+													</div>
 
-												<div className="flex flex-col items-end gap-[8px] shrink-0 max-sm:flex-col max-sm:items-start">
-													<div className="flex items-center gap-[12px] text-[12px] text-muted-foreground whitespace-nowrap">
-														<span>{format(new Date(post.date), 'MMM do, yyyy')}</span>
-														{post.readingTime && (
-															<>
-																<span>·</span>
-																<span>{post.readingTime} min</span>
-															</>
+													<div className="flex flex-col items-end gap-[8px] shrink-0 max-sm:flex-col max-sm:items-start">
+														<div className="flex items-center gap-[12px] text-[12px] text-muted-foreground whitespace-nowrap">
+															<span>{format(new Date(post.date), 'MMM do, yyyy')}</span>
+															{post.readingTime && (
+																<>
+																	<span>·</span>
+																	<span>{post.readingTime} min</span>
+																</>
+															)}
+														</div>
+														{post.category && (
+															<span className="font-mono text-[10px] tracking-[0.06em] uppercase text-muted-foreground">
+																{post.category}
+															</span>
 														)}
 													</div>
-													{post.category && (
-														<span className="font-mono text-[10px] tracking-[0.06em] uppercase text-muted-foreground">
-															{post.category}
-														</span>
-													)}
-												</div>
 
-												<LuArrowUpRight className="w-[18px] h-[18px] text-muted-foreground group-hover:text-foreground transition-[translate,color] duration-300 motion-reduce:transition-none absolute right-[14px]" />
-											</a>
-										))}
+													<LuArrowUpRight className="w-[18px] h-[18px] text-muted-foreground group-hover:text-foreground transition-[translate,color] duration-300 motion-reduce:transition-none absolute right-[14px]" />
+												</a>
+											))}
+										</div>
 									</div>
-								</div>
-							)}
-						</div>
-					</ScrollFadeReveal>
+								)}
+							</div>
+						</ScrollFadeReveal>
+					</FrameBand>
 				)}
 
+				{/* Closes the page on the grid rather than on dead space above the footer. */}
+				<FrameRule hatched />
+
 				{posts.length === 0 && (
-					<ScrollFadeReveal>
-						<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
-							No posts yet — check back soon.
-						</p>
-					</ScrollFadeReveal>
+					<FrameBand innerClassName={BAND_PADDING}>
+						<ScrollFadeReveal>
+							<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
+								No posts yet — check back soon.
+							</p>
+						</ScrollFadeReveal>
+					</FrameBand>
 				)}
 			</div>
 		</ReactLenis>

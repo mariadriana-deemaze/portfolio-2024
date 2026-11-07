@@ -127,6 +127,28 @@
 	}
 }
 
+/* Hero beam: rays rise from an origin below the box, drifting and fading
+   out of phase with each other so the fan never reads as a static image. */
+@keyframes beam-sway {
+	0%,
+	100% {
+		rotate: calc(var(--ray-angle) - var(--ray-swing));
+	}
+	50% {
+		rotate: calc(var(--ray-angle) + var(--ray-swing));
+	}
+}
+
+@keyframes beam-flicker {
+	0%,
+	100% {
+		opacity: var(--ray-dim);
+	}
+	50% {
+		opacity: var(--ray-lit);
+	}
+}
+
 @keyframes scrollcue {
 	0% {
 		top: -50%;
@@ -246,34 +268,28 @@
 		border-radius 900ms ease-out;
 }
 
-@utility overlay-grid {
-	background-size: 54px 54px;
-	background-image:
-		linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px),
-		linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px);
-}
-
 @utility bg-grad-base {
 	background: linear-gradient(180deg, hsl(var(--muted)), hsl(var(--background)) 70%);
 }
 
-@utility bg-grid-lines {
-	background-size: 54px 54px;
-	background-image:
-		linear-gradient(
-			to right,
-			color-mix(in srgb, hsl(var(--border)) 55%, transparent) 1px,
-			transparent 1px
-		),
-		linear-gradient(
-			to bottom,
-			color-mix(in srgb, hsl(var(--border)) 55%, transparent) 1px,
-			transparent 1px
-		);
-	mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, #000 55%, transparent 100%);
-	-webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, #000 55%, transparent 100%);
-	will-change: transform;
-	transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+/* Diagonal hatch for empty frame bands. Lines run at 36°, 15px apart,
+   in the same color as the frame rules so a spacer reads as part of the grid. */
+@utility hatch-lines {
+	background-image: repeating-linear-gradient(
+		144deg,
+		hsl(var(--border)) 0 1px,
+		transparent 1px 15px
+	);
+}
+
+/* Brand-toned hatch, for a band that should read as an accent rather than
+   as more of the neutral grid. */
+@utility hatch-lines-brand {
+	background-image: repeating-linear-gradient(
+		144deg,
+		var(--color-orange-primary) 0 1px,
+		transparent 1px 15px
+	);
 }
 
 @utility bg-dots-layer {
@@ -378,11 +394,36 @@
 		--color-orange-light: #f18b3e;
 		--color-orange-muted: #f3c6a7;
 		--color-orange-dark-border: #4d2512;
+		/* Hero beam. Light stock shades the rays in ink; dark stock emits light.
+		   --beam-hot is where a ray lands under the cursor: denser on ink,
+		   brighter on glow. */
+		--beam-ray: linear-gradient(
+			to top,
+			color-mix(in srgb, var(--color-orange-primary) 92%, transparent) 0%,
+			color-mix(in srgb, var(--color-orange-primary) 68%, transparent) 18%,
+			color-mix(in srgb, var(--color-orange-light) 44%, transparent) 46%,
+			color-mix(in srgb, var(--color-orange-muted) 20%, transparent) 70%,
+			transparent 88%
+		);
+		--beam-haze: color-mix(in srgb, var(--color-orange-primary) 28%, transparent);
+		--beam-blend: multiply;
+		--beam-hot: 0.82;
+		--beam-density: 1.25;
 		/* Navigation */
-		--nav-border: #f3c6a7;
-		/* Layout */
-		--sideline-inset: max(14px, 4vw);
-		--content-inset: calc(var(--sideline-inset) + 15px);
+		--nav-border: hsl(var(--border));
+		/* Layout — ruled frame. The frame is a 84rem box centred in the viewport;
+		   --frame-gutter is the margin outside it, not padding inside. */
+		/* Kept in sync with the real navbar height by the Navbar component; this
+		   is the pre-hydration fallback. Content sits below it, so the frame's
+		   vertical rules start exactly at the navbar's bottom border. */
+		--nav-h: 52px;
+		--frame-max: 84rem;
+		--frame-gutter: 1rem;
+		--frame-pad: 1.5rem;
+		/* Reading measures, for text inside a frame far wider than a line should be */
+		--measure-sm: 22.5rem;
+		--measure-md: 28rem;
+		--measure-lg: 40rem;
 		/* Font stacks */
 		--font-display: "ClashDisplay", "DM Sans", sans-serif;
 		--font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
@@ -417,6 +458,20 @@
 		--duration-slow: 1s;
 	}
 
+	@media (min-width: 48rem) {
+		:root {
+			--frame-gutter: 2rem;
+			--frame-pad: 2rem;
+		}
+	}
+
+	@media (min-width: 64rem) {
+		:root {
+			--frame-gutter: 3rem;
+			--frame-pad: 3rem;
+		}
+	}
+
 	.dark {
 		--background: 0 3% 6%;
 		--foreground: 55 10% 79%;
@@ -447,8 +502,21 @@
 		--color-fg-secondary: hsl(43 3% 52%);
 		/* Brand */
 		--brand-foreground: 0 3% 6%;
+		/* Hero beam: light emitted on dark stock. */
+		--beam-ray: linear-gradient(
+			to top,
+			color-mix(in srgb, var(--color-orange-primary) 86%, #fff) 0%,
+			var(--color-orange-primary) 12%,
+			color-mix(in srgb, var(--color-orange-light) 52%, transparent) 34%,
+			color-mix(in srgb, var(--color-orange-muted) 16%, transparent) 58%,
+			transparent 82%
+		);
+		--beam-haze: color-mix(in srgb, var(--color-orange-light) 32%, transparent);
+		--beam-blend: normal;
+		--beam-hot: 1.3;
+		--beam-density: 1;
 		/* Navigation */
-		--nav-border: #4d2512;
+		--nav-border: hsl(var(--border));
 	}
 
 	* {

@@ -2,6 +2,7 @@ import { ReactLenis } from 'lenis/react';
 import { useMemo, useState } from 'react';
 import { LuArrowUpRight } from 'react-icons/lu';
 
+import { BAND_PADDING, FrameBand, FrameRule } from '@/components/ui/frame';
 import { ImageCard } from '@/components/ui/image-card';
 import { ScrollFadeReveal } from '@/components/ui/section-reveal';
 import { StaggerText } from '@/components/ui/stagger-text';
@@ -39,10 +40,10 @@ function ProjectCard({ project, i, featured }: { project: Project; i: number; fe
 
 			<h3
 				className={cn(
-					'm-0 font-clash font-medium leading-[1.02] tracking-[-0.025em] text-white',
+					'm-0 font-clash font-medium tracking-[-0.025em] text-white',
 					'transition-[translate] duration-[500ms] [transition-timing-function:var(--ease-out)] group-hover:-translate-y-[2px]',
 					'motion-reduce:transition-none',
-					featured ? 'text-[clamp(34px,5vw,64px)]' : 'text-[clamp(24px,3vw,38px)]'
+					featured ? 'text-[clamp(34px,5vw,64px)]/[1.02]' : 'text-[clamp(24px,3vw,38px)]/[1.02]'
 				)}
 			>
 				{project.title}
@@ -50,18 +51,18 @@ function ProjectCard({ project, i, featured }: { project: Project; i: number; fe
 
 			<p
 				className={cn(
-					'm-0 mt-[10px] font-mono text-[13px] leading-[1.55] text-white/90 max-w-[440px] overflow-hidden',
+					'm-0 pt-0 font-mono text-[13px] leading-[1.55] text-white/90 max-w-[440px] overflow-hidden',
 					'max-h-0 opacity-0',
-					'transition-[max-height,opacity] duration-[550ms] [transition-timing-function:var(--ease-out)]',
-					'group-hover:max-h-[80px] group-hover:opacity-100',
-					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100',
-					'motion-reduce:max-h-[90px] motion-reduce:opacity-100'
+					'transition-[max-height,opacity,padding] duration-[550ms] [transition-timing-function:var(--ease-out)]',
+					'group-hover:max-h-[80px] group-hover:opacity-100 group-hover:pt-[10px]',
+					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100 [@media(hover:none)]:pt-[10px]',
+					'motion-reduce:max-h-[90px] motion-reduce:opacity-100 motion-reduce:pt-[10px]'
 				)}
 			>
 				{project.description}
 			</p>
 
-			<div className="flex items-center gap-[14px] mt-[16px]">
+			<div className="flex items-center gap-[14px] mt-[8px]">
 				<div className="flex gap-[6px] flex-wrap">
 					{project.tags.map((tag) => (
 						<span
@@ -103,8 +104,13 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 
 	return (
 		<ReactLenis root options={{ syncTouch: true }}>
-			<div className="mx-auto w-full max-w-[1100px] px-[var(--content-inset)]">
-				<header className="pt-[clamp(100px,14vw,138px)]">
+			{/* One entry for the whole page, frame included, so the rules never
+			    land before the content they belong to. */}
+			<div className="animate-fade-in-left delay-500">
+				{/* Unruled: the navbar's bottom border already draws this line. */}
+				<FrameRule hatched tone="brand" ruled={false} />
+
+				<FrameBand as="header" innerClassName={BAND_PADDING}>
 					<ScrollFadeReveal onLoadVisibility>
 						<div className="flex items-center gap-[12px] font-mono text-[12px] tracking-[0.06em] uppercase text-[var(--color-orange-primary)] mb-[22px]">
 							<span
@@ -145,78 +151,83 @@ export default function ProjectsList({ projects }: { projects: Project[] }) {
 							</span>
 						</div>
 					</ScrollFadeReveal>
-				</header>
+				</FrameBand>
 
 				{projects.length > 1 && (
-					<ScrollFadeReveal>
-						<div className="flex items-center justify-between gap-[16px] flex-wrap mt-[clamp(48px,7vw,80px)] pb-[18px] border-b border-border">
-							<span className="font-mono text-[12px] tracking-[0.06em] uppercase text-muted-foreground">
-								{t('pages.projects.filter-by')}
-							</span>
-							<div className="flex gap-[7px] flex-wrap">
-								{mediums.map((medium) => (
-									<button
-										key={medium}
-										onClick={() => setSelectedFilter(medium)}
-										className={cn(
-											'font-mono text-[12px] border rounded-full px-[14px] py-[6px] cursor-pointer',
-											'transition-[background,border-color,color] duration-[250ms] ease-linear',
-											selectedFilter === medium
-												? 'bg-[var(--color-orange-primary)] border-[var(--color-orange-primary)] text-white'
-												: 'bg-transparent border-border text-foreground hover:border-[var(--color-orange-primary)] hover:text-[var(--color-orange-primary)]'
-										)}
-									>
-										{medium}
-									</button>
-								))}
+					<FrameBand innerClassName="px-[var(--frame-pad)] py-5">
+						<ScrollFadeReveal>
+							<div className="flex items-center justify-between gap-[16px] flex-wrap">
+								<span className="font-mono text-[12px] tracking-[0.06em] uppercase text-muted-foreground">
+									{t('pages.projects.filter-by')}
+								</span>
+								<div className="flex gap-[7px] flex-wrap">
+									{mediums.map((medium) => (
+										<button
+											key={medium}
+											onClick={() => setSelectedFilter(medium)}
+											className={cn(
+												'font-mono text-[12px] border rounded-full px-[14px] py-[6px] cursor-pointer',
+												'transition-[background,border-color,color] duration-[250ms] ease-linear',
+												selectedFilter === medium
+													? 'bg-[var(--color-orange-primary)] border-[var(--color-orange-primary)] text-white'
+													: 'bg-transparent border-border text-foreground hover:border-[var(--color-orange-primary)] hover:text-[var(--color-orange-primary)]'
+											)}
+										>
+											{medium}
+										</button>
+									))}
+								</div>
 							</div>
-						</div>
-					</ScrollFadeReveal>
+						</ScrollFadeReveal>
+					</FrameBand>
 				)}
 
-				<ScrollFadeReveal>
-					<div
-						className={cn(
-							'mt-[clamp(28px,4vw,44px)]',
-							filteredProjects.length > 0 &&
-								'grid grid-cols-2 max-sm:grid-cols-1 gap-[clamp(16px,2.4vw,28px)]'
-						)}
-					>
-						{filteredProjects.length === 0 ? (
-							<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
-								{t('pages.projects.empty')}
-							</p>
-						) : (
-							filteredProjects.map((project, i) => (
-								<ProjectCard
-									key={project.slug}
-									project={project}
-									i={i}
-									featured={selectedFilter === 'All' && i === 0}
-								/>
-							))
-						)}
-					</div>
-				</ScrollFadeReveal>
-
-				<ScrollFadeReveal>
-					<section className="mt-[clamp(90px,13vw,150px)] border-t border-border pt-[clamp(48px,7vw,80px)] pb-[clamp(60px,9vw,110px)] flex items-end justify-between gap-[28px] flex-wrap">
-						<h2 className="m-0 font-clash font-medium text-[clamp(30px,5vw,60px)] leading-[1.0] tracking-[-0.03em] max-w-[620px]">
-							{t('pages.projects.cta.line-1')}{' '}
-							<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
-								{t('pages.projects.cta.accent')}
-							</em>
-							?
-						</h2>
-						<a
-							href="/contact"
-							className="group inline-flex items-center gap-[11px] font-mono text-[14px] text-white bg-[var(--color-orange-primary)] rounded-full px-[26px] py-[15px] no-underline whitespace-nowrap transition-[translate,box-shadow] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:shadow-[0_20px_36px_-12px_color-mix(in_srgb,var(--color-orange-primary)_60%,transparent)] motion-reduce:transition-none"
+				<FrameBand innerClassName={BAND_PADDING}>
+					<ScrollFadeReveal>
+						<div
+							className={cn(
+								filteredProjects.length > 0 &&
+									'grid grid-cols-2 max-sm:grid-cols-1 gap-[clamp(16px,2.4vw,28px)]'
+							)}
 						>
-							{t('pages.projects.cta.button')}
-							<LuArrowUpRight className="w-[16px] h-[16px] transition-[translate] duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:translate-x-[4px] group-hover:-translate-y-[4px] motion-reduce:transition-none" />
-						</a>
-					</section>
-				</ScrollFadeReveal>
+							{filteredProjects.length === 0 ? (
+								<p className="font-mono text-[13px] text-muted-foreground py-[70px] px-[14px] text-center">
+									{t('pages.projects.empty')}
+								</p>
+							) : (
+								filteredProjects.map((project, i) => (
+									<ProjectCard
+										key={project.slug}
+										project={project}
+										i={i}
+										featured={selectedFilter === 'All' && i === 0}
+									/>
+								))
+							)}
+						</div>
+					</ScrollFadeReveal>
+				</FrameBand>
+
+				<FrameBand innerClassName={BAND_PADDING}>
+					<ScrollFadeReveal>
+						<section className="flex items-end justify-between gap-[28px] flex-wrap">
+							<h2 className="m-0 font-clash font-medium text-[clamp(30px,5vw,60px)] leading-[1.0] tracking-[-0.03em] max-w-[620px]">
+								{t('pages.projects.cta.line-1')}{' '}
+								<em className="not-italic font-normal italic text-[var(--color-orange-primary)]">
+									{t('pages.projects.cta.accent')}
+								</em>
+								?
+							</h2>
+							<a
+								href="/contact"
+								className="group inline-flex items-center gap-[11px] font-mono text-[14px] text-white bg-[var(--color-orange-primary)] rounded-full px-[26px] py-[15px] no-underline whitespace-nowrap transition-[translate,box-shadow] duration-[400ms] [transition-timing-function:var(--ease-out)] hover:-translate-y-[3px] hover:shadow-[0_20px_36px_-12px_color-mix(in_srgb,var(--color-orange-primary)_60%,transparent)] motion-reduce:transition-none"
+							>
+								{t('pages.projects.cta.button')}
+								<LuArrowUpRight className="w-[16px] h-[16px] transition-[translate] duration-[450ms] [transition-timing-function:var(--ease-out)] group-hover:translate-x-[4px] group-hover:-translate-y-[4px] motion-reduce:transition-none" />
+							</a>
+						</section>
+					</ScrollFadeReveal>
+				</FrameBand>
 			</div>
 		</ReactLenis>
 	);

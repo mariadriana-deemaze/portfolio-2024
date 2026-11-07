@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 const BLOB_TRANSITION = 'transform 0.9s cubic-bezier(0.22,1,0.36,1)';
 
 export function BGGrid({ children }: { children?: ReactNode }) {
-	const gridRef = useRef<HTMLDivElement>(null);
 	const blob1Ref = useRef<HTMLImageElement>(null);
 	const blob2Ref = useRef<HTMLImageElement>(null);
 
@@ -19,8 +18,6 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 
 		const apply = () => {
 			raf = null;
-			if (gridRef.current)
-				gridRef.current.style.transform = `translate(${mx * 14}px, ${my * 14 - sy * 0.04}px)`;
 			if (blob1Ref.current)
 				blob1Ref.current.style.transform = `translate(${mx * 50}px, ${my * 40 + sy * 0.05}px)`;
 			if (blob2Ref.current)
@@ -61,9 +58,6 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 				{/* Base gradient */}
 				<div className="absolute inset-[-10%] bg-grad-base" />
 
-				{/* Graph-paper grid — 1px lines, radial mask fades edges */}
-				<div ref={gridRef} className="absolute inset-[-120px] bg-grid-lines" />
-
 				{/* Colour blobs */}
 				<img
 					ref={blob1Ref}
@@ -86,10 +80,6 @@ export function BGGrid({ children }: { children?: ReactNode }) {
 					aria-hidden="true"
 				/>
 			</div>
-
-			{/* Vertical orange sidelines */}
-			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px left-[var(--sideline-inset)] bg-brand opacity-[0.22]" />
-			<div className="fixed top-0 bottom-0 z-0 pointer-events-none w-px right-[var(--sideline-inset)] bg-brand opacity-[0.22]" />
 		</>
 	);
 }
