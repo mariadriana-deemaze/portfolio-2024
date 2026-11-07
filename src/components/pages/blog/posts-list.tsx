@@ -36,18 +36,18 @@ function FeaturedPostCard({ post }: { post: BlogPost }) {
 
 			<p
 				className={cn(
-					'm-0 mt-[10px] font-mono text-[13px] leading-[1.55] text-white/90 max-w-[540px] overflow-hidden',
+					'm-0 pt-0 font-mono text-[13px] leading-[1.55] text-white/90 max-w-[540px] overflow-hidden',
 					'max-h-0 opacity-0',
-					'transition-[max-height,opacity] duration-[550ms] [transition-timing-function:var(--ease-out)]',
-					'group-hover:max-h-[80px] group-hover:opacity-100',
-					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100',
-					'motion-reduce:max-h-[90px] motion-reduce:opacity-100'
+					'transition-[max-height,opacity,padding] duration-[550ms] [transition-timing-function:var(--ease-out)]',
+					'group-hover:max-h-[80px] group-hover:opacity-100 group-hover:pt-[10px]',
+					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100 [@media(hover:none)]:pt-[10px]',
+					'motion-reduce:max-h-[90px] motion-reduce:opacity-100 motion-reduce:pt-[10px]'
 				)}
 			>
 				{post.description}
 			</p>
 
-			<div className="flex items-center gap-[14px] mt-[16px] text-white/75 font-mono text-[12px]">
+			<div className="flex items-center gap-[14px] mt-[8px] text-white/75 font-mono text-[12px]">
 				<span>{format(new Date(post.date), 'do MMMM yyyy')}</span>
 				{post.readingTime && (
 					<>

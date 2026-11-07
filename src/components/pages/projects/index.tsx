@@ -40,10 +40,10 @@ function ProjectCard({ project, i, featured }: { project: Project; i: number; fe
 
 			<h3
 				className={cn(
-					'm-0 font-clash font-medium leading-[1.02] tracking-[-0.025em] text-white',
+					'm-0 font-clash font-medium tracking-[-0.025em] text-white',
 					'transition-[translate] duration-[500ms] [transition-timing-function:var(--ease-out)] group-hover:-translate-y-[2px]',
 					'motion-reduce:transition-none',
-					featured ? 'text-[clamp(34px,5vw,64px)]' : 'text-[clamp(24px,3vw,38px)]'
+					featured ? 'text-[clamp(34px,5vw,64px)]/[1.02]' : 'text-[clamp(24px,3vw,38px)]/[1.02]'
 				)}
 			>
 				{project.title}
@@ -51,18 +51,18 @@ function ProjectCard({ project, i, featured }: { project: Project; i: number; fe
 
 			<p
 				className={cn(
-					'm-0 mt-[10px] font-mono text-[13px] leading-[1.55] text-white/90 max-w-[440px] overflow-hidden',
+					'm-0 pt-0 font-mono text-[13px] leading-[1.55] text-white/90 max-w-[440px] overflow-hidden',
 					'max-h-0 opacity-0',
-					'transition-[max-height,opacity] duration-[550ms] [transition-timing-function:var(--ease-out)]',
-					'group-hover:max-h-[80px] group-hover:opacity-100',
-					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100',
-					'motion-reduce:max-h-[90px] motion-reduce:opacity-100'
+					'transition-[max-height,opacity,padding] duration-[550ms] [transition-timing-function:var(--ease-out)]',
+					'group-hover:max-h-[80px] group-hover:opacity-100 group-hover:pt-[10px]',
+					'[@media(hover:none)]:max-h-[90px] [@media(hover:none)]:opacity-100 [@media(hover:none)]:pt-[10px]',
+					'motion-reduce:max-h-[90px] motion-reduce:opacity-100 motion-reduce:pt-[10px]'
 				)}
 			>
 				{project.description}
 			</p>
 
-			<div className="flex items-center gap-[14px] mt-[16px]">
+			<div className="flex items-center gap-[14px] mt-[8px]">
 				<div className="flex gap-[6px] flex-wrap">
 					{project.tags.map((tag) => (
 						<span
