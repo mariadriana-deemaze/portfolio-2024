@@ -34,7 +34,7 @@ export const NowPlayingBadge = () => {
 							</span>
 							<Badge
 								variant="outline"
-								className="absolute right-0 top-0 z-10 bg-card-ghost text-card-foreground h-6 w-max max-w-[180px] sm:max-w-[220px] rounded-[24px] px-2 py-0 now-playing-transition group-hover:h-24 group-hover:w-[320px] group-hover:max-w-none group-hover:rounded-[10px] group-hover:px-3 group-hover:py-2 group-focus-within:h-24 group-focus-within:w-[320px] group-focus-within:max-w-none group-focus-within:rounded-[10px] group-focus-within:px-3 group-focus-within:py-2"
+								className="absolute right-0 top-0 z-10 bg-card-ghost text-card-foreground h-6 w-max max-w-[180px] sm:max-w-[220px] rounded-[24px] px-2 py-0 now-playing-transition group-hover:bg-card group-focus-within:bg-card group-hover:h-24 group-hover:w-[320px] group-hover:max-w-none group-hover:rounded-[10px] group-hover:px-3 group-hover:py-2 group-focus-within:h-24 group-focus-within:w-[320px] group-focus-within:max-w-none group-focus-within:rounded-[10px] group-focus-within:px-3 group-focus-within:py-2"
 							>
 								{nowPlaying?.data.albumImageUrl && (
 									<img
