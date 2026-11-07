@@ -113,7 +113,7 @@ export function Navbar() {
 				)}
 			>
 				<div className="w-full px-[var(--frame-gutter)]">
-					<div className="mx-auto w-full max-w-[var(--frame-max)] px-[var(--frame-pad)] pb-[9px] flex items-center justify-between gap-[10px]">
+					<div className="mx-auto w-full max-w-[var(--frame-max)] border-x border-transparent px-[var(--frame-pad)] pb-[9px] flex items-center justify-between gap-[10px]">
 						<div className="flex items-center gap-1 min-w-0">
 							<Link
 								to={ROUTES.home}
