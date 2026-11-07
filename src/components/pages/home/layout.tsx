@@ -56,7 +56,7 @@ export const HomeLayout = ({ projects }: { projects: Project[] }) => {
 
 				<FrameRule hatched />
 
-				<FrameBand innerClassName={BAND}>
+				<FrameBand>
 					<SectionContact />
 				</FrameBand>
 			</div>

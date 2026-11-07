@@ -49,12 +49,10 @@ export const SectionContact = () => {
 		<section
 			ref={sectionRef}
 			className={cn(
-				'relative overflow-hidden rounded-[20px] px-[max(28px,5vw)] pt-[clamp(64px,10vh,120px)] pb-[clamp(48px,7vh,88px)]',
-				'transition-[opacity,scale,rotate,translate] duration-700 [transition-timing-function:var(--ease-out)]',
+				'relative overflow-hidden px-[var(--frame-pad)] pt-[clamp(64px,10vh,120px)] pb-[clamp(48px,7vh,88px)]',
+				'transition-[opacity,translate] duration-700 [transition-timing-function:var(--ease-out)]',
 				'motion-reduce:transition-none',
-				revealed
-					? 'opacity-100 scale-100 rotate-0 translate-y-0'
-					: 'opacity-0 scale-[0.94] rotate-[4deg] translate-y-[64px]'
+				revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[64px]'
 			)}
 			style={{
 				background:
