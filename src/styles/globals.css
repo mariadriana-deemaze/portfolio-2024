@@ -268,13 +268,6 @@
 		border-radius 900ms ease-out;
 }
 
-@utility overlay-grid {
-	background-size: 54px 54px;
-	background-image:
-		linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px),
-		linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px);
-}
-
 @utility bg-grad-base {
 	background: linear-gradient(180deg, hsl(var(--muted)), hsl(var(--background)) 70%);
 }

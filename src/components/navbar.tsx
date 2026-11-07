@@ -193,11 +193,6 @@ export function Navbar() {
 						: 'nav-overlay-closed pointer-events-none'
 				)}
 			>
-				<div
-					className="absolute inset-0 overlay-grid opacity-[0.04] pointer-events-none [mask-image:linear-gradient(180deg,white_30%,transparent_75%)]"
-					aria-hidden="true"
-				/>
-
 				<nav className="relative flex flex-col">
 					{NAV_KEYS.map(({ path, key }, i) => (
 						<Link
