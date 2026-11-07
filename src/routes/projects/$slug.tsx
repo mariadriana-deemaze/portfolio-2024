@@ -397,7 +397,7 @@ function ProjectItemRoute() {
 					<div className="w-full px-[var(--frame-gutter)]">
 						<div
 							ref={transitionWrapperRef}
-							className="relative mx-auto w-full max-w-[var(--frame-max)] border-x border-t border-border"
+							className="relative mx-auto w-full max-w-[var(--frame-max)] border-x border-border"
 						>
 							<section
 								data-next-section
