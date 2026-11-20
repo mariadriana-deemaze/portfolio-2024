@@ -610,6 +610,12 @@
 	}
 }
 
+@property --reveal {
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
+}
+
 /* Code block styling */
 @layer base {
 	pre {

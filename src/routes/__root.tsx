@@ -3,10 +3,12 @@ import type { ReactNode } from 'react';
 
 import { AppLoaderDismiss, AppLoaderShell } from '@/components/app-loader';
 import Layout from '@/components/layout';
+import { TakeoverCurtain } from '@/components/takeover/curtain';
 import { NotFoundPage } from '@/components/ui/not-found-page';
 import { Toaster } from '@/components/ui/sonner';
 import { WebMcpRegistration } from '@/components/webmcp';
 import { LocaleProvider, useLocale } from '@/contexts/locale-context';
+import { TakeoverProvider } from '@/contexts/takeover-context';
 import { getCommandLinksFn } from '@/server-fns/content';
 import { ROUTES } from '@/utils/routes';
 import { getThemeInitScript } from '@/utils/theme';
@@ -51,7 +53,10 @@ function RootDocument({ children }: { children: ReactNode }) {
 			<body>
 				<AppLoaderShell />
 				<LocaleProvider>
-					<Layout commandLinks={commandLinks}>{children}</Layout>
+					<TakeoverProvider>
+						<Layout commandLinks={commandLinks}>{children}</Layout>
+						<TakeoverCurtain />
+					</TakeoverProvider>
 				</LocaleProvider>
 				<WebMcpRegistration />
 				<Toaster />
