@@ -1,15 +1,17 @@
-import { createFileRoute, Link, notFound, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, Link, notFound } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 import { PortableTextRenderer } from '@/components/portable-text';
 import { getStackByName } from '@/components/stacks';
+import { NextProjectTakeover } from '@/components/takeover/next-project';
 import { BAND_PADDING, FrameBand, FrameRule } from '@/components/ui/frame';
 import type { LightboxImage } from '@/components/ui/lightbox';
 import { Lightbox } from '@/components/ui/lightbox';
 import { NotFoundPage } from '@/components/ui/not-found-page';
 import { StaggerText } from '@/components/ui/stagger-text';
 import { useLocale } from '@/contexts/locale-context';
+import { useTakeoverArrival } from '@/contexts/takeover-context';
 import { BASE_URL } from '@/data/main';
 import { createSeoHead } from '@/lib/head';
 import type { ResolvedGalleryItem, ResolvedMetric } from '@/lib/sanity-types';
@@ -78,82 +80,6 @@ function useCoverParallax(ref: React.RefObject<HTMLDivElement | null>) {
 	}, [ref]);
 }
 
-const SCROLL_RUNWAY_VH = 80;
-const TRANSITION_START = 0.7;
-const NAVIGATE_AT = 0.95;
-
-function useNextProjectTransition(
-	wrapperRef: React.RefObject<HTMLDivElement | null>,
-	overlayRef: React.RefObject<HTMLDivElement | null>,
-	slug: string
-) {
-	const navigate = useNavigate();
-	const navigated = useRef(false);
-
-	useEffect(() => {
-		navigated.current = false;
-
-		const wrapper = wrapperRef.current;
-		const overlay = overlayRef.current;
-		if (!wrapper || !overlay) return;
-
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-		const vh = window.innerHeight;
-		wrapper.style.minHeight = `${vh + (SCROLL_RUNWAY_VH * vh) / 100}px`;
-
-		const section = wrapper.querySelector<HTMLElement>('[data-next-section]');
-		if (!section) return;
-
-		let raf = 0;
-
-		const update = () => {
-			raf = 0;
-			if (navigated.current) return;
-
-			const rect = wrapper.getBoundingClientRect();
-			const currentVh = window.innerHeight;
-			const scrolled = currentVh - rect.top;
-			const progress = Math.max(0, Math.min(1, scrolled / rect.height));
-
-			const growProgress = Math.min(progress / TRANSITION_START, 1);
-			const eased = growProgress * growProgress * (3 - 2 * growProgress);
-			section.style.minHeight = `${eased * currentVh}px`;
-
-			if (progress > TRANSITION_START) {
-				const fadeProgress = Math.min(
-					(progress - TRANSITION_START) / (NAVIGATE_AT - TRANSITION_START),
-					1
-				);
-				overlay.style.opacity = String(fadeProgress);
-			} else {
-				overlay.style.opacity = '0';
-			}
-
-			if (progress >= NAVIGATE_AT) {
-				navigated.current = true;
-				navigate({ to: '/projects/$slug', params: { slug } });
-			}
-		};
-
-		const onScroll = () => {
-			if (raf || navigated.current) return;
-			raf = requestAnimationFrame(update);
-		};
-
-		window.addEventListener('scroll', onScroll, { passive: true });
-		update();
-
-		return () => {
-			window.removeEventListener('scroll', onScroll);
-			if (raf) cancelAnimationFrame(raf);
-			wrapper.style.minHeight = '';
-			section.style.minHeight = '';
-			overlay.style.opacity = '0';
-		};
-	}, [wrapperRef, overlayRef, slug, navigate]);
-}
-
 /* Bands touch — vertical space is padding inside a band, never margin between
    two of them, so the frame's vertical rules run unbroken down the page. */
 const BAND_PAD = 'px-[var(--frame-pad)]';
@@ -191,10 +117,8 @@ function ProjectItemRoute() {
 	} = project;
 
 	const coverRef = useRef<HTMLDivElement>(null);
-	const transitionWrapperRef = useRef<HTMLDivElement>(null);
-	const fadeOverlayRef = useRef<HTMLDivElement>(null);
 	useCoverParallax(coverRef);
-	useNextProjectTransition(transitionWrapperRef, fadeOverlayRef, nextProject?.slug ?? '');
+	useTakeoverArrival(project.slug);
 
 	const heroGradient = colors?.length
 		? `linear-gradient(150deg, ${colors[0]} 0%, ${colors[1] ?? colors[0]} 35%, ${colors[2] ?? colors[1] ?? colors[0]} 100%)`
@@ -205,249 +129,198 @@ function ProjectItemRoute() {
 	const hasMetaSection = hasMetaRow || technologies.length > 0;
 
 	return (
-		<article className="w-full animate-fade-in-left delay-500">
-			{/* Unruled: the navbar's bottom border already draws this line. */}
-			<FrameRule hatched tone="brand" ruled={false} />
+		<article className="w-full">
+			<div className="animate-fade-in-left delay-500">
+				<FrameRule hatched tone="brand" ruled={false} />
 
-			<FrameBand as="header" innerClassName={BAND_PADDING}>
-				<div>
-					<Link
-						to={ROUTES.projects}
-						className="mb-[30px] inline-flex items-center gap-2 font-mono text-xs text-muted-foreground no-underline whitespace-nowrap transition-colors duration-300 hover:gap-[11px] hover:text-[var(--color-orange-primary)] sm:text-sm"
-					>
-						<span>←</span>
-						<span>{t('pages.project-detail.back-to-work')}</span>
-					</Link>
-
-					<div className="mb-[22px] flex flex-wrap items-center gap-3 font-mono text-xs tracking-[0.05em] text-muted-foreground">
-						{projectNum && (
-							<span className="font-semibold text-[var(--color-orange-primary)]">{projectNum}</span>
-						)}
-						<span className="uppercase">{medium}</span>
-						<span className="size-1 rounded-full bg-muted-foreground opacity-60" />
-						<span>{year}</span>
-					</div>
-
-					<h1 className="animate-fade-in-left delay-200 m-0 font-clash text-foreground font-medium leading-[0.92] tracking-[-0.035em] text-[clamp(54px,10vw,132px)] break-words">
-						<StaggerText text={title} autoReveal baseDelay={0.05} letterDelay={0.03} />
-					</h1>
-
-					<p className="animate-fade-in-left delay-300 mt-[28px] font-clash text-foreground text-pretty font-normal leading-[1.35] tracking-[-0.01em] text-[clamp(20px,2.6vw,30px)] max-w-[620px]">
-						{description}
-					</p>
-				</div>
-			</FrameBand>
-
-			{/* Its own band: these details used to draw their own rules 48px
-			    short of the frame, leaving a gap at both ends. */}
-			{(hasMetaSection || links.length > 0) && (
-				<FrameBand innerClassName="px-[var(--frame-pad)] py-[clamp(24px,3vw,34px)]">
-					{hasMetaSection && (
-						<div className="animate-fade-in-left delay-400">
-							{hasMetaRow && (
-								<div className="grid grid-cols-3 max-sm:grid-cols-2 gap-6">
-									{role && (
-										<div>
-											<div className={META_KEY}>{t('pages.project-detail.role')}</div>
-											<div className={META_VAL}>{role}</div>
-										</div>
-									)}
-									{timeline && (
-										<div>
-											<div className={META_KEY}>{t('pages.project-detail.timeline')}</div>
-											<div className={META_VAL}>{timeline}</div>
-										</div>
-									)}
-									{context && (
-										<div>
-											<div className={META_KEY}>{t('pages.project-detail.context')}</div>
-											<div className={META_VAL}>{context}</div>
-										</div>
-									)}
-								</div>
-							)}
-							{technologies.length > 0 && (
-								<div className={hasMetaRow ? 'mt-[22px]' : ''}>
-									<div className={META_KEY}>{t('pages.project-detail.stack')}</div>
-									<div className={cn(META_VAL, 'flex flex-wrap gap-1')}>
-										{technologies.map(({ label }) => {
-											const icon = getStackByName(label)?.icon ?? null;
-											return (
-												<span
-													key={label}
-													className="inline-flex items-center gap-1.5 border border-border rounded-full px-2 py-[2px] text-[11px]"
-												>
-													{icon}
-													{label}
-												</span>
-											);
-										})}
-									</div>
-								</div>
-							)}
-						</div>
-					)}
-
-					{links.length > 0 && (
-						<div className="animate-fade-in-left delay-500 flex gap-[10px] mt-[30px] flex-wrap">
-							{links.map((link, i) => {
-								const isGithub = link.url.includes('github.com');
-								return (
-									<a
-										key={link.url}
-										href={link.url}
-										target="_blank"
-										rel="noreferrer"
-										className={i === 0 && !isGithub ? BTN_PRIMARY : BTN_GHOST}
-									>
-										{isGithub && <LuGithub className="w-[15px] h-[15px]" />}
-										{link.title}
-										{!isGithub && <LuArrowUpRight className="w-[15px] h-[15px]" />}
-									</a>
-								);
-							})}
-						</div>
-					)}
-				</FrameBand>
-			)}
-
-			{/* Bleeds to the frame rules, like the hero beam: no side padding. */}
-			{coverImage && (
-				<FrameBand
-					as="div"
-					innerClassName="animate-fade-in-left delay-300 relative overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]"
-				>
-					{heroGradient && (
-						<div className="absolute inset-0" style={{ background: heroGradient, opacity: 0.3 }} />
-					)}
-					<div className="absolute inset-y-[-12%] inset-x-0 will-change-transform" ref={coverRef}>
-						<img
-							src={coverImage.url}
-							alt={coverImage.alt ?? `${title} project cover`}
-							width={coverImage.width}
-							height={coverImage.height}
-							loading="eager"
-							fetchPriority="high"
-							className="block size-full object-cover"
-							{...(coverImage.lqip
-								? {
-										style: {
-											backgroundImage: `url(${coverImage.lqip})`,
-											backgroundSize: 'cover'
-										}
-									}
-								: {})}
-						/>
-					</div>
-					<div
-						className="absolute inset-0"
-						style={{
-							background:
-								'linear-gradient(180deg, transparent 60%, color-mix(in srgb, var(--background) 70%, transparent))'
-						}}
-					/>
-					<span className="absolute left-[max(24px,5vw)] bottom-[22px] z-[2] font-mono text-[11px] text-white bg-black/45 border border-white/25 rounded-full px-3 py-[5px] backdrop-blur-[6px]">
-						{title} — {year}
-					</span>
-				</FrameBand>
-			)}
-
-			{(overview || problem || approach) && (
-				<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(60px,9vw,110px)]')}>
-					<div className="mx-auto max-w-[760px]">
-						{overview && (
-							<CaseStudyBlock label={t('pages.project-detail.overview')} text={overview} />
-						)}
-						{problem && (
-							<CaseStudyBlock
-								label={t('pages.project-detail.problem')}
-								text={problem}
-								className={overview ? 'mt-[48px]' : ''}
-							/>
-						)}
-						{approach && (
-							<CaseStudyBlock
-								label={t('pages.project-detail.approach')}
-								text={approach}
-								className={overview || problem ? 'mt-[48px]' : ''}
-							/>
-						)}
-					</div>
-				</FrameBand>
-			)}
-
-			{statistics.length > 0 && (
-				<StatisticsGrid statistics={statistics} label={t('pages.project-detail.key-metrics')} />
-			)}
-
-			{structuredBody && (
-				<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(50px,7vw,90px)]')}>
-					<div className="mx-auto max-w-[760px]">
-						<PortableTextRenderer body={structuredBody} className="a-body" />
-					</div>
-				</FrameBand>
-			)}
-
-			{gallery.length > 0 && <ProjectGallery gallery={gallery} />}
-
-			{nextProject && (
-				<>
-					{/* The takeover runway is a band too, so the frame's vertical
-					    rules carry on down it instead of stopping short. */}
-					<div className="w-full px-[var(--frame-gutter)]">
-						<div
-							ref={transitionWrapperRef}
-							className="relative mx-auto w-full max-w-[var(--frame-max)] border-x border-border"
+				<FrameBand as="header" innerClassName={BAND_PADDING}>
+					<div>
+						<Link
+							to={ROUTES.projects}
+							className="mb-[30px] inline-flex items-center gap-2 font-mono text-xs text-muted-foreground no-underline whitespace-nowrap transition-colors duration-300 hover:gap-[11px] hover:text-[var(--color-orange-primary)] sm:text-sm"
 						>
-							<section
-								data-next-section
-								className="sticky bottom-0 flex flex-col border-t border-border overflow-hidden"
-							>
-								<Link
-									to="/projects/$slug"
-									params={{ slug: nextProject.slug }}
-									className="group relative flex flex-1 flex-col justify-end overflow-hidden text-foreground no-underline"
-								>
-									{nextProject.coverImage && (
-										<div className="absolute inset-0 z-0 pointer-events-none [clip-path:polygon(0%_100%,100%_100%,100%_100%,0%_100%)] transition-[clip-path] duration-700 [transition-timing-function:var(--ease-out)] group-hover:[clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)]">
-											<img
-												src={nextProject.coverImage.url}
-												alt=""
-												className="absolute inset-0 size-full object-cover scale-[1.12] transition-transform duration-[1.1s] [transition-timing-function:var(--ease-out)] group-hover:scale-100"
-											/>
-											<div
-												className="absolute inset-0"
-												style={{
-													background:
-														'linear-gradient(115deg, color-mix(in srgb, var(--color-orange-primary) 88%, transparent) 0%, color-mix(in srgb, var(--color-orange-primary) 52%, transparent) 55%, rgba(20,8,3,0.5) 100%)'
-												}}
-											/>
-										</div>
-									)}
-									<div className="relative z-[1] mx-auto w-full max-w-[var(--frame-max)] p-[clamp(48px,9vw,110px)_var(--frame-pad)]">
-										<div className="font-mono text-xs tracking-[0.1em] uppercase text-muted-foreground transition-colors duration-[400ms] ease-[var(--ease-out)] group-hover:text-[#5a2a12] dark:group-hover:text-[#e8a67a]">
-											{t('pages.project-detail.next-project')}
-										</div>
-										<div className="mt-[18px] flex items-center justify-between gap-6">
-											<div className="font-clash font-medium leading-[0.95] tracking-[-0.035em] text-[clamp(40px,8vw,104px)] transition-[translate,color] duration-[550ms] ease-[var(--ease-out)] group-hover:translate-x-[22px] group-hover:text-[#2e1305] dark:group-hover:text-white motion-reduce:transition-none">
-												{nextProject.title}
+							<span>←</span>
+							<span>{t('pages.project-detail.back-to-work')}</span>
+						</Link>
+
+						<div className="mb-[22px] flex flex-wrap items-center gap-3 font-mono text-xs tracking-[0.05em] text-muted-foreground">
+							{projectNum && (
+								<span className="font-semibold text-[var(--color-orange-primary)]">
+									{projectNum}
+								</span>
+							)}
+							<span className="uppercase">{medium}</span>
+							<span className="size-1 rounded-full bg-muted-foreground opacity-60" />
+							<span>{year}</span>
+						</div>
+
+						<h1 className="animate-fade-in-left delay-200 m-0 font-clash text-foreground font-medium leading-[0.92] tracking-[-0.035em] text-[clamp(54px,10vw,132px)] break-words">
+							<StaggerText text={title} autoReveal baseDelay={0.05} letterDelay={0.03} />
+						</h1>
+
+						<p className="animate-fade-in-left delay-300 mt-[28px] font-clash text-foreground text-pretty font-normal leading-[1.35] tracking-[-0.01em] text-[clamp(20px,2.6vw,30px)] max-w-[620px]">
+							{description}
+						</p>
+					</div>
+				</FrameBand>
+
+				{/* Its own band: these details used to draw their own rules 48px
+			    short of the frame, leaving a gap at both ends. */}
+				{(hasMetaSection || links.length > 0) && (
+					<FrameBand innerClassName="px-[var(--frame-pad)] py-[clamp(24px,3vw,34px)]">
+						{hasMetaSection && (
+							<div className="animate-fade-in-left delay-400">
+								{hasMetaRow && (
+									<div className="grid grid-cols-3 max-sm:grid-cols-2 gap-6">
+										{role && (
+											<div>
+												<div className={META_KEY}>{t('pages.project-detail.role')}</div>
+												<div className={META_VAL}>{role}</div>
 											</div>
-											<div className="grid size-[clamp(54px,8vw,88px)] flex-shrink-0 place-items-center rounded-full border-[1.5px] border-border text-[var(--color-orange-primary)] transition-[rotate,scale,background,color,border-color] duration-[550ms] ease-[var(--ease-out)] group-hover:-rotate-45 group-hover:scale-[1.04] group-hover:bg-white group-hover:border-white group-hover:text-[var(--color-orange-primary)] motion-reduce:transition-none [&>svg]:h-[42%] [&>svg]:w-[42%]">
-												<LuArrowUpRight />
+										)}
+										{timeline && (
+											<div>
+												<div className={META_KEY}>{t('pages.project-detail.timeline')}</div>
+												<div className={META_VAL}>{timeline}</div>
 											</div>
+										)}
+										{context && (
+											<div>
+												<div className={META_KEY}>{t('pages.project-detail.context')}</div>
+												<div className={META_VAL}>{context}</div>
+											</div>
+										)}
+									</div>
+								)}
+								{technologies.length > 0 && (
+									<div className={hasMetaRow ? 'mt-[22px]' : ''}>
+										<div className={META_KEY}>{t('pages.project-detail.stack')}</div>
+										<div className={cn(META_VAL, 'flex flex-wrap gap-1')}>
+											{technologies.map(({ label }) => {
+												const icon = getStackByName(label)?.icon ?? null;
+												return (
+													<span
+														key={label}
+														className="inline-flex items-center gap-1.5 border border-border rounded-full px-2 py-[2px] text-[11px]"
+													>
+														{icon}
+														{label}
+													</span>
+												);
+											})}
 										</div>
 									</div>
-								</Link>
-							</section>
+								)}
+							</div>
+						)}
+
+						{links.length > 0 && (
+							<div className="animate-fade-in-left delay-500 flex gap-[10px] mt-[30px] flex-wrap">
+								{links.map((link, i) => {
+									const isGithub = link.url.includes('github.com');
+									return (
+										<a
+											key={link.url}
+											href={link.url}
+											target="_blank"
+											rel="noreferrer"
+											className={i === 0 && !isGithub ? BTN_PRIMARY : BTN_GHOST}
+										>
+											{isGithub && <LuGithub className="w-[15px] h-[15px]" />}
+											{link.title}
+											{!isGithub && <LuArrowUpRight className="w-[15px] h-[15px]" />}
+										</a>
+									);
+								})}
+							</div>
+						)}
+					</FrameBand>
+				)}
+
+				{/* Bleeds to the frame rules, like the hero beam: no side padding. */}
+				{coverImage && (
+					<FrameBand
+						as="div"
+						innerClassName="animate-fade-in-left delay-300 relative overflow-hidden bg-muted h-[clamp(360px,64vh,760px)]"
+					>
+						{heroGradient && (
+							<div
+								className="absolute inset-0"
+								style={{ background: heroGradient, opacity: 0.3 }}
+							/>
+						)}
+						<div className="absolute inset-y-[-12%] inset-x-0 will-change-transform" ref={coverRef}>
+							<img
+								src={coverImage.url}
+								alt={coverImage.alt ?? `${title} project cover`}
+								width={coverImage.width}
+								height={coverImage.height}
+								loading="eager"
+								fetchPriority="high"
+								className="block size-full object-cover"
+								{...(coverImage.lqip
+									? {
+											style: {
+												backgroundImage: `url(${coverImage.lqip})`,
+												backgroundSize: 'cover'
+											}
+										}
+									: {})}
+							/>
 						</div>
-					</div>
-					<div
-						ref={fadeOverlayRef}
-						className="pointer-events-none fixed inset-0 z-50 bg-background"
-						style={{ opacity: 0 }}
-					/>
-				</>
-			)}
+						<div
+							className="absolute inset-0"
+							style={{
+								background:
+									'linear-gradient(180deg, transparent 60%, color-mix(in srgb, var(--background) 70%, transparent))'
+							}}
+						/>
+						<span className="absolute left-[max(24px,5vw)] bottom-[22px] z-[2] font-mono text-[11px] text-white bg-black/45 border border-white/25 rounded-full px-3 py-[5px] backdrop-blur-[6px]">
+							{title} — {year}
+						</span>
+					</FrameBand>
+				)}
+
+				{(overview || problem || approach) && (
+					<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(60px,9vw,110px)]')}>
+						<div className="mx-auto max-w-[760px]">
+							{overview && (
+								<CaseStudyBlock label={t('pages.project-detail.overview')} text={overview} />
+							)}
+							{problem && (
+								<CaseStudyBlock
+									label={t('pages.project-detail.problem')}
+									text={problem}
+									className={overview ? 'mt-[48px]' : ''}
+								/>
+							)}
+							{approach && (
+								<CaseStudyBlock
+									label={t('pages.project-detail.approach')}
+									text={approach}
+									className={overview || problem ? 'mt-[48px]' : ''}
+								/>
+							)}
+						</div>
+					</FrameBand>
+				)}
+
+				{statistics.length > 0 && (
+					<StatisticsGrid statistics={statistics} label={t('pages.project-detail.key-metrics')} />
+				)}
+
+				{structuredBody && (
+					<FrameBand innerClassName={cn(BAND_PAD, 'py-[clamp(50px,7vw,90px)]')}>
+						<div className="mx-auto max-w-[760px]">
+							<PortableTextRenderer body={structuredBody} className="a-body" />
+						</div>
+					</FrameBand>
+				)}
+
+				{gallery.length > 0 && <ProjectGallery gallery={gallery} />}
+			</div>
+
+			{nextProject && <NextProjectTakeover nextProject={nextProject} />}
 		</article>
 	);
 }
